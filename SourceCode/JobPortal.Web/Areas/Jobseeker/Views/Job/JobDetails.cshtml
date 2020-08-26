@@ -3,17 +3,17 @@
     ViewData["Title"] = "Job Details";
 }
 <link href="~/css/CommanPopup.css" rel="stylesheet" />
- <link href="~/css/Loader.css" rel="stylesheet" />
+<link href="~/css/Loader.css" rel="stylesheet" />
 
-    
+
 <style>
     .widget {
         /* width: 32%; */
-         border: 0px solid #F5F1F1 !important; 
+        border: 0px solid #F5F1F1 !important;
         /* padding: 0px !important; */
-         box-shadow: 0px 0px 0px 0px !important; 
+        box-shadow: 0px 0px 0px 0px !important;
     }
-    </style>
+</style>
 <!-- Page Title End -->
 @{
     UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
@@ -109,13 +109,18 @@
                     }
                     else
                     {
-                        if (@user.RoleName == "Student")
+                        if (@user == null)
                         {
-                        <a href="#" id="btnApply" class="button" onclick="ConfrimationFoJobApply(@Model.JobPostId)">Apply For This Job</a>
+                            <a href="#" id="btnApply" class="button" onclick="WarningPopup()">Apply For This Job</a>
                         }
+                        else if (@user.RoleName == "Student")
+                        {
+                            <a href="#" id="btnApply" class="button" onclick="ConfrimationFoJobApply(@Model.JobPostId)">Apply For This Job</a>
+                        }
+
                         else
                         {
-                        <a href="#" id="btnApply" class="button" onclick="ApplyJobs(@Model.JobPostId)">Apply For This Job</a>
+                            <a href="#" id="btnApply" class="button" onclick="ApplyJobs(@Model.JobPostId)">Apply For This Job</a>
                         }
 
                     }

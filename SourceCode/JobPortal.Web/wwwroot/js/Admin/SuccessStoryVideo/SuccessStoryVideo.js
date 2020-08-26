@@ -6,12 +6,15 @@
             {
                 bSortable: false,
                 aTargets: [-1]
+               
             },
             {
                 bSearchable: false,
                 aTargets: [-1]
             }
-        ]
+        ],
+        "bLengthChange": false,
+        
     });
 
 });
@@ -27,15 +30,16 @@ function edit(_this) {
 
         //for (var i = 1; i < row.length-1; i++) {
         //    console.log(row[i].innerText);
-        modal.find('.modal-body #Id').val(row[1].innerText);
-        modal.find('.modal-body #TitelName').val(row[2].innerText);
-        modal.find('.modal-body #StoryType').val(row[3].innerText);
-        modal.find('.modal-body #videoLink').val(row[4].innerText);
-        modal.find('.modal-body #displayOrder').val(row[5].innerText);
+        modal.find('#Id').val(row[1].innerText);
+        modal.find('#TitelName').val(row[2].innerText);
+        modal.find('#StoryType').val(row[3].innerText);
+        modal.find('#videoLink').val(row[4].innerText);
+        modal.find('#displayOrder').val(row[5].innerText);
         //var dropdown = row[3].innerText
         //alert(dropdown);
         $("#SaveRec").hide();
         $("#Update").show();
+        $("#updatebtn").removeClass('display-content');
     });
 
 };
@@ -68,13 +72,14 @@ function Updatedata(_this) {
     let Id = $('#Id').val().trim();
     var data = { Id: Id === "" ? 0 : Id, Title: TitelName, Type: StoryType, VideoFile: videoLink, DisplayOrder: displayOrder };
     SendAJAXRequest('/SuccessStoryVideo/InsertUpdateSuccessStoryVideo/', 'POST', data, "JSON", (result) => {
-        if (result = true) {
+        if (result) {
             let icon = 'fa fa-thumbs-up';
-            let Message = "Successfully Done"
-            updatedsucessfully(Message, icon)
+            let Message = "Successfully Done";
+            updatedsucessfully(Message, icon);
+            //$('#btnSuccess').removeAttr('onclick');
             //location.reload(true);
         } else {
-            warnignPopup('Faild to success')
+            warnignPopup('Faild to success');
             return false;
         }
     });
@@ -100,6 +105,7 @@ function AddNew() {
     //console.log(userid)
     $('#PopUpModal').on('show.bs.modal', function () {
         $("#Update").hide();
+        $("#updatebtn").addClass('display-content');
         $("#SaveRec").show();
         $("#TitelName").val('');
         //$("#StoryType").val('0');
@@ -129,5 +135,10 @@ $('#PopUpModal').on('hidden.bs.modal', function () {
     $("#error_sp_msg").remove();
 
 });
-
+//$('#btnSuccess').click(function () {
+//    GetSuccessStoryVideo();
+//     $("#alertpopup").modal("hide");
+//    $("div.modal-backdrop.fade").removeClass("in");
+//    $("div.modal-backdrop.fade").addClass("out");
+//});
 

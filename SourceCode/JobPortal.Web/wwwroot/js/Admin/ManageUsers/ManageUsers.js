@@ -3,9 +3,13 @@
     $('#dataTable').dataTable({
         "order": [],
         'columnDefs': [
-            { "searchable": false, 'orderable': false, 'targets': 6 }
+            { "searchable": true, 'orderable': true, 'targets': 6 }
         ]
   });
+
+    $('#dataTable_paginate').addClass('data-table-pasiganation');
+    $('#dataTable_length').addClass('data-table-lenthFilter');
+    $('#dataTable_filter').addClass('data-table-SearchFilter');
 
     $('#btnYes').click(function () {
         var id= $('#userId').val();
@@ -40,13 +44,13 @@ function edit(_this) {
         $('#error_sp_msg').hide();
         //for (var i = 1; i < row.length-1; i++) {
         //    console.log(row[i].innerText);
-        modal.find('.modal-body #UserId').val(row[0].innerText);
-        modal.find('.modal-body #FName').val(row[1].innerText);
-        modal.find('.modal-body #LName').val(row[2].innerText);
-        modal.find('.modal-body #Email').val(row[3].innerText);
+        modal.find('#UserId').val(row[0].innerText);
+        modal.find('#FName').val(row[1].innerText);
+        modal.find('#LName').val(row[2].innerText);
+        modal.find('#Email').val(row[3].innerText);
         //modal.find('.modal-body #psd').val(row[4].innerText);
         //modal.find('.modal-body #Role').val(row[5].innerText);
-        $('#Role').val(row[6].innerText);
+        $('#Role').val(row[5].innerText);
         //var objSelect = document.getElementById("Role");
         //objSelect.options[0].text = row[5].innerText;
         //objSelect.options[0].text = true;

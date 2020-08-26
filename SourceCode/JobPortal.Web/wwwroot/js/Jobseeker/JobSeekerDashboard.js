@@ -59,8 +59,9 @@ function UnfollowComapny(EmployerId) {
         if (result) {
             //let icon = 'fa fa-thumbs-up';
             //updatedsucessfully(result, icon);
-            alert("Done");
-            location.reload();
+            //alert("Done");
+            InformationDialog('Unfollowed', 'You are no longer follower of the company');
+            //location.reload();
         } else {
             warnignPopup('Error');
         }

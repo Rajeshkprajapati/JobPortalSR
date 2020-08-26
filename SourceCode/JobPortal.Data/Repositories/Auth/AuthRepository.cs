@@ -24,6 +24,7 @@ namespace JobPortal.Data.Repositories.Auth
             {
                 try
                 {
+
                     SqlParameter[] parameters = new SqlParameter[] {
                         new SqlParameter("@Email",userName),
                         new SqlParameter("@Password",password)
@@ -72,6 +73,7 @@ namespace JobPortal.Data.Repositories.Auth
                         new SqlParameter("@IsActive",user.IsActive),
                         new SqlParameter("@ActivationKey",user.ActivationKey),
                         new SqlParameter("@CreatedBy",user.CreatedBy),
+                         new SqlParameter("@IsApproved",user.IsApproved),
                         outParam
                     };
                     var result =
@@ -108,7 +110,9 @@ namespace JobPortal.Data.Repositories.Auth
                         new SqlParameter("@Password",user.Password),
                         new SqlParameter("@RoleId",user.RoleId),
                         new SqlParameter("@profilepic",user.ProfilePic),
-                        new SqlParameter("@isRegisterOnlyForDemandAggregationData",isRegisterOnlyForDemandAggregationData)
+                        new SqlParameter("@isRegisterOnlyForDemandAggregationData",isRegisterOnlyForDemandAggregationData),
+                        new SqlParameter("@IsApproved",user.IsApproved),
+                        new SqlParameter("@IsActive",user.IsActive)
                     };
                     var result =
                         SqlHelper.ExecuteNonQuery

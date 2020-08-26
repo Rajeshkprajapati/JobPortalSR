@@ -155,7 +155,7 @@ $(document).ready(function () {
             $("input#hdnTotalExperience[type=hidden]").val(result.PersonalDetails.TotalExperience);
             $("#usrProfileCTC").text(result.PersonalDetails.CTC);
             $("#usrEmploymentStatus").text(result.PersonalDetails.EmploymentStatusName);
-            if (result.PersonalDetails.IsJobAlert === 1) {
+            if (result.PersonalDetails.IsJobAlert === true) {
                 $('#btnJobAlert').prop("checked", true);
             }
             if (result.ExperienceDetails !== null) {
@@ -1001,6 +1001,7 @@ $("#btnJobAlert").change(function () {
     data = "";
     SendAJAXRequest("/JobSeekerManagement/JobsAlert/?isAlert=" + isAlert + "", 'POST', data, 'JSON', function (result) {
         if (result) {
+
             //let icon = 'fa fa-thumbs-up';
             //updatedsucessfully(result, icon);
         } else {

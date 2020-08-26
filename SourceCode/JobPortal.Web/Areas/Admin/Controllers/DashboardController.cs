@@ -110,7 +110,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult GetAllUsers()
+        public PartialViewResult GetAllUsers()
         {
             List<ManageUsersViewModel> list = new List<ManageUsersViewModel>();
 
@@ -126,7 +126,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
 
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
-            return View(list);
+            return PartialView("GetAllUsers", list);
         }
 
         [HttpGet]
@@ -565,6 +565,26 @@ namespace JobPortal.Web.Areas.Admin.Controllers
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
             return Json(cityList);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult GetAdminDashboard(string country = "IN")
+        {
+
+
+            try
+            {
+                var list = manageuserHandler.GetStates(country);
+                var genders = manageuserHandler.GetGenders();
+                ViewBag.Genders = genders;
+                ViewBag.State = list;
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DashboardController), ex);
+            }
+           return PartialView("SummaryDashboardPartial");
         }
     }
 }

@@ -16,298 +16,200 @@
     <link href="~/css/CommanPopup.css" rel="stylesheet" />
     <link href="~/css/Loader.css" rel="stylesheet" />
     <link href="~/css/Admin/adminLayout.css" rel="stylesheet" />
+    <link href="~/Assets/css/colors.css" rel="stylesheet" />
+    <link href="~/Assets/css/style.css" rel="stylesheet" />
+    <link href="~/Assets/PopBox/messagebox.css" rel="stylesheet" />
     <style>
-        video {
-            width: 150px;
-            height: auto;
+        .userimg {
+            vertical-align: middle;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
         }
-
-        #confimationDeleteModel {
-            align-items: center;
-        }
-    </style>
+        </style>
+   
 </head>
 <body>
     @{
         UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-        <!-- Header start -->
-        <div class="header">
+        <!-- Header
+           ================================================== -->
+        <header class="sticky-header">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-2 col-sm-3 col-xs-12">
-                        <a href="/Home/Index/" class="logo"><img src="~/images/logo_transperent.png" alt="" /></a>
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                        </div>
-                        <div class="clearfix"></div>
+                <div class="sixteen columns">
+                    <!-- Logo -->
+                    <div id="logo">
+                        <h1><a href="index-2.html"><img src="~/Assets/images/logo.png" alt="Job Portal" /></a></h1>
                     </div>
-                    <div class="col-md-10 col-sm-12 col-xs-12">
-                        <!-- Nav start -->
-                        <div class="navbar navbar-default" role="navigation">
-                            <div class="navbar-collapse collapse" id="nav-main">
-                                <ul class="nav navbar-nav">
-                                    @if (user.RoleName == Constants.DemandAggregationRole)
+                    <!-- Menu -->
+                    <nav id="navigation" class="menu">
+                        <ul id="responsive">
+
+                            @if (user.RoleName == Constants.DemandAggregationRole)
+                            {
+                                <li>
+                                    <a href="javascript:void(0)">DashBoard</a>
+                                    <ul>
+                                        <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="DemandAggregation">Demand Aggregation</a></li>
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                <li>
+                                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">DashBoard</a>
+                                    @*<ul>
+                                        <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Summary</a></li>
+                                        <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="DemandAggregation">Demand Aggregation</a></li>
+                                    </ul>*@
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">Administrator<i class="fa fa-bell notification-bell" id="aggregate-notification-bell" aria-hidden="true"></i></a>
+                                    <ul>
+                                        @*<li>
+                                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="GetAllUsers">
+                                                Manage Users
+                                                <span class="badge notification-badge" id="manage-users-badge"></span>
+                                            </a>
+                                        </li>*@
+                                        @*<li><a asp-area="Admin" asp-controller="Designation" asp-action="GetDesignation"> Add Designation</a></li>
+                                            <li><a asp-area="Admin" asp-controller="JobIndustryArea" asp-action="GetJobIndustryArea">Add Job Category</a></li>*@
+                                        <li><a asp-area="Admin" asp-controller="JobTitle" asp-action="GetJobTitle">Add Job Role</a></li>
+                                        @*<li><a asp-area="Admin" asp-controller="SuccessStoryVideo" asp-action="GetSuccessStoryVideo">Success Story</a></li>*@
+                                        <li><a asp-area="Shared" asp-controller="BulkJobPost" asp-action="Index">Bulk Job Post</a></li>
+                                        <li><a asp-area="Admin" asp-controller="PlacedCandidate" asp-action="Index">Upload Hired Candidate</a></li>
+                                        <li><a asp-area="Admin" asp-controller="PlacedCandidate" asp-action="AllPlacedCandidate">View Hired Candidate</a></li>
+                                        <li><a asp-area="Admin" asp-controller="ManageCityState" asp-action="GetAllCity">Manage City</a></li>
+                                        <li><a asp-area="Admin" asp-controller="ManageCityState" asp-action="StateList">Manage States</a></li>
+                                        <li><a asp-area="Admin" asp-controller="ManageJobs" asp-action="FeaturedJobs">Featured Jobs</a></li>
+                                        <li><a asp-area="Admin" asp-controller="ManageJobs" asp-action="Jobs">Modify Job Details</a></li>
+                                        <li><a asp-area="Admin" asp-controller="UsersReviews" asp-action="UsersReviews">Users Review</a></li>
+                                        <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="GetAllBulkJobs">Delete Bulk Upload</a></li>
+                                    </ul>
+                                </li>
+                            }
+
+                            @*<li><a href="#">Recruiters</a></li>
+                                <li class="dropdown">
+                                    <a href="#">Jobs</a>
+                                </li>
+                                <li>
+                                    <a href="#">Companies</a>
+                                </li>*@
+
+                            @if (user != null)
+                            {
+                                <li class="userbtn float-right">
+                                    @if (user.ProfilePic != "")
                                     {
-                                        <li class="dropdown">
-                                            <a href="javascript:void(0)">DashBoard</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="DemandAggregation">Demand Aggregation</a></li>
-                                            </ul>
-                                        </li>
+                                        <a href="javascript:void(0);" id="profileImage">
+                                            <img src=@user.ProfilePic alt="" class="userimg"  />
+                                            
+                                        </a>
                                     }
                                     else
                                     {
-                                        <li class="dropdown">
-                                            @*<li class="dropdown active">  *@
-                                            <a asp-controller="Home" asp-action="Index">Home</a>
-                                            <!-- dropdown end -->
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="javascript:void(0)">DashBoard</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Summary</a></li>
-                                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="DemandAggregation">Demand Aggregation</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="javascript:void(0)">Administrator<i class="fa fa-bell notification-bell" id="aggregate-notification-bell" aria-hidden="true"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="GetAllUsers">
-                                                        Manage Users
-                                                        <span class="badge notification-badge" id="manage-users-badge"></span>
-                                                    </a>
-                                                </li>
-                                                @*<li><a asp-area="Admin" asp-controller="Designation" asp-action="GetDesignation"> Add Designation</a></li>
-                                                    <li><a asp-area="Admin" asp-controller="JobIndustryArea" asp-action="GetJobIndustryArea">Add Job Category</a></li>*@
-                                                <li><a asp-area="Admin" asp-controller="JobTitle" asp-action="GetJobTitle">Add Job Role</a></li>
-                                                <li><a asp-area="Admin" asp-controller="SuccessStoryVideo" asp-action="GetSuccessStoryVideo">Success Story</a></li>
-                                                <li><a asp-area="Shared" asp-controller="BulkJobPost" asp-action="Index">Bulk Job Post</a></li>
-                                                <li><a asp-area="Admin" asp-controller="PlacedCandidate" asp-action="Index">Upload Hired Candidate</a></li>
-                                                <li><a asp-area="Admin" asp-controller="PlacedCandidate" asp-action="AllPlacedCandidate">View Hired Candidate</a></li>
-                                                <li><a asp-area="Admin" asp-controller="ManageCityState" asp-action="GetAllCity">Manage City</a></li>
-                                                <li><a asp-area="Admin" asp-controller="ManageCityState" asp-action="StateList">Manage States</a></li>
-                                                <li><a asp-area="Admin" asp-controller="ManageJobs" asp-action="FeaturedJobs">Featured Jobs</a></li>
-                                                <li><a asp-area="Admin" asp-controller="ManageJobs" asp-action="Jobs">Modify Job Details</a></li>
-                                                <li><a asp-area="Admin" asp-controller="UsersReviews" asp-action="UsersReviews">Users Review</a></li>
-                                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="GetAllBulkJobs">Delete Bulk Upload</a></li>
-                                            </ul>
-                                        </li>
+                                        <a href=""><img src="~/ProfilePic/Avatar.jpg" alt=""  class="userimg" /></a>
                                     }
-                                    @*<li><a href="#">Recruiters</a></li>
-                                        <li class="dropdown">
-                                            <a href="#">Jobs</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Companies</a>
-                                        </li>*@
+                                    <ul>
+                                        <li>@*<a asp-area="Admin" asp-controller="Dashboard" asp-action="GetAllUsers"><i class="fa fa-tachometer" aria-hidden="true"></i> @user.FullName</a>*@</li>
+                                        <li><a href="javascript:void(0);"><i class="fa fa-tachometer" aria-hidden="true"></i> @user.FullName</a></li>
 
-                                    @if (user != null)
-                                    {
-                                        <li class="dropdown userbtn">
-                                            @if (user.ProfilePic != "")
-                                            {
-                                                <a href="javascript:void(0);">
-                                                    <img src=@user.ProfilePic alt="" class="userimg" />
-                                                    &nbsp;&nbsp;@user.FullName
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <a href=""><img src="~/ProfilePic/Avatar.jpg" alt="" class="userimg" /></a>
-                                            }
-                                            <ul class="dropdown-menu">
-                                                <li>@*<a asp-area="Admin" asp-controller="Dashboard" asp-action="GetAllUsers"><i class="fa fa-tachometer" aria-hidden="true"></i> @user.FullName</a>*@</li>
-                                                <li><a href="javascript:void(0);"><i class="fa fa-tachometer" aria-hidden="true"></i> @user.FullName</a></li>
-
-                                                <li><a href="/Auth/CreateNewPassword/"><i class="fa fa-key" aria-hidden="true">&nbsp;</i>Change Password</a></li>
-                                                <li><a href="/Auth/Logout/"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
-                                            </ul>
-                                        </li>
-                                    }
-                                </ul>
-                                <!-- Nav collapes end -->
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <!-- Nav end -->
+                                        <li><a href="/Auth/CreateNewPassword/"><i class="fa fa-key" aria-hidden="true">&nbsp;</i>Change Password</a></li>
+                                        <li><a href="/Auth/Logout/"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                    <!-- Navigation -->
+                    <div id="mobile-navigation">
+                        <a href="#menu" class="menu-trigger"><i class="fa fa-reorder"></i> Menu</a>
                     </div>
                 </div>
-                <!-- row end -->
             </div>
-            <!-- Header container end -->
-        </div>
+        </header>
+        <div class="clearfix"></div>
     }
 
     @*loader*@
     <div id="loader" hidden>
         <img id="imgloader" src="~/images/ajax-loader1.gif" />
     </div>
-
-    <!-- Header end -->
-    @*@if (Convert.ToString(ViewData["Title"]) != "Home")
-        {
-             Page Title start
-            <div class="pageTitle">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <h1 class="page-heading">Login</h1>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="breadCrumb"><a href="#">Home</a> / <span>Job Name</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             Page Title End
-        }*@
-
-    @* ....View Rendered.................. *@
-
     @RenderBody()
 
     @* ...................... *@
 
     <!--Footer-->
-    <div class="footerWrap">
+    <div class="margin-top-30"></div>
+
+    <div id="footer">
+        <!-- Main -->
         <div class="container">
-            <div class="row">
-                <!--About Us-->
-                <div class="col-md-3 col-sm-12">
-                    <div class="ft-logo"><img src="~/images/logo-1_footer.png" alt="Your alt text here" style="height:5rem"></div>
-                    <p>
-                        IT-ITeS Sector Skills Council NASSCOM
 
-                        Plot No. – 7, 8, 9 & 10
+            <div class="seven columns">
+                <h4>About</h4>
+                <p>Morbi convallis bibendum urna ut viverra. Maecenas quis consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet ullamcorper phasellus semper.</p>
+                <a href="#" class="button">Get Started</a>
+            </div>
 
-                        Sector – 126, Noida
+            <div class="three columns">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Our Blog</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Hiring Hub</a></li>
+                </ul>
+            </div>
 
-                        Uttar Pradesh - 201303<br />
+            <div class="three columns">
+                <h4>Press</h4>
+                <ul class="footer-links">
+                    <li><a href="#">In the News</a></li>
+                    <li><a href="#">Press Releases</a></li>
+                    <li><a href="#">Awards</a></li>
+                    <li><a href="#">Testimonials</a></li>
+                    <li><a href="#">Timeline</a></li>
+                </ul>
+            </div>
 
-                        Board No: 0120 4990111 – Ext: 137<br />
+            <div class="three columns">
+                <h4>Browse</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Freelancers by Category</a></li>
+                    <li><a href="#">Freelancers in USA</a></li>
+                    <li><a href="#">Freelancers in UK</a></li>
+                    <li><a href="#">Freelancers in Canada</a></li>
+                    <li><a href="#">Freelancers in Australia</a></li>
+                    <li><a href="#">Find Jobs</a></li>
 
-                        Direct No: 0120 4990137
-                    </p>
+                </ul>
+            </div>
 
-                    <!-- Social Icons -->
+        </div>
 
-                    <div class="social">
-                        <a href="https://www.facebook.com/SSCNASSCOM/" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-                        <a href="https://twitter.com/sscnasscom?ref_src=twsrc" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
-                        @*<a href="#." target="_blank"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a>*@
-                        <a href="https://www.linkedin.com/company/sscnasscom/" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
-                        <a href="https://www.youtube.com/channel/UCqBLzfnJ0y6xX45S2BVMo-Q" target="_blank"><i class="fa fa-youtube-square" aria-hidden="true"></i></a>
-                    </div>
-
-                    <!-- Social Icons end -->
-                </div>
-                <!--About us End-->
-                <!--Quick Links-->
-                <div class="col-md-2 col-sm-6">
-                    <h5>Quick Links</h5>
-                    <!--Quick Links menu Start-->
-                    <ul class="quicklinks">
-                        @*<li><a href="/Home/Career/">Career Resources</a></li>*@
-                        <li><a href="/Home/CompanyListing/">Company Listings</a></li>
-                        <li><a asp-controller="Home" asp-action="SucessStoryAndReview">Success Stories</a></li>
-                        <li><a href="/Home/ContactUs/">Contact Us</a></li>
-                        <li><a href="/Auth/Registration/">Create Account</a></li>
-                        <li><a id="TalentConnectLink" target="_blank">Talent Connect - Guide</a></li>
-                        <li><a id="CandidateBulkUpload" target="_blank">Candidate Bulk Upload - Guide</a></li>
-                        <li><a id="TPRegistrationGuide" target="_blank">TP Registration - Guide</a></li>
+        <!-- Bottom -->
+        <div class="container">
+            <div class="footer-bottom">
+                <div class="sixteen columns">
+                    <h4>Follow Us</h4>
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
+                        <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="icon-linkedin"></i></a></li>
                     </ul>
-                </div>
-                <!--Quick Links menu end-->
-                <!--Latest Articles-->
-                <!--Latest Articles-->
-                <div class="col-md-7 col-sm-6">
-                    @*<h5>Jobs By Industry</h5>*@
-                    <!--Industry menu Start-->
-                    @*<ul class="quicklinks" id="jobCategory"></ul>*@
-                    <!--Industry menu End-->
-                    @*<div class="clear"></div>*@
-
-                    <h5>Stories that Inspire us</h5>
-                    <div class="col-md-6">
-                        <ul class="posts-list">
-                            <!--Article 1-->
-                            <li>
-                                <article class="post post-list">
-                                    <div class="entry-content media">
-                                        <div class="media-left">
-                                            <iframe style="width:160px;height:100px;" src="https://www.youtube.com/embed/AszwM1QJo0Q" frameborder="0"></iframe>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="entry-title"> <a href="#.">Video Testimonial Komal</a> </h4>
-                                            <div class="entry-content-inner">
-                                                <div class="entry-meta"> <span class="entry-date">Dec 22, 2019</span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </li>
-                            <!--Article end 1-->
-                            <!--Article 2-->
-                            <li>
-                                <article class="post post-list">
-                                    <div class="entry-content media">
-                                        <div class="media-left">
-                                            <iframe style="width:160px;height:100px;" src="https://www.youtube.com/embed/5nSy8FwGv7U" frameborder="0"></iframe>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="entry-title"> <a href="#.">SSC NASSCOM Skilling Success Stories</a> </h4>
-                                            <div class="entry-content-inner">
-                                                <div class="entry-meta"> <span class="entry-date">22 Dec, 2019</span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="posts-list">
-                            <!-- Article 3-->
-                            <li>
-                                <article class="post post-list">
-                                    <div class="entry-content media">
-                                        <div class="media-left">
-                                            <iframe style="width:160px;height:100px;" src="https://www.youtube.com/embed/ToOOa1UB7fg" frameborder="0"></iframe>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="entry-title"> <a href="#.">Testimonial: Varun Kumar</a> </h4>
-                                            <div class="entry-content-inner">
-                                                <div class="entry-meta"> <span class="entry-date">Dec 22, 2019</span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </li>
-                            <!--Article end 3-->
-                            <!-- Article 4-->
-                            <li>
-                                <article class="post post-list">
-                                    <div class="entry-content media">
-                                        <div class="media-left">
-                                            <iframe style="width:160px;height:100px;" src="https://www.youtube.com/embed/tbJgE-aWgN4" frameborder="0"></iframe>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="entry-title"> <a href="#.">SSC NASSCOM Success Stories - Talent Connect</a> </h4>
-                                            <div class="entry-content-inner">
-                                                <div class="entry-meta"> <span class="entry-date">22 Dec, 2019</span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </li>
-
-                        </ul>
-                    </div>
-
+                    <div class="copyrights">©  Copyright 2018 by <a href="#">Work Scout</a>. All Rights Reserved.</div>
                 </div>
             </div>
         </div>
+
     </div>
     <!--Footer end-->
     <!-- Modal HTML -->
@@ -408,6 +310,25 @@
         </div>
     </div>
     <!-- Custom Modal HTML Ends-->
+
+
+    <script src="~/Assets/scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Assets/scripts/jquery-migrate-3.1.0.min.js"></script>
+    <script src="~/Assets/scripts/custom.js"></script>
+    <script src="~/Assets/scripts/jquery.superfish.js"></script>
+    <script src="~/Assets/scripts/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Assets/scripts/jquery.themepunch.revolution.min.js"></script>
+    <script src="~/Assets/scripts/jquery.themepunch.showbizpro.min.js"></script>
+    <script src="~/Assets/scripts/jquery.flexslider-min.js"></script>
+    <script src="~/Assets/scripts/chosen.jquery.min.js"></script>
+    <script src="~/Assets/scripts/jquery.magnific-popup.min.js"></script>
+    <script src="~/Assets/scripts/waypoints.min.js"></script>
+    <script src="~/Assets/scripts/jquery.counterup.min.js"></script>
+    <script src="~/Assets/scripts/jquery.jpanelmenu.js"></script>
+    <script src="~/Assets/scripts/stacktable.js"></script>
+    <script src="~/Assets/scripts/slick.min.js"></script>
+    <script src="~/Assets/scripts/headroom.min.js"></script>
+    <script src="~/Assets/PopBox/messagebox.js"></script>
 
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/jquery/jquery-ui.js"></script>

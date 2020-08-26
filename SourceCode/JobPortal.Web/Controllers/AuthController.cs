@@ -50,10 +50,10 @@ namespace JobPortal.Web.Controllers
             try
             {
                 var result = authHandler.Login(user.Email.Trim(), user.Password);
-                if (result != null && result.IsApproved == "False")
-                {
-                    throw new NotApprovedByAdminException("Sorry!!! Your account is not activated. Contact your tech deck.");
-                }
+                //if (result != null && result.IsApproved == "False")
+                //{
+                //    throw new NotApprovedByAdminException("Sorry!!! Your account is not activated. Contact your tech deck.");
+                //}
                 if (null != result)
                 {
                     var identity = new ClaimsIdentity(new[] {
@@ -76,7 +76,7 @@ namespace JobPortal.Web.Controllers
                         HttpContext.Session.Set<UserViewModel>(Constants.SessionKeyUserInfo, result);
                         authHandler.UserActivity(result.UserId);
                         return GoAhead(result.RoleName, result.UserId);
-                        //return View("Index"); 
+                        //return View("Index");
                     }
                     else
                     {

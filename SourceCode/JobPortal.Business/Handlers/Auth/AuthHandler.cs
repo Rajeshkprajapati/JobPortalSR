@@ -84,6 +84,8 @@ namespace JobPortal.Business.Handlers.Auth
                     MobileNo = user.MobileNo,
                     Password = user.Password,
                     RoleId = user.RoleId,
+                    IsApproved = true,
+                    IsActive = true
                 };
                 int isRegister = _authProcessor.RegisterUser(u);
                 if (isRegister > 0)
@@ -117,6 +119,8 @@ namespace JobPortal.Business.Handlers.Auth
                 Email = user.Email,
                 Password = user.Password,
                 RoleId = user.RoleId,
+                IsActive = true,
+                IsApproved = true
             };
             bool isRegister = _authProcessor.RegisterEmployer(u);
             if (isRegister)

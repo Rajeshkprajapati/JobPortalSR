@@ -356,3 +356,6 @@ function getDateRange() {
     let endpicdate = $("#endpicdate").val();
     getTilesData(picdate, endpicdate);
 }
+$("selct#yearofdata .chosen-select-no-single").trigger(function () {
+    alert('data');
+});

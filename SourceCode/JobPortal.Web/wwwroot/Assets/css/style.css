@@ -1061,7 +1061,7 @@ table.manage-table {
     }
 
     table.manage-table.resumes td {
-        padding: 30px 20px
+        padding: 5px 20px /*changed 30px to 5px*/
     }
 
 table td.title a {

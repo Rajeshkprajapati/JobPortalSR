@@ -165,7 +165,7 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        [UserAuthentication(Constants.AllRoles)]
+        //[UserAuthentication(Constants.AllRoles)]
         public IActionResult JobDetails(int jobid)
         {
             JobPostViewModel jobdetail = new JobPostViewModel();

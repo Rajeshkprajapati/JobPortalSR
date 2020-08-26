@@ -31,22 +31,22 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpGet]
-        [Route("[action]")]
-        public IActionResult GetSuccessStoryVideo()
-        {
-            List<SuccessStoryVideoViewModel> list = new List<SuccessStoryVideoViewModel>();
-            try
-            {
-                list = _successStoryVideoHandler.GetSuccessStoryVid();
-            }
-            catch (DataNotFound ex)
-            {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(SuccessStoryVideoController), ex);
-                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
-            }
-            return View(list);
-        }
+        //[HttpGet]
+        //[Route("[action]")]
+        //public IActionResult GetSuccessStoryVideo()
+        //{
+        //    List<SuccessStoryVideoViewModel> list = new List<SuccessStoryVideoViewModel>();
+        //    try
+        //    {
+        //        list = _successStoryVideoHandler.GetSuccessStoryVid();
+        //    }
+        //    catch (DataNotFound ex)
+        //    {
+        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(SuccessStoryVideoController), ex);
+        //        ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+        //    }
+        //    return View(list);
+        //}
 
         [HttpPost]
         [Route("[action]")]
@@ -103,6 +103,23 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             }
             return Json("Record Can't be Deleted");
 
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult GetSuccessStoryVideo(string country = "IN")
+        {
+            List<SuccessStoryVideoViewModel> list = new List<SuccessStoryVideoViewModel>();
+            try
+            {
+                list = _successStoryVideoHandler.GetSuccessStoryVid();
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(SuccessStoryVideoController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return PartialView("GetSuccessStoryVideo",list);
         }
     }
 }

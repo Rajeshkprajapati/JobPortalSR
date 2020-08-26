@@ -39,3 +39,15 @@
 
     });
 });
+
+$(window).scroll(function () {
+    var scroll = $(window).scrollTop();
+    console.log(scroll);
+    if (scroll >= 60) {
+        //console.log('a');
+        $(".popupdata").addClass("scrollPopup");
+    } else {
+        //console.log('a');
+        $(".popupdata").removeClass("scrollPopup");
+    }
+});
