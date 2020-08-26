@@ -1,0 +1,220 @@
+﻿
+@{
+    ViewData["Title"] = "Admin Dashboard";
+
+}
+<style>
+    .unstyled::-webkit-inner-spin-button,
+    .unstyled::-webkit-calendar-picker-indicator {
+        display: none;
+        -webkit-appearance: none;
+    }
+</style>
+<link href="~/lib/Calendar/css/tail.datetime-default-red.css" rel="stylesheet" />
+<link href="~/css/Admin/summary-dashboard.css" rel="stylesheet" />
+
+<!-- //map js -->
+<div class="pageTitle">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <h1 class="page-heading">Admin DashBoard</h1>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="breadCrumb"><a href="/Home/Index/">Home</a> / <span>Admin</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row summary-tiles-container">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-12" style="margin-top:25px;">
+            <div class="col-md-3">
+                <h6 class="pull-right-Calander labelpostion">From</h6>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+
+                        <input type="date" required id="picdate" class="demo form-control unstyled" style="height:40px!important" placeholder="Start Date">
+                        <div id="datetime-demo-holder" class="datetime-folder"></div>
+                        <div class="input-group-addon">
+                            <a href="javascript:void(0);" id="picdate1" onclick="toggleStartCalendar()">  <i class="fa fa-calendar" style="font-size:26px;color:#ad212b;" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1 calendarDivcol-md1">
+                <h6 class="pull-right-Calander labelpostion" style="">To</h6>
+            </div>
+            <div class="col-md-3">
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="date" required id="endpicdate" class="demo form-control unstyled" style="height:40px!important" onchange="TDate()" placeholder="End Date">
+                        <div id="datetime-demo-holder" class="datetime-folder"></div>
+                        <div class="input-group-addon">
+                            <a href="javascript:void(0);" id="picdate2" onclick="toggleEndCalendar()">  <i class="fa fa-calendar" style="font-size:26px;color:#ad212b;" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <input type="button" value="Get Data" onclick="getDateRange()" class="btn btn-primary" style="color: #e6ece6;height: 39px;">
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6 div4margin">
+            <div class="stats-left ">
+                <h4 class="adminHeaderText">Employer Registration</h4>
+            </div>
+            <div class="stats-right" style="cursor:pointer;" id="Employerdaywise">
+                <label id="lblEmpRegistration" style="cursor:pointer;">0</label>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="col-md-4 col-sm-6 states-mdl div4margin">
+            <div class="stats-left">
+                <h4 class="adminHeaderText">Job Post</h4>
+            </div>
+            <div class="stats-right" style="cursor:pointer;" id="jobPostDatewise">
+                <label id="lblJobPost" style="cursor:pointer;">0</label>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="col-md-4 col-sm-6 states-last div4margin">
+            <div class="stats-left">
+
+                <h4 class="adminHeaderText">Applied Jobs</h4>
+            </div>
+            <div class="stats-right" style="cursor:pointer;" id="resumePost">
+                <label id="lblResumePost" style="cursor:pointer;">0</label>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="col-md-4 col-sm-6 div4margin">
+            <div class="stats-left ">
+                <h4 class="adminHeaderText">Staffing Partner</h4>
+            </div>
+            <div class="stats-right" style="cursor:pointer;" id="stuffToday">
+                <label id="lblStuffingPartner" style="cursor:pointer;">0</label>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="col-md-4 col-sm-6 states-mdl div4margin">
+            <div class="stats-left">
+
+                <h4 class="adminHeaderText">Training Partner</h4>
+            </div>
+            <div class="stats-right" style="cursor:pointer;" id="tpToday">
+                <label id="lblTraningPartner" style="cursor:pointer;">0 </label>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="col-md-4 col-sm-6 states-last div4margin">
+            <div class="stats-left">
+                <h4 class="adminHeaderText">Student</h4>
+            </div>
+            <div class="stats-right" style="cursor:pointer;" id="studentdaywise">
+                <label id="lblStudentRegistration" style="cursor:pointer;">0</label>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row summary-graphs-container">   
+    <div class="col-md-12">
+        @*here start with charts*@
+        <div class="col-md-12 graphs-header-container">
+            <h3 style="color:#6d6868;">Analytical Dashboard</h3>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="col-md-4 form-group">
+                    <label for="FYear" style="margin-bottom:5px;">Year</label>
+                    <select class="form-control" name="FYear" id="yearofdata">
+                        @{
+                            int currYear = DateTime.Now.Year;
+                            @for (int i = (currYear - 1); i <= (currYear+1); i++)
+                            {
+                                if (i == currYear)
+                                {
+                                    <option selected value="@i">@i</option>
+                                }
+                                else
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="Gender" style="margin-bottom:5px;">Gender</label>
+                    <select class="form-control" name="Gender" id="genderApplied">
+                        @{
+                            foreach (var item in ViewBag.Genders)
+                            {
+                                if (item.GenderCode == "all")
+                                {
+                                    <option selected value="@item.GenderCode">@item.Gender</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.GenderCode">@item.Gender</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="States" style="margin-bottom:5px;">States</label>
+                    <select class="form-control" id="statewise" name="States">
+                        <option value="" selected>All</option>
+                        @{
+                            foreach (var item in ViewBag.State)
+                            {
+                                <option value="@item.StateCode">@item.State</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="col-md-6 col-sm-6 graph-holder" id="jobPostedGraphContainer">
+                    <h4 class="title">Active Jobs</h4>
+                    <label class="no-graph-available" id="noJobsPostedGraphAvailable">No Graph Available</label>
+                </div>
+                <div class="col-md-6 col-sm-6 graph-holder" id="userRegistrationGraphContainer">
+                    <h4 class="title">User Registration</h4>
+                    <label class="no-graph-available" id="noUserRegistrationGraphAvailable">No Graph Available</label>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 col-sm-6 graph-holder" id="appliedJobsGraphContainer">
+                    <h4 class="title">Applied Jobs</h4>
+                    <label class="no-graph-available" id="noAppliedJobsGraphAvailable">No Graph Available</label>
+                </div>
+                <div class="col-md-6 col-sm-6 graph-holder" id="activJobsGraphContainer">
+                    <h4 class="title">Closed Jobs</h4>
+                    <label class="no-graph-available" id="noActiveJobsGraphAvailable">No Graph Available</label>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script src="~/lib/Calendar/js/tail.datetime.js"></script>
+    <script src="~/js/Admin/Index/Chart2.js"></script>
+    <script src="~/js/common.js"></script>
+    <script src="~/js/Admin/Calendar.js"></script>
+    <script src="~/js/Admin/Index/Index.js"></script>
+}

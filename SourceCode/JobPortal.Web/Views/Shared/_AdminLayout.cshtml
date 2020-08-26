@@ -1,0 +1,425 @@
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>@ViewData["Title"]</title>
+    <link href="~/lib/jquery/jquery-ui.min.css" rel="stylesheet" />
+    @*<link rel="shortcut icon" type="image/png" href="~/images/favicon-16x16.png" />*@
+    <link href="~/lib/owl-carousel/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/custom.css" rel="stylesheet" />
+    <link href="~/css/CommanPopup.css" rel="stylesheet" />
+    <link href="~/css/Loader.css" rel="stylesheet" />
+    <link href="~/css/Admin/adminLayout.css" rel="stylesheet" />
+    <style>
+        video {
+            width: 150px;
+            height: auto;
+        }
+
+        #confimationDeleteModel {
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    @{
+        UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+        <!-- Header start -->
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-12">
+                        <a href="/Home/Index/" class="logo"><img src="~/images/logo_transperent.png" alt="" /></a>
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-10 col-sm-12 col-xs-12">
+                        <!-- Nav start -->
+                        <div class="navbar navbar-default" role="navigation">
+                            <div class="navbar-collapse collapse" id="nav-main">
+                                <ul class="nav navbar-nav">
+                                    @if (user.RoleName == Constants.DemandAggregationRole)
+                                    {
+                                        <li class="dropdown">
+                                            <a href="javascript:void(0)">DashBoard</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="DemandAggregation">Demand Aggregation</a></li>
+                                            </ul>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="dropdown">
+                                            @*<li class="dropdown active">  *@
+                                            <a asp-controller="Home" asp-action="Index">Home</a>
+                                            <!-- dropdown end -->
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="javascript:void(0)">DashBoard</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Summary</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="DemandAggregation">Demand Aggregation</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="javascript:void(0)">Administrator<i class="fa fa-bell notification-bell" id="aggregate-notification-bell" aria-hidden="true"></i></a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="GetAllUsers">
+                                                        Manage Users
+                                                        <span class="badge notification-badge" id="manage-users-badge"></span>
+                                                    </a>
+                                                </li>
+                                                @*<li><a asp-area="Admin" asp-controller="Designation" asp-action="GetDesignation"> Add Designation</a></li>
+                                                    <li><a asp-area="Admin" asp-controller="JobIndustryArea" asp-action="GetJobIndustryArea">Add Job Category</a></li>*@
+                                                <li><a asp-area="Admin" asp-controller="JobTitle" asp-action="GetJobTitle">Add Job Role</a></li>
+                                                <li><a asp-area="Admin" asp-controller="SuccessStoryVideo" asp-action="GetSuccessStoryVideo">Success Story</a></li>
+                                                <li><a asp-area="Shared" asp-controller="BulkJobPost" asp-action="Index">Bulk Job Post</a></li>
+                                                <li><a asp-area="Admin" asp-controller="PlacedCandidate" asp-action="Index">Upload Hired Candidate</a></li>
+                                                <li><a asp-area="Admin" asp-controller="PlacedCandidate" asp-action="AllPlacedCandidate">View Hired Candidate</a></li>
+                                                <li><a asp-area="Admin" asp-controller="ManageCityState" asp-action="GetAllCity">Manage City</a></li>
+                                                <li><a asp-area="Admin" asp-controller="ManageCityState" asp-action="StateList">Manage States</a></li>
+                                                <li><a asp-area="Admin" asp-controller="ManageJobs" asp-action="FeaturedJobs">Featured Jobs</a></li>
+                                                <li><a asp-area="Admin" asp-controller="ManageJobs" asp-action="Jobs">Modify Job Details</a></li>
+                                                <li><a asp-area="Admin" asp-controller="UsersReviews" asp-action="UsersReviews">Users Review</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="GetAllBulkJobs">Delete Bulk Upload</a></li>
+                                            </ul>
+                                        </li>
+                                    }
+                                    @*<li><a href="#">Recruiters</a></li>
+                                        <li class="dropdown">
+                                            <a href="#">Jobs</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Companies</a>
+                                        </li>*@
+
+                                    @if (user != null)
+                                    {
+                                        <li class="dropdown userbtn">
+                                            @if (user.ProfilePic != "")
+                                            {
+                                                <a href="javascript:void(0);">
+                                                    <img src=@user.ProfilePic alt="" class="userimg" />
+                                                    &nbsp;&nbsp;@user.FullName
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href=""><img src="~/ProfilePic/Avatar.jpg" alt="" class="userimg" /></a>
+                                            }
+                                            <ul class="dropdown-menu">
+                                                <li>@*<a asp-area="Admin" asp-controller="Dashboard" asp-action="GetAllUsers"><i class="fa fa-tachometer" aria-hidden="true"></i> @user.FullName</a>*@</li>
+                                                <li><a href="javascript:void(0);"><i class="fa fa-tachometer" aria-hidden="true"></i> @user.FullName</a></li>
+
+                                                <li><a href="/Auth/CreateNewPassword/"><i class="fa fa-key" aria-hidden="true">&nbsp;</i>Change Password</a></li>
+                                                <li><a href="/Auth/Logout/"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
+                                            </ul>
+                                        </li>
+                                    }
+                                </ul>
+                                <!-- Nav collapes end -->
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- Nav end -->
+                    </div>
+                </div>
+                <!-- row end -->
+            </div>
+            <!-- Header container end -->
+        </div>
+    }
+
+    @*loader*@
+    <div id="loader" hidden>
+        <img id="imgloader" src="~/images/ajax-loader1.gif" />
+    </div>
+
+    <!-- Header end -->
+    @*@if (Convert.ToString(ViewData["Title"]) != "Home")
+        {
+             Page Title start
+            <div class="pageTitle">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <h1 class="page-heading">Login</h1>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="breadCrumb"><a href="#">Home</a> / <span>Job Name</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             Page Title End
+        }*@
+
+    @* ....View Rendered.................. *@
+
+    @RenderBody()
+
+    @* ...................... *@
+
+    <!--Footer-->
+    <div class="footerWrap">
+        <div class="container">
+            <div class="row">
+                <!--About Us-->
+                <div class="col-md-3 col-sm-12">
+                    <div class="ft-logo"><img src="~/images/logo-1_footer.png" alt="Your alt text here" style="height:5rem"></div>
+                    <p>
+                        IT-ITeS Sector Skills Council NASSCOM
+
+                        Plot No. – 7, 8, 9 & 10
+
+                        Sector – 126, Noida
+
+                        Uttar Pradesh - 201303<br />
+
+                        Board No: 0120 4990111 – Ext: 137<br />
+
+                        Direct No: 0120 4990137
+                    </p>
+
+                    <!-- Social Icons -->
+
+                    <div class="social">
+                        <a href="https://www.facebook.com/SSCNASSCOM/" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                        <a href="https://twitter.com/sscnasscom?ref_src=twsrc" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                        @*<a href="#." target="_blank"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a>*@
+                        <a href="https://www.linkedin.com/company/sscnasscom/" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+                        <a href="https://www.youtube.com/channel/UCqBLzfnJ0y6xX45S2BVMo-Q" target="_blank"><i class="fa fa-youtube-square" aria-hidden="true"></i></a>
+                    </div>
+
+                    <!-- Social Icons end -->
+                </div>
+                <!--About us End-->
+                <!--Quick Links-->
+                <div class="col-md-2 col-sm-6">
+                    <h5>Quick Links</h5>
+                    <!--Quick Links menu Start-->
+                    <ul class="quicklinks">
+                        @*<li><a href="/Home/Career/">Career Resources</a></li>*@
+                        <li><a href="/Home/CompanyListing/">Company Listings</a></li>
+                        <li><a asp-controller="Home" asp-action="SucessStoryAndReview">Success Stories</a></li>
+                        <li><a href="/Home/ContactUs/">Contact Us</a></li>
+                        <li><a href="/Auth/Registration/">Create Account</a></li>
+                        <li><a id="TalentConnectLink" target="_blank">Talent Connect - Guide</a></li>
+                        <li><a id="CandidateBulkUpload" target="_blank">Candidate Bulk Upload - Guide</a></li>
+                        <li><a id="TPRegistrationGuide" target="_blank">TP Registration - Guide</a></li>
+                    </ul>
+                </div>
+                <!--Quick Links menu end-->
+                <!--Latest Articles-->
+                <!--Latest Articles-->
+                <div class="col-md-7 col-sm-6">
+                    @*<h5>Jobs By Industry</h5>*@
+                    <!--Industry menu Start-->
+                    @*<ul class="quicklinks" id="jobCategory"></ul>*@
+                    <!--Industry menu End-->
+                    @*<div class="clear"></div>*@
+
+                    <h5>Stories that Inspire us</h5>
+                    <div class="col-md-6">
+                        <ul class="posts-list">
+                            <!--Article 1-->
+                            <li>
+                                <article class="post post-list">
+                                    <div class="entry-content media">
+                                        <div class="media-left">
+                                            <iframe style="width:160px;height:100px;" src="https://www.youtube.com/embed/AszwM1QJo0Q" frameborder="0"></iframe>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="entry-title"> <a href="#.">Video Testimonial Komal</a> </h4>
+                                            <div class="entry-content-inner">
+                                                <div class="entry-meta"> <span class="entry-date">Dec 22, 2019</span> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </li>
+                            <!--Article end 1-->
+                            <!--Article 2-->
+                            <li>
+                                <article class="post post-list">
+                                    <div class="entry-content media">
+                                        <div class="media-left">
+                                            <iframe style="width:160px;height:100px;" src="https://www.youtube.com/embed/5nSy8FwGv7U" frameborder="0"></iframe>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="entry-title"> <a href="#.">SSC NASSCOM Skilling Success Stories</a> </h4>
+                                            <div class="entry-content-inner">
+                                                <div class="entry-meta"> <span class="entry-date">22 Dec, 2019</span> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="posts-list">
+                            <!-- Article 3-->
+                            <li>
+                                <article class="post post-list">
+                                    <div class="entry-content media">
+                                        <div class="media-left">
+                                            <iframe style="width:160px;height:100px;" src="https://www.youtube.com/embed/ToOOa1UB7fg" frameborder="0"></iframe>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="entry-title"> <a href="#.">Testimonial: Varun Kumar</a> </h4>
+                                            <div class="entry-content-inner">
+                                                <div class="entry-meta"> <span class="entry-date">Dec 22, 2019</span> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </li>
+                            <!--Article end 3-->
+                            <!-- Article 4-->
+                            <li>
+                                <article class="post post-list">
+                                    <div class="entry-content media">
+                                        <div class="media-left">
+                                            <iframe style="width:160px;height:100px;" src="https://www.youtube.com/embed/tbJgE-aWgN4" frameborder="0"></iframe>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="entry-title"> <a href="#.">SSC NASSCOM Success Stories - Talent Connect</a> </h4>
+                                            <div class="entry-content-inner">
+                                                <div class="entry-meta"> <span class="entry-date">22 Dec, 2019</span> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Footer end-->
+    <!-- Modal HTML -->
+    <div id="alertpopup" class="modal1 fade" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div id="iconbox" class="icon-box">
+                        <i id="iconPopup" class="" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="modal-title" id="tagiging"></h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center" id="tagginMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnSuccess" onclick="dissmissModal()" class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AlertPopUp with out Reload -->
+    <div id="popwithoutRedirect" class="modal1 fade" role="dialog" tabindex="-1" aria-hidden="true" align="center">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div id="iconbox" class="icon-box">
+                        <i id="iconPopup" class="fa fa-exclamation" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="modal-title" id="tagiging">Alert!</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center" id="popmessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnPopupWithoutReload" onclick="closeAlertPop()" class="btn btn-success btn-block" data-dismiss="modal1">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end-->
+    <!-- Confirmation Modal Begin -->
+    <div id="confimationModel" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-confirm" id="confirmBox">
+            <div class="modal-content">
+                <input type="hidden" id="userId" />
+                <input type="hidden" id="EmailId" />
+                <div class="modal-body" title="Confirmation Required">
+                    <p class="text-center" style="font-size:15px">Are you sure?</p>
+                </div>
+                <div class="modal-footer" id="confirmButtons">
+                    <button class="btn btn-success btnyes" value="No" id="btnYes">Yes</button>
+                    <button class="btn btn-success btnno" data-dismiss="modal">NO</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Confirmation Model End -->
+    <!--Delete Confirmation Modal Begin -->
+    <div id="confimationDeleteModel" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true" align="center">
+        <div class="modal-dialog modal-confirm" id="confirmDelBox">
+            <div class="modal-content">
+
+                <div class="modal-body" title="Confirmation Required">
+                    <p class="text-center" style="font-size:15px">Are you sure?</p>
+                </div>
+                <div class="modal-footer" id="confirmDelButtons">
+                    <button class="btn btn-success" id="btndelete" data-dismiss="modal">Yes</button>
+                    <button class="btn btn-success" data-dismiss="modal">NO</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Delete Confirmation  Model End -->
+    <!-- success popup without redirect Starts-->
+    <div id="WRSuccessPopup" class="modal1 fade" role="dialog" tabindex="-1" aria-hidden="true" align="center">
+
+        <div id="WRSuccessPopupModel" class="modal-dialog modal-confirm">
+            <div class="modal-content" style="width:100%!important">
+                <div class="modal-header">
+                    <div id="wriconbox" class="icon-box">
+                        <i id="wriconPopup" class="fa fa-exclamation" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="modal-title" id="wrtagiging"></h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center" id="wrtagginMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button id="" class="btn btn-success btn-block" data-dismiss="modal" onclick="">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Custom Modal HTML Ends-->
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery/jquery-ui.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/owl-carousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+    <script src="~/js/Shared/sharedjs.js"></script>
+    <script src="~/js/Admin/adminLayout.js"></script>
+    <script src="~/js/common.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/_layout.js"></script>
+    <script src="~/js/Validation.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

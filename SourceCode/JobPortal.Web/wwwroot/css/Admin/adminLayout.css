@@ -1,0 +1,19 @@
+﻿.notification-badge {
+    background-color: red;
+    margin-left: 10px;
+    display:none;
+}
+
+.notification-bell {
+    color: red;
+    margin-left:5px;
+    display:none;
+}
+
+.btn-group-sm > .btn, .btn-sm {
+    margin: 2px;
+}
+
+.tableButtonCenter {
+     display: flex;
+}
