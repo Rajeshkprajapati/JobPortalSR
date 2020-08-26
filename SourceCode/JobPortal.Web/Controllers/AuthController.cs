@@ -76,7 +76,7 @@ namespace JobPortal.Web.Controllers
                         HttpContext.Session.Set<UserViewModel>(Constants.SessionKeyUserInfo, result);
                         authHandler.UserActivity(result.UserId);
                         return GoAhead(result.RoleName, result.UserId);
-                        //return View("Index");
+                        //return View("Index"); 
                     }
                     else
                     {

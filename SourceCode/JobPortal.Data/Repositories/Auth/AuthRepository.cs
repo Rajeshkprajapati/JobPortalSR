@@ -24,7 +24,6 @@ namespace JobPortal.Data.Repositories.Auth
             {
                 try
                 {
-
                     SqlParameter[] parameters = new SqlParameter[] {
                         new SqlParameter("@Email",userName),
                         new SqlParameter("@Password",password)
