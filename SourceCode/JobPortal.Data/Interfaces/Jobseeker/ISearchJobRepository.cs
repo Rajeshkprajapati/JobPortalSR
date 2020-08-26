@@ -8,7 +8,7 @@ namespace JobPortal.Data.Interfaces.Jobseeker
 {
     public interface ISearchJobRepository
     {
-        DataTable GetSearchJobList(JobSearchModel searches,int UserId, int quarterStartMonth);
+        DataTable GetSearchJobList(JobSearchModel searches,int UserId);
 
     }
 }

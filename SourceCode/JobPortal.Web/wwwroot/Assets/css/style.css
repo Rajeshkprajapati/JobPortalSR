@@ -4066,7 +4066,7 @@ span.temporary {
 .listing {
     border-radius: 0;
     display: flex;
-    /*padding: 25px;*/
+    padding: 25px;
     border-left: 4px solid #eee;
     transition: .3s;
     position: relative;

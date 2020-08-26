@@ -17,7 +17,7 @@ namespace JobPortal.Data.Repositories.Jobseeker
             connectionString = configuration["ConnectionStrings:NassComJobPortalDB"];
         }
 
-        public DataTable GetSearchJobList(JobSearchModel searches, int UserId, int quarterStartMonth)
+        public DataTable GetSearchJobList(JobSearchModel searches, int UserId)
         {
             using (var connection = new SqlConnection(connectionString))
             {
@@ -30,8 +30,7 @@ namespace JobPortal.Data.Repositories.Jobseeker
                 new SqlParameter("@Experience",searches.Experiance),
                 new SqlParameter("@city",searches.City),
                 new SqlParameter("@User",UserId),
-                new SqlParameter("@Skills",searches.Skills),
-                new SqlParameter("@FinancialYearStratMonth",quarterStartMonth),
+                new SqlParameter("@Skills",searches.Skills),                
                 new SqlParameter("@CompanyUserId",searches.CompanyUserId)
             };
                     var searchList =

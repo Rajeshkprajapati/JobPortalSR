@@ -42,8 +42,8 @@ namespace JobPortal.Business.Handlers.Jobseeker
                 JobCategory = string.Join(Constants.CommaSeparator, searches.JobCategory),
                 CompanyUserId = string.Join(Constants.CommaSeparator, searches.CompanyUserId)
             };
-            int quarterStartMonth = Convert.ToInt32(ConfigurationHelper.Config.GetSection(Constants.JobPostingQuarterStartingMonthKey).Value);
-            DataTable jobList = _searchJobRepository.GetSearchJobList(sModel, UserId,quarterStartMonth);
+            //int quarterStartMonth = Convert.ToInt32(ConfigurationHelper.Config.GetSection(Constants.JobPostingQuarterStartingMonthKey).Value);
+            DataTable jobList = _searchJobRepository.GetSearchJobList(sModel, UserId);
             List<SearchJobListViewModel> lstJobList = new List<SearchJobListViewModel>();
             if (jobList.Rows.Count > 0)
             {
