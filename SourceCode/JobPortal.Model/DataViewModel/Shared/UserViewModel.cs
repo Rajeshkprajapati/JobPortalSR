@@ -87,7 +87,7 @@ namespace JobPortal.Model.DataViewModel.Shared
         public string ReturnUrl { get; set; }
         public IList<AuthenticationScheme> SocialLogins { get; set; }
         public string EmploymentStatusName { get; set; }
-        public int IsJobAlert { get; set; }
+        public bool IsJobAlert { get; set; }
         public int ProfileScore { get; set; }
     }
 }

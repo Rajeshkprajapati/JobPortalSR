@@ -279,7 +279,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
                 model.PersonalDetails.State = Convert.ToString(jobSeekerDetail.Rows[0]["State"]);
                 model.PersonalDetails.Resume = Convert.ToString(jobSeekerDetail.Rows[0]["Resume"]);
                 model.PersonalDetails.LinkedinProfile = Convert.ToString(jobSeekerDetail.Rows[0]["LinkedinProfile"] as string) ??"";
-                model.PersonalDetails.IsJobAlert = jobSeekerDetail.Rows[0]["IsJobAlert"] as int? ?? 0;
+                model.PersonalDetails.IsJobAlert = Convert.ToBoolean(jobSeekerDetail.Rows[0]["IsJobAlert"]);
                 //model.PersonalDetails.ProfileScore = ProfileScore;
                 if (!Convert.IsDBNull(jobSeekerDetail.Rows[0]["TotalExperience"]))
                 {

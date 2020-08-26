@@ -18,10 +18,10 @@
         <div class="dashboard-nav-inner">
             <div class="testimonial-author">
                 <h4>Profile Score</h4>
-                   <div class="progress ProgressDiv" id="ProgressDiv">
-                        @*<div class="progress-bar" role="progressbar"  style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>*@
-                    </div>
-                
+                <div class="progress ProgressDiv" id="ProgressDiv">
+                    @*<div class="progress-bar" role="progressbar"  style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>*@
+                </div>
+
             </div>
         </div>
         <div class="dashboard-nav-inner usrProfile">
@@ -122,7 +122,7 @@
                                             <th><i class="fa fa-file-text"></i> Skill</th>
                                             <th><i class="fa fa-check-square-o"></i> Version</th>
                                             <th><i class="fa fa-calendar"></i> Last Used</th>
-                                            <th><i class="fa fa-user"></i> Experience</th>
+                                            <th><i class="fa fa-user"></i> Experience(y)</th>
                                             <th>Action</th>
                                         </tr>
                                         <tbody id="ITSkills"></tbody>
@@ -276,7 +276,7 @@
     <div class="dashboard-content">
         <div class="row">
             <!-- Table-->
-            <div class="col-lg-12 col-md-12">
+            <div class="col-lg-12 col-md-12 popupdata">
                 <label class="close" data-dismiss="modal" style="margin-right:4px;">&times;</label>
                 <div class="dashboard-list-box margin-top-5">
 
@@ -289,7 +289,7 @@
                                 <input type="hidden" name="Industry" value="" />
                                 <input type="hidden" name="Skills" value="" />
                                 <input type="hidden" name="WorkLocation" value="" />
-                               @*<input type="hidden" name="ServingNoticePeriod" value=true />*@
+                                @*<input type="hidden" name="ServingNoticePeriod" value=true />*@
                                 <!-- designation -->
                                 <div class="form">
                                     <h5>Designation</h5>
@@ -405,7 +405,7 @@
 <div class="modal fade" id="educationModalCenter" tabindex="-1" role="dialog" aria-labelledby="educationModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
     <div class="dashboard-content">
         <div class="row">
-            <div class="col-lg-12 col-md-12">
+            <div class="col-lg-12 col-md-12 popupdata">
                 <label class="close" data-dismiss="modal" style="margin-right:4px;">&times;</label>
                 <div class="dashboard-list-box margin-top-5">
 
@@ -478,7 +478,7 @@
 <div class="modal fade" id="profileModalCenter" tabindex="-1" role="dialog" aria-labelledby="profileModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
     <div class="dashboard-content">
         <div class="row">
-            <div class="col-lg-12 col-md-12">
+            <div class="col-lg-12 col-md-12 popupdata">
                 <label class="close" data-dismiss="modal" style="margin-right:4px;">&times;</label>
                 <div class="dashboard-list-box margin-top-5">
 
@@ -540,8 +540,7 @@
                             </div>
                             <div class="form">
                                 <h5>Job Category</h5>
-                                <select id="ddlJobCategory" class="selectDropdown" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">                                   
-                                </select>
+                                <select id="ddlJobCategory" class="selectDropdown" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))"></select>
                             </div>
                             <div class="form">
                                 <h5>Job Title</h5>
@@ -611,7 +610,7 @@
 <div class="modal fade" id="locationModalCenter" tabindex="-1" role="dialog" aria-labelledby="locationModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
     <div class="dashboard-content">
         <div class="row">
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-6 col-md-6 popupdata">
                 <label class="close" data-dismiss="modal" style="margin-right:8px;">&times;</label>
                 <div class="dashboard-list-box margin-top-5">
                     <h4 id="locationModalTitle">Add Preferred Location</h4>
@@ -653,7 +652,7 @@
 <div class="modal fade" id="ProfileSummaryModalCenter" tabindex="-1" role="dialog" aria-labelledby="ProfileSummaryModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
     <div class="dashboard-content">
         <div class="row">
-            <div class="col-lg-12 col-md-12">
+            <div class="col-lg-12 col-md-12 popupdata">
                 <label class="close" data-dismiss="modal" style="margin-right:8px;">&times;</label>
                 <div class="dashboard-list-box margin-top-5">
                     <h4 id="ProfileSummaryModalLongTitle">Add Profile Summary</h4>
@@ -708,7 +707,7 @@
 <div class="modal fade" id="ITSkillsModel" tabindex="-1" role="dialog" aria-labelledby="ITSkillsModel" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
     <div class="dashboard-content">
         <div class="row">
-            <div class="col-lg-12 col-md-12">
+            <div class="col-lg-12 col-md-12 popupdata">
                 <label class="close" data-dismiss="modal" style="margin-right:8px;">&times;</label>
                 <div class="dashboard-list-box margin-top-5">
                     <h4 id="">IT Skills</h4>
@@ -798,4 +797,5 @@
     <script src="~/lib/tag-editor/jquery.caret.min.js"></script>
     <script src="~/lib/tag-editor/jquery.tag-editor.min.js"></script>
     <script src="~/js/Jobseeker/Profile.js"></script>
+    <script src="~/js/common.js"></script>
 }

@@ -876,7 +876,7 @@ canvas#pie {
 }
 
 table > thead > tr {
-    background-color: #263bd6;
+    background-color: #333;
     color: white;
     font-weight: bold;
 }
@@ -1126,7 +1126,7 @@ div.jobimg > img{
 }
 
 .custom-failed .messagebox_title {
-    background: #cc3300 !important;
+    background: red !important;
     color: white !important;
 }
 
@@ -1135,4 +1135,10 @@ div.jobimg > img{
 }
 #titlebar {
     border-bottom: 0.5px solid #8fbda359;
+}
+.close-model {
+    margin: 2px 2px 0px 0px;
+}
+.scrollPopup {
+    margin: 80px 0px 0px 0px !important;
 }

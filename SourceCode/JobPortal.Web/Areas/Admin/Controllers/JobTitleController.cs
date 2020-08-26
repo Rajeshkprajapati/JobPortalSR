@@ -29,22 +29,22 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpGet]
-        [Route("[action]")]
-        public IActionResult GetJobTitle()
-        {
-            List<JobTitleViewModel> list = new List<JobTitleViewModel>();
-            try
-            {                
-                    list = _jobTitleHandler.GetJobTitle();
-            }
-            catch (DataNotFound ex)
-            {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(JobTitleController), ex);
-                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
-            }
-            return View(list);
-        }
+        //[HttpGet]
+        //[Route("[action]")]
+        //public IActionResult GetJobTitle()
+        //{
+        //    List<JobTitleViewModel> list = new List<JobTitleViewModel>();
+        //    try
+        //    {                
+        //            list = _jobTitleHandler.GetJobTitle();
+        //    }
+        //    catch (DataNotFound ex)
+        //    {
+        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(JobTitleController), ex);
+        //        ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+        //    }
+        //    return View(list);
+        //}
 
         [HttpPost]
         [Route("[action]")]
@@ -78,6 +78,23 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             }
             return Json("Record Can't be Deleted");
             //return View();
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult GetJobTitle()
+        {
+            List<JobTitleViewModel> list = new List<JobTitleViewModel>();
+            try
+            {
+                list = _jobTitleHandler.GetJobTitle();
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(JobTitleController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return PartialView("GetJobTitle", list);
         }
     }
 }

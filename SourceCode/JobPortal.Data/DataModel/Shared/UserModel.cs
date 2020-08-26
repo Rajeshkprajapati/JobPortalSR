@@ -38,6 +38,7 @@ namespace JobPortal.Data.DataModel.Shared
         public bool IsActive { get; set; } = true;
         public string ActivationKey { get; set; }
         public string LinkedinProfile { get; set; }
+        public bool IsApproved { get; set; }
     }
     public class RolesModel
     {

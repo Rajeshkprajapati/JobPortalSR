@@ -12,7 +12,8 @@
                 bSearchable: false,
                 aTargets: [-1]
             }
-        ]
+        ],
+        "bLengthChange": false
     });
 
 });
@@ -28,10 +29,11 @@ function edit(_this) {
 
         //for (var i = 1; i < row.length-1; i++) {
         //    console.log(row[i].innerText);
-        modal.find('.modal-body #JobTitleId').val(row[0].innerText);
-        modal.find('.modal-body #JobTitelName').val(row[1].innerText);
+        modal.find('#JobTitleId').val(row[0].innerText);
+        modal.find('#JobTitelName').val(row[1].innerText);
         $("#SaveRec").hide();
         $("#Update").show();
+        $("#updatebtn").removeClass('display-content');
     });
 
 };
@@ -76,9 +78,10 @@ function AddNew() {
     $('#PopUpModal').on('show.bs.modal', function () {
         $("#Update").hide();
         $("#SaveRec").show();
+        $("#updatebtn").addClass('display-content');
         $("#JobTitelName").val('');
         $("#JobTitleId").val('');
-        $("#PopUpModalLabel").text("Add Job Title")
+        $("#PopUpModalLabel").text("Add Job Title");
  });
 
 };
