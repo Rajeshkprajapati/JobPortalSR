@@ -241,7 +241,6 @@
                 <div class="listings-container">
                     @foreach (var item in Model)
                     {
-
                         <!-- Listing -->
                         <a href="/Job/JobDetails/?jobid=@item.JobPostId" class="listing full-time">
                             <div class="listing-logo">
@@ -253,13 +252,11 @@
                                     <li><i class="ln ln-icon-Management"></i> @item.CompanyName</li>
                                     <li><i class="ln ln-icon-Map2"></i> @item.City</li>
                                     <li><i class="ln ln-icon-Money-2"></i>@item.CTC</li>
-                                    <li><div class="listing-date new">@item.NumberOfDays&#8203;d ago</div></li>
+                                    <li><div class="listing-date new">@item.NumberOfDays&#8203;days ago</div></li>
                                 </ul>
                             </div>
                         </a>
-
                     }
-
                 </div>
                 <div class="clearfix"></div>
                 <div class="pagination-container">
@@ -268,7 +265,7 @@
                     </nav>
                     <nav class="pagination-next-prev">
                         <ul>
-                            <li><a class="prev">Previous</a></li>
+                            <!-- <li><a class="prev">Previous</a></li> -->
                             <li><a class="next">Next</a></li>
                         </ul>
                     </nav>

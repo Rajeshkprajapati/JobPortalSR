@@ -58,7 +58,7 @@ namespace JobPortal.Business.Handlers.Employer.SearchResume
 
                     var skillsObject = new SearchResumeListViewModel
                     {
-                        Skills = JsonConvert.DeserializeObject<Skills>(Convert.ToString(searchedResume.Rows[i]["Skills"])),                        
+                        Skills = JsonConvert.DeserializeObject<Skills>(Convert.ToString(searchedResume.Rows[i]["Skills"])),
                         FirstName = (searchedResume.Rows[i]["FirstName"] as string) ?? "",
                         LastName = (searchedResume.Rows[i]["LastName"] as string) ?? "",
                         Email = (searchedResume.Rows[i]["Email"] as string) ?? "",
@@ -70,6 +70,11 @@ namespace JobPortal.Business.Handlers.Employer.SearchResume
                         //Address = (searchedResume.Rows[i]["Address"] as string) ?? "",
                         AboutMe = (searchedResume.Rows[i]["AboutMe"] as string) ?? "",
                         ProfilePic = Convert.ToString(searchedResume.Rows[i]["ProfilePic"]),
+                        CurrentSalary = Convert.ToString(searchedResume.Rows[i]["CurrentSalary"]),
+                        ExpectedSalary = Convert.ToString(searchedResume.Rows[i]["ExpectedSalary"]),
+                        //ProfileSummary = Convert.ToString(searchedResume.Rows[i]["ProfileSummary"]),
+                        LinkedinProfile = Convert.ToString(searchedResume.Rows[i]["LinkedinProfile"]),
+                        ExperienceDetails = JsonConvert.DeserializeObject<ExperienceDetails[]>(searchedResume.Rows[i]["ExperienceDetails"].ToString())
                     };
                     //var len = skillsObject.Skills.SkillSets.Length;
                     //if (skillsObject.Skills != null && skillsObject.Skills.SkillSets.Substring(len-1) != ",")
@@ -121,7 +126,7 @@ namespace JobPortal.Business.Handlers.Employer.SearchResume
                     foreach (EducationalDetails edu in model.EducationalDetails)
                     {
                         DataTable coursename = _masterRepository.GetCoursesById(Convert.ToInt32(edu.Course));
-                        if (coursename != null && coursename.Rows.Count>0)
+                        if (coursename != null && coursename.Rows.Count > 0)
                         {
                             edu.CourseName = coursename.Rows[0]["CourseName"] as string ?? "";
                         }
