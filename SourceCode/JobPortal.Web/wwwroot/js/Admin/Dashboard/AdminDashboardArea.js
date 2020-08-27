@@ -42,3 +42,25 @@ function GetJobRoles() {
         }
     });
 }
+
+function GetStateList() {
+    SendAJAXRequest(`/ManageCityState/StateList`, "GET", {}, "html", function (resp) {
+        if (resp && resp !== "") {
+            $("div#contentHolder").html(resp);
+        }
+        else {
+            return false;
+        }
+    });
+}
+
+function GetCityList() {
+    SendAJAXRequest(`/ManageCityState/GetAllCity`, "GET", {}, "html", function (resp) {
+        if (resp && resp !== "") {
+            $("div#contentHolder").html(resp);
+        }
+        else {
+            return false;
+        }
+    });
+}

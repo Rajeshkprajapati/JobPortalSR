@@ -2,66 +2,59 @@
 @{
     ViewData["Title"] = "Cities";
 }
-<link href="~/lib/datatable/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-<link href="~/css/Loader.css" rel="stylesheet" />
 <link href="~/css/CommanPopup.css" rel="stylesheet" />
-<!-- Page Title start -->
-<div class="pageTitle">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <h1 class="page-heading">Manage City</h1>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="breadCrumb"><a href="/Home/Index/">Home</a> / <span>Admin</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container" style="padding-top:20px;padding-bottom:170px;">
+<style>
+    .dashboard-content .submit-page {
+        display: block;
+    }
+</style>
+<div id="titlebar">
     <div class="row">
-        <div class="col-sm-12">
-            <div class="col-md-3">
-                @*<h4> Manage City </h4>*@
-            </div>
-            <div class="col-md-9">
-                <button type="submit" class="btn btn-primary btn-sm pull-right" id="AddNew"
-                        style="margin-bottom:10px;margin-right: -14px;" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="addnew()">
-                    Add New
-                </button>
-
-            </div>
-        </div>
-        <div class="col-md-12 table-responsive borderonScreen">
-            <table class="table table-striped table-bordered dt-responsive nowrap" id="dataTable">
-                <thead>
-
-                    <tr>
-                        <th hidden>City Id</th>
-                        <th>City Name</th>
-                        <th>City Code</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var cityModel in Model)
-                    {
-                        <tr>
-                            <td hidden>@cityModel.StateCode</td>
-                            <td>@cityModel.City</td>
-                            <td>@cityModel.CityCode</td>
-                            <td class="tableButtonCenter">
-                                <button type="button" class="btn btn-success btn-sm editbtn" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="edit(this)">Edit</button>
-                                <button type="button" class="btn btn-danger btn-sm" onclick="ConfrimationCityDeleteMessage('@(cityModel.CityCode)','@(cityModel.StateCode)')">Delete</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+        <div class="col-md-12">
+            <!-- Breadcrumbs -->
+            <nav id="breadcrumbs">
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li>City List</li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12 table-responsive">
+        <div class="form">
+            <input type="submit" class="button border fw margin-top-0 pull-right" id="AddNew" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="AddNew()" value="Add New" />
+        </div>
+        <table class="table table-striped table-bordered dt-responsive nowrap" id="dataTable">
+            <thead>
+
+                <tr>
+                    <th hidden>City Id</th>
+                    <th>City Name</th>
+                    <th>City Code</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cityModel in Model)
+                {
+                    <tr>
+                        <td hidden>@cityModel.StateCode</td>
+                        <td>@cityModel.City</td>
+                        <td>@cityModel.CityCode</td>
+                        <td class="action">
+                            <a href="javascript:void(0);" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="edit(this)"><i class="fa fa-pencil"></i> Edit</a><br />
+                            <a href="javascript:void(0);" onclick="ConfrimationCityDeleteMessage('@(cityModel.CityCode)','@(cityModel.StateCode)')"><i class="fa fa-remove"></i> Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
 <!--Modal-->
 
@@ -95,8 +88,6 @@
                             <input type="text" class="form-control" name="CityCode" required>
                         </div>
                     </div>
-                    @*</div>*@
-                    @*<div class="modal-footer footerModel">*@
                     <button type="button" name="update" id="Update" class="btn btn-primary" onclick="updatecity(this)">Update</button>
                     <button type="button" name="add" id="Add" class="btn btn-primary" onclick="addcity(this)">Add New</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -108,9 +99,55 @@
 </div>
 
 
-@section Scripts
-    {
-    <script src="~/lib/datatable/js/jquery.dataTables.min.js"></script>
+@*<div class="modal fade" id="PopUpModal" tabindex="-1" role="dialog" aria-labelledby="locationModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
+    <div class="dashboard-content">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 popupdata">
+                <label class="close close-model" data-dismiss="modal">&times;</label>
+                <div class="dashboard-list-box margin-top-5">
+                    <h4 id="PopUpModalLabel">Edit Record</h4>
+                    <div class="dashboard-list-box-content">
+                        <div class="submit-page" id="cityModal">
+                            <form name="managecity">
+                                <div class="form" style="width:100%">
+                                    <h5>Country</h5>
+                                    <select class="selectDropdown" id="StateCode" name="StateCode" asp-items="@(new SelectList(@ViewBag.AllState, "StateCode", "State"))">
+                                        <option>--Select State--</option>
+                                    </select>
+                                </div>
+
+                                <div class="form" style="width:100%" id="citycoderow">
+                                    <h5>City Code</h5>
+                                    <input type="text" id="CityCode" name="CityCode" required class="search-field eduModeltxtbox" placeholder="City Code">
+                                </div>
+
+                                <div class="form" style="width:100%">
+                                    <h5>City Name</h5>
+                                    <input type="text" id="City" name="City" required class="search-field eduModeltxtbox" placeholder="City Name">
+                                </div>
+
+
+
+                                <div class="form" style="width:33%" id="savebtn">
+                                    <input type="submit" id="Add" name="Add" class="button border fw margin-top-10  pull-right" onclick="addcity(this)" value="Save" />
+                                </div>
+                                <div class="form" style="width:33%" id="updatebtn">
+                                    <input type="submit" id="Update" name="Update" class="button border fw margin-top-10 pull-right" onclick="updatecity(this)" value="Update data" />
+                                </div>
+                                <div class="form" style="width:33%">
+                                    <input type="button" class="button border fw margin-top-10 " data-dismiss="modal" value="Close" />
+                                </div>
+                                </form>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+     <script src="~/lib/datatable/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/datatable/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/Admin/ManageCity/managecity.js"></script>
-}
+

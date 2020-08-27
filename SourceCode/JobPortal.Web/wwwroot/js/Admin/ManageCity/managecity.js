@@ -137,4 +137,8 @@ $(function () {
             }
         ]
     });
+
+     $('#dataTable_paginate').addClass('data-table-pasiganation');
+    $('#dataTable_length').addClass('data-table-lenthFilter');
+    $('#dataTable_filter').addClass('data-table-SearchFilter');
 });

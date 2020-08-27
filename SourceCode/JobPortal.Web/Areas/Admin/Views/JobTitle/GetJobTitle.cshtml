@@ -3,15 +3,8 @@
 @{
     ViewData["Title"] = "Job Title";
 }
-<link href="~/lib/datatable/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-<link href="~/css/Loader.css" rel="stylesheet" />
-<link href="~/css/CommanPopup.css" rel="stylesheet" />
-<!-- Page Title start -->
-<!-- Page Title End -->
-<div class="container" style="padding-top:20px;padding-bottom:170px;">
-    <div class="row">
 
-        <!-- Titlebar -->
+<!-- Titlebar -->
         <div id="titlebar">
             <div class="row">
                 <div class="col-md-12">
@@ -25,8 +18,8 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-12 table-responsive borderonScreen">
+    <div class="row">
+        <div class="col-md-12 table-responsive">
           <div class="form">
                 <input type="submit" class="button border fw margin-top-0 pull-right" id="AddNew" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="AddNew()" value="Add New" />
             </div>
@@ -45,10 +38,7 @@
                     <tr>
                         <td hidden>@jobTitleModel.JobTitleId</td>
                         <td>@jobTitleModel.JobTitleName</td>
-                        @*<td class="tableButtonCenter">
-            <button type="submit" class="btn btn-success btn-sm editbtn" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="edit(this)">Edit</button>
-            <button type="submit" class="btn btn-danger btn-sm" onclick="ConfrimationDeleteMessage(@jobTitleModel.JobTitleId)">Delete</button>
-        </td>*@
+
                         <td class="action">
                             <a href="javascript:void(0);" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="edit(this)"><i class="fa fa-pencil"></i> Edit</a><br />
                             <a href="javascript:void(0);" onclick="ConfrimationDeleteMessage(@jobTitleModel.JobTitleId)"><i class="fa fa-remove"></i> Delete</a>
@@ -58,44 +48,10 @@
                 </tbody>
             </table>
         </div>
-            </div>
-        </div>
+           </div>
+
         <!-- Modal -->
-        @*<div class="modal fade customModelPopup" id="PopUpModal" tabindex="-1" role="dialog" aria-labelledby="PopUpModalLabel">
-            <div class="modal-dialog ModelDialog" role="document">
-
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="PopUpModalLabel">Edit Record</h4>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="row">
-                            <div class="form-group col-md-6" hidden>
-                                <input type="text" class="form-control" id="JobTitleId" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div style="margin-top: auto;" class="form-group col-md-6">
-                                <label for="first-name" class="control-label" style="padding-bottom:10px;">Job Title Name</label>
-                                <input type="text" class="form-control" id="JobTitelName" required>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer footerModel">
-                        <button type="button" id="Update" class="btn btn-primary" onclick="Updatedata()">Update</button>
-                        <button type="button" id="SaveRec" class="btn btn-primary" onclick="Updatedata()">Save</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>*@
-
-
-<div class="modal fade" id="PopUpModal" tabindex="-1" role="dialog" aria-labelledby="locationModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
+  <div class="modal fade" id="PopUpModal" tabindex="-1" role="dialog" aria-labelledby="locationModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
     <div class="dashboard-content">
         <div class="row">
             <div class="col-lg-6 col-md-6 popupdata">

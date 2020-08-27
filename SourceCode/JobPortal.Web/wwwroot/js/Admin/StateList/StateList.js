@@ -14,6 +14,9 @@
         ]
     });
 
+    $('#dataTable_paginate').addClass('data-table-pasiganation');
+    $('#dataTable_length').addClass('data-table-lenthFilter');
+    $('#dataTable_filter').addClass('data-table-SearchFilter');
 });
 function edit(_this) {
     //console.log(userid)
@@ -30,11 +33,13 @@ function edit(_this) {
 
         //for (var i = 1; i < row.length-1; i++) {
         //    console.log(row[i].innerText);
-        modal.find('.modal-body #Country').val(row[0].innerText);
-        modal.find('.modal-body #StateCode').val(row[2].innerText);
-        modal.find('.modal-body #StateName').val(row[1].innerText);
+        modal.find('#Country').val(row[0].innerText);
+        modal.find('#StateCode').val(row[2].innerText);
+        modal.find('#StateName').val(row[1].innerText);
         $("#SaveRec").hide();
+        $("#updatebtn").removeClass('display-content');
         $("#Update").show();
+        
     });
 
 }
@@ -100,7 +105,6 @@ function deletedata(CountryCode, stateCode) {
         if (result) {
             let icon = 'fa fa-thumbs-up';
             updatedsucessfully(result, icon);
-            //location.reload(true);
         } else {
             warnignPopup('Error');
         }
@@ -115,6 +119,7 @@ function AddNew() {
     $('#PopUpModal').on('show.bs.modal', function () {
         $("#Update").hide();
         $("#SaveRec").show();
+        $("#updatebtn").addClass('display-content');
         //$('div#StateRow').hide();
         $('#Country').attr('readonly', false);
         $('#Country').css('pointerEvents','auto');

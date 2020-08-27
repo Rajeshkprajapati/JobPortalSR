@@ -25,21 +25,21 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             _manageCityStateHandler = manageCityStateHandler;
         }
 
-        [HttpGet]
-        public IActionResult GetAllCity()
-        {
-            IList<CityViewModel> list = new List<CityViewModel>();
-            try
-            {
-                ViewBag.AllState = _manageCityStateHandler.GetAllState();
-                list = _manageCityStateHandler.GetAllCity();
-            }
-            catch (DataNotFound ex)
-            {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(ManageCityStateController), ex);
-            }
-            return View(list);
-        }
+        //[HttpGet]
+        //public IActionResult GetAllCity()
+        //{
+        //    IList<CityViewModel> list = new List<CityViewModel>();
+        //    try
+        //    {
+        //        ViewBag.AllState = _manageCityStateHandler.GetAllState();
+        //        list = _manageCityStateHandler.GetAllCity();
+        //    }
+        //    catch (DataNotFound ex)
+        //    {
+        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(ManageCityStateController), ex);
+        //    }
+        //    return View(list);
+        //}
 
         [HttpPost]
         [Route("[action]")]
@@ -95,23 +95,23 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             return Json(new {msg});            
         }
 
-        [HttpGet]
-        [Route("[action]")]
-        public IActionResult StateList()
-        {
-            List<StateViewModel> list = new List<StateViewModel>();
-            try
-            {
-                list = _manageCityStateHandler.GetStateList("IN");
-                ViewBag.AllCountry = _manageCityStateHandler.GetCountryList();
-            }
-            catch (DataNotFound ex)
-            {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(ManageCityStateController), ex);
-                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
-            }
-            return View(list);
-           }
+        //[HttpGet]
+        //[Route("[action]")]
+        //public IActionResult StateList()
+        //{
+        //    List<StateViewModel> list = new List<StateViewModel>();
+        //    try
+        //    {
+        //        list = _manageCityStateHandler.GetStateList("IN");
+        //        ViewBag.AllCountry = _manageCityStateHandler.GetCountryList();
+        //    }
+        //    catch (DataNotFound ex)
+        //    {
+        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(ManageCityStateController), ex);
+        //        ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+        //    }
+        //    return View(list);
+        //   }
         [HttpPost]
         [Route("[action]")]
         public IActionResult InsertState([FromBody]StateViewModel stateModel)
@@ -170,6 +170,41 @@ namespace JobPortal.Web.Areas.Admin.Controllers
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
             return Json("Unable to do this action");
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult StateList()
+        {
+            List<StateViewModel> list = new List<StateViewModel>();
+            try
+            {
+                list = _manageCityStateHandler.GetStateList("IN");
+                ViewBag.AllCountry = _manageCityStateHandler.GetCountryList();
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(ManageCityStateController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return PartialView("StateList", list);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult GetAllCity()
+        {
+            IList<CityViewModel> list = new List<CityViewModel>();
+            try
+            {
+                ViewBag.AllState = _manageCityStateHandler.GetAllState();
+                list = _manageCityStateHandler.GetAllCity();
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(ManageCityStateController), ex);
+            }
+            return PartialView("GetAllCity", list);
         }
     }
 }
