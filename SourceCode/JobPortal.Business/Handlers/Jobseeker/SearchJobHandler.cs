@@ -47,7 +47,23 @@ namespace JobPortal.Business.Handlers.Jobseeker
             List<SearchJobListViewModel> lstJobList = new List<SearchJobListViewModel>();
             if (jobList.Rows.Count > 0)
             {
-                lstJobList = ConvertDatatableToModelList.ConvertDataTable<SearchJobListViewModel>(jobList);
+                //lstJobList = ConvertDatatableToModelList.ConvertDataTable<SearchJobListViewModel>(jobList);
+                foreach (DataRow row in jobList.Rows)
+                {
+                    lstJobList.Add(new SearchJobListViewModel
+                    {
+                        JobTitleByEmployer = Convert.ToString(row["JobTitleByEmployer"]),
+                        JobPostId = Convert.ToInt32(row["JobPostId"]),
+                        CompanyLogo = Convert.ToString(row["CompanyLogo"]),
+                        JobTitle = Convert.ToString(row["JobTitle"]),
+                        EmploymentStatus = Convert.ToString(row["EmploymentStatus"]),
+                        City = Convert.ToString(row["City"]),
+                        HiringCriteria = Convert.ToString(row["HiringCriteria"]),
+                        CompanyName = Convert.ToString(row["CompanyName"]),
+                        CTC = Convert.ToString(row["CTC"]),
+                        NumberOfDays = Convert.ToString(row["NumberOfDays"]),
+                    });
+                }
                 var appliedJobs =homeHandler.GetAplliedJobs(UserId);
                 for (int i = 0; i < lstJobList.Count; i++)
                 {
