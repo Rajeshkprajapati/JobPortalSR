@@ -10,6 +10,10 @@
     .pagination {
         display: contents !important;
     }
+
+    .listing {
+        padding: 0px !important;
+    }
 </style>
 <div class="pageTitle">
     <div class="container">
@@ -60,7 +64,8 @@
                                         <img src="@item.ProfilePic" alt="Jobseeker">
                                     }
                                     <div class="resumes-list-content">
-                                        <h4>@item.FirstName @item.LastName <span>@item.JobTitle</span></h4>
+                                        <h4>@item.FirstName @item.LastName <span>@item.Email</span>
+                                        <span>@item.JobTitle</span></h4>
                                         @if (item.ExperienceDetails != null && item.ExperienceDetails[0].AnnualSalary != null)
                                         {
                                             <span><i class="fa fa-money"></i> @item.ExperienceDetails[0].AnnualSalary</span>
@@ -72,13 +77,13 @@
                                         <span><i class="fa fa-envelope" aria-hidden="true"></i>@item.Email</span>
                                         <span>
                                             <i class="fa fa-map-marker"></i>
-                                            @if (String.IsNullOrWhiteSpace(item.CityName))
+                                            @if (string.IsNullOrWhiteSpace(item.CityName))
                                             {
-                                                @item.CityName
+                                                <span>N/A</span>
                                             }
                                             else
                                             {
-                                                <span>N/A</span>
+                                                @item.CityName
                                             }
                                         </span>
                                         <span>@item.AboutMe</span>
