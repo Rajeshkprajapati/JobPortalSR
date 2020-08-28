@@ -515,6 +515,7 @@ function AddProfileDetail() {
         if (result === true) {
             let icon = 'fa fa-thumbs-up';
             let Message = "Personal details added/updated successfully";
+            //InformationDialog('Information', 'Personal details added/updated successfully');
             updatedsucessfully(Message, icon);
 
         }

@@ -61,7 +61,7 @@
                                     }
                                     <div class="resumes-list-content">
                                         <h4>@item.FirstName @item.LastName <span>@item.JobTitle</span></h4>
-                                        @if (item.ExperienceDetails != null)
+                                        @if (item.ExperienceDetails != null && item.ExperienceDetails[0].AnnualSalary != null)
                                         {
                                             <span><i class="fa fa-money"></i> @item.ExperienceDetails[0].AnnualSalary</span>
                                         }
@@ -83,8 +83,16 @@
                                         </span>
                                         <span>@item.AboutMe</span>
                                         <div class="skills">
-                                            @*@string[] skill = @item.Skills.SkillSets.Split(',');*@
-                                            <span>@item.Skills.SkillSets</span>
+                                            @{
+                                                string[] skills = item.Skills.SkillSets.Split(',');
+                                                foreach (var skill in skills)
+                                                {
+                                                    if (skill.Length > 1)
+                                                    {
+                                                        <span>@skill</span>
+                                                    }
+                                                }
+                                            }
                                         </div>
 
                                         <div class="clearfix"></div>

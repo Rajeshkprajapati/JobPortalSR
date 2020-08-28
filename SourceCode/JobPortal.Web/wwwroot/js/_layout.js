@@ -42,7 +42,7 @@
 
 $(window).scroll(function () {
     var scroll = $(window).scrollTop();
-    console.log(scroll);
+    //console.log(scroll);
     if (scroll >= 60) {
         //console.log('a');
         $(".popupdata").addClass("scrollPopup");

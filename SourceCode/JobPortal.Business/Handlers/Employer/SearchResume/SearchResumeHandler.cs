@@ -75,7 +75,7 @@ namespace JobPortal.Business.Handlers.Employer.SearchResume
                         //ProfileSummary = Convert.ToString(searchedResume.Rows[i]["ProfileSummary"]),
                         LinkedinProfile = Convert.ToString(searchedResume.Rows[i]["LinkedinProfile"]),
                         ExperienceDetails = JsonConvert.DeserializeObject<ExperienceDetails[]>(searchedResume.Rows[i]["ExperienceDetails"].ToString())
-                    };
+                    };                    
                     //var len = skillsObject.Skills.SkillSets.Length;
                     //if (skillsObject.Skills != null && skillsObject.Skills.SkillSets.Substring(len-1) != ",")
                     //{
