@@ -145,6 +145,8 @@ BEGIN
 		EmploymentStatus,
 		Skills,
 		City,
+		CTC,
+		NumberOfDays,
 		HiringCriteria,
 		CompanyLogo,
 		CompanyName,

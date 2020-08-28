@@ -64,8 +64,10 @@
                                         <img src="@item.ProfilePic" alt="Jobseeker">
                                     }
                                     <div class="resumes-list-content">
-                                        <h4>@item.FirstName @item.LastName <span>@item.Email</span>
-                                        <span>@item.JobTitle</span></h4>
+                                        <h4>
+                                            @item.FirstName @item.LastName <span>@item.Email</span>
+                                            <span>@item.JobTitle</span>
+                                        </h4>
                                         @if (item.ExperienceDetails != null && item.ExperienceDetails[0].AnnualSalary != null)
                                         {
                                             <span><i class="fa fa-money"></i> @item.ExperienceDetails[0].AnnualSalary</span>
@@ -89,13 +91,20 @@
                                         <span>@item.AboutMe</span>
                                         <div class="skills">
                                             @{
-                                                string[] skills = item.Skills.SkillSets.Split(',');
-                                                foreach (var skill in skills)
+                                                if (item.Skills != null && item.Skills.SkillSets.Length > 0)
                                                 {
-                                                    if (skill.Length > 1)
+                                                    string[] skills = item.Skills.SkillSets.Split(',');
+                                                    foreach (var skill in skills)
                                                     {
-                                                        <span>@skill</span>
+                                                        if (skill.Length > 1)
+                                                        {
+                                                            <span>@skill</span>
+                                                        }
                                                     }
+                                                }
+                                                else
+                                                {
+                                                    <span>N/A</span>
                                                 }
                                             }
                                         </div>

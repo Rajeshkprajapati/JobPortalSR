@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
-using JobPortal.Business.Handlers.Employer.JobPost;
 using JobPortal.Business.Interfaces.Employer.JobPost;
 using JobPortal.Business.Interfaces.Home;
 using JobPortal.Business.Interfaces.Shared;
@@ -15,11 +13,9 @@ using JobPortal.Utility.Exceptions;
 using JobPortal.Utility.ExtendedMethods;
 using JobPortal.Utility.Helpers;
 using JobPortal.Web.Filters;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Configuration;
 
 namespace JobPortal.Web.Controllers
 {
@@ -47,64 +43,69 @@ namespace JobPortal.Web.Controllers
 
         public IActionResult Index()
         {
-            //try
-            //{
-            ViewBag.JobIndustryArea = _jobpastHandler.GetJobIndustryAreaDetails();
-            ViewBag.AllJobRoles = _homeHandler.GetAllJobRoles();
-            ViewBag.PopulerSearchesCategory = _homeHandler.PopulerSearchesCategory();
-            ViewBag.PopulerSearchesCity = _homeHandler.PopulerSearchesCity();
-            ViewBag.TopEmployer = _homeHandler.TopEmployer();
-            List<SearchJobListViewModel> featurejobs = _homeHandler.GetFeaturedJobs();
-            featurejobs = featurejobs.OrderBy(o => o.FeaturedJobDisplayOrder).ToList();
-            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-            if (user != null)
+            try
             {
-                List<int> appliedjobs = _homeHandler.GetAplliedJobs(user.UserId);
-                for (int i = 0; i < featurejobs.Count; i++)
+                ViewBag.JobIndustryArea = _jobpastHandler.GetJobIndustryAreaDetails();
+                ViewBag.AllJobRoles = _homeHandler.GetAllJobRoles();
+                ViewBag.PopulerSearchesCategory = _homeHandler.PopulerSearchesCategory();
+                ViewBag.PopulerSearchesCity = _homeHandler.PopulerSearchesCity();
+                ViewBag.TopEmployer = _homeHandler.TopEmployer();
+                List<SearchJobListViewModel> featurejobs = _homeHandler.GetFeaturedJobs();
+                featurejobs = featurejobs.OrderBy(o => o.FeaturedJobDisplayOrder).ToList();
+                var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+                if (user != null)
                 {
-                    //getting the all the jobs applied by user only if the user logged in
-                    if (user.UserId != 0 && appliedjobs.Count > 0)
+                    List<int> appliedjobs = _homeHandler.GetAplliedJobs(user.UserId);
+                    for (int i = 0; i < featurejobs.Count; i++)
                     {
-                        featurejobs[i].IsApplied = appliedjobs.Any(aj => aj == featurejobs[i].JobPostId);
+                        //getting the all the jobs applied by user only if the user logged in
+                        if (user.UserId != 0 && appliedjobs.Count > 0)
+                        {
+                            featurejobs[i].IsApplied = appliedjobs.Any(aj => aj == featurejobs[i].JobPostId);
+                        }
                     }
+                    ViewBag.FeaturedJobs = featurejobs;
                 }
-                ViewBag.FeaturedJobs = featurejobs;
-            }
-            else
-            {
-                ViewBag.FeaturedJobs = featurejobs;
-            }
-
-            List<SearchJobListViewModel> recentJobs = _homeHandler.GetRecentJobs();
-            recentJobs = recentJobs.OrderBy(o => o.FeaturedJobDisplayOrder).ToList();
-            if (user != null)
-            {
-                List<int> appliedjobs = _homeHandler.GetAplliedJobs(user.UserId);
-                for (int i = 0; i < recentJobs.Count; i++)
+                else
                 {
-                    //getting the all the jobs applied by user only if the user logged in
-                    if (user.UserId != 0 && recentJobs.Count > 0)
-                    {
-                        recentJobs[i].IsApplied = appliedjobs.Any(aj => aj == recentJobs[i].JobPostId);
-                    }
+                    ViewBag.FeaturedJobs = featurejobs;
                 }
-                ViewBag.RecentJobs = recentJobs;
+
+                List<SearchJobListViewModel> recentJobs = _homeHandler.GetRecentJobs();
+                recentJobs = recentJobs.OrderBy(o => o.FeaturedJobDisplayOrder).ToList();
+                if (user != null)
+                {
+                    List<int> appliedjobs = _homeHandler.GetAplliedJobs(user.UserId);
+                    for (int i = 0; i < recentJobs.Count; i++)
+                    {
+                        //getting the all the jobs applied by user only if the user logged in
+                        if (user.UserId != 0 && recentJobs.Count > 0)
+                        {
+                            recentJobs[i].IsApplied = appliedjobs.Any(aj => aj == recentJobs[i].JobPostId);
+                        }
+                    }
+                    ViewBag.RecentJobs = recentJobs;
+                }
+                else
+                {
+                    ViewBag.RecentJobs = recentJobs;
+                }
+
+                List<SearchJobListViewModel> walkinJobs = _homeHandler.GetWalkInsJobs();
+                ViewBag.WalkinJobs = walkinJobs;
+
+                //    //ViewBag.City = homeHandler.GetCityList();
             }
-            else
+            catch (DataNotFound ex)
             {
-                ViewBag.RecentJobs = recentJobs;
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(HomeController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
-
-            List<SearchJobListViewModel> walkinJobs = _homeHandler.GetWalkInsJobs();
-            ViewBag.WalkinJobs = walkinJobs;
-
-            //    //ViewBag.City = homeHandler.GetCityList();
-            //}
-            //catch (DataNotFound ex)
-            //{
-            //    Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(HomeController), ex);
-            //    ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
-            //}
+            catch (Exception ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(HomeController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
             return View();
         }
 
