@@ -33,7 +33,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult FeaturedJobs()
+        public PartialViewResult FeaturedJobs()
         {
             List<SearchJobListViewModel> list = new List<SearchJobListViewModel>();
             try
@@ -45,7 +45,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(ManageJobsController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
-            return View(list);
+            return PartialView("FeaturedJobs", list);
         }
 
         [HttpGet]

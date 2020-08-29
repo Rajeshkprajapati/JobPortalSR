@@ -28,7 +28,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult UsersReviews()
+        public PartialViewResult UsersReviews()
         {
             List<UsersReviewsViewModel> list = new List<UsersReviewsViewModel>();
             try
@@ -39,7 +39,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
-            return View(list);
+            return PartialView("UsersReviews", list);
         }
         [HttpGet]
         [Route("[action]")]

@@ -9,9 +9,18 @@
         display: none;
         -webkit-appearance: none;
     }
+
     #dashboard #titlebar {
         margin: 0 0 20px !important;
     }
+
+    .dashboard-nav ul {
+        margin: 15px 0 0;
+    }
+
+        .dashboard-nav ul li.active-submenu ul {
+            max-height: 290px;
+        }
 </style>
 <link href="~/lib/Calendar/css/tail.datetime-default-red.css" rel="stylesheet" />
 <link href="~/css/Admin/summary-dashboard.css" rel="stylesheet" />
@@ -38,19 +47,23 @@
                         <li onclick="GetJobRoles()"><a href="javascript:void(0);">Job Roles</a></li>
                         <li onclick="GetStateList()"><a href="javascript:void(0);">States</a></li>
                         <li onclick="GetCityList()"><a href="javascript:void(0);">Cities</a></li>
-                        @*<li onclick="ManageJobList()"><a href="javascript:void(0);">Manage Jobs</a></li>*@
+                        <li onclick=" MangeJobsData()"><a href="javascript:void(0);">Manage Jobs</a></li>
+                        <li onclick="BulkJobs()"><a href="javascript:void(0);">Bulk Uploads</a></li>
+                        <li onclick=" FeaturedJobs()"><a href="javascript:void(0);">Featured Jobs</a></li>
+                        <li onclick="UsersReviews()"><a href="javascript:void(0);">Users Review</a></li>
+
                         @*<li><a href="dashboard-manage-applications.html">Manage Applications <span class="nav-tag">4</span></a></li>
-                        <li><a href="dashboard-add-job.html">Add Job</a></li>*@
+                            <li><a href="dashboard-add-job.html">Add Job</a></li>*@
                     </ul>
                 </li>
                 @*<li>
-                    <a>For Candidates</a>
-                    <ul>
-                        <li><a href="dashboard-manage-resumes.html">Manage Resumes <span class="nav-tag">2</span></a></li>
-                        <li><a href="dashboard-job-alerts.html">Job Alerts</a></li>
-                        <li><a href="dashboard-add-resume.html">Add Resume</a></li>
-                    </ul>
-                </li>*@
+                        <a>For Candidates</a>
+                        <ul>
+                            <li><a href="dashboard-manage-resumes.html">Manage Resumes <span class="nav-tag">2</span></a></li>
+                            <li><a href="dashboard-job-alerts.html">Job Alerts</a></li>
+                            <li><a href="dashboard-add-resume.html">Add Resume</a></li>
+                        </ul>
+                    </li>*@
             </ul>
             <ul data-submenu-title="Account">
                 <li><a href="dashboard-my-profile.html">My Profile</a></li>
@@ -78,5 +91,6 @@
     <script src="~/js/Admin/Index/Chart2.js"></script>
     <script src="~/js/common.js"></script>
     <script src="~/js/Admin/Calendar.js"></script>
+    <script src="~/js/Admin/JobManager/jobmodifications.js"></script>
     <script src="~/js/Admin/Index/Index.js"></script>
 }
