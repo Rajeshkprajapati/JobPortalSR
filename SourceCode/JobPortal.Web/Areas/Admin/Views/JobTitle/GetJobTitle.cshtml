@@ -3,24 +3,25 @@
 @{
     ViewData["Title"] = "Job Title";
 }
-
-<!-- Titlebar -->
-        <div id="titlebar">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Breadcrumbs -->
-                    <nav id="breadcrumbs">
-                        <ul>
-                            <li><a href="#">Dashboard</a></li>
-                            <li>Job Role</li>
-                        </ul>
-                    </nav>
-                </div>
+<div class="dashboard-content">
+    <!-- Titlebar -->
+    <div id="titlebar">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Breadcrumbs -->
+                <h3>Job Role</h3>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="#">Dashboard</a></li>
+                        <li>Job Role</li>
+                    </ul>
+                </nav>
             </div>
         </div>
+    </div>
     <div class="row">
         <div class="col-md-12 table-responsive">
-          <div class="form">
+            <div class="form">
                 <input type="submit" class="button border fw margin-top-0 pull-right" id="AddNew" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="AddNew()" value="Add New" />
             </div>
             <table class="table table-striped table-bordered dt-responsive nowrap" id="dataTable">
@@ -35,60 +36,60 @@
                 <tbody>
                     @foreach (var jobTitleModel in Model)
                     {
-                    <tr>
-                        <td hidden>@jobTitleModel.JobTitleId</td>
-                        <td>@jobTitleModel.JobTitleName</td>
+                        <tr>
+                            <td hidden>@jobTitleModel.JobTitleId</td>
+                            <td>@jobTitleModel.JobTitleName</td>
 
-                        <td class="action">
-                            <a href="javascript:void(0);" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="edit(this)"><i class="fa fa-pencil"></i> Edit</a><br />
-                            <a href="javascript:void(0);" onclick="ConfrimationDeleteMessage(@jobTitleModel.JobTitleId)"><i class="fa fa-remove"></i> Delete</a>
-                        </td>
-                    </tr>
+                            <td class="action">
+                                <a href="javascript:void(0);" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="edit(this)"><i class="fa fa-pencil"></i> Edit</a><br />
+                                <a href="javascript:void(0);" onclick="ConfrimationDeleteMessage(@jobTitleModel.JobTitleId)"><i class="fa fa-remove"></i> Delete</a>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
-           </div>
+    </div>
+</div>
+    <!-- Modal -->
+    <div class="modal fade" id="PopUpModal" tabindex="-1" role="dialog" aria-labelledby="locationModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
+        <div class="dashboard-content">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 popupdata">
+                    <label class="close close-model" data-dismiss="modal">&times;</label>
+                    <div class="dashboard-list-box margin-top-5">
+                        <h4 id="PopUpModalLabel">Edit Record</h4>
+                        <div class="dashboard-list-box-content">
+                            <div class="submit-page">
+                                <div class="form" style="display:none">
+                                    <h5>User ID</h5>
+                                    <input type="text" name="JobTitleId" id="JobTitleId" class="search-field eduModeltxtbox" placeholder="User Id">
+                                </div>
 
-        <!-- Modal -->
-  <div class="modal fade" id="PopUpModal" tabindex="-1" role="dialog" aria-labelledby="locationModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
-    <div class="dashboard-content">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 popupdata">
-                <label class="close close-model" data-dismiss="modal">&times;</label>
-                <div class="dashboard-list-box margin-top-5">
-                    <h4 id="PopUpModalLabel">Edit Record</h4>
-                    <div class="dashboard-list-box-content">
-                        <div class="submit-page">
-                            <div class="form" style="display:none">
-                                <h5>User ID</h5>
-                                <input type="text" name="JobTitleId" id="JobTitleId" class="search-field eduModeltxtbox" placeholder="User Id">
+                                <div class="form" style="width:100%">
+                                    <h5>Job Title Name</h5>
+                                    <input type="text" name="JobTitelName" id="JobTitelName" class="search-field eduModeltxtbox" placeholder="First Name">
+                                </div>
+                                <div class="form" style="width:33%" id="savebtn">
+                                    <input type="submit" id="SaveRec" class="button border fw margin-top-10  pull-right" onclick="Updatedata()" value="Save" />
+                                </div>
+                                <div class="form" style="width:33%" id="updatebtn">
+                                    <input type="submit" id="Update" class="button border fw margin-top-10 pull-right" onclick="Updatedata()" value="Update data" />
+                                </div>
+                                <div class="form" style="width:33%">
+                                    <input type="button" class="button border fw margin-top-10 " data-dismiss="modal" value="Close" />
+                                </div>
                             </div>
 
-                            <div class="form" style="width:100%">
-                                <h5>Job Title Name</h5>
-                                <input type="text" name="JobTitelName" id="JobTitelName" class="search-field eduModeltxtbox" placeholder="First Name">
-                            </div>
-                            <div class="form" style="width:33%" id="savebtn">
-                                <input type="submit" id="SaveRec" class="button border fw margin-top-10  pull-right" onclick="Updatedata()" value="Save" />
-                            </div>
-                            <div class="form" style="width:33%" id="updatebtn">
-                                <input type="submit" id="Update" class="button border fw margin-top-10 pull-right" onclick="Updatedata()" value="Update data" />
-                            </div>
-                            <div class="form" style="width:33%">
-                                <input type="button" class="button border fw margin-top-10 " data-dismiss="modal" value="Close" />
-                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
-        <script src="~/lib/datatable/js/jquery.dataTables.min.js"></script>
-        <script src="~/lib/datatable/js/dataTables.bootstrap4.min.js"></script>
-        <script src="~/js/Admin/JobTitle/JobTitle.js"></script>
+    <script src="~/lib/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatable/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/Admin/JobTitle/JobTitle.js"></script>

@@ -8,6 +8,8 @@
         ],
         //searching: false
     });
+    $('#dataTable_length').addClass('data-table-lenthFilter');
+    $('#dataTable_filter').addClass('data-table-SearchFilter');
 });
 
 function SearchBulkJob() {

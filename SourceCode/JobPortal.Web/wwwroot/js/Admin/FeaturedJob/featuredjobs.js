@@ -14,7 +14,8 @@
             }
         ]
     });
-
+    $('#dataTable_length').addClass('data-table-lenthFilter');
+    $('#dataTable_filter').addClass('data-table-SearchFilter');
 });
 function edit(_this) {
     $('#PopUpModal').on('show.bs.modal', function (event) {
@@ -25,10 +26,16 @@ function edit(_this) {
         modal.find('.modal-title').text(titlename + ' Record');
         var row = $(_this).closest('tr').find('td');
         if (titlename === 'Edit') {
-            modal.find('.modal-body #JobPostId').val(row[0].innerText);
-            modal.find('.modal-body #jobTitle').val(row[1].innerText);
-            modal.find('.modal-body #companyname').val(row[2].innerText);
-            modal.find('.modal-body #displayOrder').val(row[3].innerText);
+            //modal.find('.modal-body #JobPostId').val(row[0].innerText);
+            //modal.find('.modal-body #jobTitle').val(row[1].innerText);
+            //modal.find('.modal-body #companyname').val(row[2].innerText);
+            //modal.find('.modal-body #displayOrder').val(row[3].innerText);
+
+            modal.find('#JobPostId').val(row[0].innerText);
+            modal.find('#jobTitle').val(row[1].innerText);
+            modal.find('#companyname').val(row[2].innerText);
+            modal.find('#displayOrder').val(row[3].innerText);
+
             $('#error_sp_msg').hide();
             $("#SaveRec").hide();
             $("#Update").show();

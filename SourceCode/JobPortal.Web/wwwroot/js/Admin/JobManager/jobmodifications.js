@@ -24,7 +24,7 @@ dashboard = (function () {
         SendAJAXRequest(`/Dashboard/GetJobs?year=${year}&employer=${employer}`, "GET", {}, "html", function (resp) {
             if (resp && resp !== "") {
                 $('#loader').hide();
-                $("div#jobsContainer").html(resp);
+                $("div#contentHolder").html(resp);
                 if ($("select#jobListYearFilter").val() !== year) {
                     $("select#jobListYearFilter").val(year);
                 }
@@ -125,6 +125,10 @@ function populateJobOnForm(jobId) {
     dashboard.populateJobOnForm(jobId);
 }
 
+function MangeJobsData() {
+    dashboard.getJobs();
+}
+
 function updateJob(_this) {
     let forms = $(_this).parent().parent().find("form");
     let formsData = ResolveFormData(forms);
@@ -144,9 +148,9 @@ function updateJob(_this) {
     dashboard.updateJob(formsData[0]);
 }
 
-$(function () {
-    dashboard.getJobs();
-});
+//$(function () {
+//    dashboard.getJobs();
+//});
 
 //$(function () {
 //    dashboard.getCity();

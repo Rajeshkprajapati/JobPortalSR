@@ -13,7 +13,8 @@
             }
         ]
     });
-
+    $('#dataTable_length').addClass('data-table-lenthFilter');
+    $('#dataTable_filter').addClass('data-table-SearchFilter');
 });
 function deletedata(ReviewId) {
     SendAJAXRequest(`/UsersReviews/DeleteUsersReview/?Id=${ReviewId}`, 'GET', {}, 'JSON', (result) => {
@@ -66,21 +67,20 @@ $('#btnYes').click(function () {
 function edit(_this) {
     var row = $(_this).closest('tr').find('td');
     $('#error_sp_msg').hide();
-    $('.modal-body #ReviewId').val(row[0].innerText);
-    $('.modal-body #ReviewName').val(row[1].innerText);
-    $('.modal-body #ReviewEmail').val(row[2].innerText);
-    //$('.modal-body #ReviewTagLine').val(row[4].innerText);
-    $('.modal-body #ReviewMessage').val(row[3].innerText);
+    $('#ReviewId').val(row[0].innerText);
+    $('#ReviewName').val(row[1].innerText);
+    $('#ReviewEmail').val(row[2].innerText);
+    $('#ReviewMessage').val(row[3].innerText);
 }
 
 function Updatedata(_this) {
-    event.preventDefault();
+    //event.preventDefault();
     //var formdata = ResolveFormData(_this);
-    let id = $('.modal-body #ReviewId').val();
-    let name = $('.modal-body #ReviewName').val();
-    let email = $('.modal-body #ReviewEmail').val();
-    let tagline = $('.modal-body #ReviewTagLine').val();
-    let message = $('.modal-body #ReviewMessage').val();
+    let id = $('#ReviewId').val();
+    let name = $('#ReviewName').val();
+    let email = $('#ReviewEmail').val();
+    let tagline = $('#ReviewTagLine').val();
+    let message = $('#ReviewMessage').val();
 
     var data = { Id: id, Name: name, Email: email, Tagline: tagline, Message: message };
 

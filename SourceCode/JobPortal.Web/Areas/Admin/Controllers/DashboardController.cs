@@ -502,11 +502,11 @@ namespace JobPortal.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult GetAllBulkJobs(string country = "IN")
+        public PartialViewResult GetAllBulkJobs(string country = "IN")
         {
             ViewBag.EmployersData = dashboardHandler.GetEmployers(true);
             ViewBag.States = dashboardHandler.GetStates(country);
-            return View();
+            return PartialView("GetAllBulkJobs");
         }
 
         [HttpGet]

@@ -64,3 +64,37 @@ function GetCityList() {
         }
     });
 }
+
+function FeaturedJobs() {
+    SendAJAXRequest(`/ManageJobs/FeaturedJobs`, "GET", {}, "html", function (resp) {
+        if (resp && resp !== "") {
+            $("div#contentHolder").html(resp);
+        }
+        else {
+            return false;
+        }
+    });
+}
+
+function UsersReviews() {
+    SendAJAXRequest(`/UsersReviews/UsersReviews`, "GET", {}, "html", function (resp) {
+        if (resp && resp !== "") {
+            $("div#contentHolder").html(resp);
+        }
+        else {
+            return false;
+        }
+    });
+}
+
+function BulkJobs(){
+    SendAJAXRequest(`/Dashboard/GetAllBulkJobs`, "GET", {}, "html", function (resp) {
+        if (resp && resp !== "") {
+            $("div#contentHolder").html(resp);
+        }
+        else {
+            return false;
+        }
+    });
+}
+
