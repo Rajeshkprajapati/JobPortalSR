@@ -13,6 +13,9 @@
         /* padding: 0px !important; */
         box-shadow: 0px 0px 0px 0px !important;
     }
+    a:hover {
+        font-weight: 900;        
+    }
 </style>
 <!-- Page Title End -->
 @{
@@ -46,9 +49,10 @@
                     <div class="content">
                         <h4>@Model.CompanyName</h4>
                         <span><a href="#"><i class="fa fa-link"></i> Website</a></span>
-                        <span><a href="#"><i class="fa fa-twitter"></i> twitter</a></span>
-                        <!--<span><a href="https://www.facebook.com/sharer/sharer.php?u=https://localhost:44319/Job/JobDetails/?jobid=2084"><i class="fa fa-facebook"></i> facebook</a></span> -->
-                        <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                        <span class="bold-content">Share on</span>
+                        <span><a href="@ViewBag.TwitterUrl@Model.JobPostId" ><i class="fa fa-twitter"></i> Twitter</a></span>                        
+                        <span><a href="@ViewBag.FBUrl@Model.JobPostId" ><i class="fa fa-facebook"></i> Facebook</a></span>                                                                                     
+                        <span><a href="@ViewBag.WhatsAppUrl@Model.JobPostId" ><i class="fa fa-whatsapp"></i> WhatsApp</a></span>                                                                                     
                     </div>
                     <div class="clearfix"></div>
                 </div>

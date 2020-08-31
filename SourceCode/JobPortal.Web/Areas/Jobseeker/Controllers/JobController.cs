@@ -1,4 +1,8 @@
-﻿using JobPortal.Business.Interfaces.Employer.JobPost;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using JobPortal.Business.Interfaces.Employer.JobPost;
 using JobPortal.Business.Interfaces.Home;
 using JobPortal.Business.Interfaces.Jobseeker;
 using JobPortal.Model.DataViewModel.Employer.JobPost;
@@ -10,10 +14,7 @@ using JobPortal.Utility.Helpers;
 using JobPortal.Web.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+using Microsoft.Extensions.Configuration;
 
 namespace JobPortal.Web.Areas.Jobseeker.Controllers
 {
@@ -27,12 +28,17 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
         private readonly IJobPostHandler jobpastHandler;
         private readonly IHomeHandler homeHandler;
         private readonly ISearchJobHandler searchJobHandler;
-        public JobController(IJobPostHandler _jobpastHandler, IHomeHandler _homeHandler, IUserProfileHandler _userProfileHandler, ISearchJobHandler _searchJobHandler)
+        private readonly IConfiguration config;
+        private readonly string URLprotocol;
+        public JobController(IJobPostHandler _jobpastHandler, IHomeHandler _homeHandler, IConfiguration _config,
+            IUserProfileHandler _userProfileHandler, ISearchJobHandler _searchJobHandler)
         {
             jobpastHandler = _jobpastHandler;
             homeHandler = _homeHandler;
             searchJobHandler = _searchJobHandler;
             userProfileHandler = _userProfileHandler;
+            config = _config;
+            URLprotocol = config["URLprotocol"];
         }
 
         public IActionResult Index()
@@ -95,7 +101,7 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(JobController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(JobController), ex);
             }
@@ -173,9 +179,16 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
             user = user ?? new UserViewModel();
             try
             {
+                var basePath = string.Format("{0}://{1}{2}", Request.Scheme, URLprotocol, Request.Host);
+                var pageLink = "/Job/JobDetails/?jobid=";
+                var fbUrl = "https://www.facebook.com/sharer/sharer.php?u=";
+                var twitterUrl = "https://twitter.com/home?status=";
+                var whatsAppUrl = "https://wa.me/?text=";
+                var encodedlink = System.Web.HttpUtility.UrlEncode(basePath + pageLink);                
+                ViewBag.FBUrl = string.Format("{0}{1}", fbUrl, basePath + pageLink);
+                ViewBag.TwitterUrl = string.Format("{0}{1}", twitterUrl, basePath + pageLink);
+                ViewBag.WhatsAppUrl = string.Format("{0}{1}", whatsAppUrl, encodedlink);
                 jobdetail = jobpastHandler.GetJobDetails(jobid);
-                //string imgname = Path.GetFileName(jobdetail.CompanyLogo);
-                //jobdetail.CompanyLogo = $@"/ProfilePic/" + imgname;
                 if (user != null)
                 {
                     List<int> appliedjobs = homeHandler.GetAplliedJobs(user.UserId);
@@ -218,7 +231,7 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
                     for (int i = 0; i < appliedjobs.Count; i++)
                     {
                         list[i].IsApplied = appliedjobs.Any(aj => aj == list[i].JobPostId);
-                    }                    
+                    }
                 }
             }
             catch (DataNotFound ex)
