@@ -168,7 +168,7 @@ dashboard = (function () {
     };
 
     let populateJobOnForm = function (jobId) {
-        debugger;
+        
         SendAJAXRequest(`/Dashboard/GetJobScreenById?jobId=${jobId}`, "GET", {}, "html", function (resp) {
             if (resp && resp !== "") {
                 $("div#editJob").find("div.modal-body").html(resp);
@@ -207,7 +207,7 @@ dashboard = (function () {
     };
 
     let updateJob = function (data) {
-        //debugger;
+        
         let bodyContent = $("#cke_jobDetails iframe").contents().find("body").html();
         data.jobDetails = bodyContent;
         SendAJAXRequest(`/Dashboard/UpdateJobDetails`, "POST", data, "JSON", function (resp) {
@@ -226,7 +226,7 @@ dashboard = (function () {
     };
 
     let replyToJobSeeker = function (data) {
-        //debugger;
+        
         SendAJAXRequest(`/Dashboard/ReplyToJobSeeker`, "POST", data, "JSON", function (resp) {
             if (resp && resp.isSuccess) {
                 closeModalManually($("div#emailPromptContainer"));
@@ -253,7 +253,7 @@ dashboard = (function () {
         });
     };
     let myProfile = function () {
-        debugger;
+        
         SendAJAXRequest(`/Dashboard/MyProfilePartial`, "GET", {}, "html", function (resp) {
             if (resp && resp !== "") {
                 $("div#mycontentHolder").html(resp);
