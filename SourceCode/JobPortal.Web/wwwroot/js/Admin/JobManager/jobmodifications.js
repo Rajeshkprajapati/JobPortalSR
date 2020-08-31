@@ -14,7 +14,7 @@ dashboard = (function () {
         $('input[type=checkbox][name=featured]').change();
     };
 
-    let getJobs = function () {
+    let getJobs = function () {        
         let year = $("select#jobListYearFilter").val();
         year = (year && year !== "") ? year : new Date().getFullYear();
 
@@ -25,9 +25,10 @@ dashboard = (function () {
             if (resp && resp !== "") {
                 $('#loader').hide();
                 $("div#contentHolder").html(resp);
-                if ($("select#jobListYearFilter").val() !== year) {
-                    $("select#jobListYearFilter").val(year);
-                }
+                //if ($("select#jobListYearFilter").val() !== year) {
+                //    $('select#jobListYearFilter option[value="'+year+'"]').attr('selected', true);
+                //}
+                $("select#jobListYearFilter").val(year).trigger("chosen:updated");
             }
             else {
                 return false;
@@ -126,6 +127,9 @@ function populateJobOnForm(jobId) {
 }
 
 function MangeJobsData() {
+    dashboard.getJobs();
+}
+function getMyJobs() {
     dashboard.getJobs();
 }
 
