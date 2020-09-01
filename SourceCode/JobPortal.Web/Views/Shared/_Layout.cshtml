@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>@ViewData["Title"]</title>
-
+    @RenderSection("header", required: false)
     <link rel="shortcut icon" type="image/png" href="~/images/favicon.ico" />
     <link href="~/lib/jquery/jquery-ui.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -21,7 +21,7 @@
     <link href="~/Assets/css/colors.css" rel="stylesheet" />
     <link href="~/Assets/css/style.css" rel="stylesheet" />
     <link href="~/Assets/PopBox/messagebox.css" rel="stylesheet" />
-    
+
 </head>
 <body>
     <div id="wrapper">
