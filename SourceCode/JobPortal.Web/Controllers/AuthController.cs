@@ -585,12 +585,12 @@ namespace JobPortal.Web.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {                    
+                {
                     user.RoleId = 3;//For Employer
                     authHandler.RegisterEmployer(user);
-                    SendRegistrationMailToEmployer(user);                   
+                    SendRegistrationMailToEmployer(user);
                     TempData["successMsg"] = "Registration Successful Please wait for admin approval!";
-                    ModelState.Clear();                   
+                    ModelState.Clear();
                 }
             }
             catch (UserNotCreatedException ex)
@@ -620,7 +620,7 @@ namespace JobPortal.Web.Controllers
             try
             {
                 var basePath = string.Format("{0}://{1}{2}", Request.Scheme, URLprotocol, Request.Host);
-                var link = basePath + "/Auth/EmployerLogin";                
+                var link = basePath + "/Auth/EmployerLogin";
                 var eModel = new EmailViewModel
                 {
                     Subject = "Welcome aboard!",
@@ -634,10 +634,10 @@ namespace JobPortal.Web.Controllers
                     IsHtml = true,
                     MailType = (int)MailType.ForgotPassword
                 };
-                                
+
                 emailHandler.SendMail(eModel, -1);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
             }
@@ -651,29 +651,12 @@ namespace JobPortal.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var basePath = string.Format("{0}://{1}{2}", Request.Scheme, URLprotocol, Request.Host);
-                    var link = basePath + "/Auth/JobSeekerLogin";
 
                     user.RoleId = 2;//For Student
                     authHandler.RegisterUser(user);
-                    var eModel = new EmailViewModel
-                    {
-                        Subject = "Welcome to SRJobPortal.com",
-                        Body = "<b>Dear " + user.FirstName + "</b>," + "<br/><br/>Congratulations! You have successfully registered with" +
-                        " SRJobPortal.com<br/>" +
-                        "<br/>Please note that your username and password are both case sensitive.<br/><br/>Your login details are below:<br/><br/>" +
-                        "User Name: " + user.Email +
-                        "<br>Password: " + user.Password +
-                        "<br/><br/>You can update your contact and registration details at any time by logging on to SRJobPortal.com" +
-                        "<br/><br/>Wish you all the best!<br/><a href=" + link + "> SrJobPortal.com</a> Team",
-                        To = new string[] { user.Email },
-                        From = config["EmailCredential:Fromemail"],
-                        IsHtml = true,
-                        MailType = (int)MailType.ForgotPassword
-                    };
-                    TempData["successMsg"] = "Registration Successful Please wait for admin approval!";
+                    SendRegistrationMailToJobSeeker(user);
+                    TempData["successMsg"] = "Registration Successful!";
                     ModelState.Clear();
-                    emailHandler.SendMail(eModel, -1);
                 }
             }
             catch (UserNotCreatedException ex)
@@ -696,6 +679,36 @@ namespace JobPortal.Web.Controllers
                 ViewData["SuccessMessage"] = "Unable to send Mail";
             }
             return View();
+        }
+        private void SendRegistrationMailToJobSeeker(JobSeekerViewModel user)
+        {
+            try
+            {
+                var basePath = string.Format("{0}://{1}{2}", Request.Scheme, URLprotocol, Request.Host);
+                var link = basePath + "/Auth/JobSeekerLogin";
+
+                var eModel = new EmailViewModel
+                {
+                    Subject = "Welcome to SRJobPortal.com",
+                    Body = "<b>Dear " + user.FirstName + "</b>," + "<br/><br/>Congratulations! You have successfully registered with" +
+                            " SRJobPortal.com<br/>" +
+                            "<br/>Please note that your username and password are both case sensitive.<br/><br/>Your login details are below:<br/><br/>" +
+                            "User Name: " + user.Email +
+                            "<br>Password: " + user.Password +
+                            "<br/><br/>You can update your contact and registration details at any time by logging on to SRJobPortal.com" +
+                            "<br/><br/>Wish you all the best!<br/><a href=" + link + "> SrJobPortal.com</a> Team",
+                    To = new string[] { user.Email },
+                    From = config["EmailCredential:Fromemail"],
+                    IsHtml = true,
+                    MailType = (int)MailType.ForgotPassword
+                };
+                TempData["successMsg"] = "Registration Successful";
+                emailHandler.SendMail(eModel, -1);
+            }
+            catch (Exception ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+            }
         }
 
         [HttpPost]
@@ -742,7 +755,7 @@ namespace JobPortal.Web.Controllers
             }
         }
         [HttpPost]
-        public JsonResult FBRegistration([FromBody]string accesstoken)
+        public JsonResult FBEmpRegistration([FromBody]string accesstoken)
         {
             var isSuccess = true;
             try
@@ -771,7 +784,51 @@ namespace JobPortal.Web.Controllers
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
                 isSuccess = false;
-            }catch(UserAlreadyExists ex)
+            }
+            catch (UserAlreadyExists ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+            }
+            catch (Exception ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+            }
+            return Json(new { isSuccess });
+
+        }
+        [HttpPost]
+        public JsonResult FBJobseekerRegistration([FromBody]string accesstoken)
+        {
+            var isSuccess = true;
+            try
+            {
+                var resp = authHandler.GetFBUserInfo(accesstoken);
+
+                if (resp == null)
+                {
+                    throw new UserNotCreatedException("Invalid access token");
+                }
+                var randomPassword = RandomGenerator.GetRandom(5);
+                var user = new JobSeekerViewModel
+                {
+                    FirstName = resp.FirstName,
+                    LastName = resp.LastName,
+                    Email = resp.Email,
+                    Password = randomPassword,
+                };
+
+                user.RoleId = 2;//For Student
+                authHandler.RegisterUser(user);
+                SendRegistrationMailToJobSeeker(user);
+            }
+            catch (UserNotCreatedException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+            }
+            catch (UserAlreadyExists ex)
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
                 isSuccess = false;

@@ -9,7 +9,7 @@
     <meta property="og:url" content="/Job/JobDetails/?jobid=@Model.JobPostId" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="@Model.JobTitleByEmployer" />
-    <meta property="og:description" content="@Model.JobDetails" />
+    <meta property="og:description" content="@Html.Raw(Model.JobDetails)" />
     <meta property="og:image" content="@Model.CompanyLogo" />
 }
 
@@ -240,7 +240,6 @@
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0&appId=544734402958846&autoLogAppEvents=1" nonce="oYQmyAJk"></script>
 }
 @section Scripts
-    {
-    <script src="~/Assets/scripts/sharer.min.js"></script>
+    {    
     <script src="~/js/Jobseeker/JobDetails.js"></script>
 }

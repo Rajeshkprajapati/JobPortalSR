@@ -53,16 +53,13 @@
                     <div class="col-sm-8">
                         <ul class="social-icons">
                             <li>
-
-
                                 <!--<fb:login-button scope="public_profile,email"
                                                  onlogin="checkLoginState();">
                                 </fb:login-button> -->
-                                <!--<div class="fb-login-button" data-size="large" data-button-type="continue_with"
-                                data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div> -->
+                                <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div>
 
-                                <a class="facebook" href="javascript:void(0)" onclick="checkLoginState()"><i class="icon-facebook"></i></a>
-                                <!-- <a class="gplus" href="#"><i class="icon-gplus"></i></a> -->
+                                <!--<a class="facebook" href="javascript:void(0)" onclick="checkLoginState();" target="_blank"><i class="icon-facebook"></i></a>
+                                <a class="gplus" href="#"><i class="icon-gplus"></i></a> -->
                             </li>
                         </ul>
                     </div>
@@ -137,7 +134,7 @@
 
 @section Scripts
     {
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0&appId=544734402958846&autoLogAppEvents=1" nonce="94j3X9ee"></script>
+    @*<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0&appId=544734402958846&autoLogAppEvents=1" nonce="94j3X9ee"></script>*@
 
     <script>
         window.fbAsyncInit = function () {
@@ -170,7 +167,7 @@
         function statusChangeCallback(response) {
             if (response.status === 'connected') {
                 var accessToken = response.authResponse.accessToken;
-                SendAJAXRequest(`/Auth/FBRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
+                SendAJAXRequest(`/Auth/FBEmpRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
                     if (resp && resp.isSuccess) {
                         //console.log('Success');
                         InformationDialog('Information', 'Registration Successfull Please wait for admin approval!');

@@ -10,6 +10,7 @@
     span.text-danger {
         color: red !important;
     }
+
     .header {
         box-shadow: 0 12px 0 rgba(0,0,0,.12) !important;
     }
@@ -17,21 +18,6 @@
 
 <!-- Titlebar
 ================================================== -->
-@*<div id="titlebar" class="single">
-        <div class="container">
-            <div class="sixteen columns">
-                <h2>Job Seeker Registarton</h2>
-                <nav id="breadcrumbs">
-                    <ul>
-                        <li>You are here:</li>
-                        <li><a href="#">Home</a></li>
-                        <li>Registarton</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>*@
-
 <!-- Content
 ================================================== -->
 <!-- Container -->
@@ -49,7 +35,7 @@
             <!-- Register -->
             <div class="tab-content" id="tab2">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <label for="socialmedia">
                             Register Via:
                         </label>
@@ -57,8 +43,11 @@
                     <div class="col-sm-8">
                         <ul class="social-icons">
                             <li>
-                                <a class="facebook" href="#"><i class="icon-facebook"></i></a>
-                                <a class="gplus" href="#"><i class="icon-gplus"></i></a>
+                                <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" onlogin="checkLoginState();" data-use-continue-as="false" data-width=""></div>
+                                <!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                                </fb:login-button>
+                                <a class="facebook" href="javascript:void(0)" onclick="checkLoginState();" target="_blank"><i class="icon-facebook"></i></a>
+                                <a class="gplus" href="#"><i class="icon-gplus"></i></a> -->
                             </li>
                         </ul>
                     </div>
@@ -83,12 +72,12 @@
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                     @*<p class="form-row" >
-                    <label>
-                        Gender:
-                        <input type="radio" asp-for="Gender" value="Male" />Male
-                        <input type="radio" asp-for="Gender" value="Female"/>Female
-                    </label>
-                </p>*@
+                            <label>
+                                Gender:
+                                <input type="radio" asp-for="Gender" value="Male" />Male
+                                <input type="radio" asp-for="Gender" value="Female"/>Female
+                            </label>
+                        </p>*@
 
                     <div class="form-row form-row-wide">
                         <label asp-for="Email">
@@ -108,13 +97,13 @@
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     @*<div class="form-row form-row-wide">
-                        <label asp-for="TotalExperience">
-                            Experiance:
-                            <i class="ln ln-icon-Mouse-2"></i>
-                            <input type="number" class="input-text" asp-for="TotalExperience" placeholder="Experience in years" />
-                        </label>
-                        <span asp-validation-for="TotalExperience" class="text-danger"></span>
-                    </div>*@
+                            <label asp-for="TotalExperience">
+                                Experiance:
+                                <i class="ln ln-icon-Mouse-2"></i>
+                                <input type="number" class="input-text" asp-for="TotalExperience" placeholder="Experience in years" />
+                            </label>
+                            <span asp-validation-for="TotalExperience" class="text-danger"></span>
+                        </div>*@
                     <div class="form-row form-row-wide">
                         <label for="Mobile">
                             Mobile:
@@ -124,29 +113,29 @@
                         <span asp-validation-for="MobileNo" class="text-danger"></span>
                     </div>
                     @*<div class="form-row form-row-wide">
-                        <label asp-for="Skills">
-                            Skills:
-                            <i class="ln ln-icon-Wrench"></i>
-                            <input type="text" class="input-text" asp-for="Skills" id="Skills" placeholder="skills" />
-                        </label>
-                        <span asp-validation-for="Skills" class="text-danger"></span>
-                    </div>*@
+                            <label asp-for="Skills">
+                                Skills:
+                                <i class="ln ln-icon-Wrench"></i>
+                                <input type="text" class="input-text" asp-for="Skills" id="Skills" placeholder="skills" />
+                            </label>
+                            <span asp-validation-for="Skills" class="text-danger"></span>
+                        </div>*@
                     @*<div class="form-row form-row-wide">
-                        <label asp-for="Industry">
-                            Industry:
-                            <i class="ln ln-icon-Building"></i>
-                            <input type="text" class="input-text" asp-for="Industry" id="JobIndustryArea" placeholder="Industry" />
-                        </label>
-                        <span asp-validation-for="Industry" class="text-danger"></span>
-                    </div>*@
+                            <label asp-for="Industry">
+                                Industry:
+                                <i class="ln ln-icon-Building"></i>
+                                <input type="text" class="input-text" asp-for="Industry" id="JobIndustryArea" placeholder="Industry" />
+                            </label>
+                            <span asp-validation-for="Industry" class="text-danger"></span>
+                        </div>*@
                     @*<div class="form-row form-row-wide">
-                        <label asp-for="PreferredLocation">
-                            Preferred Location:
-                            <i class="ln ln-icon-Map-Marker2"></i>
-                            <input type="text" class="input-text" asp-for="PreferredLocation" placeholder="Location" />
-                        </label>
-                        <span asp-validation-for="PreferredLocation" class="text-danger"></span>
-                    </div>*@
+                            <label asp-for="PreferredLocation">
+                                Preferred Location:
+                                <i class="ln ln-icon-Map-Marker2"></i>
+                                <input type="text" class="input-text" asp-for="PreferredLocation" placeholder="Location" />
+                            </label>
+                            <span asp-validation-for="PreferredLocation" class="text-danger"></span>
+                        </div>*@
                     <div class="form-row">
                         <input type="submit" class="button border fw margin-top-10" name="register" value="Register" />
                     </div>
@@ -155,3 +144,53 @@
         </div>
     </div>
 </div>
+<div id="fb-root"></div>
+@section Scripts
+    {
+
+
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '544734402958846',
+                cookie: true,
+                xfbml: true,
+                version: 'v8.0'
+            });
+
+            FB.AppEvents.logPageView();
+
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                if (response.authResponse != null) {
+                    statusChangeCallback(response);
+                }
+            });
+        }
+        function statusChangeCallback(response) {
+            if (response.status === 'connected') {
+                var accessToken = response.authResponse.accessToken;
+                SendAJAXRequest(`/Auth/FBJobseekerRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
+                    if (resp && resp.isSuccess) {
+                        //console.log('Success');
+                        InformationDialog('Information', 'Registration Successfull!');
+                    } else {
+                        ErrorDialog('Error', 'Email already exist!');
+                    }
+                });
+            } else {
+                ErrorDialog('Error', 'Error occured please retry!');
+            }
+        }
+    </script>
+}
