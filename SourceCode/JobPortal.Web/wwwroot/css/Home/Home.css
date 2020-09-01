@@ -124,8 +124,19 @@
     -moz-transform: scale(1.07);
 }
 .category-small-box:nth-child(odd) {
-    background: #47d8afdb;
+    background: #a63960;
 }
 .category-small-box:nth-child(even) {
-    background: #e0dbd0de;
+    background: #1c6882;
+}
+.category-small-box i {
+    color: #e8cbcb;
+}
+
+.category-small-box h4 {
+    color: #d6cfcf;
+}
+
+.category-small-box span {
+    color: #e5e7f3;
 }
