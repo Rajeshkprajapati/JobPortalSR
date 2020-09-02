@@ -38,6 +38,20 @@
         }
 
     });
+
+    SendAJAXRequest('/Home/SuccessStory/', 'GET', {}, 'JSON', (data) => {
+        if (data) {
+            var videSection = $('#videSection');
+            $(videSection).empty();
+            for (var i = 0; i < data.length; i++) {
+                $(videSection).append('<div class="col-md-5 video-border"> <iframe height = "100%" width = "100%" src="' + data[i].video + '" frameborder = "0" allowfullscreen = "allowfullscreen" ></iframe> </div>');
+               }
+        } else {
+            warnignPopup('Error');
+        }
+
+    });
+
 });
 
 $(window).scroll(function () {

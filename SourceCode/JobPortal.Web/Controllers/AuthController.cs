@@ -36,7 +36,7 @@ namespace JobPortal.Web.Controllers
             emailHandler = _emailHandler;
             userProfileHandler = _userProfileHandler;
             config = _config;
-            URLprotocol = config["URLprotocol"];
+            URLprotocol = config["SiteProtocol"];
         }
         public IActionResult Index(string returnUrl)
         {
@@ -248,7 +248,7 @@ namespace JobPortal.Web.Controllers
                 var emailID = authHandler.ForgetPassword(email);
                 /* Mail Send */
                 string emailEncr = EncryptDecrypt.Encrypt(emailID, "sblw-3hn8-sqoy19");
-                var basePath = string.Format("{0}://{1}", /*Request.Scheme*/ URLprotocol, Request.Host);
+                var basePath = string.Format("{0}://{1}", Request.Scheme /*URLprotocol*/, Request.Host);
                 var link = basePath + "/Auth/ResetPassword/?id=" + emailEncr;
 
                 var eModel = new EmailViewModel
@@ -589,7 +589,7 @@ namespace JobPortal.Web.Controllers
                     user.RoleId = 3;//For Employer
                     authHandler.RegisterEmployer(user);
                     SendRegistrationMailToEmployer(user);
-                    TempData["successMsg"] = "Registration Successful Please wait for admin approval!";
+                    TempData["successMsg"] = "Registered Successfully done. Please login with registered mail..!";
                     ModelState.Clear();
                 }
             }
@@ -655,7 +655,7 @@ namespace JobPortal.Web.Controllers
                     user.RoleId = 2;//For Student
                     authHandler.RegisterUser(user);
                     SendRegistrationMailToJobSeeker(user);
-                    TempData["successMsg"] = "Registration Successful!";
+                    TempData["successMsg"] = "User registered successfully, please login to proceed.";
                     ModelState.Clear();
                 }
             }

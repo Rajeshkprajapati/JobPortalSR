@@ -6,6 +6,7 @@ using JobPortal.Business.Interfaces.Employer.JobPost;
 using JobPortal.Business.Interfaces.Home;
 using JobPortal.Business.Interfaces.Shared;
 using JobPortal.Model.DataViewModel.Admin.JobIndustryArea;
+using JobPortal.Model.DataViewModel.Admin.SuccessStory;
 using JobPortal.Model.DataViewModel.Home;
 using JobPortal.Model.DataViewModel.JobSeeker;
 using JobPortal.Model.DataViewModel.Shared;
@@ -93,6 +94,9 @@ namespace JobPortal.Web.Controllers
 
                 List<SearchJobListViewModel> walkinJobs = _homeHandler.GetWalkInsJobs();
                 ViewBag.WalkinJobs = walkinJobs;
+                ViewBag.Comment = _homeHandler.GetSuccussStory();
+                ViewBag.SuccessStoryVideo = _homeHandler.GetSuccussStoryVideos();
+
 
                 //    //ViewBag.City = homeHandler.GetCityList();
             }
@@ -114,7 +118,7 @@ namespace JobPortal.Web.Controllers
             //var result = new List<SuccessStoryViewModel>();
             try
             {
-                ViewBag.Comment = _homeHandler.GetSuccussStory();
+                //ViewBag.Comment = _homeHandler.GetSuccussStory();
                 ViewBag.SuccessStoryVideo = _homeHandler.GetSuccussStoryVideos();
             }
             catch (DataNotFound ex)
@@ -545,6 +549,23 @@ namespace JobPortal.Web.Controllers
             }
 
             return View();
+        }
+
+        public IActionResult SuccessStory()
+        {
+            List<SuccessStoryVideoViewModel> lstsuccessStoryvideo = new List<SuccessStoryVideoViewModel>();
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            user = user ?? new UserViewModel();
+            try
+            {
+                lstsuccessStoryvideo = _homeHandler.GetSuccussStoryVideos();
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(HomeController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return Json(lstsuccessStoryvideo);
         }
     }
 }

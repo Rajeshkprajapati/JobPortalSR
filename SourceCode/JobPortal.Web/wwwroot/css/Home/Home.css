@@ -140,3 +140,9 @@
 .category-small-box span {
     color: #e5e7f3;
 }
+.testimonial-author {
+   width: 25%;
+}
+.greybg {
+    background: #ffffff;
+}
