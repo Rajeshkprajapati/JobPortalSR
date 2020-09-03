@@ -682,5 +682,39 @@ namespace JobPortal.Business.Handlers.Home
             }
             throw new DataNotFound("Data not found");
         }
+
+        public List<SearchJobListViewModel> FreelancerJobs()
+        {
+            DataTable dt = _homeRepositories.FreelancerJobs();
+            if (dt.Rows.Count > 0)
+            {
+                List<SearchJobListViewModel> lstFreelancerJobs = new List<SearchJobListViewModel>();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string picpath = System.IO.Path.GetFullPath(hostingEnviroment.WebRootPath + dt.Rows[i]["CompanyLogo"]);
+                    if (!System.IO.File.Exists(picpath))
+                    {
+                        string fName = $@"\ProfilePic\" + "Avatar_company.jpg";
+                        dt.Rows[i]["CompanyLogo"] = fName;
+                    }
+                    SearchJobListViewModel freelancerJobs = new SearchJobListViewModel
+                    {
+                        JobPostId = Convert.ToInt32(dt.Rows[i]["JobPostId"]),
+                        CompanyLogo = Convert.ToString(dt.Rows[i]["CompanyLogo"]),
+                        JobTitle = Convert.ToString(dt.Rows[i]["JobTitle"]),
+                        EmploymentStatus = Convert.ToString(dt.Rows[i]["EmploymentStatus"]),
+                        City = Convert.ToString(dt.Rows[i]["City"]),
+                        HiringCriteria = Convert.ToString(dt.Rows[i]["HiringCriteria"]),
+                        CompanyName = Convert.ToString(dt.Rows[i]["CompanyName"]),
+                        CTC = Convert.ToString(dt.Rows[i]["CTC"]),
+                        NumberOfDays = Convert.ToString(dt.Rows[i]["NumberOfDays"]),
+
+                    };
+                    lstFreelancerJobs.Add(freelancerJobs);
+                }
+                return lstFreelancerJobs;
+            }
+            throw new DataNotFound("Data not found");
+        }
     }
 }

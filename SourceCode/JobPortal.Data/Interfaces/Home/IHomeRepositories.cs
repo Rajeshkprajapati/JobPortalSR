@@ -39,5 +39,6 @@ namespace JobPortal.Data.Interfaces.Home
         DataTable CityJobVacancies();
         DataTable CompanyJobVacancies();
         DataTable AllJobsByCompany(int UserId);
+        DataTable FreelancerJobs();
     }
 }

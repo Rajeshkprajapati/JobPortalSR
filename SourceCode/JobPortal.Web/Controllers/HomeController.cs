@@ -440,10 +440,10 @@ namespace JobPortal.Web.Controllers
                 EmailViewModel mailtouser = new EmailViewModel()
                 {
                     To = to,
-                    Subject = "Contact-US",
+                    Subject = "Team Job Portal",
                     Body = "We have received your request,We will get back to you soon.",
                     IsHtml = false,
-                    From = "amaggo@nasscom.com",
+                    From = "nasscomtestmail@gmail.com",
                 };
                 _mailHandler.SendMail(mailtouser, 0, false);
                 string adminmail = _configuration["AdminMail:Email"];
@@ -451,10 +451,10 @@ namespace JobPortal.Web.Controllers
                 EmailViewModel mailtoadmin = new EmailViewModel()
                 {
                     To = toadmin,
-                    Subject = "Contact-US",
-                    Body = "<p>Body:" + model.Details + " " + "<br/><br/>Name:" + model.Fullname + " <br/><br/>Email: " + model.Email + "</p>",
+                    Subject = "Job portal new inquiry",
+                    Body = "<p>New inquiry from job portal"+"</p>"+ "<p>Message:" + model.Details + " " + "<br/>Name:" + model.Fullname + "<br/>Email: " + model.Email + " <br/>Phone: " + model.Phone+ "<br/><br/>Thank You<br/>Team Job Portal"+"</p>",
                     IsHtml = true,
-                    From = "amaggo@nasscom.com",
+                    From = "nasscomtestmail@gmail.com",
                 };
                 _mailHandler.SendMail(mailtoadmin, 0, false);
                 ViewBag.Contact = "We have received your request,We will get back to you soon.";
@@ -566,6 +566,48 @@ namespace JobPortal.Web.Controllers
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
             return Json(lstsuccessStoryvideo);
+        }
+        public IActionResult Aboutus()
+        {
+           return View();
+        }
+
+        public IActionResult FreelancerJobs()
+        {
+
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            try
+            {
+                List<SearchJobListViewModel> freelancerJobs = _homeHandler.FreelancerJobs();
+                if (user != null)
+                {
+                    List<int> appliedjobs = _homeHandler.GetAplliedJobs(user.UserId);
+                    for (int i = 0; i < freelancerJobs.Count; i++)
+                    {
+                        //getting the all the jobs applied by user only if the user logged in
+                        if (user.UserId != 0 && appliedjobs.Count > 0)
+                        {
+                            freelancerJobs[i].IsApplied = appliedjobs.Any(aj => aj == freelancerJobs[i].JobPostId);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    ViewBag.FreelancerJobs = freelancerJobs;
+                }
+                else
+                {
+                    ViewBag.FreelancerJobs = freelancerJobs;
+                }
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user == null ? 0 : user.UserId, typeof(HomeController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+
+            return View();
         }
     }
 }

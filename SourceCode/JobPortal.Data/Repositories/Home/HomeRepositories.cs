@@ -858,5 +858,34 @@ namespace JobPortal.Data.Repositories.Home
             }
             throw new DataNotFound("Can not execute query");
         }
+
+        public DataTable FreelancerJobs()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                   var freelancerJobs =
+                        SqlHelper.ExecuteReader
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetFreelancerJobs"
+
+                            );
+                    if (null != freelancerJobs && freelancerJobs.HasRows)
+                    {
+                        var dt = new DataTable();
+                        dt.Load(freelancerJobs);
+                        return dt;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Can not execute query");
+        }
     }
 }

@@ -1,132 +1,135 @@
 ﻿@using JobPortal.Model.DataViewModel.Shared
 @model UserViewModel
 @{
-    ViewData["Title"] = "ContactUs";
+    ViewData["Title"] = "Contact Us";
 }
-<link href="~/css/CommanPopup.css" rel="stylesheet" />
-<style>
-    input[type="text"] {
-        font-size: 16px;
-    }
-
-    #details {
-        font-size: 16px;
-    }
-</style>
-<div class="pageTitle">
+<!-- Titlebar
+================================================== -->
+<div id="titlebar" class="photo-bg" style="background-image: url('/Assets/images/all-categories-photo.jpg')">
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <h1 class="page-heading">Contact Us</h1>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="breadCrumb"><a href="/Home/Index/">Home</a> / <span>Contact Us</span></div>
-            </div>
+         <div class="sixteen columns">
+            <h2 class="LoginHeading">Contact Us</h2>
+            <nav id="breadcrumbs">
+                <ul>
+                    <li>You are here:</li>
+                    <li><a href="/Home/Index/">Home</a></li>
+                    <li>Contact Us</li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
-<!-- Page Title End -->
-<!-- Contact us -->
-<div class="inner-page">
-    <div class="container">
-        <div class="contact-wrap">
-            <div class="row">
-                @*<div class="col-md-12 column">
-                        <div class="title">
-                            <span>We Are Here For Your Help</span><br />
-                            <p><h2>GET IN TOUCH FAST</h2></p>
-                        </div>
-                    </div>*@
-
-                @{
-                    @if (ViewBag.Contact != null)
-                    {
-                        <div class="alert alert-success" role="alert"><label style="margin-left: 300px;">@ViewBag.Contact</label></div>
-                    }
-                    @if (ViewBag.ContactError != null)
-                    {
-                        <div class="alert alert-danger" role="alert"><label style="margin-left: 300px;">@ViewBag.ContactError</label></div>
-                    }
-                }
-                <!-- Contact Info -->
-                <div class="col-md-4 column">
-                    <div class="contact-now">
-                        <div class="contact">
-                            <span><i class="fa fa-home"></i></span>
-                            <div class="information">
-                                <strong>Address:</strong>
-                                <p>NASSCOM Plot 7 to 10, Sector 126, Noida - 201303 </p>
-                            </div>
-                        </div>
-                        <!-- Contact Info -->
-                        <div class="contact">
-                            <span><i class="fa fa-envelope"></i></span>
-                            <div class="information">
-                                <strong>Email Address:</strong>
-                                <p>@{@ViewBag.ContactUs}</p>
-                            </div>
-                        </div>
-                        <!-- Contact Info -->
-                        <div class="contact">
-                            <span><i class="fa fa-phone"></i></span>
-                            <div class="information">
-                                <strong>Phone No:</strong>
-                                <p>Board No: 0120 4990111  – Ext: 137</p>
-                                <p>Direct No: 0120 4990137</p>
-                            </div>
-                        </div>
-                        <!-- Contact Info -->
-                    </div>
-                    <!-- Contact Now -->
-                </div>
-
-                <!-- Contact form -->
-
-                <div class="col-md-8 column">
-                    <div class="contact-form">
-                        <div id="message"></div>
-                        <form method="post" action="/Home/ConatctUs/" name="contactform" id="contactform">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input name="fullname" type="text" id="name" placeholder="Full Name" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" maxlength="10" minlength="10" name="phone" id="phone" placeholder="Phone Number" required>
-                                </div>
-                                @{
-                                    var user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-                                    @if (user != null)
-                                    {
-                                        <div class="col-md-12">
-                                            <input name="email" type="text" id="email" value="@user.Email" readonly>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="col-md-12">
-                                            <input name="email" type="text" id="email" placeholder="Email">
-                                        </div>
-                                    }
-                                }
-                                <div class="col-md-12">
-                                    <textarea rows="6" class="text-area-editor" name="details" id="details" placeholder="Details"></textarea>
-                                </div>
-                                <div class="col-md-12">
-                                    <button title="" class="button" type="submit" id="submit">Submit Now</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+<!-- Content
+================================================== -->
+<!-- Container -->
+<div class="container">
+    <div class="sixteen columns">
+        <h3 class="margin-bottom-20">Our Office</h3>
+        <!-- Google Maps -->
+        <section class="google-map-container" style="border:1px solid gray">
+            <div id="googlemaps" class="google-map google-map-full">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.4067654300834!2d77.38302791440682!3d28.617568591510324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce56197fc4865%3A0x2743b721b342a663!2sSteep%20Rise%20Infotech!5e0!3m2!1sen!2sin!4v1599125171214!5m2!1sen!2sin" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
             </div>
+        </section>
+        <!-- Google Maps / End -->
+    </div>
+</div>
+<!-- Container / End -->
+<!-- Container -->
+<div class="container">
+    <div class="eleven columns">
+        <h3 class="margin-bottom-15">Contact Us</h3>
+        @{
+            @if (ViewBag.Contact != null)
+            {
+                <div class="alert alert-success" role="alert"><label>@ViewBag.Contact</label></div>
+            }
+            @if (ViewBag.ContactError != null)
+            {
+                <div class="alert alert-danger" role="alert"><label>@ViewBag.ContactError</label></div>
+            }
+        }
+        <!-- Contact Form -->
+        <section id="contact" class="padding-right">
+            <!-- Success Message -->
+            <mark id="message"></mark>
+            <!-- Form -->
+            <form method="post" action="/Home/ConatctUs/" name="contactform" id="contactform">
+                <fieldset>
+                    <div>
+                        <label>Name:</label>
+                        <input name="fullname" type="text" id="name" placeholder="Full Name" required/>
+                    </div>
+                    <div>
+                        <label>Mobile:</label>
+                        <input type="text" name="phone" id="phone" placeholder="Phone Number" required/>
+                    </div>
+                    @{
+                        var user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+                        @if (user != null)
+                        {
+                            <div>
+                                <label>Email: <span>*</span></label>
+                                <input name="email" type="text" id="email" value="@user.Email" readonly>
+                            </div>
+                        }
+                        else
+                        {
+                            <label>Email: <span>*</span></label>
+                            <div>
+                                <input name="email" type="text" id="email" placeholder="Email" required>
+                            </div>
+                        }
+                    }
+                    <div>
+                        <label>Message: <span>*</span></label>
+                        <textarea cols="40" rows="3" name="details" id="details" placeholder="Details" spellcheck="true" required></textarea>
+                    </div>
+                </fieldset>
+                <div id="result"></div>
+                <input type="submit" class="" id="sendMessage" value="Send Message" />
+                <div class="clearfix"></div>
+                <div class="margin-bottom-40"></div>
+            </form>
+        </section>
+        <!-- Contact Form / End -->
+    </div>
+    <!-- Container / End -->
+    <!-- Sidebar
+    ================================================== -->
+    <div class="five columns">
+        <!-- Information -->
+        <h3 class="margin-bottom-10">Information</h3>
+        <div class="widget-box">
+            <p>Due to the bespoke nature of our work, we would like to talk with you so that we can really get to grips with how you and your business work. That way, we can tailor a solution to both your requirements and your budget. </p>
+            <ul class="contact-informations">
+                <li>C-76, Sector 63, </li>
+                <li>Noida - 201301 (U.P) India</li>
+            </ul>
+            <ul class="contact-informations second">
+                <li><i class="fa fa-phone"></i> <p>+91-120-455-4091, +91-981-155-9349</p></li>
+                <li><i class="fa fa-envelope"></i> <p><a href="http://www.vasterad.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b0ddd1d9dcf0d5c8d1ddc0dcd59ed3dfdd">info@steeprise.com</a></p></li>
+                <li><i class="fa fa-globe"></i> <p>www.steeprise.com</p></li>
+            </ul>
+        </div>
+
+        <!-- Social -->
+        <div class="widget margin-top-30">
+            <h3 class="margin-bottom-5">Social Media</h3>
+            <ul class="social-icons">
+                <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
+                <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
+                <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+                <li><a class="linkedin" href="#"><i class="icon-linkedin"></i></a></li>
+            </ul>
+            <div class="clearfix"></div>
+            <div class="margin-bottom-50"></div>
         </div>
     </div>
 </div>
+<!-- Container / End -->
 
-<!-- Google Map -->
-@*<div class="googlemap">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d193572.19492844533!2d-74.11808565615137!3d40.70556503857166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1481975053066" allowfullscreen></iframe>
-    </div>*@
+
 
 @section scripts{
     <script>
