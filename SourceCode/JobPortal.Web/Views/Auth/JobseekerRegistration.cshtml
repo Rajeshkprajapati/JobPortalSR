@@ -43,11 +43,12 @@
                     <div class="col-sm-8">
                         <ul class="social-icons">
                             <li>
-                                <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" onlogin="checkLoginState();" data-use-continue-as="false" data-width=""></div>
-                                <!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                                <!--<div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" onlogin="checkLoginState();" data-use-continue-as="false" data-width=""></div> -->
+                                <!--<a class="gplus" href="#"><i class="icon-gplus"></i></a>
+                                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
                                 </fb:login-button>
-                                <a class="facebook" href="javascript:void(0)" onclick="checkLoginState();" target="_blank"><i class="icon-facebook"></i></a>
-                                <a class="gplus" href="#"><i class="icon-gplus"></i></a> -->
+                                    -->
+                                <a class="facebook" href="javascript:void(0)" onclick="checkLoginState();"><i class="icon-facebook"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -154,6 +155,8 @@
             FB.init({
                 appId: '544734402958846',
                 cookie: true,
+                oauth: true,
+                status: true,
                 xfbml: true,
                 version: 'v8.0'
             });
@@ -171,26 +174,22 @@
         }(document, 'script', 'facebook-jssdk'));
 
         function checkLoginState() {
-            FB.getLoginStatus(function (response) {
-                if (response.authResponse != null) {
+            FB.login(function (response) {
+                if (response.status === 'connected') {
                     statusChangeCallback(response);
                 }
-            });
+            }, { scope: 'public_profile,email' });
         }
         function statusChangeCallback(response) {
-            if (response.status === 'connected') {
-                var accessToken = response.authResponse.accessToken;
-                SendAJAXRequest(`/Auth/FBJobseekerRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
-                    if (resp && resp.isSuccess) {
-                        //console.log('Success');
-                        InformationDialog('Information', 'Registration Successfull!');
-                    } else {
-                        ErrorDialog('Error', 'Email already exist!');
-                    }
-                });
-            } else {
-                ErrorDialog('Error', 'Error occured please retry!');
-            }
+            var accessToken = response.authResponse.accessToken;
+            SendAJAXRequest(`/Auth/FBJobseekerRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
+                if (resp && resp.isSuccess) {
+                    //console.log('Success');
+                    InformationDialog('Information', 'Registration Successfull!');
+                } else {
+                    ErrorDialog('Error', 'Email already exist!');
+                }
+            });
         }
     </script>
 }
