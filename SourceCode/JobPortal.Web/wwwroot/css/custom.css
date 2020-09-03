@@ -1142,3 +1142,13 @@ div.jobimg > img{
 .scrollPopup {
     margin: 80px 0px 0px 0px !important;
 }
+.video-border {
+    border: solid 5px #1c6882;
+    margin: 3px;
+    transition: border-width 0.6s linear;
+    border-radius: 20px;
+}
+
+    .video-border:hover {
+        border: solid 5px #a63960;
+    }

@@ -120,6 +120,12 @@ namespace JobPortal.Business.Handlers.Home
                 DataTable dt = successStories;
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
+                    string picpath = System.IO.Path.GetFullPath(hostingEnviroment.WebRootPath + dt.Rows[i]["ProfilePic"]);
+                    if (!System.IO.File.Exists(picpath))
+                    {
+                        string fName = $@"\ProfilePic\" + "Avatar.jpg";
+                        dt.Rows[i]["ProfilePic"] = fName;
+                    }
                     SuccessStoryViewModel successStory = new SuccessStoryViewModel
                     {
                         Email = Convert.ToString(dt.Rows[i]["Email"]),

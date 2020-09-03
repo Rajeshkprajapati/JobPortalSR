@@ -125,15 +125,12 @@
                                 {
                                     @foreach (var item in ViewBag.SuccessStoryVideo)
                                     {
-                                        @if (@item.Type == "Student")
-                                        {
-                                            <div class="col-md-4">
+                                       <div class="col-md-4">
                                                 <iframe height="100%" width="100%" src="@item.Video" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
                                                 <label class="btn btn-primary buttonLabel text-overflow" title="@item.Title">@item.Title</label><br />
                                                 <label class="updateLbl"><i class="fa fa-user" aria-hidden="true"></i> :&nbsp;@item.UpdatedBy</label>
                                                 <i class="fa fa-clock-o updateLbl dateicon" aria-hidden="true">:&nbsp;@item.CreatedDate.ToString("MM/dd/yyyy")</i>
                                             </div>
-                                        }
                                     }
                                 }
 
