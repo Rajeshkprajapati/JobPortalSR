@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace JobPortal.Model.DataViewModel.Shared
 {
@@ -18,7 +19,9 @@ namespace JobPortal.Model.DataViewModel.Shared
         public string RoleName { get; set; }
         public string MobileNo { get; set; }
         public string UserName { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
         public string Password { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }

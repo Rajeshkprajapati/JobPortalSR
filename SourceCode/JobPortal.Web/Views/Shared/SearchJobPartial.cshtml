@@ -19,25 +19,25 @@
                 <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>
             </div>
             <div class="col-md-2 autocomplete">
-                <input type="text" asp-for="Skills" class="form-control" placeholder="Skill" />
+                <input type="text" asp-for="Skills" class="form" placeholder="Skill" />
             </div>
            
             <div class="col-md-2">
                 @if (ViewBag.JobIndustryArea != null)
                 {
-                    <select asp-for="JobCategory[0]" class="form-control" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
+                    <select asp-for="JobCategory[0]" class="form" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
                         <option value="">Job Category</option>
                     </select>
                 }
                 else
                 {
-                    <select asp-for="JobCategory" class="form-control" >
+                    <select asp-for="JobCategory" class="form" >
                         <option value="">Job Category</option>
                     </select>
                 }
             </div>
             <div class="col-md-1">
-                <select class="form-control" asp-for="Experiance">
+                <select class="form" asp-for="Experiance">
                     <option value="-1">Year</option>
                     <option value="0">Fresher</option>
                     @for (int i = 1; i <= 15; i++)
@@ -49,7 +49,7 @@
             </div>
             <div class="col-md-2 autocomplete">
                 <input asp-for="City" type="hidden" id="hdnCity" />
-                <input type="text" id="City" class="form-control" placeholder="Enter city" />
+                <input type="text" id="City" class="form" placeholder="Enter city" />
             </div>
             <div class="col-md-2">
                 <input type="submit" id="SearchJobPartial" class="btn" value="Search Job">

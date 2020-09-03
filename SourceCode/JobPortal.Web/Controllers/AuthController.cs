@@ -49,39 +49,42 @@ namespace JobPortal.Web.Controllers
         {
             try
             {
-                var result = authHandler.Login(user.Email.Trim(), user.Password);
-                //if (result != null && result.IsApproved == "False")
-                //{
-                //    throw new NotApprovedByAdminException("Sorry!!! Your account is not activated. Contact your tech deck.");
-                //}
-                if (null != result)
+                if (ModelState.IsValid)
                 {
-                    var identity = new ClaimsIdentity(new[] {
+                    var result = authHandler.Login(user.Email.Trim(), user.Password);
+                    if (null != result)
+                    {
+                        var identity = new ClaimsIdentity(new[] {
                     new Claim(ClaimTypes.Email,result.Email),
                     new Claim(ClaimTypes.Role,result.RoleName)
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    var principal = new ClaimsPrincipal(identity);
-                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                        var principal = new ClaimsPrincipal(identity);
+                        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                    if (!string.IsNullOrEmpty(result.PasswordExpirayDate) && DateTime.Now.Date <= Convert.ToDateTime(result.PasswordExpirayDate))
-                    {
-                        //Handled if image url exist in db but not available physically
-                        string picpath = hostingEnviroment.WebRootPath + result.ProfilePic;
-                        if (!System.IO.File.Exists(picpath))
+                        if (!string.IsNullOrEmpty(result.PasswordExpirayDate) && DateTime.Now.Date <= Convert.ToDateTime(result.PasswordExpirayDate))
                         {
-                            string fName = $@"\ProfilePic\" + "Avatar.jpg";
-                            result.ProfilePic = fName;
+                            //Handled if image url exist in db but not available physically
+                            string picpath = hostingEnviroment.WebRootPath + result.ProfilePic;
+                            if (!System.IO.File.Exists(picpath))
+                            {
+                                string fName = $@"\ProfilePic\" + "Avatar.jpg";
+                                result.ProfilePic = fName;
+                            }
+                            HttpContext.Session.Set<UserViewModel>(Constants.SessionKeyUserInfo, result);
+                            authHandler.UserActivity(result.UserId);
+                            return GoAhead(result.RoleName, result.UserId);
+                            //return View("Index");
                         }
-                        HttpContext.Session.Set<UserViewModel>(Constants.SessionKeyUserInfo, result);
-                        authHandler.UserActivity(result.UserId);
-                        return GoAhead(result.RoleName, result.UserId);
-                        //return View("Index");
+                        else
+                        {
+                            return View("CreateNewPassword");
+                        }
                     }
-                    else
-                    {
-                        return View("CreateNewPassword");
-                    }
+                }
+                else
+                {
+
                 }
             }
             catch (InvalidUserCredentialsException ex)
@@ -144,94 +147,14 @@ namespace JobPortal.Web.Controllers
 
         public IActionResult JobseekerRegistration(string data)
         {
-            //var lstRoles = authHandler.RolesList();
-            //ViewBag.RoleListEmp = lstRoles.FindAll(x => x.IsEmp == true);
-            //ViewBag.RoleListCandidate = lstRoles.FindAll(x => x.IsEmp == false);
             return View();
         }
         public IActionResult EmployerRegistration(string data)
         {
-            //var lstRoles = authHandler.RolesList();
-            //ViewBag.RoleListEmp = lstRoles.FindAll(x => x.IsEmp == true);
-            //ViewBag.RoleListCandidate = lstRoles.FindAll(x => x.IsEmp == false);
             return View();
         }
 
-        //[HttpPost]
-        //public JsonResult SubmitRegistration([FromForm]UserViewModel user)
-        //{
-        //    var isregistered = true;
-        //    var message = "User registered successfully, please login to proceed.";
-        //    try
-        //    {
-        //        authHandler.RegisterUser(user, user.ImageFile);
-        //        var eModel = new EmailViewModel
-        //        {
-        //            Subject = "Resgistration completed successfully",
-        //            Body = "Dear " + user.FirstName + "," + "<br/>You have successfully registered with us." + "<br>Your login details are below:<br>" + "User Name: " + user.Email + "<br>Password: " + user.Password + "<br><br>Thank You<br>Placement Portal Team",
-        //            To = new string[] { user.Email },
-        //            From = config["EmailCredential:Fromemail"],
-        //            IsHtml = true,
-        //            MailType = (int)MailType.ForgotPassword
-        //        };
-        //        emailHandler.SendMail(eModel, -1);
-        //    }
-        //    catch (UserNotCreatedException ex)
-        //    {
-        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
-        //        isregistered = false;
-        //        message = ex.Message;
-        //        //ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
-        //    }
-        //    catch (UserAlreadyExists ex)
-        //    {
-        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
-        //        isregistered = false;
-        //        message = ex.Message;
-        //        //ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
-        //    }
-        //    return Json(new { isRegistered = isregistered, msg = message });
-        //}
 
-        //[HttpPost]
-        //public JsonResult SubmitEmpRegistration([FromForm]UserViewModel user)
-        //{
-        //    var isregistered = true;
-        //    //var message = "Employer registered successfully, Please wait for the Account Activation";
-        //    var message = "Account created successfully, You will get a mail after account activation.";
-        //    try
-        //    {
-        //        authHandler.RegisterEmployer(user, user.ImageFile);
-
-        //        var eModel = new EmailViewModel
-        //        {
-        //            Subject = "Account Activation",
-        //            Body = "Dear " + user.CompanyName + "," + "<br/>Please wait for the account activation." + "<br><br>Thank You<br>Placement Portal Team",
-        //            To = new string[] { user.Email },
-        //            From = config["EmailCredential:Fromemail"],
-        //            IsHtml = true,
-        //            MailType = (int)MailType.ForgotPassword
-        //        };
-        //        emailHandler.SendMail(eModel, -1);
-
-        //        //ViewData["SuccessMessage"] = "Employer registered successfully, please login to proceed";
-        //    }
-        //    catch (UserNotCreatedException ex)
-        //    {
-        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
-        //        isregistered = false;
-        //        message = ex.Message;
-        //        //ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
-        //    }
-        //    catch (UserAlreadyExists ex)
-        //    {
-        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
-        //        isregistered = false;
-        //        message = ex.Message;
-        //        //ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
-        //    }
-        //    return Json(new { isRegistered = isregistered, msg = message });
-        //}
 
         [HttpGet]
         public ActionResult ForgotPassword()
@@ -531,52 +454,6 @@ namespace JobPortal.Web.Controllers
             TempData[Constants.SessionRedirectUrl] = returnUrl;
             return View();
         }
-
-        #region Googlelogin
-        //public IActionResult GoogleLogin()
-        //{
-        //    string redirectUrl = Url.Action("GoogleResponse", "Auth");
-        //    var properties = signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
-        //    return new ChallengeResult("Google", properties);
-        //}
-
-        //public async Task<IActionResult> GoogleResponse()
-        //{
-        //    ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync();
-        //    if (info == null)
-        //    {
-        //        return RedirectToAction(nameof(Login));
-        //    }
-
-        //    var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
-        //    string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
-        //    if (result.Succeeded)
-        //    {
-        //        return View(userInfo);
-        //    }
-        //    else
-        //    {
-        //        var user = new IdentityUser
-        //        {
-        //            Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
-        //            UserName = info.Principal.FindFirst(ClaimTypes.Email).Value
-        //        };
-
-        //        IdentityResult identResult = await userManager.CreateAsync(user);
-        //        if (identResult.Succeeded)
-        //        {
-        //            identResult = await userManager.AddLoginAsync(user, info);
-        //            if (identResult.Succeeded)
-        //            {
-        //                await signInManager.SignInAsync(user, false);
-        //                return View(userInfo);
-        //            }
-        //        }
-        //        return UnauthorizedUser();
-        //    }
-        //}
-        #endregion
-
 
         [HttpPost]
         public IActionResult EmployerRegistration(EmployeeViewModel user)
