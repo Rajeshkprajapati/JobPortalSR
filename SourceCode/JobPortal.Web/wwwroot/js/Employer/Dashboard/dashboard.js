@@ -19,7 +19,7 @@ dashboard = (function () {
 
         
 
-        $("ul.usernavdash").find("li").eq(0).click();
+        //$("ul.usernavdash").find("li").eq(0).click();
 
         //appending dashboard data
         SendAJAXRequest(`/Dashboard/EmpDashboardData`, 'GET', {}, "html", function (resp) {
