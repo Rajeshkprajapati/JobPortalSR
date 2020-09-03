@@ -81,11 +81,7 @@ namespace JobPortal.Web.Controllers
                             return View("CreateNewPassword");
                         }
                     }
-                }
-                else
-                {
-
-                }
+                }                
             }
             catch (InvalidUserCredentialsException ex)
             {

@@ -6,7 +6,7 @@ dashboard = (function () {
     let messageSection = {};
     let jobSeekersSection = {};
     messageSection.calendar = messageSection.calendar || null;
-    //jobSeekersSection.multiselector = jobSeekersSection.multiselector || null;
+    
     let init = function () {
         
         $("div.dashboard-nav-inner").find('ul').find("li").click(function () {
@@ -17,13 +17,7 @@ dashboard = (function () {
             $(this).addClass("active");
         });
 
-        //$('table#tableJobSeekersList,table#tableMessagesList').dataTable({
-        //    "ordering": true
-        //    //order: [[1, 'desc'], [0, 'asc']]
-        //    //searching: false,
-        //    //lengthChange: false,
-        //    //bAutoWidth: false
-        //});
+        
 
         $("ul.usernavdash").find("li").eq(0).click();
 
@@ -37,31 +31,7 @@ dashboard = (function () {
             }
         });
     };
-    //let initMultiSelectorForJobSeekersFilter = function () {
-    //    jobSeekersSection.multiselector = multiselector.initSelector(
-    //        $('select#ddlJobRoles'),
-    //        {
-    //            nonSelectedText: 'Select job role',
-    //            onDropdownHidden: function (evt) {
-    //                globalFilter.selectedJobRoles = $("input[type=hidden]#hdnJobRoleIds").val();
-    //                loadAllGraphs();
-    //            },
-    //            onSelectAll: function () {
-    //                $("input[type=hidden]#hdnJobRoleIds").val('');
-    //            }
-    //        },
-    //        $("input[type=hidden]#hdnJobRoleIds")
-    //    );
-    //    $("button.multiselect-clear-filter").click(function () {
-    //        let selector = $(this).parent().parent().parent().parent().parent().parent().find('select');
-    //        if (selector && selector.length > 0) {
-    //            $(selector).multiselect("clearSelection");
-    //            if (selector.attr('id')) {
-    //                $("input[type=hidden]#hdnJobRoleIds").val('');
-    //            }
-    //        }
-    //    });
-    //};
+    
 
     let employerDetails = function () {
         SendAJAXRequest(`/Dashboard/GetEmployerDetail`, "GET", {}, "html", function (resp) {
@@ -174,17 +144,8 @@ dashboard = (function () {
                 $("div#editJob").find("div.modal-body").html(resp);
                 $("div#editJob").modal({
                     backdrop: "static"
-                });                
-                //$("#jobRole").trigger("chosen:updated");                
-                $("#jobRole").prop('disabled', true).trigger("chosen:updated");
-                //multiselector.initSelector(
-                //    $('select#jobRole'),
-                //    {
-                //        nonSelectedText: 'Select job role',
-                //        isDisableSelector: true
-                //    },
-                //    $("input[type=hidden]#hdnJobRoleIds")
-                //);
+                });                                            
+                $("#jobRole").prop('disabled', true).trigger("chosen:updated");                
             }
             else {
                 return false;
@@ -214,10 +175,7 @@ dashboard = (function () {
             if (resp && resp.isUpdated) {
                 closeModalManually($("div#editJob"));
                 $("ul.usernavdash").find("li").eq(2).click();
-                InformationDialog('Information', 'Successfully updated job details');
-                //let Message = "Successfully updated job details";
-                //let icon = "fas fa-thumbs-up";
-                //sucessfullyPopupWR(Message, icon);
+                InformationDialog('Information', 'Successfully updated job details');               
             }
             else {
                 return false;
@@ -230,12 +188,9 @@ dashboard = (function () {
         SendAJAXRequest(`/Dashboard/ReplyToJobSeeker`, "POST", data, "JSON", function (resp) {
             if (resp && resp.isSuccess) {
                 closeModalManually($("div#emailPromptContainer"));
-                let Message = "Successfully replied";
-                //let icon = "fas fa-thumbs-up";
+                let Message = "Successfully replied";                
                 getMessages();
-                InformationDialog('Information', Message);
-                //sucessfullyPopupWR(Message, icon);
-
+                InformationDialog('Information', Message);                
             }
             else {
                 return false;
