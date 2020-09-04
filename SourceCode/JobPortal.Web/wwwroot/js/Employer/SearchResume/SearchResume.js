@@ -4,8 +4,9 @@
     SendAJAXRequest(`/SearchResume/SendMessage/?userEmail=${JobseekerId}&&JobSeekerName=${JobSeekerName}`, 'GET', {}, 'JSON', (result) => {
         if (result) {
             $('#loader').hide();
-            document.getElementById('result').innerHTML = result.errorMessage;
-            $("#result").show();
+            //document.getElementById('result').innerHTML = result.errorMessage;
+            InformationDialog('Information', result.errorMessage);
+            //$("#result").show();
         } else {
             $('#loader').hide();
             $("#iconPopup").addClass('fa fa-exclamation-triangle');

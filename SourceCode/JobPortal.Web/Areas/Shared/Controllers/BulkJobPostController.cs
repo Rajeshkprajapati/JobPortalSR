@@ -43,17 +43,17 @@ namespace JobPortal.Web.Areas.Shared.Controllers
             user = user ?? new UserViewModel();
             try
             {
-                if (inBackground)
-                {
-                    bjpHandler.UploadJobsInBackground(user,files);
-                    Logger.Logger.WriteLog(Logger.Logtype.Error, "Test", user.UserId, typeof(BulkJobPostController), "Text that this method is called");
-                    ModelState.AddModelError("Message", "We have processed your bulk job uploads in background.");
-                    return View("Index", summary);
-                }
-                else
-                {
+                //if (inBackground)
+                //{
+                //    bjpHandler.UploadJobsInBackground(user,files);
+                //    Logger.Logger.WriteLog(Logger.Logtype.Error, "Test", user.UserId, typeof(BulkJobPostController), "Text that this method is called");
+                //    ModelState.AddModelError("Message", "We have processed your bulk job uploads in background.");
+                //    return View("Index", summary);
+                //}
+                //else
+                //{
                         summary = bjpHandler.UploadJobs(user, files);
-                }
+                //}
             }
             //catch (DataNotUpdatedException ex)
             catch (XmlFileMapperException ex)

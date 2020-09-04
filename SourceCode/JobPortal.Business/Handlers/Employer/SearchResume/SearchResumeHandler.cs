@@ -164,6 +164,12 @@ namespace JobPortal.Business.Handlers.Employer.SearchResume
                     DateTime date = Convert.ToDateTime(dob);
                     model.DateOfBirth = Convert.ToString(DateTime.Now.Year - date.Year);
                 }
+                string picpath = System.IO.Path.GetFullPath(_hostingEnviroment.WebRootPath + model.ProfilePic);
+                if (!System.IO.File.Exists(picpath))
+                {
+                    string fName = $@"\ProfilePic\" + "118_index.jpg";
+                    model.ProfilePic = fName;
+                }
                 model.CurrentSalary = searchedResume.Rows[0]["CurrentSalary"].ToString();
                 model.ExpectedSalary = searchedResume.Rows[0]["ExpectedSalary"].ToString();
 
