@@ -60,6 +60,14 @@
         <!-- Recent Jobs -->
         <div class="eleven columns">
             <div class="padding-right">
+                @if (Model.Count() < 1)
+                {
+                    <br/>
+                    <div class="alert alert-danger" role="alert"><strong>Oh snap!</strong>&nbsp; Jobs not found</div>
+
+                }
+                else
+                {
                 <div class="listings-container">
                     @foreach (var item in Model)
                     {
@@ -80,6 +88,7 @@
                         </a>
                     }
                 </div>
+                }
                 <div class="clearfix"></div>
                 <div class="pagination-container">
                     <nav class="pagination">

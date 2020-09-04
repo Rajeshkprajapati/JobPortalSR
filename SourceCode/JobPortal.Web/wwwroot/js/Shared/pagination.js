@@ -29,6 +29,9 @@
         numberPage++;
         slide();
     });
+    if ($(".listing").length == 0) {
+        next.hide();
+    };
     $("#pagin li").first().find("a").addClass("current-page");
 
     slide = function (sens) {
@@ -44,8 +47,8 @@
             next.hide();
             prev.show();
         } else {
-            next.show();
-            prev.show();
+            next.hide();
+            prev.hide();
         }
 
 
