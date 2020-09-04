@@ -1,5 +1,5 @@
 ﻿function changePassword() {
-    debugger;
+    
     $('#PasswordForm').submit(function (e) {
         e.preventDefault();
     });
@@ -8,6 +8,17 @@
 
     let oldPassword = $('input[name=OldPassword]').val();
     let Password = $('input[name=Password]').val();
+    let ConfirmPassword = $('input[name=ConfirmPassword]').val();
+    debugger;
+    if ((ConfirmPassword == null || ConfirmPassword == '') || (Password == null || Password == '')) {
+        ErrorDialog('Warning', 'Empty password fields not allowed');
+        return false;
+    }
+    if (ConfirmPassword != Password) {
+        ErrorDialog('Warning', 'Password and Confirm Password must be same');
+        return false;
+    }
+
     //var formData = new FormData();
     //formData.append('OldPassword', oldPassword);
     //formData.append('Password', Password);
@@ -18,7 +29,7 @@
 
     SendAJAXRequest("/Auth/ChangePassword/", 'post', formData, 'json', function(result) {
         if (result === true) {
-            debugger
+            
             InformationDialog('Information','Password successfully changed');
         } else {
             ErrorDialog('Error', 'Current password is not correct');            
@@ -53,8 +64,7 @@ function UpdateEmpDetail() {
     
 
     SendAJAXRequest("/EmployerManagement/UpdateProfile/", "POST", formData, "JSON", function (result) {
-        if (result === true) {
-            debugger;
+        if (result === true) {            
             InformationDialog('Information', 'Profile details added/updated successfully');
             //location.reload(true);
         } else {

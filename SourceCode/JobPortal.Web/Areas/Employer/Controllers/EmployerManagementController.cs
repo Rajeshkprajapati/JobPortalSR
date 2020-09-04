@@ -97,7 +97,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 if (result)
                 {
                     user.CompanyName = model.CompanyName;
-                    user.ProfilePic = model.ProfilePic;
+                    user.ProfilePic = !string.IsNullOrEmpty(model.ProfilePic) ? model.ProfilePic : user.ProfilePic;
                 }
                 //HttpContext.Session.Set<UserViewModel>(Constants.SessionKeyUserInfo, model);
             }

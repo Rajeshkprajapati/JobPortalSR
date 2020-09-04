@@ -54,7 +54,7 @@
 
 
                             <label for="MobileNo">Phone</label>
-                            <input type="text" name="MobileNo" value="@Model.MobileNo" placeholder="Your Phone number">
+                            <input type="text" maxlength="10" pattern="[789][0-9]{9}" id="phoneNumber" name="MobileNo" value="@Model.MobileNo" placeholder="Your Phone number">
 
                             <label>Email</label>
                             <input type="text" name="Email" readonly value="@Model.Email" placeholder="Email Address">

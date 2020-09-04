@@ -91,7 +91,7 @@
                                         <span>@item.AboutMe</span>
                                         <div class="skills">
                                             @{
-                                                if (item.Skills != null && item.Skills.SkillSets.Length > 0)
+                                                if (item.Skills != null && item.Skills.SkillSets != null && item.Skills.SkillSets.Length > 0)
                                                 {
                                                     string[] skills = item.Skills.SkillSets.Split(',');
                                                     foreach (var skill in skills)
