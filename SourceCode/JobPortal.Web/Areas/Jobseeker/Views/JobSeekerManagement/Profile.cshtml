@@ -70,7 +70,7 @@
                             <span id="Resumename"></span>
                             <ul>
                                 <li><a href="javascript:void(0)" id="Resumefile"><i class="fa fa-file-text"></i> Download CV</a></li>
-                                <li><a asp-area="Jobseeker" asp-controller="ResumeBuilder" asp-action="Index"><i class="fa fa-envelope"></i> Build Resume</a></li>
+                                <li><a href="/JobSeekerManagement/Dashboard/#ManageResume"><i class="fa fa-envelope"></i> Build Resume</a></li>
                             </ul>
                         </div>
                         <!-- Buttons -->
@@ -200,7 +200,7 @@
                 </div>
 
                 <div class="dashboard-list-box margin-top-3">
-                    <h4>Personal Details<a data-toggle="modal" onclick="EditProfileData()" class="addMorebtn pull-right">+Add More</a></h4>
+                    <h4>Personal Details<a data-toggle="modal" onclick="EditProfileData()" class="addMorebtn pull-right">+Add More/Edit</a></h4>
                 </div>
                 <div class="application">
                     <div class="app-content">
@@ -417,34 +417,34 @@
 
                                 <div class="form">
                                     <h5>Education</h5>
-                                    <select class="selectDropdown" id="CourseCategory" name="Qualification" asp-items="@(new SelectList(@ViewBag.Coursecategory, "Id", "Name"))">
-                                        <option>--Select Course Category--</option>
+                                    <select class="selectDropdown" id="CourseCategory" name="Qualification" asp-items="@(new SelectList(@ViewBag.Coursecategory, "Id", "Name"))" required>
+                                        <option  value="">--Select Course Category--</option>
                                     </select>
                                 </div>
 
                                 <div class="form">
                                     <h5>Course</h5>
-                                    <select class="selectDropdown" name="Course" id="ddlcourse"></select>
+                                    <select class="selectDropdown" name="Course" id="ddlcourse" required></select>
                                 </div>
                                 <div class="form">
                                     <h5>Specialization</h5>
-                                    <input type="text" name="Specialization" id="Specialization" class="search-field eduModeltxtbox" placeholder="Type Your Specialization">
+                                    <input type="text" name="Specialization" id="Specialization" class="search-field eduModeltxtbox" placeholder="Type Your Specialization" required>
                                 </div>
                                 <div class="form">
                                     <h5>University/Institute</h5>
-                                    <input type="text" name="University" id="UniversityInstitute" class="search-field eduModeltxtbox" placeholder="Type Your University/Institute">
+                                    <input type="text" name="University" id="UniversityInstitute" class="search-field eduModeltxtbox" placeholder="Type Your University/Institute" required>
                                 </div>
                                 <div class="form" width="100%">
                                     <h5>Course Type</h5>
-                                    <input type="radio" name="CourseType" value="1" class="eduRadio"> Full Time
-                                    <input type="radio" name="CourseType" value="2" class="eduRadio"> Part Time
-                                    <input type="radio" name="CourseType" value="3" class="eduRadio"> Correspondence
+                                    <input type="radio" name="CourseType" value="1" class="eduRadio" required> Full Time
+                                    <input type="radio" name="CourseType" value="2" class="eduRadio" required> Part Time
+                                    <input type="radio" name="CourseType" value="3" class="eduRadio" required> Correspondence
                                 </div>
                                 <div class="form">
                                 </div>
                                 <div class="form">
                                     <h5>Pass Out Year</h5>
-                                    <select class="selectDropdown" name="PassingYear">
+                                    <select class="selectDropdown" name="PassingYear" required>
                                         @{
                                             int currYearPassing = DateTime.Now.Year;
                                             @for (int i = (currYearPassing - 50); i <= (currYearPassing + 1); i++)
@@ -456,7 +456,7 @@
                                 </div>
                                 <div class="form">
                                     <h5>Grading System/Percentage</h5>
-                                    <input type="text" name="Percentage" id="GradingSystemPercentages" class="search-field eduModeltxtbox" placeholder="Grading System/Percentage">
+                                    <input type="text" name="Percentage" id="GradingSystemPercentages" class="search-field eduModeltxtbox" placeholder="Grading System/Percentage" required>
                                 </div>
 
                                 <div class="form">
@@ -544,17 +544,22 @@
                             </div>
                             <div class="form">
                                 <h5>Job Title</h5>
-                                <select id="ddlJobTitle" class="selectDropdown" name="JobTitle" asp-items="@(new SelectList(@ViewBag.AllJobTitle,"JobTitleId", "JobTitleName"))">
+                                <select id="ddlJobTitle" class="selectDropdown" name="JobTitle" asp-items="@(new SelectList(@ViewBag.AllJobTitle,"JobTitleId", "JobTitleName"))" required>
                                     <option value="">Select Job Title</option>
                                 </select>
                             </div>
-                            <div class="form">
+                            <div class="form" style="width:33%">
                                 <h5>Employment Status</h5>
                                 <select id="ddlEmploymentStatus" class="selectDropdown" asp-items="@(new SelectList(@ViewBag.EmploymentStatus,"EmploymentStatusId", "EmploymentStatusName"))">
                                     <option value="">Employment Status</option>
                                 </select>
                             </div>
-                            <div class="form">
+                            <div class="form" style="width:33%">
+                                <h5>Gender</h5>
+                                <input type="radio" name="gender" id="btnMale">&nbsp; Male&nbsp;&nbsp;
+                                <input type="radio" name="gender" id="btnFemale">&nbsp;Female
+                            </div>
+                            <div class="form" style="width:33%">
                                 <h5>Marital Status</h5>
                                 <select class="selectDropdown" id="ddlMaritalStatus">
                                     <option value="">Select Marital Status</option>
@@ -562,11 +567,7 @@
                                     <option value="married">Married</option>
                                 </select>
                             </div>
-                            <div class="form">
-                                <h5>Gender</h5>
-                                <input type="radio" name="gender" id="btnMale">&nbsp; Male&nbsp;&nbsp;
-                                <input type="radio" name="gender" id="btnFemale">&nbsp;Female
-                            </div>
+
                             <div class="form" style="width:33%">
                                 <h5>Country</h5>
                                 <select id="ddlCountry" class="selectDropdown" required asp-items="@(new SelectList(@ViewBag.Country,"CountryCode", "Country"))">
@@ -789,13 +790,14 @@
 
 @section Scripts
     {
-    <script src="~/Assets/PopBox/messagebox.js"></script>
+
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/jquery/jquery-ui.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/lib/Calendar/js/tail.datetime.js"></script>
     <script src="~/lib/tag-editor/jquery.caret.min.js"></script>
     <script src="~/lib/tag-editor/jquery.tag-editor.min.js"></script>
+    <script src="~/Assets/PopBox/messagebox.js"></script>
     <script src="~/js/Jobseeker/Profile.js"></script>
     <script src="~/js/common.js"></script>
 }

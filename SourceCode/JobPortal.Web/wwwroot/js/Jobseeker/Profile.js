@@ -89,6 +89,9 @@ $(document).ready(function () {
             if (result.PersonalDetails.Resume) {
                 $('#Resumefile').attr('href', result.PersonalDetails.Resume);
             }
+            else {
+                $('#Resumefile').attr("hidden", "true");
+            }
 
             $('#candidateid').text(result.PersonalDetails.CandidateId);
             $('#SSCJobRole').text(result.PersonalDetails.SSCJobRole);
@@ -832,10 +835,9 @@ function DeleteITSkill(id) {
     var data = "";
     SendAJAXRequest("/JobSeekerManagement/DeleteITSkill/?ITSkillId=" + id + "", 'POST', data, 'JSON', function (result) {
         if (result) {
-            let icon = 'fa fa-thumbs-up';
-            updatedsucessfully(result, icon);
+            InformationDialogWithPageRelode("Success", 'Succuessfully Done');
         } else {
-            warnignPopup('Error');
+            ErrorDialog('Warning','This action not done');
         }
     });
 }
@@ -848,19 +850,26 @@ function UpdateITSKill()
     let LastUsed = $('#LastUsed').val();
     let ExperienceYear = $('#ExperienceYear option:selected').val();
     let ExperienceMonth = $('#ExperienceMonth option:selected').val();
-    var data = {
-        Id: ITSkillId, Skill: ITSkill, SkillVersion: SkillVersion,
-        LastUsed: LastUsed, ExperienceYear: ExperienceYear,
-        ExperienceMonth: ExperienceMonth
-    };
-    SendAJAXRequest("/JobSeekerManagement/UpdateITSkill/", 'POST', data, 'JSON', function (result) {
-    if (result) {
-            let icon = 'fa fa-thumbs-up';
-        updatedsucessfully("Successfully done", icon);
-          } else {
-            warnignPopup('Error');
-        }
-    });
+    if(ITSkill == "" || SkillVersion == "")
+    {
+        ErrorDialog('Warning','Fields are required');
+        return false;
+    }
+    else {
+        var data = {
+            Id: ITSkillId, Skill: ITSkill, SkillVersion: SkillVersion,
+            LastUsed: LastUsed, ExperienceYear: ExperienceYear,
+            ExperienceMonth: ExperienceMonth
+        };
+        SendAJAXRequest("/JobSeekerManagement/UpdateITSkill/", 'POST', data, 'JSON', function (result) {
+            if (result) {
+                InformationDialogWithPageRelode("Success", 'Succuessfully Done');
+            } else {
+                ErrorDialog('Warning','This action not done');
+            }
+        });
+    }
+   
 }
 
 function EditProfileSummary() {

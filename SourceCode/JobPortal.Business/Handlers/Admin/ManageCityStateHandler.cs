@@ -101,11 +101,11 @@ namespace JobPortal.Business.Handlers.Admin
         }
         public bool InsertStateList(StateViewModel stateViewModel)
         {
-            string statecode = stateViewModel.StateCode;
-            if (usp_CheckIfStateAlreadyExist(Convert.ToString(statecode)) == true)
-            {
-                throw new UserAlreadyExists("State code already exist");
-            }
+           // string statecode = stateViewModel.StateCode;
+            //if (usp_CheckIfStateAlreadyExist(Convert.ToString(statecode)) == true)
+            //{
+            //    throw new UserAlreadyExists("State code already exist");
+            //}
             StateListModel state = new StateListModel
             {
                 StateCode = stateViewModel.StateCode,

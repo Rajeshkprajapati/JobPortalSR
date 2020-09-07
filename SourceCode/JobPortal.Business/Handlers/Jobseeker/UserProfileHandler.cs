@@ -259,6 +259,13 @@ namespace JobPortal.Business.Handlers.Jobseeker
                 {
                     model.Skills = JsonConvert.DeserializeObject<Skills>(jobSeekerDetail.Rows[0]["Skills"].ToString());
                 }
+                string picpath = System.IO.Path.GetFullPath(_hostingEnviroment.WebRootPath + jobSeekerDetail.Rows[0]["ProfilePic"]);
+                if (!System.IO.File.Exists(picpath))
+                {
+                    string fName = $@"\ProfilePic\" + "Avatar.jpg";
+                    jobSeekerDetail.Rows[0]["ProfilePic"] = fName;
+                }
+
                 model.PersonalDetails.DOB = Convert.ToString(jobSeekerDetail.Rows[0]["DateOfBirth"]);
                 model.PersonalDetails.ProfileSummary = Convert.ToString(jobSeekerDetail.Rows[0]["ProfileSummary"]);
                 model.PersonalDetails.ProfilePic = Convert.ToString(jobSeekerDetail.Rows[0]["ProfilePic"]);

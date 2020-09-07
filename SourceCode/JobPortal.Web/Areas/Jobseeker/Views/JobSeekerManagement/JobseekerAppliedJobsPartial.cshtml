@@ -30,7 +30,7 @@
                         <th><i class="fa fa-clock-o"></i> CTC</th>
                         <th><i class="fa fa-calendar"></i> Date</th>
                         @*<th><i class="fa fa-calendar"></i> Days</th>*@
-                        <th></th>
+                        @*<th></th>*@
                     </tr>
                     <!-- Item #1 -->
                     @if (ViewBag.Appliedjob != null && Enumerable.Count(ViewBag.Appliedjob)>0)
@@ -44,9 +44,9 @@
                                 <td>@item.CTC</td>
                                 <td>@item.CreatedDate</td>
                                 @*<td>@item.NumberOfDays&#8203;d ago</td>*@
-                                <td class="action">
+                                @*<td class="action">
                                     <a onclick="DeleteAppliedJob(@item.JobPostId)" class="delete"><i class="fa fa-remove"></i> Delete</a>
-                                </td>
+                                </td>*@
                             </tr>
 
                         }
@@ -59,10 +59,5 @@
                 </table>
             </div>
         </div>
-    </div>
-
-    <!-- Copyrights -->
-    <div class="col-md-12">
-        <div class="copyrights">© 2019 WorkScout. All Rights Reserved.</div>
     </div>
 </div>

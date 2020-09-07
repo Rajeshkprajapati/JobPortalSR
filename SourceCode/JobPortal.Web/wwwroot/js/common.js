@@ -210,3 +210,16 @@ function PromptBoxDialog() {
 
     $('.messagebox_title').css("background", "#033c73").css("color", "white");
 }
+
+function InformationDialogWithPageRelode(title, msg) {
+
+    $.MessageBox({
+        buttonDone: 'OK',
+        message: msg,
+        title: title,
+        customClass: "custom-success",
+    }).done(function () {
+        location.reload();
+    });
+
+}
