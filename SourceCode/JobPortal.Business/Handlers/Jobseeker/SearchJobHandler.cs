@@ -53,6 +53,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
                     lstJobList.Add(new SearchJobListViewModel
                     {
                         JobTitleByEmployer = Convert.ToString(row["JobTitleByEmployer"]),
+                        Skills = Convert.ToString(row["Skills"]),
                         JobPostId = Convert.ToInt32(row["JobPostId"]),
                         CompanyLogo = Convert.ToString(row["CompanyLogo"]),
                         JobTitle = Convert.ToString(row["JobTitle"]),

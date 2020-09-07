@@ -289,6 +289,7 @@ namespace JobPortal.Business.Handlers.Employer.JobPost
                     //NoPosition = Convert.ToInt32(dt.Rows[0]["NoPosition"]),
                     EmploymentStatusName = Convert.ToString(dt.Rows[0]["EmploymentStatusName"]),
                     EmploymentTypeName = Convert.ToString(dt.Rows[0]["EmploymentTypeName"]),
+                    Skills = Convert.ToString(dt.Rows[0]["Skills"]),
                     JobTitle = Convert.ToString(dt.Rows[0]["JobTitleName"]),
                     Nationality = Convert.ToString(dt.Rows[0]["Nationality"]),
                     PositionStartDate = Convert.ToString(dt.Rows[0]["PositionStartDate"]),

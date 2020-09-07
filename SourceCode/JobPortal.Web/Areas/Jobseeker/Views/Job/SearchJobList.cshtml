@@ -84,6 +84,25 @@
                                     <li><i class="ln ln-icon-Money-2"></i>@item.CTC</li>
                                     <li><div class="listing-date new">@item.NumberOfDays&#8203; days ago</div></li>
                                 </ul>
+                                <div class="skills">
+                                    @{
+                                        if (!string.IsNullOrEmpty(item.Skills) && item.Skills.Length > 0)
+                                        {
+                                            string[] skills = item.Skills.Split(',');
+                                            foreach (var skill in skills)
+                                            {
+                                                if (skill.Length > 1)
+                                                {                                                    
+                                                    <span>@skill</span>
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span>N/A</span>
+                                        }
+                                    }
+                                </div>
                             </div>
                         </a>
                     }

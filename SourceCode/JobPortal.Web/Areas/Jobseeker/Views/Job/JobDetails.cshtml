@@ -83,6 +83,28 @@
                              data-href="ViewBag.FBUrl Model.JobPostId"
                              data-layout="button">
                         </div>-->
+                        
+                        <div class="skills">
+                            <span>Skills: </span>
+                            @{
+                                if (Model.Skills != null && Model.Skills.Length > 0)
+                                {
+                                    string[] skills = Model.Skills.Split(',');
+                                    foreach (var skill in skills)
+                                    {
+                                        if (skill.Length > 1)
+                                        {
+                                            <span>@skill</span>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+                            }                               
+                        </div>
+
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -240,6 +262,6 @@
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0&appId=544734402958846&autoLogAppEvents=1" nonce="oYQmyAJk"></script>
 }
 @section Scripts
-    {    
+    {
     <script src="~/js/Jobseeker/JobDetails.js"></script>
 }
