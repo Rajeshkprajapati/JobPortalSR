@@ -7,20 +7,7 @@
 <link href="~/lib/jquery/jquery-ui.min.css" rel="stylesheet" />
 <link href="~/css/Loader.css" rel="stylesheet" />
 <link href="~/css/JobSeeker/search-jobs.css" rel="stylesheet" />
-<style>
-    #joblist {
-        max-height: 30rem;
-        overflow-y: scroll;
-    }
 
-    #main-section {
-        margin-top: 1.5rem;
-    }
-
-    #skilldata {
-        margin-bottom: 0.5rem;
-    }
-</style>
 <!-- Page Title start -->
 <div class="pageTitle">
     <div class="container">
@@ -85,6 +72,7 @@
                                     <li><div class="listing-date new">@item.NumberOfDays&#8203; days ago</div></li>
                                 </ul>
                                 <div class="skills">
+                                    <span style="background-color:white;color:#808080 !important;font-weight:300 !important">Skills: </span>
                                     @{
                                         if (!string.IsNullOrEmpty(item.Skills) && item.Skills.Length > 0)
                                         {
