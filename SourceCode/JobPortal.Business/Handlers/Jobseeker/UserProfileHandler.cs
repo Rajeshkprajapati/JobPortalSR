@@ -243,7 +243,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
 
                     foreach (EducationalDetails edu in model.EducationalDetails)
                     {
-                        if (edu.Course != null)
+                        if (!string.IsNullOrEmpty(edu.Course))
                         {
                             DataTable coursename = _masterRepository.GetCoursesById(Convert.ToInt32(edu.Course));
                             if (coursename != null)
