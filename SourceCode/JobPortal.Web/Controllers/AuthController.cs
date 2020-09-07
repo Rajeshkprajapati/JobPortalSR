@@ -42,7 +42,7 @@ namespace JobPortal.Web.Controllers
         {
             TempData[Constants.SessionRedirectUrl] = returnUrl;
             return View();
-        }
+        } 
 
         [HttpPost]
         public IActionResult Login(UserViewModel user)
