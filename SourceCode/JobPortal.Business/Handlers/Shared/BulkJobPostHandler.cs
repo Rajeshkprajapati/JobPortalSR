@@ -29,7 +29,9 @@ namespace JobPortal.Business.Handlers.Shared
         private readonly IAuthRepository authProcessor;
         private readonly IJobPostRepository jobPostProcessor;
         private readonly IEMailHandler emailHandler;
-        public BulkJobPostHandler(IHostingEnvironment env, IConfiguration configuration, IEMailHandler _emailHandler)
+        private readonly IConfiguration config;
+        private readonly string URLprotocol;
+        public BulkJobPostHandler(IHostingEnvironment env, IConfiguration configuration, IEMailHandler _emailHandler, IConfiguration _config)
         {
             environment = env;
             emailHandler = _emailHandler;
@@ -39,6 +41,8 @@ namespace JobPortal.Business.Handlers.Shared
             bjpProcessor = bjpFactory.CreateProcessor();
             var jpFactory = new ProcessorFactoryResolver<IJobPostRepository>(configuration);
             jobPostProcessor = jpFactory.CreateProcessor();
+            config = _config;
+            URLprotocol = config["SiteProtocol"];
         }
 
         public Task UploadJobsInBackground(UserViewModel user, IList<IFormFile> files)
@@ -201,6 +205,7 @@ namespace JobPortal.Business.Handlers.Shared
                                                 row[additionalColumns[2]] = "Failed";
                                                 row[additionalColumns[3]] += "<li>State Not Found In Our Record</li>";
                                                 //}
+                                                InformToAdmin(row[col.ColumnName], col.ColumnName, user.Email, user.FullName);
                                             }
 
                                             break;
@@ -230,11 +235,12 @@ namespace JobPortal.Business.Handlers.Shared
                                                 row[additionalColumns[2]] = "Failed";
                                                 row[additionalColumns[3]] += "<li>City Not Found In Our Record</li>";
                                                 //}
+                                                InformToAdmin(row[col.ColumnName], col.ColumnName, user.Email, user.FullName);
                                             }
                                             break;
                                         case "SPOCEmail":
                                             string email = Convert.ToString(row[col.ColumnName]);
-                                            if (!string.IsNullOrWhiteSpace(email) && email!=Constants.NotAvailalbe)
+                                            if (!string.IsNullOrWhiteSpace(email) && email != Constants.NotAvailalbe)
                                             {
                                                 if (!emailHandler.IsValidEmail(email))
                                                 {
@@ -245,7 +251,7 @@ namespace JobPortal.Business.Handlers.Shared
                                             break;
                                         case "CompanyName":
                                             string companyName = Convert.ToString(row[col.ColumnName]);
-                                            if (!authProcessor.CheckIfEmployerExists(companyName,true))
+                                            if (!authProcessor.CheckIfEmployerExists(companyName, true))
                                             {
                                                 string mailId = companyName.ToLower().Replace(" ", "_");
                                                 var u = new UserModel
@@ -256,7 +262,7 @@ namespace JobPortal.Business.Handlers.Shared
                                                     RoleId = 3,
                                                     ProfilePic = string.Empty
                                                 };
-                                                bool isRegister = authProcessor.RegisterEmployer(u,true);
+                                                bool isRegister = authProcessor.RegisterEmployer(u, true);
                                             }
                                             t =
                                             bjpProcessor.GetIdFromValue(companyName, col.ColumnName);
@@ -279,6 +285,8 @@ namespace JobPortal.Business.Handlers.Shared
                                 {
                                     jDetail.IsFromBulkUpload = true;
                                     jDetail.CreatedBy = Convert.ToString(user.UserId);
+                                    var date = DateTime.Now;
+                                    jDetail.FinancialYear = date.Year;
                                     //ValidateJobModel(ref jDetail);
                                     if (jobPostProcessor.AddJobPostData(jDetail))
                                     {
@@ -314,6 +322,49 @@ namespace JobPortal.Business.Handlers.Shared
             {
                 throw new XmlFileMapperException(
                     string.Format("{0}", "JobPostMapping.xml file is not in proper format to convert in data table."));
+            }
+        }
+
+        private void InformToAdmin(object value, string columnName, string Email, string Name)
+        {
+            if (!string.IsNullOrEmpty(columnName))
+            {
+                switch (columnName)
+                {
+                    case "CityCode":
+                        SendMail(value, "City", Email, Name);
+                        break;
+                    case "StateCode":
+                        SendMail(value, "State", Email, Name);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        private void SendMail(object value, string columnName, string Email, string Name)
+        {
+            try
+            {
+
+                var data = Convert.ToString(value);
+                var eModel = new EmailViewModel
+                {
+                    Subject = "BulkJobPost",
+                    Body = "Dear Admin," + "<br/><br/>" +
+                    "An Employer " + Name + "(" + Email + ") was trying to add " + data + " as " +
+                    columnName + ", which does not belong to our database.please do the needful.<br><br> Thank You <br>Steeprise Talent Team",
+                    To = new string[] { config["AdminMail:Email"] },
+                    From = config["EmailCredential:Fromemail"],
+                    IsHtml = true,
+                    MailType = (int)MailType.ForgotPassword
+                };
+
+                emailHandler.SendMail(eModel, -1);
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
@@ -462,7 +513,7 @@ namespace JobPortal.Business.Handlers.Shared
         private void ValidateSpocContact(DataRow row, string[] additionalColumns)
         {
             string spocContact = Convert.ToString(row["SPOCContact"]);
-            if (!string.IsNullOrWhiteSpace(spocContact) && spocContact!=Constants.NotAvailalbe)
+            if (!string.IsNullOrWhiteSpace(spocContact) && spocContact != Constants.NotAvailalbe)
             {
                 if (spocContact.Substring(0, 3) != "+91")
                 {
@@ -478,7 +529,7 @@ namespace JobPortal.Business.Handlers.Shared
                     row[additionalColumns[3]] += $"<li>SPOC Contact is not in correct format - Enter 10 digit mobile number or {Constants.NotAvailalbe}</li>";
 
                 }
-            }       
+            }
         }
 
         private void ExtendTable(string[] additionalColumns, ref DataTable table, int userId, bool isFirstRowAlsoAsHeader = false)
@@ -539,7 +590,7 @@ namespace JobPortal.Business.Handlers.Shared
 
             if (!string.IsNullOrWhiteSpace(jType))
             {
-                if(jType!= "Fresher" && jType!= "Experience" && jType!= "Any")
+                if (jType != "Fresher" && jType != "Experience" && jType != "Any")
                 {
                     row[additionalColumns[2]] = "Failed";
                     row[additionalColumns[3]] += $"<li>Job Type {jType} is not valid,Enter Fresher/Experience/Any as correct Job Type.</li>";
@@ -563,7 +614,7 @@ namespace JobPortal.Business.Handlers.Shared
                     {
                         if (!string.IsNullOrWhiteSpace(Convert.ToString(row["MinExp"])) && !string.IsNullOrWhiteSpace(Convert.ToString(row["MaxExp"])))
                         {
-                            if (Convert.ToInt32(row["MaxExp"])>0 && Convert.ToInt32(row["MinExp"]) > Convert.ToInt32(row["MaxExp"]))
+                            if (Convert.ToInt32(row["MaxExp"]) > 0 && Convert.ToInt32(row["MinExp"]) > Convert.ToInt32(row["MaxExp"]))
                             {
                                 row[additionalColumns[2]] = "Failed";
                                 row[additionalColumns[3]] += $"<li>Min experience must be less than Max experience.</li>";
@@ -677,6 +728,7 @@ namespace JobPortal.Business.Handlers.Shared
 
         private void SaveDetailToAudit(BulkJobPostSummaryDetailViewModel detail, string fileName, int userId)
         {
+            var date = DateTime.Now;
             try
             {
                 var dModel = new BulkJobPostSummaryDetail
@@ -686,23 +738,16 @@ namespace JobPortal.Business.Handlers.Shared
                     CTC = detail.CTC,
                     ErrorDetails = detail.ErrorDetails,
                     FileName = fileName,
-                    //FinancialYear = detail.FinancialYear,
+                    FinancialYear = Convert.ToString(date.Year),
                     HiringCriteria = detail.HiringCriteria,
                     JobDetails = detail.JobDetails,
                     JobLocation = detail.CityCode,
-                    //JobRole1 = detail.JobRole1,
-                    //JobRole2 = detail.JobRole2,
-                    //JobRole3 = detail.JobRole3,
                     JobTitle = detail.JobTitleByEmployer,
                     JobType = detail.JobType,
                     MaxExp = detail.MaxExp,
                     MinExp = detail.MinExp,
                     ProcessedBy = detail.ProcessedBy,
                     ProcessedOn = detail.ProcessedOn,
-                    //Quarter1 = detail.Quarter1,
-                    //Quarter2 = detail.Quarter2,
-                    //Quarter3 = detail.Quarter3,
-                    //Quarter4 = detail.Quarter4,
                     SerialNo = detail.SequenceNo,
                     SPOC = detail.SPOC,
                     SPOCContact = detail.SPOCContact,

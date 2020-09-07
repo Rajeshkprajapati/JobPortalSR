@@ -89,10 +89,10 @@ namespace JobPortal.Business.Handlers.Employer
                         CTC = Convert.ToString(row["CTC"]),
                         TotalApplications = Convert.ToInt32(row["TotalApplications"]),
                         PostedOn = Convert.ToDateTime(row["PostedOn"]),
-                        Quarter1 = Convert.ToString(row["Quarter1"]),
-                        Quarter2 = Convert.ToString(row["Quarter2"]),
-                        Quarter3 = Convert.ToString(row["Quarter3"]),
-                        Quarter4 = Convert.ToString(row["Quarter4"]),
+                        //Quarter1 = Convert.ToString(row["Quarter1"]),
+                        //Quarter2 = Convert.ToString(row["Quarter2"]),
+                        //Quarter3 = Convert.ToString(row["Quarter3"]),
+                        //Quarter4 = Convert.ToString(row["Quarter4"]),
                         Featured = Convert.ToString(row["Featured"]),
                         DisplayOrder = row["FeaturedJobDisplayOrder"] as int? ?? 0
                     });
