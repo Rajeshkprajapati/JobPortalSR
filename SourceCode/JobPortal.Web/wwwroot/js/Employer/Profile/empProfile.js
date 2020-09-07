@@ -11,7 +11,7 @@
     let ConfirmPassword = $('input[name=ConfirmPassword]').val();
     debugger;
     if ((ConfirmPassword == null || ConfirmPassword == '') || (Password == null || Password == '')) {
-        ErrorDialog('Warning', 'Empty password fields not allowed');
+        ErrorDialog('Warning', 'Empty password fields are not allowed');
         return false;
     }
     if (ConfirmPassword != Password) {
