@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using JobPortal.Business.Interfaces.Employer.JobPost;
 using JobPortal.Business.Interfaces.Home;
 using JobPortal.Business.Interfaces.Jobseeker;
@@ -180,6 +181,7 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
             try
             {
                 var basePath = string.Format("{0}://{1}{2}", Request.Scheme, URLprotocol, Request.Host);
+                //var basePath = string.Format("{0}", "http://18.221.113.108:83");
                 var pageLink = "/Job/JobDetails/?jobid=";
                 var fbUrl = "https://www.facebook.com/sharer/sharer.php?u=";
                 var twitterUrl = "https://twitter.com/home?status=";
@@ -189,6 +191,7 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
                 ViewBag.TwitterUrl = string.Format("{0}{1}", twitterUrl, basePath + pageLink);
                 ViewBag.WhatsAppUrl = string.Format("{0}{1}", whatsAppUrl, encodedlink);
                 jobdetail = jobpastHandler.GetJobDetails(jobid);
+                ViewBag.jDetails = Regex.Replace(jobdetail.JobDetails, "<.*?>", String.Empty);
                 if (user != null)
                 {
                     List<int> appliedjobs = homeHandler.GetAplliedJobs(user.UserId);

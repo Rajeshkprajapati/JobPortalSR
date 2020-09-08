@@ -1,9 +1,9 @@
 ﻿function SendMail(JobseekerId,JobSeekerName) {
     var data = { userEmail: JobseekerId, JobSeekerName: JobSeekerName };
-    $('#loader').show();
+    //$('#loader').show();
     SendAJAXRequest(`/SearchResume/SendMessage/?userEmail=${JobseekerId}&&JobSeekerName=${JobSeekerName}`, 'GET', {}, 'JSON', (result) => {
         if (result) {
-            $('#loader').hide();
+            //$('#loader').hide();
             //document.getElementById('result').innerHTML = result.errorMessage;
             InformationDialog('Information', result.errorMessage);
             //$("#result").show();
