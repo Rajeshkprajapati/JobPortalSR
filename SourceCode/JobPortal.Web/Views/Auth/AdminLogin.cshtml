@@ -30,7 +30,7 @@
             <div asp-validation-summary="All" asp- class="text-danger-custom">
             </div>
             <form class="login100-form validate-form flex-sb flex-w" method="post" asp-action="AdminLogin">
-                <span class="login100-form-title p-b-53">
+                <span class="login100-form-title">
                     Admin Login
                 </span>
                 <!--
@@ -49,7 +49,7 @@
                     </span>
                 </div>
                 <div class="wrap-input100 validate-input" data-validate="Username is required">
-                    <input class="input100" asp-for="Email" type="text" name="Email">
+                    <input class="input100" asp-for="Email" type="text" name="Email" required>
                     <span asp-validation-for="Email" class="text-danger"></span>
                     <span class="focus-input100"></span>
                 </div>
@@ -64,7 +64,7 @@
                     </a>-->
                 </div>
                 <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <input class="input100" asp-for="Password" type="password" name="Password">
+                    <input class="input100" asp-for="Password" type="password" name="Password" required>
                     <span asp-validation-for="Password" class="text-danger"></span>
                     <span class="focus-input100"></span>
                 </div>
