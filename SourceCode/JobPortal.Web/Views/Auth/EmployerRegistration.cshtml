@@ -43,87 +43,166 @@
                 <p style="color:red;font-weight:bold">@TempData["errorMsg"]</p>
             }
             <!-- Register -->
-            <div class="tab-content" id="tab2">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label for="socialmedia">
-                            Register Via:
-                        </label>
+            <div class="userbtns">
+                <ul class="nav nav-tabs">
+                    <li class="@ViewBag.Active"><a data-toggle="tab" href="#employer" aria-expanded="false">Employer</a></li>
+                    <li class="@ViewBag.CActive"><a data-toggle="tab" href="#consultant" aria-expanded="true">Consultancy</a></li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div id="employer" class="formpanel tab-pane fade active in">
+                    <div class="row" id="tab1">
+                        <div class="col-sm-3">
+                            <label for="socialmedia">
+                                Register Via:
+                            </label>
+                        </div>
+                        <div class="col-sm-8">
+                            <ul class="social-icons">
+                                <li>
+                                    <a class="facebook" href="javascript:void(0)" onclick="checkEmployeeLoginState();"><i class="icon-facebook"></i></a>
+                                </li>
+                                <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col-sm-8">
-                        <ul class="social-icons">
-                            <li>
-                                <!--<fb:login-button scope="public_profile,email"
-                                                 onlogin="checkLoginState();">
-                                </fb:login-button> -->
-                                <!--
-                                <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div>
-                                <a class="gplus" href="#"><i class="icon-gplus"></i></a> -->
-                                <a class="facebook" href="javascript:void(0)" onclick="checkLoginState();"><i class="icon-facebook"></i></a>
-                            </li>
-                            <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-                        </ul>
-                    </div>
+                    <form autocomplete="off" method="post" class="register" asp-action="EmployeeRegistration">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-row form-row-wide">
+                            <label asp-for="CompanyName">
+                                Company Name:
+                                <i class="ln ln-icon-Male"></i>
+                                <input type="text" class="input-text" asp-for="CompanyName" id="companyname" placeholder="CompanyName" />
+                            </label>
+                            <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        </div>
+
+                        @*<p class="form-row">
+                                <label>
+                                    Gender:
+                                    <input type="radio" name="Gender" value="Male" />Male
+                                    <input type="radio" name="Gender" value="Female" />Female
+                                </label>
+                            </p>*@
+
+                        <div class="form-row form-row-wide">
+                            <label asp-for="Email">
+                                Official Email:
+                                <i class="ln ln-icon-Mail"></i>
+                                <input type="text" class="input-text" asp-for="Email" id="email" placeholder="Office Email" autocomplete="off" />
+                            </label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-row form-row-wide">
+                            <label asp-for="Password">
+                                Password:
+                                <i class="ln ln-icon-Lock-2"></i>
+                                <input class="input-text" type="password" asp-for="Password" id="password" placeholder="Password" />
+                            </label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-row form-row-wide">
+                            <label asp-for="Mobile">
+                                Mobile:
+                                <i class="ln ln-icon-Smartphone"></i>
+                                <input type="number" maxlength="10" class="input-text" asp-for="Mobile" id="mobile" placeholder="Mobile" />
+                            </label>
+                            <span asp-validation-for="Mobile" class="text-danger"></span>
+                        </div>
+
+                        @*<div class="form-row form-row-wide">
+                                <label asp-for="Industry">
+                                    Industry:
+                                    <i class="ln ln-icon-Building"></i>
+                                    <input type="text" class="input-text" asp-for="Industry" id="JobIndustryArea" placeholder="Industry" />
+                                </label>
+                                <span asp-validation-for="Industry" class="text-danger"></span>
+                            </div>*@
+
+                        <div class="form-row">
+                            <input type="submit" class="button border fw margin-top-10" name="register" value="Register" />
+                        </div>
+                    </form>
                 </div>
-                <form autocomplete="off" method="post" class="register" asp-action="/Auth/EmployeeRegistration">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-row form-row-wide">
-                        <label asp-for="CompanyName">
-                            Company Name:
-                            <i class="ln ln-icon-Male"></i>
-                            <input type="text" class="input-text" asp-for="CompanyName" id="companyname" placeholder="CompanyName" />
-                        </label>
-                        <span asp-validation-for="CompanyName" class="text-danger"></span>
-                    </div>
-
-                    @*<p class="form-row">
-                            <label>
-                                Gender:
-                                <input type="radio" name="Gender" value="Male" />Male
-                                <input type="radio" name="Gender" value="Female" />Female
+                <div id="consultant" class="formpanel tab-pane fade">
+                    <div class="row" id="tab1">
+                        <div class="col-sm-3">
+                            <label for="socialmedia">
+                                Register Via:
                             </label>
-                        </p>*@
-
-                    <div class="form-row form-row-wide">
-                        <label asp-for="Email">
-                            Official Email:
-                            <i class="ln ln-icon-Mail"></i>
-                            <input type="text" class="input-text" asp-for="Email" id="email" placeholder="Office Email" autocomplete="off" />
-                        </label>
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-8">
+                            <ul class="social-icons">
+                                <li>
+                                    <a class="facebook" href="javascript:void(0)" onclick="checkConsultancyLoginState();"><i class="icon-facebook"></i></a>
+                                </li>
+                                <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
-
-                    <div class="form-row form-row-wide">
-                        <label asp-for="Password">
-                            Password:
-                            <i class="ln ln-icon-Lock-2"></i>
-                            <input class="input-text" type="password" asp-for="Password" id="password" placeholder="Password" />
-                        </label>
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-row form-row-wide">
-                        <label asp-for="Mobile">
-                            Mobile:
-                            <i class="ln ln-icon-Smartphone"></i>
-                            <input type="number" maxlength="10" class="input-text" asp-for="Mobile" id="mobile" placeholder="Mobile" />
-                        </label>
-                        <span asp-validation-for="Mobile" class="text-danger"></span>
-                    </div>
-
-                    @*<div class="form-row form-row-wide">
-                            <label asp-for="Industry">
-                                Industry:
-                                <i class="ln ln-icon-Building"></i>
-                                <input type="text" class="input-text" asp-for="Industry" id="JobIndustryArea" placeholder="Industry" />
+                    <form autocomplete="off" method="post" class="register" asp-action="ConsultancyRegistration">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-row form-row-wide">
+                            <label asp-for="CompanyName">
+                                Consultancy Name:
+                                <i class="ln ln-icon-Male"></i>
+                                <input type="text" class="input-text" asp-for="CompanyName" id="companyname" placeholder="Consultancy Name" />
                             </label>
-                            <span asp-validation-for="Industry" class="text-danger"></span>
-                        </div>*@
+                            <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-row">
-                        <input type="submit" class="button border fw margin-top-10" name="register" value="Register" />
-                    </div>
-                </form>
+                        @*<p class="form-row">
+                                <label>
+                                    Gender:
+                                    <input type="radio" name="Gender" value="Male" />Male
+                                    <input type="radio" name="Gender" value="Female" />Female
+                                </label>
+                            </p>*@
+
+                        <div class="form-row form-row-wide">
+                            <label asp-for="Email">
+                                Official Email:
+                                <i class="ln ln-icon-Mail"></i>
+                                <input type="text" class="input-text" asp-for="Email" id="email" placeholder="Office Email" autocomplete="off" />
+                            </label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-row form-row-wide">
+                            <label asp-for="Password">
+                                Password:
+                                <i class="ln ln-icon-Lock-2"></i>
+                                <input class="input-text" type="password" asp-for="Password" id="password" placeholder="Password" />
+                            </label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-row form-row-wide">
+                            <label asp-for="Mobile">
+                                Mobile:
+                                <i class="ln ln-icon-Smartphone"></i>
+                                <input type="number" maxlength="10" class="input-text" asp-for="Mobile" id="mobile" placeholder="Mobile" />
+                            </label>
+                            <span asp-validation-for="Mobile" class="text-danger"></span>
+                        </div>
+
+                        @*<div class="form-row form-row-wide">
+                                <label asp-for="Industry">
+                                    Industry:
+                                    <i class="ln ln-icon-Building"></i>
+                                    <input type="text" class="input-text" asp-for="Industry" id="JobIndustryArea" placeholder="Industry" />
+                                </label>
+                                <span asp-validation-for="Industry" class="text-danger"></span>
+                            </div>*@
+
+                        <div class="form-row">
+                            <input type="submit" class="button border fw margin-top-10" name="register" value="Register" />
+                        </div>
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>
@@ -158,16 +237,34 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-        function checkLoginState() {
+        function checkConsultancyLoginState() {
             FB.login(function (response) {
                 if (response.status === 'connected') {
-                    statusChangeCallback(response);
+                    statusChangeCallbackForEmployee(response);
                 }
             }, { scope: 'public_profile,email' });
         }
-        function statusChangeCallback(response) {
+        function statusChangeCallbackForEmployee(response) {
             var accessToken = response.authResponse.accessToken;
             SendAJAXRequest(`/Auth/FBEmpRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
+                if (resp && resp.isSuccess) {
+                    //console.log('Success');
+                    InformationDialog('Information', 'Registration Successfull!');
+                } else {
+                    ErrorDialog('Warning', 'Email already exist!');
+                }
+            });
+        }
+        function checkConsultancyLoginState() {
+            FB.login(function (response) {
+                if (response.status === 'connected') {
+                    statusChangeCallbackForConsultancy(response);
+                }
+            }, { scope: 'public_profile,email' });
+        }
+        function statusChangeCallbackForConsultancy(response) {
+            var accessToken = response.authResponse.accessToken;
+            SendAJAXRequest(`/Auth/FBConsultantRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
                 if (resp && resp.isSuccess) {
                     //console.log('Success');
                     InformationDialog('Information', 'Registration Successfull!');

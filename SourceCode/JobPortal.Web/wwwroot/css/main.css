@@ -2482,7 +2482,7 @@ a.wit-btn {
         }
 
             .userbtns .nav-tabs > li a:hover, .userbtns .nav-tabs > li.active a {
-                background: #263bd6;
+                background: #282828;
                 border: none;
                 color: #fff;
             }
@@ -2492,7 +2492,7 @@ a.wit-btn {
                     height: 0;
                     border-left: 10px solid transparent;
                     border-right: 10px solid transparent;
-                    border-top: 10px solid #263bd6;
+                    border-top: 10px solid #282828;
                     content: '';
                     position: absolute;
                     bottom: -10px;

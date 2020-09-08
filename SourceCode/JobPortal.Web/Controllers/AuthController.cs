@@ -42,7 +42,7 @@ namespace JobPortal.Web.Controllers
         {
             TempData[Constants.SessionRedirectUrl] = returnUrl;
             return View();
-        } 
+        }
 
         [HttpPost]
         public IActionResult Login(UserViewModel user)
@@ -54,34 +54,17 @@ namespace JobPortal.Web.Controllers
                     var result = authHandler.Login(user.Email.Trim(), user.Password);
                     if (null != result)
                     {
-                        var identity = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.Email,result.Email),
-                    new Claim(ClaimTypes.Role,result.RoleName)
-                    }, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                        var principal = new ClaimsPrincipal(identity);
-                        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-                        if (!string.IsNullOrEmpty(result.PasswordExpirayDate) && DateTime.Now.Date <= Convert.ToDateTime(result.PasswordExpirayDate))
+                        if (result.RoleName != "Admin")
                         {
-                            //Handled if image url exist in db but not available physically
-                            string picpath = hostingEnviroment.WebRootPath + result.ProfilePic;
-                            if (!System.IO.File.Exists(picpath))
-                            {
-                                string fName = $@"\ProfilePic\" + "Avatar.jpg";
-                                result.ProfilePic = fName;
-                            }
-                            HttpContext.Session.Set<UserViewModel>(Constants.SessionKeyUserInfo, result);
-                            authHandler.UserActivity(result.UserId);
-                            return GoAhead(result.RoleName, result.UserId);
-                            //return View("Index");
+                            return SetSession(result);
                         }
                         else
                         {
-                            return View("CreateNewPassword");
+                            ModelState.AddModelError("ErrorMessage", string.Format("{0}", "You are not allowed to login here"));
                         }
+
                     }
-                }                
+                }
             }
             catch (InvalidUserCredentialsException ex)
             {
@@ -147,6 +130,7 @@ namespace JobPortal.Web.Controllers
         }
         public IActionResult EmployerRegistration(string data)
         {
+            ViewBag.Active = "active";
             return View();
         }
 
@@ -450,6 +434,12 @@ namespace JobPortal.Web.Controllers
             TempData[Constants.SessionRedirectUrl] = returnUrl;
             return View();
         }
+        [HttpGet]
+        public IActionResult AdminLogin(string returnUrl)
+        {
+            TempData[Constants.SessionRedirectUrl] = returnUrl;
+            return View();
+        }
 
         [HttpPost]
         public IActionResult EmployerRegistration(EmployeeViewModel user)
@@ -485,7 +475,45 @@ namespace JobPortal.Web.Controllers
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
                 ViewData["SuccessMessage"] = "Unable to send Mail";
             }
+            ViewBag.Active = "active";
             return View();
+        }
+        [HttpPost]
+        public IActionResult ConsultancyRegistration(EmployeeViewModel user)
+        {
+            var message = "User registered successfully, please login to proceed.";
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    user.RoleId = 6;//For Consultancy
+                    authHandler.RegisterEmployer(user);
+                    SendRegistrationMailToEmployer(user);
+                    TempData["successMsg"] = "Registered Successfully done. Please login with registered mail..!";
+                    ModelState.Clear();
+                }
+            }
+            catch (UserNotCreatedException ex)
+            {
+                TempData["errorMsg"] = "Unable to register user Please try again later!";
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                message = ex.Message;
+                //ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            catch (UserAlreadyExists ex)
+            {
+                TempData["errorMsg"] = "User already exist please login!";
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                message = ex.Message;
+                //ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            catch (Exception ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                ViewData["SuccessMessage"] = "Unable to send Mail";
+            }
+            ViewBag.CActive = "active";
+            return View("EmployerRegistration");
         }
 
         private void SendRegistrationMailToEmployer(EmployeeViewModel user)
@@ -672,6 +700,50 @@ namespace JobPortal.Web.Controllers
 
         }
         [HttpPost]
+        public JsonResult FBConsultantRegistration([FromBody]string accesstoken)
+        {
+            var isSuccess = true;
+            try
+            {
+                var resp = authHandler.GetFBUserInfo(accesstoken);
+
+                if (resp == null)
+                {
+                    throw new UserNotCreatedException("Invalid access token");
+                }
+                var randomPassword = RandomGenerator.GetRandom(5);
+                var user = new EmployeeViewModel
+                {
+                    FirstName = resp.FirstName,
+                    LastName = resp.LastName,
+                    Email = resp.Email,
+                    Password = randomPassword,
+                    CompanyName = resp.FirstName,
+                };
+
+                user.RoleId = 6;//For Consultation
+                authHandler.RegisterEmployer(user);
+                SendRegistrationMailToEmployer(user);
+            }
+            catch (UserNotCreatedException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+            }
+            catch (UserAlreadyExists ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+            }
+            catch (Exception ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+            }
+            return Json(new { isSuccess });
+
+        }
+        [HttpPost]
         public JsonResult FBJobseekerRegistration([FromBody]string accesstoken)
         {
             var isSuccess = true;
@@ -713,6 +785,75 @@ namespace JobPortal.Web.Controllers
             }
             return Json(new { isSuccess });
 
+        }
+
+        [HttpPost]
+        public IActionResult AdminLogin(UserViewModel user)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = authHandler.Login(user.Email.Trim(), user.Password);
+                    if (null != result)
+                    {
+                        if (result.RoleName == "Admin")
+                        {
+                            return SetSession(result);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("ErrorMessage", string.Format("{0}", "You are not allowed to login here"));
+                        }
+                    }
+                }
+            }
+            catch (InvalidUserCredentialsException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            catch (UserNotFoundException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            catch (NotApprovedByAdminException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return View("AdminLogin");
+        }
+
+        private IActionResult SetSession(UserViewModel result)
+        {
+            var identity = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.Email,result.Email),
+                    new Claim(ClaimTypes.Role,result.RoleName)
+                    }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var principal = new ClaimsPrincipal(identity);
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+            if (!string.IsNullOrEmpty(result.PasswordExpirayDate) && DateTime.Now.Date <= Convert.ToDateTime(result.PasswordExpirayDate))
+            {
+                //Handled if image url exist in db but not available physically
+                string picpath = hostingEnviroment.WebRootPath + result.ProfilePic;
+                if (!System.IO.File.Exists(picpath))
+                {
+                    string fName = $@"\ProfilePic\" + "Avatar.jpg";
+                    result.ProfilePic = fName;
+                }
+                HttpContext.Session.Set<UserViewModel>(Constants.SessionKeyUserInfo, result);
+                authHandler.UserActivity(result.UserId);
+                return GoAhead(result.RoleName, result.UserId);
+                //return View("Index");
+            }
+            else
+            {
+                return View("CreateNewPassword");
+            }
         }
     }
 }

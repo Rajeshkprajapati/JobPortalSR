@@ -7,7 +7,7 @@ namespace JobPortal.Model.DataViewModel.Shared
 {
     public class EmployeeViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "This field is required.")]
         public string CompanyName { get; set; }
 
         [Required]
