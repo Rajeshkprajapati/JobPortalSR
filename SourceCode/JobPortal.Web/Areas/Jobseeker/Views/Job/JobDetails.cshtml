@@ -9,7 +9,7 @@
     <meta property="og:url" content="/Job/JobDetails/?jobid=@Model.JobPostId" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="@Model.JobTitleByEmployer" />
-    <meta property="og:description" content="@Model.JobDetails" />
+    <meta property="og:description" content="@Html.Raw(Model.JobDetails)" />
     <meta property="og:image" content="@Model.CompanyLogo" />
 }
 

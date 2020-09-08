@@ -49,52 +49,52 @@
             <div class="padding-right">
                 @if (Model.Count() < 1)
                 {
-                    <br/>
+                    <br />
                     <div class="alert alert-danger" role="alert"><strong>Oh snap!</strong>&nbsp; Jobs not found</div>
 
                 }
                 else
                 {
-                <div class="listings-container">
-                    @foreach (var item in Model)
-                    {
-                        <!-- Listing -->
-                        <a href="/Job/JobDetails/?jobid=@item.JobPostId" class="listing full-time">
-                            <div class="listing-logo">
-                                <img src="@item.CompanyLogo" alt="Logo">
-                            </div>
-                            <div class="listing-title">
-                                <h4>@item.JobTitleByEmployer <span class="listing-type">@item.EmploymentStatus</span></h4>
-                                <ul class="listing-icons">
-                                    <li><i class="ln ln-icon-Management"></i> @item.CompanyName</li>
-                                    <li><i class="ln ln-icon-Map2"></i> @item.City</li>
-                                    <li><i class="ln ln-icon-Money-2"></i>@item.CTC</li>
-                                    <li><div class="listing-date new">@item.NumberOfDays&#8203; days ago</div></li>
-                                </ul>
-                                <div class="skills">
-                                    <!--<span style="background-color:white;color:#808080 !important;font-weight:300 !important">Skills: </span>-->
-                                    @{
-                                        if (!string.IsNullOrEmpty(item.Skills) && item.Skills.Length > 0)
-                                        {
-                                            string[] skills = item.Skills.Split(',');
-                                            foreach (var skill in skills)
+                    <div class="listings-container">
+                        @foreach (var item in Model)
+                        {
+                            <!-- Listing -->
+                            <a href="/Job/JobDetails/?jobid=@item.JobPostId" class="listing full-time">
+                                <div class="listing-logo">
+                                    <img src="@item.CompanyLogo" alt="Logo">
+                                </div>
+                                <div class="listing-title">
+                                    <h4>@item.JobTitleByEmployer <span class="listing-type">@item.EmploymentStatus</span></h4>
+                                    <ul class="listing-icons">
+                                        <li><i class="ln ln-icon-Management"></i> @item.CompanyName</li>
+                                        <li><i class="ln ln-icon-Map2"></i> @item.City</li>
+                                        <li><i class="ln ln-icon-Money-2"></i>@item.CTC</li>
+                                        <li><div class="listing-date new">@item.NumberOfDays&#8203; days ago</div></li>
+                                    </ul>
+                                    <div class="skills">
+                                        <!--<span style="background-color:white;color:#808080 !important;font-weight:300 !important">Skills: </span>-->
+                                        @{
+                                            if (!string.IsNullOrEmpty(item.Skills) && item.Skills.Length > 0)
                                             {
-                                                if (skill.Length > 1)
-                                                {                                                    
-                                                    <span>@skill</span>
+                                                string[] skills = item.Skills.Split(',');
+                                                foreach (var skill in skills)
+                                                {
+                                                    if (skill.Length > 1)
+                                                    {
+                                                        <span>@skill</span>
+                                                    }
                                                 }
                                             }
+                                            else
+                                            {
+                                                <span>N/A</span>
+                                            }
                                         }
-                                        else
-                                        {
-                                            <span>N/A</span>
-                                        }
-                                    }
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    }
-                </div>
+                            </a>
+                        }
+                    </div>
                 }
                 <div class="clearfix"></div>
                 <div class="pagination-container">
@@ -111,7 +111,7 @@
             </div>
         </div>
         <div class="five columns">
-            
+
             <div class="widget">
                 <h4>Jobs By City</h4>
                 <input type="text" class="filter-search-box" placeholder="Search" />
@@ -127,7 +127,7 @@
                                     <li>
                                         <input type="checkbox" @if (filters.City.Any(c => c == item.CityCode)) { <text> checked</text> } name="checkname" id="Name_@j" value="@item.CityCode" onchange="SearchCity(this)" />
                                         <label for="Name_@j"></label>
-                                        @item.City <span>@item.CountValue</span>
+                                        @item.City (<span>@item.CountValue</span>)
                                     </li>
                                     j = j + 1;
                                 }
@@ -157,7 +157,7 @@
                                     <li>
                                         <input type="checkbox" @if (filters.CompanyUserId.Any(c => c == Convert.ToString(item.UserId))) { <text> checked</text> } name="CompanyName" id="CompanyName_@k" value="@item.UserId" onchange="SearchCompany(this)" />
                                         <label for="CompanyName_@k"></label>
-                                        @item.CompanyName <span>@item.CountValue</span>
+                                        @item.CompanyName (<span>@item.CountValue</span>)
                                     </li>
                                     k = k + 1;
                                 }

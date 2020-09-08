@@ -1,4 +1,5 @@
-﻿function SendAJAXRequest(actionUrl, method, datatoSend, dType, cb, customHeaders, isFileUpload) {
+﻿function SendAJAXRequest(actionUrl, method, datatoSend, dType, cb, customHeaders, isFileUpload) {    
+    $("div.windows8").show();
     $.ajax({
         url: actionUrl,
         data: isFileUpload ? datatoSend : JSON.stringify(datatoSend),
@@ -18,12 +19,15 @@
             }
         },
         success: function (dt, res1, res2) {
+            $("div.windows8").hide();
             cb(dt);
         },
         failure: function (response) {
+            $("div.windows8").hide();
             cb(null);
         },
         error: function (response) {
+            $("div.windows8").hide();
             if (response && response.responseText.indexOf("returnUrl") > -1) {
                 let data = JSON.parse(response.responseText);
                 if (data.returnUrl) {

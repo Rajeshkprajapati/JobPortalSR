@@ -3,9 +3,9 @@
     var currentUrl = window.location.href;
 
     $('#confimationModel').modal('hide');
-    $('#loader').show();
+    //$('#loader').show();
     SendAJAXRequest('/Job/ApplyJob/?jobPostid=' + id + '&currentUrl=' + currentUrl, 'get', {}, 'json', (result) => {
-        $('#loader').hide();
+        //$('#loader').hide();
         if (result && result.returnUrl) {
             window.location.href = result.returnUrl;
         }

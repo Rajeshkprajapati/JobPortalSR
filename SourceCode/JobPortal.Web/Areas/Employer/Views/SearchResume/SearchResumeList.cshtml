@@ -154,7 +154,7 @@
                                     <li>
                                         <input type="checkbox" @if (filters.City.Any(c => c == item.CityCode)) { <text> checked</text> } name="checkname" id="Name_@j" value="@item.CityCode" onchange="SearchCity(this)" />
                                         <label for="Name_@j"></label>
-                                        @item.City <span>@item.CountValue</span>
+                                        @item.City (<span>@item.CountValue</span>)
                                     </li>
                                     j = j + 1;
                                 }

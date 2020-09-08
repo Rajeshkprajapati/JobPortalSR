@@ -21,14 +21,14 @@
     <link href="~/Assets/css/colors.css" rel="stylesheet" />
     <link href="~/Assets/css/style.css" rel="stylesheet" />
     <link href="~/Assets/PopBox/messagebox.css" rel="stylesheet" />
-
+    <link href="~/Assets/css/cssloader.css" rel="stylesheet" />
 </head>
 <body>
     <div id="wrapper">
         @{
             UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             <!-- Header
-            ================================================== -->
+        ================================================== -->
             <header class="sticky-header">
                 <div class="container">
                     <div class="sixteen columns">
@@ -166,7 +166,7 @@
 
         @RenderBody()
         <!-- Footer
-        ================================================== -->
+    ================================================== -->
         <div class="margin-top-30"></div>
 
         <div id="footer">
@@ -235,6 +235,23 @@
                 </div>
             </div>
 
+        </div>
+        <div class="windows8">
+            <div class="wBall" id="wBall_1">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_2">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_3">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_4">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_5">
+                <div class="wInnerBall"></div>
+            </div>
         </div>
 
         <!-- Back To Top Button -->
