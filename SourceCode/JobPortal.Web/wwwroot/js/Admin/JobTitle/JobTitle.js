@@ -52,24 +52,19 @@ function Updatedata(_this) {
     var data = { JobTitleId: jtitleId === "" ? 0 : jtitleId, JobTitleName: $('#JobTitelName').val() };
     SendAJAXRequest('/JobTitle/InsertUpdateJobTitle/', 'POST', data, 'JSON', (result) => {
         if (result) {
-            //alert(result);
-            //location.reload(true);
-            let icon = 'fa fa-thumbs-up';
-            updatedsucessfully(result, icon) 
-            //location.reload(true);
+            $('#PopUpModal').modal('toggle');
+            InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetJobRoles);
         } else {
-           warnignPopup('Error')
+            ErrorDialog('Error', 'Action faild with error');
         }
     });
 }
 function deletedata(JobTitleId) {
         SendAJAXRequest(`/JobTitle/DeleteJobTitle/?jobTitleId=${JobTitleId}`, 'GET', {},'JSON', (result) => {
             if (result) {
-                let icon = 'fa fa-thumbs-up';
-                updatedsucessfully(result, icon) 
-                //location.reload(true);
+                InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetJobRoles);
             } else {
-                warnignPopup('Error')
+                ErrorDialog('Error', 'Action faild with error');
             }
         });
 }

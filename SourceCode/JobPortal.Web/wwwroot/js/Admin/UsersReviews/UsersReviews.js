@@ -81,18 +81,21 @@ function Updatedata(_this) {
     let email = $('#ReviewEmail').val();
     let tagline = $('#ReviewTagLine').val();
     let message = $('#ReviewMessage').val();
-
-    var data = { Id: id, Name: name, Email: email, Tagline: tagline, Message: message };
-
-    SendAJAXRequest('/UsersReviews/UpdateUserReview/', 'POST', data, 'JSON', (result) => {
-        if (result === true) {
-            let icon = 'fa fa-thumbs-up';
-            updatedsucessfully('done', icon)
-            //location.reload(true);
-        } else {
-            warnignPopup('Error')
-        }
-    });
+    if (name == "" || email == "" || message == "") {
+        ErrorDialog('warning', 'Fields are required');
+        return false;
+    }
+    else {
+        var data = { Id: id, Name: name, Email: email, Tagline: tagline, Message: message };
+        SendAJAXRequest('/UsersReviews/UpdateUserReview/', 'POST', data, 'JSON', (result) => {
+            if (result === true) {
+                 $('#PopUpModal').modal('toggle');
+                InformationDialogWithPartialReload('Done', 'You have successfully done this action.', UsersReviews);
+            } else {
+                ErrorDialog('Warning', 'Action faild with error');
+            }
+        });
+    }
 }
 
 $("#JobTitelName").keypress(function (e) {

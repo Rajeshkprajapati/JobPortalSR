@@ -48,13 +48,10 @@ function Updatedata(_this) {
     var data = { CountryCode: CountryCode, StateCode: $('#StateCode').val().trim(), State: $('#StateName').val().trim() };
         SendAJAXRequest('/ManageCityState/UpdateState/', 'POST', data, 'JSON', (result) => {
             if (result) {
-                //alert(result);
-                //location.reload(true);
-                let icon = 'fa fa-thumbs-up';
-                updatedsucessfully(result, icon);
-                //location.reload(true);
+                $('#PopUpModal').modal('toggle');
+                InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetStateList);
             } else {
-                warnignPopup('Error');
+                ErrorDialog('Error','Faild to do this action');
             }
         });
     }
@@ -66,11 +63,11 @@ function AddData(_this) {
     let StateCode = $('#StateCode').val().trim();
     let StateName = $('#StateName').val().trim();
     if (StateCode === "") {
-        warnignPopup('Please fill state code');
+        ErrorDialog('Required','Please fill state code');
         return false;
     }
     if (StateName === "") {
-        warnignPopup('Please fill state name');
+        ErrorDialog('Required','Please fill state name');
         return false;
     }
     if (CountryCode !== "0") {
@@ -81,21 +78,21 @@ function AddData(_this) {
                 //location.reload(true);
                 if (result === 'State code already exist') {
 
-                    warnignPopup(result);
+                    ErrorDialog('Error', result);
                 }
                 else {
-                    let icon = 'fa fa-thumbs-up';
-                    updatedsucessfully(result, icon);
+                    $('#PopUpModal').modal('toggle');
+                    InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetStateList);
                 }
 
                 //location.reload(true);
             } else {
-                warnignPopup('Error');
+                ErrorDialog('Error', 'Faild to do this action');
             }
         });
     }
     else {
-        warnignPopup('Please select country');
+        ErrorDialog('Required','Please select country');
     }
 }
 
@@ -103,10 +100,9 @@ function deletedata(CountryCode, stateCode) {
     var data = { CountryCode: CountryCode, StateCode: stateCode };
     SendAJAXRequest('/ManageCityState/DeleteState/', 'POST', data, 'JSON', (result) => {
         if (result) {
-            let icon = 'fa fa-thumbs-up';
-            updatedsucessfully(result, icon);
+            InformationDialogWithPartialReload('Done', result, GetStateList);
         } else {
-            warnignPopup('Error');
+            ErrorDialog('Error','Unable to do this action');
         }
     });
 }

@@ -227,3 +227,21 @@ function InformationDialogWithPageRelode(title, msg) {
     });
 
 }
+
+
+function InformationDialogWithPartialReload(title, msg,method) {
+
+    $.MessageBox({
+        buttonDone: 'OK',
+        message: msg,
+        title: title,
+        customClass: "custom-success",
+    }).done(function () {
+        method();
+    });
+
+}
+
+$(function () {
+    $('#PopUpModal').modal('toggle');
+});

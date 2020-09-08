@@ -21,11 +21,10 @@
         SendAJAXRequest('/Dashboard/ApproveUser/', 'POST', data, 'JSON', (result) => {
             if (result && result.status) {               
                 $('#loader').hide();
-               let icon = 'fa fa-thumbs-up';              
-                updatedsucessfully(result.msg, icon);
+                InformationDialogWithPartialReload('Done', result, ManageUsers);
             } else {
                 $('#loader').hide();
-                warnignPopup(result.msg);
+                ErrorDialog('Error',result.msg);
              }
         });
     });
@@ -66,10 +65,9 @@ function deletedata(userid) {
         SendAJAXRequest(`/Dashboard/DeleteUsersById/?userid=${userid}`, 'GET', {}, 'JSON', (result) => {
        
             if (result) {
-                let icon = 'fa fa-thumbs-up';
-                updatedsucessfully(result, icon);
+                InformationDialogWithPartialReload('Done', result, ManageUsers);
             } else {
-                warnignPopup('Error');
+                ErrorDialog('Error','Faild to do this action');
             }
         });
 }
@@ -81,11 +79,10 @@ function Updatedata() {
     var data = { Userid: $('#UserId').val(), FirstName: $('#FName').val(), LastName: $('#LName').val(), Email: $('#Email').val(), RoleName: $("#Role option:selected").val(), Password: $("#psd").val() };
     SendAJAXRequest('/Dashboard/Updatedata/', 'POST', data, 'JSON', (result) => {
         if (result) {
-            let icon = 'fa fa-thumbs-up';
-            updatedsucessfully(result, icon);
-            //location.reload(true);
+            $('#PopUpModal').modal('toggle');
+            InformationDialogWithPartialReload('Done', result, ManageUsers);
         } else {
-            warnignPopup('Error');
+            ErrorDialog('Error','Faild to do this action');
         }
     });
     

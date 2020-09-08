@@ -27,13 +27,9 @@ mastercity = (function () {
     let deletecity = function (citycode, statecode) {
         SendAJAXRequest(`/ManageCityState/DeleteCity/?citycode=${citycode}&statecode=${statecode}`, 'GET', {}, 'JSON', (resp) => {
             if (resp && resp.msg) {
-                let message = "City Deleted Successfully";
-                let icon = 'fa fa-thumbs-up';
-                updatedsucessfully(message, icon);
+               InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetCityList);
             } else {
-                let message = "Unable to Delete City";
-                let icon = 'fa fa-exclamation';
-                warnignPopup(message, icon);
+                ErrorDialog('Warning', message);
             }
         });
     }
@@ -41,13 +37,10 @@ mastercity = (function () {
     let adddata = function (data) {
         SendAJAXRequest(`/ManageCityState/AddCity`, 'POST', data, 'JSON', (resp) => {
             if (resp && resp.msg) {
-                let message = "City Added Successfully";
-                let icon = 'fa fa-thumbs-up';
-                updatedsucessfully(message, icon);
+                $('#PopUpModal').modal('toggle');
+                InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetCityList);
             } else {
-                let message = "City Code is already exist! Please verify";
-                let icon = 'fa fa-exclamation';
-                warnignPopup(message, icon);
+               ErrorDialog('Warning', message);
             }
         });
     }
@@ -55,13 +48,11 @@ mastercity = (function () {
     let updatedata = function (data) {
         SendAJAXRequest(`/ManageCityState/UpdateCity`, 'POST', data, 'JSON', (resp) => {
             if (resp && resp.msg) {
-                let message = "City Update Successfully";
-                let icon = 'fa fa-thumbs-up';
-                updatedsucessfully(message, icon);
+                $('#PopUpModal').modal('toggle');
+                InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetCityList);
             } else {
                 let message = "City Code is already exist! Please verify";
-                let icon = 'fa fa-exclamation';
-                warnignPopup(message, icon);
+                ErrorDialog('Warning', message);
             }
         });
     }
@@ -89,8 +80,7 @@ function addcity(_this) {
     let formData = ResolveFormData(form);
     if (formData[0].StateCode == "--Select State--" || formData[0].City == "" || formData[0].CityCode == "") {
         let message = "Please enter a valid data";
-        let icon = 'fa fa-exclamation';
-        warnignPopup(message, icon);
+        ErrorDialog('Warning', message);
         return false;
     }
     mastercity.adddata(formData[0]);
@@ -100,8 +90,7 @@ function updatecity(_this) {
     let formData = ResolveFormData(form);
     if (formData[0].StateCode == "--Select State--" || formData[0].City == ""  || formData[0].CityCode == "" ) {
         let message = "Please enter a valid data";
-        let icon = 'fa fa-exclamation';
-        warnignPopup(message, icon);
+        ErrorDialog('Warning', message);
         return false;
     }
     mastercity.updatedata(formData[0]);

@@ -73,13 +73,10 @@ function Updatedata(_this) {
     var data = { Id: Id === "" ? 0 : Id, Title: TitelName, Type: StoryType, VideoFile: videoLink, DisplayOrder: displayOrder };
     SendAJAXRequest('/SuccessStoryVideo/InsertUpdateSuccessStoryVideo/', 'POST', data, "JSON", (result) => {
         if (result) {
-            let icon = 'fa fa-thumbs-up';
-            let Message = "Successfully Done";
-            updatedsucessfully(Message, icon);
-            //$('#btnSuccess').removeAttr('onclick');
-            //location.reload(true);
+            $('#PopUpModal').modal('toggle');
+            InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetSuccessStoryVideo);
         } else {
-            warnignPopup('Faild to success');
+            ErrorDialog('Error','Faild to do action');
             return false;
         }
     });
