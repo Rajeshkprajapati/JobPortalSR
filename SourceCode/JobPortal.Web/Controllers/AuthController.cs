@@ -849,7 +849,7 @@ namespace JobPortal.Web.Controllers
                 var randomPassword = RandomGenerator.GetRandom(5);
                 var user = new EmployeeViewModel
                 {
-                    FirstName = resp.GivenName,
+                    CompanyName = resp.GivenName,
                     LastName = resp.FamilyName,
                     Email = resp.Email,
                     Password = randomPassword,
@@ -896,7 +896,7 @@ namespace JobPortal.Web.Controllers
                 var randomPassword = RandomGenerator.GetRandom(5);
                 var user = new EmployeeViewModel
                 {
-                    FirstName = resp.GivenName,
+                    CompanyName = resp.GivenName,
                     LastName = resp.FamilyName,
                     Email = resp.Email,
                     Password = randomPassword,
