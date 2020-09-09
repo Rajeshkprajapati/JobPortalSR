@@ -391,5 +391,32 @@ namespace JobPortal.Business.Handlers.Auth
             return null;
         }
 
+        public GoogleUserInfoViewModel GetGoogleUserInfo(string accessToken)
+        {
+            string userInfoUrl = _configuration["GoogleAPI:TokenValidator"];
+
+            var formattedUrl = string.Format(userInfoUrl, accessToken);
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(formattedUrl);
+                using (var resp = client.GetAsync(client.BaseAddress))
+                {
+                    resp.Wait();
+                    var result = resp.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var response = result.Content.ReadAsStringAsync();
+                        response.Wait();
+                        return JsonConvert.DeserializeObject<GoogleUserInfoViewModel>(response.Result);
+                    }
+                    else
+                    {
+                        throw new UserNotCreatedException("Invalid access token");
+                    }
+                }
+            }
+        }        
+
     }
 }

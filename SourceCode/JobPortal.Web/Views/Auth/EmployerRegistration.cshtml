@@ -11,6 +11,11 @@
         color: red !important;
     }
 </style>
+@section header {
+    <meta name="google-signin-client_id" content="341141713204-tu361b8fe8gv41r9il92obeqqqlbr4pf.apps.googleusercontent.com" />
+    <meta name="google-signin-scope" content="profile email">
+    <script src="https://apis.google.com/js/api:client.js" async defer></script>
+}
 <!-- Titlebar
 ================================================== -->
 @*<div id="titlebar" class="single">
@@ -62,7 +67,7 @@
                                 <li>
                                     <a class="facebook" href="javascript:void(0)" onclick="checkEmployeeLoginState();"><i class="icon-facebook"></i></a>
                                 </li>
-                                <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+                                <li><a class="gplus" id="employersignin" href="javascript:void(0)"><i class="icon-gplus"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -138,7 +143,7 @@
                                 <li>
                                     <a class="facebook" href="javascript:void(0)" onclick="checkConsultancyLoginState();"><i class="icon-facebook"></i></a>
                                 </li>
-                                <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+                                <li><a class="gplus" id="consultantsignin" href="javascript:void(0)"><i class="icon-gplus"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -148,7 +153,7 @@
                             <label asp-for="CompanyName">
                                 Consultancy Name:
                                 <i class="ln ln-icon-Male"></i>
-                                <input type="text" class="input-text" asp-for="CompanyName" id="companyname" placeholder="Consultancy Name" />
+                                <input type="text" class="input-text" asp-for="CompanyName" placeholder="Consultancy Name" />
                             </label>
                             <span asp-validation-for="CompanyName" class="text-danger"></span>
                         </div>
@@ -165,7 +170,7 @@
                             <label asp-for="Email">
                                 Official Email:
                                 <i class="ln ln-icon-Mail"></i>
-                                <input type="text" class="input-text" asp-for="Email" id="email" placeholder="Office Email" autocomplete="off" />
+                                <input type="text" class="input-text" asp-for="Email" placeholder="Office Email" autocomplete="off" />
                             </label>
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
@@ -174,7 +179,7 @@
                             <label asp-for="Password">
                                 Password:
                                 <i class="ln ln-icon-Lock-2"></i>
-                                <input class="input-text" type="password" asp-for="Password" id="password" placeholder="Password" />
+                                <input class="input-text" type="password" asp-for="Password" placeholder="Password" />
                             </label>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
@@ -183,7 +188,7 @@
                             <label asp-for="Mobile">
                                 Mobile:
                                 <i class="ln ln-icon-Smartphone"></i>
-                                <input type="number" maxlength="10" class="input-text" asp-for="Mobile" id="mobile" placeholder="Mobile" />
+                                <input type="number" maxlength="10" class="input-text" asp-for="Mobile" placeholder="Mobile" />
                             </label>
                             <span asp-validation-for="Mobile" class="text-danger"></span>
                         </div>
@@ -206,16 +211,74 @@
             </div>
         </div>
     </div>
-
-
 </div>
 <div id="fb-root"></div>
 
 
 @section Scripts
     {
-    @*<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0&appId=544734402958846&autoLogAppEvents=1" nonce="94j3X9ee"></script>*@
+    @*<script src="https://apis.google.com/js/platform.js" async defer></script>*@
 
+    <script>
+        gapi.load('auth2', function () {
+            auth2 = gapi.auth2.init({
+                client_id: '341141713204-tu361b8fe8gv41r9il92obeqqqlbr4pf.apps.googleusercontent.com',
+                cookiepolicy: 'single_host_origin',
+            });
+            attachSignin(document.getElementById('employersignin'));
+            attachSignin(document.getElementById('consultantsignin'));
+        });
+        function attachSignin(element) {
+            //console.log(element.id);
+            auth2.attachClickHandler(element, {},
+                function (googleUser) {
+                    empGoogleRegistration(googleUser, element.id);
+                }, function (error) {
+                    console.log(JSON.stringify(error, undefined, 2));
+                });
+        }
+        //function onSignIn(googleUser) {
+        //    var profile = googleUser.getBasicProfile();
+        //    var id_token = googleUser.getAuthResponse().id_token;
+        //    console.log(id_token);
+        //    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        //    console.log('Name: ' + profile.getName());
+        //    console.log('Image URL: ' + profile.getImageUrl());
+        //    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        //    googleRegistration(id_token);
+        //}
+        function empGoogleRegistration(response, id) {
+            debugger;
+            if (response.getAuthResponse().id_token) {
+                var accessToken = response.getAuthResponse().id_token;
+                if (id === 'consultantsignin') {
+
+                    SendAJAXRequest(`/Auth/ConsultantGoogleRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
+                        if (resp && resp.isSuccess) {
+                            //console.log('Success');
+                            InformationDialog('Information', 'Registration Successfull!');
+                        } else {
+                            ErrorDialog('Warning', 'Invalid Credential!');
+                        }
+                    });
+                } else {
+
+                    SendAJAXRequest(`/Auth/EmpGoogleRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
+                        if (resp && resp.isSuccess) {
+                            //console.log('Success');
+                            InformationDialog('Information', 'Registration Successfull!');
+                        } else {
+                            ErrorDialog('Warning', 'Invalid Credential!');
+                        }
+                    });
+                }
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                });
+            }
+        }
+    </script>
     <script>
         window.fbAsyncInit = function () {
             FB.init({

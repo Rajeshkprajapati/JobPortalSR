@@ -786,6 +786,49 @@ namespace JobPortal.Web.Controllers
             return Json(new { isSuccess });
 
         }
+        [HttpPost]
+        public JsonResult GoogleJobseekerRegistration([FromBody]string accesstoken)
+        {
+            var isSuccess = true;
+            try
+            {
+                var resp = authHandler.GetGoogleUserInfo(accesstoken);
+
+                if (resp == null)
+                {
+                    throw new UserNotCreatedException("Invalid access token");
+                }
+                var randomPassword = RandomGenerator.GetRandom(5);
+                var user = new JobSeekerViewModel
+                {
+                    FirstName = resp.GivenName,
+                    LastName = resp.FamilyName,
+                    Email = resp.Email,
+                    Password = randomPassword,
+                };
+
+                user.RoleId = 2;//For Student
+                authHandler.RegisterUser(user);
+                SendRegistrationMailToJobSeeker(user);
+            }
+            catch (UserNotCreatedException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+            }
+            catch (UserAlreadyExists ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+            }
+            catch (Exception ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+            }
+            return Json(new { isSuccess });
+
+        }
 
         [HttpPost]
         public IActionResult AdminLogin(UserViewModel user)

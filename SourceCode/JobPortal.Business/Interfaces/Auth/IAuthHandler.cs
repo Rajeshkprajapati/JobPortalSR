@@ -26,5 +26,6 @@ namespace JobPortal.Business.Interfaces.Auth
         bool ChangePassword(ResetPasswordViewModel user);     
         
         FBUserInfoResultViewModel GetFBUserInfo(string accessToken);
+        GoogleUserInfoViewModel GetGoogleUserInfo(string accessToken);
     }
 }
