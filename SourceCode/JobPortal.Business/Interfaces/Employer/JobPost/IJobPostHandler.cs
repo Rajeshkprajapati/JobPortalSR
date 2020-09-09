@@ -22,7 +22,7 @@ namespace JobPortal.Business.Interfaces.Employer.JobPost
         List<StateViewModel> GetStateList(string CountryCode);
         List<CityViewModel> GetCityList(string StateCode);
         List<GenderViewModel> GetGenderListDetail();
-        bool AddJobPost(JobPostViewModel model, int userId);
+        bool AddJobPost(JobPostViewModel model, int userId,bool isDraftJob=false);
         JobPostViewModel GetJobDetails(int jobid);
         bool AddPreferredLocation(string[] location,int userid);
         List<JobTypeViewModel> GetJobTypes();

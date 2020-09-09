@@ -49,7 +49,7 @@ namespace JobPortal.Data.Repositories.Employer
             throw new DataNotFound("Employer details not found, please contact your tech deck.");
         }
 
-        public DataTable GetJobs(int empId, int year, int jobId)
+        public DataTable GetJobs(int empId, int year, int jobId,bool isDraftJob)
         {
             using (var connection = new SqlConnection(connectionString))
             {
@@ -58,7 +58,8 @@ namespace JobPortal.Data.Repositories.Employer
                     SqlParameter[] parameters = new SqlParameter[] {
                         new SqlParameter("@EmpId",empId),
                         new SqlParameter("@JobId",jobId),
-                        new SqlParameter("@year",year)
+                        new SqlParameter("@year",year),
+                        new SqlParameter("@isDraftJob",isDraftJob)
                     };
                     var result =
                         SqlHelper.ExecuteDataset

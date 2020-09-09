@@ -134,7 +134,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             try
             {
                 employer = user.UserId;
-                jobs = dashboardHandler.GetJobs(employer, year);
+                jobs = dashboardHandler.GetJobs(employer, year,true);
             }
             catch (DataNotFound ex)
             {

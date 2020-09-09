@@ -222,7 +222,7 @@ namespace JobPortal.Business.Handlers.Employer.JobPost
             throw new UserNotFoundException("Data not found");
         }
 
-        public bool AddJobPost(JobPostViewModel jobpostviewmodel, int userId)
+        public bool AddJobPost(JobPostViewModel jobpostviewmodel, int userId,bool isDraftJob)
         {
             JobPostModel model = new JobPostModel
             {
@@ -249,16 +249,13 @@ namespace JobPortal.Business.Handlers.Employer.JobPost
                 SPOC = jobpostviewmodel.ContactPerson,
                 SPOCContact = jobpostviewmodel.Mobile,
                 SPOCEmail = jobpostviewmodel.SPOCEmail,
-                IsWalkin = jobpostviewmodel.IsWalkIn,
-                //Quarter1 = jobpostviewmodel.Quarter1,
-                //Quarter2 = jobpostviewmodel.Quarter2,
-                //Quarter3 = jobpostviewmodel.Quarter3,
-                //Quarter4 = jobpostviewmodel.Quarter4,
+                IsWalkin = jobpostviewmodel.IsWalkIn,                
                 Skills = jobpostviewmodel.Skills,
                 JobTitleByEmployer=jobpostviewmodel.JobTitleByEmployer,
                 MinExp=(int)jobpostviewmodel.MinExp,
                 MaxExp=(int)jobpostviewmodel.MaxExp,
-                FinancialYear=jobpostviewmodel.FinancialYear
+                FinancialYear=jobpostviewmodel.FinancialYear,
+                IsDraftJob = isDraftJob
             };
             bool result = _jobPostProcessor.AddJobPostData(model);
             if (result == true)

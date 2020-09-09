@@ -10,7 +10,7 @@ namespace JobPortal.Data.Interfaces.Employer
     public interface IDashboardRepository
     {
         DataTable GetProfileData(int empId);
-        DataTable GetJobs(int empId, int year, int jobId = 0);
+        DataTable GetJobs(int empId, int year, int jobId = 0,bool isDraftJob=false);
         DataTable GetJobSeekers(int empId, int jobId=0);
         DataSet GetDashboard(int empId);
         DataTable GetViewedProfiles(int empId);

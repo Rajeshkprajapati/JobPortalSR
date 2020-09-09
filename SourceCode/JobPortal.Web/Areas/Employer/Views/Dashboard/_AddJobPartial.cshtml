@@ -177,6 +177,7 @@
                     </div>
                 </div>
                 <input type="submit" class="button margin-top-30" value="Post Job">
+                <input type="button" class="button margin-top-30" onclick="return SaveJob(this)" value="Save Job">
             </form>
 
             @*<a href="#" class="button margin-top-30">Post <i class="fa fa-arrow-circle-right"></i></a>*@
@@ -190,33 +191,28 @@
     $(document).ready(function () {
         $(".chosen-select").chosen({});
         $(".chosen-select-no-single").chosen({});
-        //$('#JobPostForm').validate();
-        //$.validator.setDefaults({ ignore: ":hidden:not(select)" });
-        //$.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" });        
-        //if ($("select.chosen-select").length > 0) {
-        //    $("select.chosen-select").each(function () {
-        //        if ($(this).attr('required') !== undefined) {
-        //            $(this).on("change", function () {
-        //                $(this).valid();
-        //            });
-        //        }
-        //    });
-        //}
-        //if ($("select.chosen-select-no-single").length > 0) {
-        //    $("select.chosen-select-no-single").each(function () {
-        //        if ($(this).attr('required') !== undefined) {
-        //            $(this).on("change", function () {
-        //                $(this).valid();
-        //            });
-        //        }
-        //    });
-        //}        
-        //$('#JobPostForm').validate({
-        //    rule:{
-        //}, message: {
-        //}
-        //});
     });
+    function SaveJob(_this) {
+        debugger;
+        $('#JobPostForm').submit(function (e) {
+            e.preventDefault();
+        });
+        let formsData = ResolveFormData($('#JobPostForm'));
+        let jdetails = CKEDITOR.instances['JobDetails'].getData();
+        formsData[0].JobDetails = jdetails;
+        formsData[0].JobTitle = $('select[name=JobTitleId]').val().toString();
+        SendAJAXRequest('/JobManagement/SaveJobPost/', 'POST', formsData[0], 'JSON', (resp) => {
+            if (resp) {
+                InformationDialog('Information', 'Job Post Saved Successful!');
+            } else {
+                ErrorDialog('Error', 'Saving Job Post Failed!');
+            }
+        });
+        resetForm($('#JobPostForm'));
+        CKEDITOR.instances['JobDetails'].setData("");
+        initializeCalendars(true, true);
+        return false;
+    }
     CKEDITOR.replace('JobDetails');
 </script>
 

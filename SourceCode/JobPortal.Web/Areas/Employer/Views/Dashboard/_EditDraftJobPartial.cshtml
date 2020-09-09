@@ -110,15 +110,10 @@
 <script>
     CKEDITOR.replace('jobDetails');
     $(document).ready(function () {
-        //debugger;
         $("#jobRole").chosen({width:"100%"});
         $(".chosen-select-no-single").chosen({});
-        //var my_val = 3,4,6;
-        //var str_array = my_val.split(',');
         var str_array = '@Model.JobTitleId.Replace(" ", "")';
-        //console.log(str_array);
         var arr = str_array.split(',');
-        //console.log(arr);
         $("#jobRole").val(arr).trigger("chosen:updated");
 
         //......................

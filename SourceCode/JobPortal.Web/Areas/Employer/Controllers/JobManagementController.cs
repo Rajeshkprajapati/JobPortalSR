@@ -80,6 +80,28 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             //return RedirectToAction("JobPosting", "JobManagement");
             return Json(msg);
         }
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult SaveJobPost([FromBody]JobPostViewModel model)
+        {
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            user = user ?? new UserViewModel();
+            var msg = true;
+            try
+            {
+                jobpastHandler.AddJobPost(model, user.UserId,true);
+                //TempData["msg"] = "Job Posted successfully";                
+            }
+            catch (UserNotCreatedException ex)
+            {
+                msg = false;
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(JobManagementController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+
+            }
+            //return RedirectToAction("JobPosting", "JobManagement");
+            return Json(msg);
+        }
 
         [HttpGet]
         [Route("[action]")]

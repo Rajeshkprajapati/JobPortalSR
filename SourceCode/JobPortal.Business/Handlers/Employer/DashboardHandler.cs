@@ -67,9 +67,10 @@ namespace JobPortal.Business.Handlers.Employer
             throw new DataNotFound("Employer details not found");
         }
 
-        public IEnumerable<JobPostViewModel> GetJobs(int empId, int year, bool isDraftJob = false)
+        public IEnumerable<JobPostViewModel> GetJobs(int empId, int year, bool isDraftJob)
         {
-            var jobs = dashboardRepository.GetJobs(empId, year);
+            int jobid = 0;
+            var jobs = dashboardRepository.GetJobs(empId, year,jobid,isDraftJob);
             if (null != jobs && jobs.Rows.Count > 0)
             {
                 IList<JobPostViewModel> jModel = new List<JobPostViewModel>();

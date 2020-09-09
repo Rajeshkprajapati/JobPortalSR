@@ -187,8 +187,7 @@ function initCalendar(selector, date, startDate) {
     $(selector).data(cal);
 }
 
-function AddJobPost(_this) {
-    //debugger;
+function AddJobPost(_this) {    
     $('#JobPostForm').submit(function (e) {
         e.preventDefault();
     });
@@ -251,6 +250,7 @@ function AddJobPost(_this) {
     initializeCalendars(true, true);
     return false;
 }
+
 
 function toggleCalendar(_this) {
     //$(_this).parent().parent().find("input[type=date]").data().toggle();

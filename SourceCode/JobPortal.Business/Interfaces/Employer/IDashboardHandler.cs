@@ -11,7 +11,7 @@ namespace JobPortal.Business.Interfaces.Employer
     {
         DashboardSummary GetDashboard(int empId);
         UserViewModel GetProfileData(int empId);
-        IEnumerable<JobPostViewModel> GetJobs(int empId, int year);
+        IEnumerable<JobPostViewModel> GetJobs(int empId, int year,bool isDraft=false);
         IEnumerable<Model.DataViewModel.Employer.Dashboard.JobSeekerViewModel> GetJobSeekers(int empId);
         IEnumerable<UserViewModel> GetViewedProfiles(int empId);
         IEnumerable<UserViewModel> GetJobSeekersBasedOnEmployerHiringCriteria(int empId, string year, string city, string role);

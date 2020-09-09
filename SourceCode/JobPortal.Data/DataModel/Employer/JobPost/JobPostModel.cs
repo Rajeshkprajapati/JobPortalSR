@@ -28,6 +28,7 @@ namespace JobPortal.Data.DataModel.Employer.JobPost
         public int JobType { get; set; }
         public string Gender { get; set; }
         public string JobDetails { get; set; }
+        public bool IsDraftJob{ get; set; } = false;
 
         //  Here User Id in the sense of source of job
         public int Userid { get; set; }

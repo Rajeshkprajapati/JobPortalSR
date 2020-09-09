@@ -314,11 +314,7 @@ namespace JobPortal.Data.Repositories.Employer.JobPost
                 new SqlParameter("@IsWalkInJob",model.IsWalkin == "Yes"?true:false),
                 new SqlParameter("@NoPosition",model.NoPosition),
                 new SqlParameter("@PositionStartDate",model.PositionStartDate),
-                new SqlParameter("@PositionEndDate",model.PositionEndDate),
-                //new SqlParameter("@Quarter1",model.Quarter1),
-                //new SqlParameter("@Quarter2",model.Quarter2),
-                //new SqlParameter("@Quarter3",model.Quarter3),
-                //new SqlParameter("@Quarter4",model.Quarter4),
+                new SqlParameter("@PositionEndDate",model.PositionEndDate),                
                 new SqlParameter("@Spoc",model.SPOC),
                 new SqlParameter("@SpocContact",model.SPOCContact),
                 new SqlParameter("@SpocEmail",model.SPOCEmail),
@@ -329,8 +325,8 @@ namespace JobPortal.Data.Repositories.Employer.JobPost
                 new SqlParameter("@MinExp",model.MinExp),
                 new SqlParameter("@MaxExp",model.MaxExp),
                 new SqlParameter("@FinancialYear",model.FinancialYear),
-                new SqlParameter("@IsFromBulkUpload",model.IsFromBulkUpload)
-
+                new SqlParameter("@IsFromBulkUpload",model.IsFromBulkUpload),
+                new SqlParameter("@isDraftJob",model.IsDraftJob)
             };
                     var result =
                         SqlHelper.ExecuteNonQuery
