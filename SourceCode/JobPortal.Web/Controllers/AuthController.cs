@@ -486,7 +486,7 @@ namespace JobPortal.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    user.RoleId = 6;//For Consultancy
+                    user.RoleId = 4;//For Consultancy
                     authHandler.RegisterEmployer(user);
                     SendRegistrationMailToEmployer(user);
                     TempData["successMsg"] = "Registered Successfully done. Please login with registered mail..!";
@@ -721,7 +721,7 @@ namespace JobPortal.Web.Controllers
                     CompanyName = resp.FirstName,
                 };
 
-                user.RoleId = 6;//For Consultation
+                user.RoleId = 4;//For Consultation
                 authHandler.RegisterEmployer(user);
                 SendRegistrationMailToEmployer(user);
             }
@@ -855,7 +855,7 @@ namespace JobPortal.Web.Controllers
                     Password = randomPassword,
                 };
 
-                user.RoleId = 6;//For Consultant
+                user.RoleId = 4;//For Consultant
                 authHandler.RegisterEmployer(user);
                 SendRegistrationMailToEmployer(user);
             }
