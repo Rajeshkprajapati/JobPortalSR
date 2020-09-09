@@ -67,7 +67,7 @@ namespace JobPortal.Business.Handlers.Employer
             throw new DataNotFound("Employer details not found");
         }
 
-        public IEnumerable<JobPostViewModel> GetJobs(int empId, int year)
+        public IEnumerable<JobPostViewModel> GetJobs(int empId, int year, bool isDraftJob = false)
         {
             var jobs = dashboardRepository.GetJobs(empId, year);
             if (null != jobs && jobs.Rows.Count > 0)
@@ -88,11 +88,7 @@ namespace JobPortal.Business.Handlers.Employer
                         JobDetails = Convert.ToString(row["JobDetails"]),
                         CTC = Convert.ToString(row["CTC"]),
                         TotalApplications = Convert.ToInt32(row["TotalApplications"]),
-                        PostedOn = Convert.ToDateTime(row["PostedOn"]),
-                        //Quarter1 = Convert.ToString(row["Quarter1"]),
-                        //Quarter2 = Convert.ToString(row["Quarter2"]),
-                        //Quarter3 = Convert.ToString(row["Quarter3"]),
-                        //Quarter4 = Convert.ToString(row["Quarter4"]),
+                        PostedOn = Convert.ToDateTime(row["PostedOn"]),                        
                         Featured = Convert.ToString(row["Featured"]),
                         DisplayOrder = row["FeaturedJobDisplayOrder"] as int? ?? 0
                     });
@@ -257,7 +253,7 @@ namespace JobPortal.Business.Handlers.Employer
 
         public IEnumerable<UserViewModel> GetJobSeekersBasedOnEmployerHiringCriteria(int empId, string year, string city, string role)
         {
-            var jobSeekers = dashboardRepository.GetJobSeekersBasedOnEmployerHiringCriteria(empId,year,city,role);
+            var jobSeekers = dashboardRepository.GetJobSeekersBasedOnEmployerHiringCriteria(empId, year, city, role);
             IList<UserViewModel> jSeekers = new List<UserViewModel>();
             if (null != jobSeekers && jobSeekers.Rows.Count > 0)
             {
@@ -293,7 +289,7 @@ namespace JobPortal.Business.Handlers.Employer
                             Resume = resumePath,
                             ProfileSummary = Convert.ToString(row["ProfileSummary"]),
                             AboutMe = Convert.ToString(row["AboutMe"]),
-                            RoleName= Convert.ToString(row["JobTitleName"]),
+                            RoleName = Convert.ToString(row["JobTitleName"]),
                             CityName = Convert.ToString(row["Name"])
 
                         });
@@ -535,7 +531,7 @@ namespace JobPortal.Business.Handlers.Employer
                 JobTitleByEmployer = job.JobTitleByEmployer,
                 PositionStartDate = job.PositionStartDate,
                 PositionEndDate = job.PositionEndDate,
-                FinancialYear =job.FinancialYear
+                FinancialYear = job.FinancialYear
             };
             return dashboardRepository.UpdateJob(userId, job.JobPostId, jModel);
         }

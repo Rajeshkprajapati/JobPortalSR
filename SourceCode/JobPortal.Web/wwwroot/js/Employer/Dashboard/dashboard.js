@@ -152,6 +152,20 @@ dashboard = (function () {
             }
         });
     };
+    let populateDraftJobOnForm = function (jobId) {        
+        SendAJAXRequest(`/Dashboard/GetDraftJobScreenById?jobId=${jobId}`, "GET", {}, "html", function (resp) {
+            if (resp && resp !== "") {
+                $("div#editJob").find("div.modal-body").html(resp);
+                $("div#editJob").modal({
+                    backdrop: "static"
+                });                                            
+                $("#jobRole").trigger("chosen:updated");                
+            }
+            else {
+                return false;
+            }
+        });
+    };
 
     let getReplyPrompt = function (msg) {
         SendAJAXRequest(`/Dashboard/GetReplyPrompt`, "POST", msg, "html", function (resp) {
@@ -176,6 +190,21 @@ dashboard = (function () {
                 closeModalManually($("div#editJob"));
                 $("ul.usernavdash").find("li").eq(2).click();
                 InformationDialog('Information', 'Successfully updated job details');               
+            }
+            else {
+                return false;
+            }
+        });
+    };
+    let PostDraftJob = function (data) {
+        debugger;
+        let bodyContent = $("#cke_jobDetails iframe").contents().find("body").html();
+        data.jobDetails = bodyContent;
+        SendAJAXRequest(`/Dashboard/PostDraftJob`, "POST", data, "JSON", function (resp) {
+            if (resp && resp.isUpdated) {
+                closeModalManually($("div#editJob"));
+                $("ul.usernavdash").find("li").eq(2).click();
+                InformationDialog('Information', 'TestJob job details');               
             }
             else {
                 return false;
@@ -207,6 +236,24 @@ dashboard = (function () {
             }
         });
     };
+
+    let draftjobs = function () {
+        debugger;
+        let year = $("select[name=jobListYearFilter]").val();
+        year = (year && year !== "") ? year : new Date().getFullYear();
+        SendAJAXRequest(`/Dashboard/GetDraftJobs?year=${year}`, "GET", {}, "html", function (resp) {
+            if (resp && resp !== "") {
+                $("div#mycontentHolder").html(resp);
+                if ($("select[name=jobListYearFilter]").val() !== year) {
+                    $("select[name=jobListYearFilter]").val(year);
+                }
+            }
+            else {
+                return false;
+            }
+        });
+    };
+
     let myProfile = function () {
         
         SendAJAXRequest(`/Dashboard/MyProfilePartial`, "GET", {}, "html", function (resp) {
@@ -239,13 +286,16 @@ dashboard = (function () {
         getViewedProfiles: getViewedProfiles,
         getJobSeekersBasedOnEmployerHiringCriteria: getJobSeekersBasedOnEmployerHiringCriteria,
         populateJobOnForm: populateJobOnForm,
+        populateDraftJobOnForm: populateDraftJobOnForm,
         updateJob: updateJob,
+        PostDraftJob: PostDraftJob,
         getMessages: getMessages,
         messageSection: messageSection,
         getReplyPrompt: getReplyPrompt,
         replyToJobSeeker: replyToJobSeeker,
         addjobs: addjobs,
-        myProfile: myProfile
+        myProfile: myProfile,
+        draftjobs: draftjobs
     };
 
 })();
@@ -264,6 +314,9 @@ function getMyDetails() {
 
 function getMyJobs() {
     dashboard.getJobs();
+}
+function draftjobs() {
+    dashboard.draftjobs();
 }
 
 function getJobSeekers() {
@@ -289,6 +342,9 @@ function getJobSeekersBasedOnEmployerHiringCriteria() {
 function populateJobOnForm(jobId) {
     dashboard.populateJobOnForm(jobId);
 }
+function populateDraftJobOnForm(jobId) {
+    dashboard.populateDraftJobOnForm(jobId);
+}
 
 function getReplyPrompt(msg) {
     dashboard.getReplyPrompt(msg);
@@ -313,6 +369,11 @@ function updateJob(_this) {
     let forms = $(_this).parent().parent().find("form");
     let formsData = ResolveFormData(forms);
     dashboard.updateJob(formsData[0]);
+}
+function PostDraftJob(_this) {   
+    let forms = $(_this).parent().parent().find("form");
+    let formsData = ResolveFormData(forms);
+    dashboard.PostDraftJob(formsData[0]);
 }
 
 function toggleCalendar() {

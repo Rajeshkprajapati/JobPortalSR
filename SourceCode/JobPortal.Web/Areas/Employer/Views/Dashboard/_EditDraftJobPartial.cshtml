@@ -1,0 +1,153 @@
+﻿@using JobPortal.Model.DataViewModel.Employer.JobPost;
+@model JobPostViewModel
+
+<div class="row col-md-12">
+
+    <form>
+        <input type="hidden" name="JobPostId" value="@Model.JobPostId" />
+        <div class="form-group row">
+            <label class="col-md-2" for="companyName">Company Name</label>
+            <div class="col-sm-10">
+                <input type="text" class=" form-control" name="CompanyName" value="@Model.CompanyName" id="companyName" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="jobTitle">Job Title</label>
+            <div class="col-sm-10">
+                <input type="text" class=" form-control" name="JobTitleByEmployer" value="@Model.JobTitleByEmployer" id="jobTitle" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="jobRole">Job Role</label>
+            <div class="col-sm-10">                
+                <select class="chosen-select" id="jobRole" multiple="multiple" asp-items="@(new SelectList(ViewBag.JobRoles, "JobTitleId", "JobTitleName"))"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="country">Country</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="CountryCode" asp-items="@(new SelectList(ViewBag.Countries, "CountryCode", "Country", Model.CountryCode))" id="country"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="state">State</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="state" onchange="stateChange(this.value)" name="StateCode" asp-items="@(new SelectList(ViewBag.States, "StateCode", "State", Model.StateCode))"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="city">City</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="city" name="CityCode" asp-items="@(new SelectList(ViewBag.Cities, "CityCode", "City", Model.CityCode))"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="monthlySalary">Posting Date</label>
+            <div class="col-sm-10">
+                <input type="date" class=" form-control unstyled" id="PostingDate" name="PositionStartDate" placeholder="yyyy-mm-dd" value="@Model.PositionStartDate" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="monthlySalary">Expiry Date</label>
+            <div class="col-sm-10">
+                <input type="date" min="2020-01-01" max="2030-12-31" class=" form-control unstyled" id="ExpiryDate" name="PositionEndDate" placeholder="yyyy-mm-dd" value="@Model.PositionEndDate" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="ctc">CTC</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="ctc" name="CTC" value="@Model.CTC" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="hiringCriteria">Hiring Criteria</label>
+            <div class="col-sm-10">
+                <input type="text" class=" form-control" id="hiringCriteria" name="HiringCriteria" value="@Model.HiringCriteria" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="jobType">Job Type</label>
+            <div class="col-sm-10">
+                <input type="hidden" id="jobType" name="JobType" value="@Model.JobType" />
+                <input type="text" class=" form-control" id="jobTypeSummary" name="JobTypeSummary" value="@Model.JobTypeSummary" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="financialYear">Financial Year</label>
+            <div class="col-sm-10">
+                <input type="text" class=" form-control" id="financialYear" name="FinancialYear" value="@Model.FinancialYear" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="spoc">SPOC</label>
+            <div class="col-sm-10">
+                <input type="text" class=" form-control" id="spoc" name="ContactPerson" value="@Model.ContactPerson" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="spocEmail">SPOC Email</label>
+            <div class="col-sm-10">
+                <input type="text" class=" form-control" id="spocEmail" name="SPOCEmail" value="@Model.SPOCEmail" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="spocContact">SPOC Contact</label>
+            <div class="col-sm-10">
+                <input type="text" class=" form-control" id="spocContact" name="Mobile" value="@Model.Mobile" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="jobDetails">Job Details</label>
+            <div class="col-sm-10">
+                <textarea class="form-control ckeditor" cols="25" name="JobDetails" id="jobDetails">@Model.JobDetails</textarea>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+    CKEDITOR.replace('jobDetails');
+    $(document).ready(function () {
+        //debugger;
+        $("#jobRole").chosen({width:"100%"});
+        $(".chosen-select-no-single").chosen({});
+        //var my_val = 3,4,6;
+        //var str_array = my_val.split(',');
+        var str_array = '@Model.JobTitleId.Replace(" ", "")';
+        //console.log(str_array);
+        var arr = str_array.split(',');
+        //console.log(arr);
+        $("#jobRole").val(arr).trigger("chosen:updated");
+
+        //......................
+        function initCalendar(TextBox) {
+            dobCalendar = tail.DateTime(TextBox, {
+                dateFormat: "YYYY-mm-dd",
+                timeFormat: false,
+                position: "bottom",
+                closeButton: false,
+                dateEnd: new Date('01/01/2030'),
+                dateStart: new Date('01/01/2020')
+            })
+                .on("open", () => {
+
+                })
+                .on("close", () => {
+
+                })
+                .on("change", () => {
+
+                });
+            //dobCalendar.selectDate(date.getFullYear(), date.getMonth(), date.getDate());
+        };
+        initCalendar("input[type=date]#ExpiryDate");
+        if ($('#PostingDate').length) {
+            initCalendar("input[type=date]#PostingDate");
+        }
+
+    });
+</script>
+
+

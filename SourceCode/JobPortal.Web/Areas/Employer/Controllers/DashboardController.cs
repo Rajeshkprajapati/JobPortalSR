@@ -26,7 +26,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
         private readonly IDashboardHandler dashboardHandler;
         private readonly IJobPostHandler _jobpastHandler;
         private readonly IHomeHandler _homeHandler;
-        public DashboardController(IDashboardHandler _dashboardHandler, IJobPostHandler jobpastHandler,IHomeHandler homeHandler)
+        public DashboardController(IDashboardHandler _dashboardHandler, IJobPostHandler jobpastHandler, IHomeHandler homeHandler)
         {
             dashboardHandler = _dashboardHandler;
             _jobpastHandler = jobpastHandler;
@@ -53,7 +53,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             var dBoard = dashboardHandler.GetDashboard(user.UserId);
             ViewBag.JobTitle = _jobpastHandler.GetJobTitleDetails() ?? new List<JobTitleViewModel>();
             ViewBag.CityList = dashboardHandler.GetCityListWithoutState() ?? new List<CityViewModel>();
-            return PartialView("_EmpDashboardDataPartial",dBoard);
+            return PartialView("_EmpDashboardDataPartial", dBoard);
         }
 
         [HttpGet]
@@ -77,7 +77,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public PartialViewResult GetJobSeekersBasedOnEmployerHiringCriteria(string year,string city,string role)
+        public PartialViewResult GetJobSeekersBasedOnEmployerHiringCriteria(string year, string city, string role)
         {
 
             IEnumerable<UserViewModel> jobseekers = null;
@@ -87,7 +87,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             {
                 ViewBag.AllJobRoles = _homeHandler.GetAllJobRoles();
                 ViewBag.AllCities = dashboardHandler.GetCityListWithoutState();
-                jobseekers = dashboardHandler.GetJobSeekersBasedOnEmployerHiringCriteria(user.UserId,year,city,role);              
+                jobseekers = dashboardHandler.GetJobSeekersBasedOnEmployerHiringCriteria(user.UserId, year, city, role);
             }
             catch (DataNotFound ex)
             {
@@ -123,6 +123,25 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 jobs = new List<JobPostViewModel>();
             }
             return PartialView("JobsPartial", jobs);
+        }
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult GetDraftJobs(int year, int employer = 0)
+        {
+            IEnumerable<JobPostViewModel> jobs = null;
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            user = user ?? new UserViewModel();
+            try
+            {
+                employer = user.UserId;
+                jobs = dashboardHandler.GetJobs(employer, year);
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(DashboardController), ex);
+                jobs = new List<JobPostViewModel>();
+            }
+            return PartialView("_DraftJobsPartial", jobs);
         }
 
         [HttpGet]
@@ -161,7 +180,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 ViewBag.EmploymentStatus = _jobpastHandler.GetJobJobEmploymentStatusDetails();
                 ViewBag.EmploymentType = _jobpastHandler.GetJobJobEmploTypeDetails();
                 ViewBag.Country = _jobpastHandler.GetCountryDetails();
-                ViewBag.JobTypes = _jobpastHandler.GetJobTypes();                
+                ViewBag.JobTypes = _jobpastHandler.GetJobTypes();
             }
             catch (DataNotFound ex)
             {
@@ -176,7 +195,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
         {
             var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             ViewBag.Emailid = user.Email;
-            return PartialView("_MyProfilePartial",user);
+            return PartialView("_MyProfilePartial", user);
         }
 
         [HttpGet]
@@ -184,12 +203,12 @@ namespace JobPortal.Web.Areas.Employer.Controllers
         public PartialViewResult GetViewedProfiles()
         {
             IEnumerable<UserViewModel> jSeekers = null;
-          
+
             var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             user = user ?? new UserViewModel();
             try
             {
-               jSeekers = dashboardHandler.GetViewedProfiles(user.UserId);
+                jSeekers = dashboardHandler.GetViewedProfiles(user.UserId);
                 ViewData["isViewdProfile"] = 1;
             }
             catch (DataNotFound ex)
@@ -224,6 +243,29 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             }
             return PartialView("EditJobPartial", job);
         }
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult GetDraftJobScreenById(int jobId)
+        {
+            JobPostViewModel job = null;
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            user = user ?? new UserViewModel();
+            try
+            {
+                ViewData["RoleName"] = user.RoleName;
+                ViewBag.Countries = dashboardHandler.GetCountries();
+                ViewBag.JobRoles = dashboardHandler.GetJobRoles();
+                job = dashboardHandler.GetJob(jobId, user.UserId);
+                ViewBag.States = dashboardHandler.GetStates(job.CountryCode);
+                ViewBag.Cities = dashboardHandler.GetCities(job.StateCode);
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(DashboardController), ex);
+                job = new JobPostViewModel();
+            }
+            return PartialView("_EditDraftJobPartial", job);
+        }
 
         [HttpGet]
         [Route("[action]")]
@@ -237,12 +279,12 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 DateTime _date = DateTime.Parse(date);
                 //DateTime _date = DateTime.ParseExact(date,"MM/dd/yyyy", CultureInfo.InvariantCulture);
                 messages = dashboardHandler.GetMessages(_date, user.UserId);
-            }            
+            }
             catch (DataNotFound ex)
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(DashboardController), ex);
                 messages = new List<MessageViewModel>();
-            }            
+            }
             return PartialView("MessagesPartial", messages);
         }
 
@@ -264,6 +306,25 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 isUpdated = false;
             }
             return new JsonResult(new { isUpdated = isUpdated });
+        }
+        [HttpPost]
+        [Route("[action]")]
+        public JsonResult PostDraftJob([FromBody]JobPostViewModel model)
+        {
+            bool isUpdated = true;
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            user = user ?? new UserViewModel();
+            try
+            {
+                //dashboardHandler.UpdateJob(model, user.UserId);
+            }
+
+            catch (DataNotUpdatedException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(DashboardController), ex);
+                isUpdated = false;
+            }
+            return new JsonResult(new { isUpdated });
         }
 
         [HttpPost]
