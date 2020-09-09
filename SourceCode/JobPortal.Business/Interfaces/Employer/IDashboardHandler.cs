@@ -25,5 +25,7 @@ namespace JobPortal.Business.Interfaces.Employer
         IEnumerable<MessageViewModel> GetMessages(DateTime msgsOnDate, int empId);
         bool ReplyToJobSeeker(MessageViewModel msg, int userId);
         List<CityViewModel> GetCityListWithoutState();
+        IEnumerable<JobPostViewModel> GetActiveCloseJobs(int empId, int year, int JobStatus);
+        bool DactiveActiveJobs(string id, int JobPostId);
     }
 }

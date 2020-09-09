@@ -382,5 +382,47 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             }
             return Json(cityList);
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult GetActiveAndCloseJob()
+        {
+           return PartialView("ActiveCloseJobsPartial");
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult GetJobStatus(int year, int JobStatus)
+        {
+            IEnumerable<JobPostViewModel> JobStatsList = null;
+
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            user = user ?? new UserViewModel();
+            try
+            {
+                JobStatsList = dashboardHandler.GetActiveCloseJobs(user.UserId, year, JobStatus);
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(DashboardController), ex);
+                JobStatsList = new List<JobPostViewModel>();
+            }
+            ViewBag.JobStatus = JobStatus;
+            return PartialView("GetJobStatus", JobStatsList);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult DactiveActiveJob(int JobPostId)
+        {
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+
+            var result = dashboardHandler.DactiveActiveJobs(Convert.ToString(user.UserId), JobPostId);
+            if (result)
+            {
+              return Json("Job Closed");
+            }
+            return Json("Faild to job close");
+        }
     }
 }

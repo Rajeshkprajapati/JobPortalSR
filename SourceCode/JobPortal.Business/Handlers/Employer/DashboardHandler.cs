@@ -571,6 +571,40 @@ namespace JobPortal.Business.Handlers.Employer
             return null;
             //throw new UserNotFoundException("User not found");
         }
+
+        public IEnumerable<JobPostViewModel> GetActiveCloseJobs(int empId,int year,int JobStatus)
+        {
+            var ActiveJobCloseJobData = dashboardRepository.GetActiveCloseJobs(empId, year, JobStatus);
+            IList<JobPostViewModel> activeCloseJobs = new List<JobPostViewModel>();
+            if (null != ActiveJobCloseJobData && ActiveJobCloseJobData.Rows.Count > 0)
+            {
+                foreach (DataRow row in ActiveJobCloseJobData.Rows)
+                {
+                    activeCloseJobs.Add(
+                        new JobPostViewModel
+                        {
+                            JobPostId = Convert.ToInt32(row["JobPostId"]),
+                            JobTitleByEmployer = Convert.ToString(row["JobTitleByEmployer"]),
+                            HiringCriteria = Convert.ToString(row["HiringCriteria"]),
+                            CTC = Convert.ToString(row["CTC"]),
+                            PostedOn = Convert.ToDateTime(row["PostedOn"]),
+                            PositionEndDate = Convert.ToString(row["PositionEndDate"])
+                        });
+                }
+                return activeCloseJobs;
+            }
+            return activeCloseJobs;
+        }
+
+        public bool DactiveActiveJobs(string id, int JobPostId)
+        {
+            var result = dashboardRepository.DactiveActiveJobs(id, JobPostId);
+            if (result)
+            {
+                return true;
+            }
+            throw new Exception("Unable close active job");
+        }
     }
 }
 
