@@ -787,14 +787,15 @@ namespace JobPortal.Web.Controllers
 
         }
         [HttpPost]
-        public JsonResult GoogleJobseekerRegistration([FromBody]string accesstoken)
+        public JsonResult JobseekerGoogleRegistration([FromBody]string accesstoken)
         {
             var isSuccess = true;
+            var msg = string.Empty;
             try
             {
                 var resp = authHandler.GetGoogleUserInfo(accesstoken);
-
-                if (resp == null)
+                var client_id = config["GoogleAppSettings:ClientId"];
+                if (resp == null || !resp.Azp.Equals(client_id))
                 {
                     throw new UserNotCreatedException("Invalid access token");
                 }
@@ -815,18 +816,115 @@ namespace JobPortal.Web.Controllers
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
                 isSuccess = false;
+                msg = "Registration Failed,Please try again!";
             }
             catch (UserAlreadyExists ex)
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                msg = "Email Already Exist!";
                 isSuccess = false;
             }
             catch (Exception ex)
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                msg = "Registration Failed,Please try again!";
                 isSuccess = false;
             }
-            return Json(new { isSuccess });
+            return Json(new { isSuccess, msg });
+
+        }
+        [HttpPost]
+        public JsonResult ConsultantGoogleRegistration([FromBody]string accesstoken)
+        {
+            var isSuccess = true;
+            var msg = string.Empty;
+            try
+            {
+                var resp = authHandler.GetGoogleUserInfo(accesstoken);
+                var client_id = config["GoogleAppSettings:ClientId"];
+                if (resp == null || !resp.Azp.Equals(client_id))
+                {
+                    throw new UserNotCreatedException("Invalid access token");
+                }
+                var randomPassword = RandomGenerator.GetRandom(5);
+                var user = new EmployeeViewModel
+                {
+                    FirstName = resp.GivenName,
+                    LastName = resp.FamilyName,
+                    Email = resp.Email,
+                    Password = randomPassword,
+                };
+
+                user.RoleId = 6;//For Consultant
+                authHandler.RegisterEmployer(user);
+                SendRegistrationMailToEmployer(user);
+            }
+            catch (UserNotCreatedException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+                msg = "Registration Failed,Please try again!";
+            }
+            catch (UserAlreadyExists ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+                msg = "Email Already Exist!";
+            }
+            catch (Exception ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+                msg = "Registration Failed,Please try again!";
+            }
+            return Json(new { isSuccess, msg });
+
+        }
+        [HttpPost]
+        public JsonResult EmpGoogleRegistration([FromBody]string accesstoken)
+        {
+            var isSuccess = true;
+            var msg = string.Empty;
+            try
+            {
+                var resp = authHandler.GetGoogleUserInfo(accesstoken);
+                var client_id = config["GoogleAppSettings:ClientId"];
+                if (resp == null || !resp.Azp.Equals(client_id))
+                {
+                    throw new UserNotCreatedException("Invalid access token");
+                }
+                var randomPassword = RandomGenerator.GetRandom(5);
+                var user = new EmployeeViewModel
+                {
+                    FirstName = resp.GivenName,
+                    LastName = resp.FamilyName,
+                    Email = resp.Email,
+                    Password = randomPassword,
+                };
+
+                user.RoleId = 3;//For Employer
+                authHandler.RegisterEmployer(user);
+                SendRegistrationMailToEmployer(user);
+            }
+            catch (UserNotCreatedException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+                msg = "Registration Failed,Please try again!";
+            }
+            catch (UserAlreadyExists ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+                msg = "Email Already Exist!";
+            }
+            catch (Exception ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                isSuccess = false;
+                msg = "Registration Failed,Please try again!";
+            }
+            return Json(new { isSuccess, msg });
 
         }
 

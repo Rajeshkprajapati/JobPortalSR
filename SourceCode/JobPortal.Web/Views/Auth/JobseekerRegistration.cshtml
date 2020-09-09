@@ -16,7 +16,7 @@
     }
 </style>
 @section header {
-    <meta name="google-signin-client_id" content="341141713204-tu361b8fe8gv41r9il92obeqqqlbr4pf.apps.googleusercontent.com" />
+    <meta name="google-signin-client_id" content="959100024495-sshngggnec7htiprelkoqvb5f70l6afq.apps.googleusercontent.com" />
     <meta name="google-signin-scope" content="profile email">
     <script src="https://apis.google.com/js/api:client.js" async defer></script>
 }
@@ -152,7 +152,7 @@
     <script>
         gapi.load('auth2', function () {
             auth2 = gapi.auth2.init({
-                client_id: '341141713204-tu361b8fe8gv41r9il92obeqqqlbr4pf.apps.googleusercontent.com',
+                client_id: '959100024495-sshngggnec7htiprelkoqvb5f70l6afq.apps.googleusercontent.com',
                 cookiepolicy: 'single_host_origin',
             });
             attachSignin(document.getElementById('signin'));
@@ -179,12 +179,12 @@
         function googleRegistration(response) {
             if (response.getAuthResponse().id_token) {
                 var accessToken = response.getAuthResponse().id_token;
-                SendAJAXRequest(`/Auth/GoogleJobseekerRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
+                SendAJAXRequest(`/Auth/JobseekerGoogleRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
                     if (resp && resp.isSuccess) {
                         //console.log('Success');
                         InformationDialog('Information', 'Registration Successfull!');
                     } else {
-                        ErrorDialog('Warning', 'Invalid Credential!');
+                        ErrorDialog('Warning', resp.msg);
                     }
                 });
                 var auth2 = gapi.auth2.getAuthInstance();
