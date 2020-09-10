@@ -38,7 +38,7 @@
 
             <div class="row margin-bottom-10">
                 <div class="form col-sm-12 col-md-12 col-lg-12">
-                    <h5>Draft Job Details</h5>
+                    <h5>Draft Job Year</h5>
                 </div>
                 <div class="form col-sm-6 col-md-6 col-lg-6">
                     <select name="jobListYearFilter" id="jobListYearFilter" onchange="getMyJobs()" data-placeholder="Select Year" class="chosen-select-no-single">
@@ -61,7 +61,7 @@
                 }
             </div>
 
-            <div class="dashboard-list-box margin-top-30">
+            <div class="dashboard-list-box margin-top-30" style="overflow-y:scroll">
                 <div class="dashboard-list-box-content">
                     <!-- Table -->
                     <table class="manage-table responsive-table">
@@ -70,7 +70,6 @@
                             <th>Date Posted</th>
                             <th>HiringCriteria</th>
                             <th>JobTypeSummary</th>
-                            <th>Total Applications</th>
                             <th>Action</th>
                         </tr>
 
@@ -90,10 +89,7 @@
                                     </td>
                                     <td class="companyName">@job.PostedOn.ToString("MM/dd/yyyy")</td>
                                     <td class="companyName">@job.HiringCriteria</td>
-                                    <td class="location">@job.JobTypeSummary </td>
-                                    <td class="centered">
-                                        @job.TotalApplications
-                                    </td>
+                                    <td class="location">@job.JobTypeSummary </td>                                    
                                     <td class="customenowrap">                                        
                                         <label onclick="populateDraftJobOnForm(@job.JobPostId)" style="cursor:pointer"><i class="fa fa-pencil"></i> Edit</label>
                                     </td>
@@ -120,7 +116,7 @@
 </div>
 <!-- Edit Job Popup Container -->
 
-<div class="modal fade" id="editJob" tabindex="-1" role="dialog">
+<div class="modal fade draftjob" id="editJob" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

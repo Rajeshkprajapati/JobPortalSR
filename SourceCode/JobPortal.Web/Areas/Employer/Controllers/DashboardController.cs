@@ -307,25 +307,25 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             }
             return new JsonResult(new { isUpdated = isUpdated });
         }
-        [HttpPost]
-        [Route("[action]")]
-        public JsonResult PostDraftJob([FromBody]JobPostViewModel model)
-        {
-            bool isUpdated = true;
-            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-            user = user ?? new UserViewModel();
-            try
-            {
-                //dashboardHandler.UpdateJob(model, user.UserId);
-            }
+        //[HttpPost]
+        //[Route("[action]")]
+        //public JsonResult PostDraftJob([FromBody]JobPostViewModel model)
+        //{
+        //    bool isUpdated = true;
+        //    var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+        //    user = user ?? new UserViewModel();
+        //    try
+        //    {
+        //        dashboardHandler.UpdateJob(model, user.UserId,true);
+        //    }
 
-            catch (DataNotUpdatedException ex)
-            {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(DashboardController), ex);
-                isUpdated = false;
-            }
-            return new JsonResult(new { isUpdated });
-        }
+        //    catch (DataNotUpdatedException ex)
+        //    {
+        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(DashboardController), ex);
+        //        isUpdated = false;
+        //    }
+        //    return new JsonResult(new { isUpdated });
+        //}
 
         [HttpPost]
         [Route("[action]")]

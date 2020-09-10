@@ -532,7 +532,7 @@ namespace JobPortal.Business.Handlers.Employer
                 JobTitleByEmployer = job.JobTitleByEmployer,
                 PositionStartDate = job.PositionStartDate,
                 PositionEndDate = job.PositionEndDate,
-                FinancialYear = job.FinancialYear
+                FinancialYear = job.FinancialYear,                
             };
             return dashboardRepository.UpdateJob(userId, job.JobPostId, jModel);
         }

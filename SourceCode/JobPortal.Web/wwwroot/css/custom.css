@@ -334,7 +334,8 @@
 }
 
 .modal {
-    max-height: 94% !important;    
+    max-height: 94% !important; 
+    left: 40vh;
 }
 @media (min-width: 768px) {
     .modal-dialog {

@@ -200,11 +200,12 @@ dashboard = (function () {
         debugger;
         let bodyContent = $("#cke_jobDetails iframe").contents().find("body").html();
         data.jobDetails = bodyContent;
-        SendAJAXRequest(`/Dashboard/PostDraftJob`, "POST", data, "JSON", function (resp) {
+        SendAJAXRequest(`/Dashboard/UpdateJobDetails`, "POST", data, "JSON", function (resp) {
             if (resp && resp.isUpdated) {
                 closeModalManually($("div#editJob"));
                 $("ul.usernavdash").find("li").eq(2).click();
-                InformationDialog('Information', 'TestJob job details');               
+                InformationDialog('Information', 'Successfully posted draft job!');
+                location.reload(true);
             }
             else {
                 return false;
@@ -237,8 +238,7 @@ dashboard = (function () {
         });
     };
 
-    let draftjobs = function () {
-        debugger;
+    let draftjobs = function () {        
         let year = $("select[name=jobListYearFilter]").val();
         year = (year && year !== "") ? year : new Date().getFullYear();
         SendAJAXRequest(`/Dashboard/GetDraftJobs?year=${year}`, "GET", {}, "html", function (resp) {
@@ -370,9 +370,11 @@ function updateJob(_this) {
     let formsData = ResolveFormData(forms);
     dashboard.updateJob(formsData[0]);
 }
-function PostDraftJob(_this) {   
+function PostDraftJob(_this) {
+    debugger;
     let forms = $(_this).parent().parent().find("form");
     let formsData = ResolveFormData(forms);
+    formsData[0].JobTitle = $('.jobRoles').val().toString();
     dashboard.PostDraftJob(formsData[0]);
 }
 

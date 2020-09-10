@@ -20,7 +20,7 @@ namespace JobPortal.Business.Interfaces.Employer
         IEnumerable<CityViewModel> GetCities(string sCode);
         IEnumerable<CountryViewModel> GetCountries();
         IEnumerable<JobTitleViewModel> GetJobRoles();
-        bool UpdateJob(JobPostViewModel job,int userId);
+        bool UpdateJob(JobPostViewModel job, int userId);
         IEnumerable<UserViewModel> GetEmployers();
         IEnumerable<MessageViewModel> GetMessages(DateTime msgsOnDate, int empId);
         bool ReplyToJobSeeker(MessageViewModel msg, int userId);

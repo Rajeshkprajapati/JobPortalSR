@@ -302,7 +302,7 @@ namespace JobPortal.Data.Repositories.Employer
                     new SqlParameter("@JobTitleByEmployer",job.JobTitleByEmployer),
                     new SqlParameter("@PostingDate",job.PositionStartDate),
                     new SqlParameter("@ExpiryDate",job.PositionEndDate),
-                    new SqlParameter("@FinancialYear",job.FinancialYear),
+                    new SqlParameter("@FinancialYear",job.FinancialYear)                    
                 };
                     var result =
                         SqlHelper.ExecuteNonQuery
