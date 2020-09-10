@@ -298,6 +298,10 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             user = user ?? new UserViewModel();
             try
             {
+                if(model  != null)
+                {
+                    model.CompanyName = user.CompanyName;
+                }
                 dashboardHandler.UpdateJob(model, user.UserId);
             }
 
