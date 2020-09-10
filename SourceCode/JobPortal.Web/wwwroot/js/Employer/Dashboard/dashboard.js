@@ -181,8 +181,7 @@ dashboard = (function () {
         });
     };
 
-    let updateJob = function (data) {
-        
+    let updateJob = function (data) {        
         let bodyContent = $("#cke_jobDetails iframe").contents().find("body").html();
         data.jobDetails = bodyContent;
         SendAJAXRequest(`/Dashboard/UpdateJobDetails`, "POST", data, "JSON", function (resp) {
@@ -196,8 +195,8 @@ dashboard = (function () {
             }
         });
     };
-    let PostDraftJob = function (data) {
-        debugger;
+
+    let PostDraftJob = function (data) {        
         let bodyContent = $("#cke_jobDetails iframe").contents().find("body").html();
         data.jobDetails = bodyContent;
         SendAJAXRequest(`/Dashboard/UpdateJobDetails`, "POST", data, "JSON", function (resp) {
@@ -213,8 +212,7 @@ dashboard = (function () {
         });
     };
 
-    let replyToJobSeeker = function (data) {
-        
+    let replyToJobSeeker = function (data) {       
         SendAJAXRequest(`/Dashboard/ReplyToJobSeeker`, "POST", data, "JSON", function (resp) {
             if (resp && resp.isSuccess) {
                 closeModalManually($("div#emailPromptContainer"));

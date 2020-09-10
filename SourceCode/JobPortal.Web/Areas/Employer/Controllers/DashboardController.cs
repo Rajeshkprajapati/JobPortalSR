@@ -258,6 +258,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 job = dashboardHandler.GetJob(jobId, user.UserId);
                 ViewBag.States = dashboardHandler.GetStates(job.CountryCode);
                 ViewBag.Cities = dashboardHandler.GetCities(job.StateCode);
+                ViewBag.JobTypes = _jobpastHandler.GetJobTypes();
             }
             catch (DataNotFound ex)
             {
