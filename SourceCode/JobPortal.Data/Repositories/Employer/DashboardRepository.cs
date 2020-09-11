@@ -420,6 +420,71 @@ namespace JobPortal.Data.Repositories.Employer
             }
             throw new Exception("Unable to close job");
         }
+
+        public DataTable BulkResumeData(string UserIds)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlParameter[] parameters = new SqlParameter[] {
+                    new SqlParameter("@UserIds",UserIds),
+                };
+                    var result =
+                        SqlHelper.ExecuteReader
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetJobseekersResume",
+                            parameters
+                            );
+                    if (null != result && result.HasRows)
+                    {
+                        var dt = new DataTable();
+                        dt.Load(result);
+                        return dt;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Job seekers resume not found.");
+        }
+
+        public bool SaveProfileHistory(int UserId, string JobSeekerIds, string FileUrl)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@UserId",UserId),
+                        new SqlParameter("@JobSeekerIds",JobSeekerIds),
+                        new SqlParameter("@FileUrl",FileUrl),
+                    };
+                    var data =
+                       SqlHelper.ExecuteNonQuery
+                       (
+                           connection,
+                           CommandType.StoredProcedure,
+                           "usp_InserDownloadProfileHistory",
+                           parameters
+                           );
+                    if (data > 0)
+                    {
+                        return true;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new Exception("Unable to close job");
+        }
     }
 }
 

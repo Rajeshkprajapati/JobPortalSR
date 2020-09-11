@@ -160,6 +160,9 @@
     table td {
         white-space: nowrap;
     }
+    .downloadBtn {
+        margin-bottom:5px;
+    }
 </style>
 
 <div class="dashboard-content">
@@ -230,16 +233,17 @@
                             </div>
                         </div>
                     </div>
+                    <a href="" id="ziplink" hidden>Data</a>
                 }
 
             </div>
-
-
-            <div class="dashboard-list-box margin-top-30">
-
-                <div class="dashboard-list-box-content" style="overflow-y:scroll;max-height:800px;height:100%">
+            <div class="dashboard-list-box margin-top-0">
+                <input type="button" onclick="DownloadResume()" class="downloadBtn" value="Download Resume" />
+               
+                <div class="dashboard-list-box-content">
                     <!-- Table -->
-                    <table class="manage-table responsive-table" >
+
+                    <table class="manage-table responsive-table" id="JobSeekerTable">
                         <tr>
                         <tr>
                             <th>
@@ -250,10 +254,11 @@
                             </th>
                             <th>
                                 Email
-                            </th>                            
+                            </th>
                             <th>
                                 Resume
                             </th>
+                            <th>Select Resume</th>
                         </tr>
                         <!-- Item #1 -->
                         @if (Model.Count() > 0)
@@ -272,7 +277,7 @@
                                     </td>
                                     <td>
                                         @employee.Email
-                                    </td>                                   
+                                    </td>
                                     <td>
                                         @if (!string.IsNullOrWhiteSpace(employee.Resume))
                                         {
@@ -281,6 +286,16 @@
                                         else
                                         {
                                             <span>Resume not attached</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(employee.Resume))
+                                        {
+                                            <input type="checkbox" class="checkBoxClass" value="@employee.UserId" id="bulkResumeChkbox" name="bulkResumeChkbox" onchange="SelectJob(this)">
+                                        }
+                                        else
+                                        {
+                                            <span>No resume</span>
                                         }
                                     </td>
 
@@ -312,3 +327,4 @@
         $(".chosen-select-no-single").chosen({});
     });
 </script>
+<script src="~/js/Employer/BulkResume/BulkResume.js"></script>

@@ -23,5 +23,7 @@ namespace JobPortal.Data.Interfaces.Employer
         //DataTable GetJobSeekersByYear(string year);
         DataTable GetActiveCloseJobs(int empId, int year, int JobStatus);
         bool DactiveActiveJobs(string id, int JobPostId);
+        DataTable BulkResumeData(string UserIds);
+        bool SaveProfileHistory(int UserId, string JobSeekerIds, string FileUrl);
     }
 }

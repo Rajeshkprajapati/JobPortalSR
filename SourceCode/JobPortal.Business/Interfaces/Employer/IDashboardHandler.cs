@@ -27,5 +27,8 @@ namespace JobPortal.Business.Interfaces.Employer
         List<CityViewModel> GetCityListWithoutState();
         IEnumerable<JobPostViewModel> GetActiveCloseJobs(int empId, int year, int JobStatus);
         bool DactiveActiveJobs(string id, int JobPostId);
+        string BulkResumeData(string UserIds, int userId);
+        string SingleUserProfileDownload(string JobseekerId, int userId);
+        bool SaveProfileHistory(int UserId, string JobSeekerIds, string FileUrl);
     }
 }
