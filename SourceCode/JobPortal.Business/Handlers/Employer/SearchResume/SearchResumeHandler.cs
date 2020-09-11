@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
+using System.Net;
 using JobPortal.Business.Handlers.DataProcessorFactory;
 using JobPortal.Business.Interfaces.Employer.SearchResume;
 using JobPortal.Data.DataModel.Shared;
@@ -176,6 +178,26 @@ namespace JobPortal.Business.Handlers.Employer.SearchResume
                 return model;
             }
             throw new UserNotFoundException("Data Not found");
+        }
+
+        public void LogSearchResumeList(SearchResumeViewModel searches,string userip,int empid)
+        {
+            try
+            {
+
+                //string ipinfo = new WebClient().DownloadString("http://ipinfo.io/" + "171.76.228.130");
+                string ipinfo = new WebClient().DownloadString("http://ipinfo.io/" + userip);
+                //var ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+                //RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
+                //ipInfo.Country = myRI1 != null ? myRI1.EnglishName : "";
+                var search = JsonConvert.SerializeObject(searches);
+                _serarchresumeProcess.LogSearchResumeList(search,userip,ipinfo,empid);
+            }
+            catch (Exception ex)
+            {
+                
+            }
+
         }
     }
 }

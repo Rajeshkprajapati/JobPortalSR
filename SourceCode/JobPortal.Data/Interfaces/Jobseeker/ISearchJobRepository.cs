@@ -9,6 +9,6 @@ namespace JobPortal.Data.Interfaces.Jobseeker
     public interface ISearchJobRepository
     {
         DataTable GetSearchJobList(JobSearchModel searches,int UserId);
-
+        void LogSearchJob(string searche, string userip, string location, int userid);
     }
 }

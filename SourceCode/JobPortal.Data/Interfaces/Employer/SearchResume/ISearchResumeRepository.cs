@@ -11,6 +11,7 @@ namespace JobPortal.Data.Interfaces.Employer.SearchResume
     {
         DataTable GetSearchResumeList(SearchResumeModel searches);
         DataTable ShowCandidateDetails(int employerId, int jobSeekerId);
+        void LogSearchResumeList(string searches,string userip,string location,int empid);
     }
 }
 

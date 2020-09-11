@@ -14,8 +14,10 @@ using JobPortal.Utility.Exceptions;
 using JobPortal.Utility.ExtendedMethods;
 using JobPortal.Utility.Helpers;
 using JobPortal.Web.Filters;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+
 
 namespace JobPortal.Web.Areas.Employer.Controllers
 {
@@ -31,12 +33,15 @@ namespace JobPortal.Web.Areas.Employer.Controllers
         private readonly ISearchResumeHandler searchresumehandler;
         private readonly IEMailHandler emailHandler;
         private readonly IConfiguration config;
-        public SearchResumeController(IEMailHandler _emailHandler,IConfiguration _config, IJobPostHandler _jobpastHandler, IHomeHandler _homeHandler, ISearchResumeHandler _searchResumeHandler)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public SearchResumeController(IEMailHandler _emailHandler,IConfiguration _config, IJobPostHandler _jobpastHandler,
+            IHttpContextAccessor httpContextAccessor,IHomeHandler _homeHandler, ISearchResumeHandler _searchResumeHandler)
         {
             jobpastHandler = _jobpastHandler;
             homeHandler = _homeHandler;
             searchresumehandler = _searchResumeHandler;
             emailHandler = _emailHandler;
+            _httpContextAccessor = httpContextAccessor;
             config = _config;
         }
         public IActionResult Index()
@@ -75,6 +80,9 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 ViewBag.JobIndustryArea = jobpastHandler.GetJobIndustryAreaWithStudentData();
                 ViewBag.City = homeHandler.GetCitiesWithJobSeekerInfo();
                 ViewBag.Searches = searches;
+                //GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
+                var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+                searchresumehandler.LogSearchResumeList(searches,userip,user.UserId);
                 lstResumeList = searchresumehandler.GetSearchResumeList(searches);
             }
 

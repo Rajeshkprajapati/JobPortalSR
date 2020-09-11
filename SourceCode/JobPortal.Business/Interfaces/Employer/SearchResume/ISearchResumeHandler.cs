@@ -9,6 +9,7 @@ namespace JobPortal.Business.Interfaces.Employer.SearchResume
     public interface ISearchResumeHandler
     {
         List<SearchResumeListViewModel> GetSearchResumeList(SearchResumeViewModel searches);
+        void LogSearchResumeList(SearchResumeViewModel searches,string userip,int empid);
         SearchResumeListViewModel ShowCandidateDetails(int employerId, int jobSeekerId);
     }
 }

@@ -10,10 +10,12 @@ using JobPortal.Utility.Exceptions;
 using JobPortal.Utility.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
 
 namespace JobPortal.Business.Handlers.Jobseeker
 {
@@ -29,6 +31,26 @@ namespace JobPortal.Business.Handlers.Jobseeker
             _hostingEnviroment = hostingEnvironment;
             homeHandler = _homeHandler;
         }
+
+        public void LogSearchJob(SearchJobViewModel searches,string userip, int UserId)
+        {
+            try
+            {
+
+                //string ipinfo = new WebClient().DownloadString("http://ipinfo.io/" + "171.76.228.130");
+                string ipinfo = new WebClient().DownloadString("http://ipinfo.io/" + userip);
+                //var ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+                //RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
+                //ipInfo.Country = myRI1 != null ? myRI1.EnglishName : "";                
+                var search = JsonConvert.SerializeObject(searches);
+                _searchJobRepository.LogSearchJob(search, userip, ipinfo, UserId);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+       
 
         public List<SearchJobListViewModel> SearchJobList(SearchJobViewModel searches, int UserId)
         {

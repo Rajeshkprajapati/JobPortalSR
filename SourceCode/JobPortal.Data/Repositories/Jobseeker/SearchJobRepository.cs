@@ -53,5 +53,34 @@ namespace JobPortal.Data.Repositories.Jobseeker
             }
             throw new DataNotFound("Data Not found");
         }
+        public void LogSearchJob(string searche, string userip, string location, int userid)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    SqlParameter[] parameters = new SqlParameter[] {
+                         new SqlParameter("@userIP",userip),
+                         new SqlParameter("@loaction",location),
+                         new SqlParameter("@jobSeekerId",userid),
+                         new SqlParameter("@searchCriteria",searche),
+                         new SqlParameter("@createdBy",userid),
+                    };
+                    var resp =
+                        SqlHelper.ExecuteNonQuery
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_InsertSearchJobHistory",
+                            parameters
+                            );
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+        }
     }
 }

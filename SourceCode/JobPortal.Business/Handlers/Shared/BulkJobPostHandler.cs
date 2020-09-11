@@ -166,8 +166,7 @@ namespace JobPortal.Business.Handlers.Shared
                                             break;
                                         default:
                                             break;
-                                    }
-
+                                    }                                   
                                     //  Check if master information available in our system or not.
                                     DataTable t = null;
                                     switch (col.ColumnName)
@@ -475,8 +474,17 @@ namespace JobPortal.Business.Handlers.Shared
             {
                 try
                 {
-                    var dt = Convert.ToDateTime(posStartDate);
-                    row["PositionStartDate"] = dt;
+                    //var dt = Convert.ToDateTime(posStartDate);
+                    DateTime dt;
+                    if(DateTime.TryParse(posStartDate,out dt))
+                    {
+                        //string.Format("{0:yyyy/MM/dd}", dt);
+                        row["PositionStartDate"] = dt.ToString("yyyy/MM/dd");
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -490,8 +498,17 @@ namespace JobPortal.Business.Handlers.Shared
             {
                 try
                 {
-                    var dt = Convert.ToDateTime(posEndDate);
-                    row["PositionEndDate"] = dt;
+                    //var dt = Convert.ToDateTime(posEndDate);
+                    DateTime dt;
+                    if(DateTime.TryParse(posEndDate,out dt))
+                    {
+                        //string.Format("{0:yyyy/MM/dd}", dt);
+                        row["PositionEndDate"] = dt.ToString("yyyy/MM/dd");
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using JobPortal.Business.Interfaces.Employer.JobPost;
@@ -31,14 +32,16 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
         private readonly ISearchJobHandler searchJobHandler;
         private readonly IConfiguration config;
         private readonly string URLprotocol;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public JobController(IJobPostHandler _jobpastHandler, IHomeHandler _homeHandler, IConfiguration _config,
-            IUserProfileHandler _userProfileHandler, ISearchJobHandler _searchJobHandler)
+            IHttpContextAccessor httpContextAccessor,IUserProfileHandler _userProfileHandler, ISearchJobHandler _searchJobHandler)
         {
             jobpastHandler = _jobpastHandler;
             homeHandler = _homeHandler;
             searchJobHandler = _searchJobHandler;
             userProfileHandler = _userProfileHandler;
             config = _config;
+            _httpContextAccessor = httpContextAccessor;
             URLprotocol = config["URLprotocol"];
         }
 
@@ -94,7 +97,9 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
                 ViewBag.City = homeHandler.GetCityHasJobPostId();
                 ViewBag.Company = homeHandler.GetCompanyHasJobPostId();
                 ViewBag.Searches = searches;
-                lstjobList = searchJobHandler.SearchJobList(searches, user.UserId);
+                var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();                                
+                searchJobHandler.LogSearchJob(searches,userip, user.UserId);
+                lstjobList = searchJobHandler.SearchJobList(searches ,user.UserId);
             }
 
             catch (DataNotFound ex)
