@@ -521,6 +521,12 @@ namespace JobPortal.Business.Handlers.Home
                 {
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
+                        string picpath = System.IO.Path.GetFullPath(hostingEnviroment.WebRootPath + dt.Rows[i]["CompanyLogo"]);
+                        if (!System.IO.File.Exists(picpath))
+                        {
+                            string fName = $@"\ProfilePic\" + "Avatar_company.jpg";
+                            dt.Rows[i]["CompanyLogo"] = fName;
+                        }
                         SearchJobListViewModel RecentJobs = new SearchJobListViewModel
                         {
                             CompanyLogo = Convert.ToString(dt.Rows[i]["CompanyLogo"]) ?? "",
@@ -553,6 +559,12 @@ namespace JobPortal.Business.Handlers.Home
                 {
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
+                        string picpath = System.IO.Path.GetFullPath(hostingEnviroment.WebRootPath + dt.Rows[i]["CompanyLogo"]);
+                        if (!System.IO.File.Exists(picpath))
+                        {
+                            string fName = $@"\ProfilePic\" + "Avatar_company.jpg";
+                            dt.Rows[i]["CompanyLogo"] = fName;
+                        }
                         SearchJobListViewModel WalkinJobs = new SearchJobListViewModel
                         {
                             CompanyLogo = Convert.ToString(dt.Rows[i]["CompanyLogo"]) ?? "",
