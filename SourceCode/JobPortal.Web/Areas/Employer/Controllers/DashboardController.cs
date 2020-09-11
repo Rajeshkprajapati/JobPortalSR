@@ -19,7 +19,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
 {
     [Area("Employer")]
     [Route("[controller]")]
-    [UserAuthentication(Constants.CorporateRole + "," + Constants.StaffingPartnerRole + "," + Constants.AdminRole)]
+    [UserAuthentication(Constants.CorporateRole + "," + Constants.StaffingPartnerRole + "," + Constants.AdminRole + "," + Constants.Consultant)]
     public class DashboardController : Controller
     {
 

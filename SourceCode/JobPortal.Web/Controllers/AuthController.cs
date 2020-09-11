@@ -97,7 +97,7 @@ namespace JobPortal.Web.Controllers
             {
                 return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
             }
-            else if (role == Constants.CorporateRole || role == Constants.StaffingPartnerRole)
+            else if (role == Constants.CorporateRole || role == Constants.StaffingPartnerRole || role == Constants.Consultant)
             {
                 return RedirectToAction("EmpDashboard", "Dashboard", new { area = "Employer" });
             }
