@@ -19,9 +19,10 @@ namespace JobPortal.Utility.Helpers
         public const string DemandAggregationRole = "Demand Aggregation";
         public const string StaffingPartnerRole = "Staffing Partner";
         public const string TrainingPartnerRole = "Training Partner";
-        public const string AllRoles = "Corporate,Staffing Partner, Student, Training Partner,Admin";
+        public const string AllRoles = "Corporate,Staffing Partner, Student, Training Partner,Admin,Consultant";
         public const string JobSeekers = "Student, Training Partner";
-        public const string Employers = "Corporate,Staffing Partner";
+        public const string Employers = "Corporate,Staffing Partner,Consultant";
+        public const string Consultant = "Consultant";
 
         
 
