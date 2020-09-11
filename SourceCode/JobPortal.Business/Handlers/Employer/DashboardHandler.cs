@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 
 namespace JobPortal.Business.Handlers.Employer
@@ -571,6 +572,165 @@ namespace JobPortal.Business.Handlers.Employer
             return null;
             //throw new UserNotFoundException("User not found");
         }
+
+        public IEnumerable<JobPostViewModel> GetActiveCloseJobs(int empId, int year, int JobStatus)
+        {
+            var ActiveJobCloseJobData = dashboardRepository.GetActiveCloseJobs(empId, year, JobStatus);
+            IList<JobPostViewModel> activeCloseJobs = new List<JobPostViewModel>();
+            if (null != ActiveJobCloseJobData && ActiveJobCloseJobData.Rows.Count > 0)
+            {
+                foreach (DataRow row in ActiveJobCloseJobData.Rows)
+                {
+                    activeCloseJobs.Add(
+                        new JobPostViewModel
+                        {
+                            JobPostId = Convert.ToInt32(row["JobPostId"]),
+                            JobTitleByEmployer = Convert.ToString(row["JobTitleByEmployer"]),
+                            HiringCriteria = Convert.ToString(row["HiringCriteria"]),
+                            CTC = Convert.ToString(row["CTC"]),
+                            PostedOn = Convert.ToDateTime(row["PostedOn"]),
+                            PositionEndDate = Convert.ToString(row["PositionEndDate"])
+                        });
+                }
+                return activeCloseJobs;
+            }
+            return activeCloseJobs;
+        }
+
+        public bool DactiveActiveJobs(string id, int JobPostId)
+        {
+            var result = dashboardRepository.DactiveActiveJobs(id, JobPostId);
+            if (result)
+            {
+                return true;
+            }
+            throw new Exception("Unable close active job");
+        }
+
+        public string BulkResumeData(string UserIds, int userId)
+        {
+            var jobSeekersResumeData = dashboardRepository.BulkResumeData(UserIds);
+            var ResumeFolderRoute = $@"\BulkResume\{userId + "_" + "BulkResume"}";
+            var NewBulkResumeFolder = $"{environment.WebRootPath}{ResumeFolderRoute}";
+            if (!Directory.Exists(NewBulkResumeFolder))
+            {
+              Directory.CreateDirectory(NewBulkResumeFolder);
+            }
+            else {
+                Directory.Delete(NewBulkResumeFolder,true);
+                Directory.CreateDirectory(NewBulkResumeFolder);
+            }
+            IList<UserViewModel> jSeekersResume = new List<UserViewModel>();
+            if (null != jobSeekersResumeData && jobSeekersResumeData.Rows.Count > 0)
+            {
+                foreach (DataRow row in jobSeekersResumeData.Rows)
+                {
+
+                    string resumePath = Convert.ToString(row["Resume"]);
+                    
+                    if (!string.IsNullOrWhiteSpace(resumePath))
+                    {
+                        if (!File.Exists($"{environment.WebRootPath}{resumePath}"))
+                        {
+                            resumePath = string.Empty;
+                        }
+                        else
+                        {
+                            if (Convert.ToString(row["Resume"]) != null)
+                            {
+                                try
+                                {
+                                    var DestFileName = Path.GetFileName(resumePath);
+                                    var DestFileRoute = $@"{ResumeFolderRoute}\{DestFileName}";
+
+                                    var SourceFile = Path.Combine($"{environment.WebRootPath}{resumePath}");
+                                    var DestinationFile = Path.Combine($"{environment.WebRootPath}{DestFileRoute}");
+                                    File.Copy(SourceFile, DestinationFile);
+                                    //if (File.Exists($"{environment.WebRootPath}{DestFileRoute}"))
+                                    //{
+                                    //    File.Delete(DestinationFile);
+                                    //    File.Copy(SourceFile, DestinationFile);
+                                    //}
+                                    //else
+                                    //{
+                                    //    File.Copy(SourceFile, DestinationFile);
+                                    //}
+                                }
+                                catch (Exception ex)
+                                {
+                                    var data = ex;
+                                }
+                            }
+                        }
+                    }
+
+
+                    jSeekersResume.Add(
+                        new UserViewModel
+                        {
+                            UserId = Convert.ToInt32(row["UserId"]),
+                            Resume = Convert.ToString(row["Resume"])
+
+                        });
+                }
+               // DownloadResume(NewBulkResumeFolder);
+                return ConvertUserProfileZip(NewBulkResumeFolder);
+            }
+            throw new DataNotFound("Jobseekers information not found");
+        }
+
+        protected string ConvertUserProfileZip(string downlaodBulkResume)
+        {
+            string NewZipFolderRoute = "";
+            string ZipFolderRoute = "";
+            var zipPath="";
+            try
+            {
+                var FileName = Path.GetFileNameWithoutExtension(downlaodBulkResume);
+                var timeStamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                 ZipFolderRoute = $@"\BulkResume\{FileName + "_"+ timeStamp}.zip";
+                NewZipFolderRoute = $"{environment.WebRootPath}{ZipFolderRoute}";
+                string startPath = $@"{downlaodBulkResume}";
+                zipPath = Path.Combine($"{NewZipFolderRoute}");
+                //extractPath = Path.Combine($"{NewZipFolderRoute}");
+                ZipFile.CreateFromDirectory(startPath, zipPath);
+                //ZipFile.ExtractToDirectory(zipPath, extractPath);
+            }
+            catch (Exception ex)
+            {
+               var Data = ex;
+            }
+            return ZipFolderRoute;
+        }
+
+        public bool SaveProfileHistory(int UserId, string JobSeekerIds, string FileUrl)
+        {
+            var result = dashboardRepository.SaveProfileHistory(UserId, JobSeekerIds, FileUrl);
+            if (result)
+            {
+                return true;
+            }
+            throw new Exception("History saved");
+        }
+
+        public string SingleUserProfileDownload(string JobseekerId, int userId)
+        {
+            string fileUrl = "";
+            var JobSeekerFile = dashboardRepository.BulkResumeData(JobseekerId);
+          
+            if (null != JobSeekerFile && JobSeekerFile.Rows.Count > 0)
+            {
+                fileUrl = Convert.ToString(JobSeekerFile.Rows[0]["Resume"]);
+                if (!File.Exists($"{environment.WebRootPath}{fileUrl}"))
+                {
+                    fileUrl = string.Empty;
+                }
+                return fileUrl;
+            }
+            return fileUrl;
+            throw new Exception("not find file");
+        }
+
     }
 }
 

@@ -1,0 +1,54 @@
+﻿
+<style>
+    table th {
+        white-space: nowrap;
+    }
+
+    table td {
+        white-space: nowrap;
+    }
+</style>
+
+<div class="dashboard-content">
+    <!-- Titlebar -->
+    <div id="titlebar">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Job Info</h2>
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>Home</li>
+                        <li>Dashboard</li>
+                        <li>Job Info</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+   
+    <div class="row">
+        <ul class="tabs-nav blog">
+            <li onclick="jobStatusDetails(1)" class="active" id="activeJobs"><a href="javascript:void(0)">Active Jobs</a></li>
+            <li onclick="jobStatusDetails(0)" class="" id="closedJobs"><a href="javascript:void(0)">Closed Jobs</a></li>
+        </ul>
+        <br/>
+        <div class="dashboard-list-box margin-top-0" id="contentTableHolder">
+           
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        let year = new Date().getFullYear();
+        let jobStatus = 1;
+        SendAJAXRequest(`/Dashboard/GetJobStatus?year=${year}&JobStatus=${jobStatus}`, "GET", {}, "html", function (resp) {
+            if (resp && resp !== "") {
+                $("div#contentTableHolder").html(resp);
+            }
+            else {
+                return false;
+            }
+        });
+    });
+</script>

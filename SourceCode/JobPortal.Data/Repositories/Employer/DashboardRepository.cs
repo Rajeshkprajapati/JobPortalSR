@@ -355,6 +355,136 @@ namespace JobPortal.Data.Repositories.Employer
             }
             throw new DataNotUpdatedException("Unable to update job seeker's mail response status, please contact your teck deck with your details.");
         }
+
+        public DataTable GetActiveCloseJobs(int empId, int year, int JobStatus)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@EmpId",empId),
+                        new SqlParameter("@year",year),
+                        new SqlParameter("@JobStatus",JobStatus)
+                    };
+                    var result =
+                        SqlHelper.ExecuteDataset
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetEmployerActiveJobs",
+                            parameters
+                            );
+                    if (null != result && result.Tables.Count > 0)
+                    {
+                        return result.Tables[0];
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Job seekers information found, please contact your tech deck.");
+        }
+
+        public bool DactiveActiveJobs(string id, int JobPostId)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@UserId",id),
+                        new SqlParameter("@JobPostId",JobPostId),
+                    };
+                    var data =
+                       SqlHelper.ExecuteNonQuery
+                       (
+                           connection,
+                           CommandType.StoredProcedure,
+                           "usp_CloseEmployerJob",
+                           parameters
+                           );
+                    if (data > 0)
+                    {
+                        return true;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new Exception("Unable to close job");
+        }
+
+        public DataTable BulkResumeData(string UserIds)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlParameter[] parameters = new SqlParameter[] {
+                    new SqlParameter("@UserIds",UserIds),
+                };
+                    var result =
+                        SqlHelper.ExecuteReader
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetJobseekersResume",
+                            parameters
+                            );
+                    if (null != result && result.HasRows)
+                    {
+                        var dt = new DataTable();
+                        dt.Load(result);
+                        return dt;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Job seekers resume not found.");
+        }
+
+        public bool SaveProfileHistory(int UserId, string JobSeekerIds, string FileUrl)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@UserId",UserId),
+                        new SqlParameter("@JobSeekerIds",JobSeekerIds),
+                        new SqlParameter("@FileUrl",FileUrl),
+                    };
+                    var data =
+                       SqlHelper.ExecuteNonQuery
+                       (
+                           connection,
+                           CommandType.StoredProcedure,
+                           "usp_InserDownloadProfileHistory",
+                           parameters
+                           );
+                    if (data > 0)
+                    {
+                        return true;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new Exception("Unable to close job");
+        }
     }
 }
 

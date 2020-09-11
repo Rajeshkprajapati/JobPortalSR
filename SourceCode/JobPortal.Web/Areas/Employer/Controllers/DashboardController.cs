@@ -382,5 +382,101 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             }
             return Json(cityList);
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult GetActiveAndCloseJob()
+        {
+            return PartialView("ActiveCloseJobsPartial");
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult GetJobStatus(int year, int JobStatus)
+        {
+            IEnumerable<JobPostViewModel> JobStatsList = null;
+
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            user = user ?? new UserViewModel();
+            try
+            {
+                JobStatsList = dashboardHandler.GetActiveCloseJobs(user.UserId, year, JobStatus);
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(DashboardController), ex);
+                JobStatsList = new List<JobPostViewModel>();
+            }
+            ViewBag.JobStatus = JobStatus;
+            return PartialView("GetJobStatus", JobStatsList);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult DactiveActiveJob(int JobPostId)
+        {
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+
+            var result = dashboardHandler.DactiveActiveJobs(Convert.ToString(user.UserId), JobPostId);
+            if (result)
+            {
+                return Json("Job Closed");
+            }
+            return Json("Faild to job close");
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult BulkResumeDownload(string UserIds)
+        {
+            bool result = false;
+            string ResumeFolder = "";
+            string data = null;
+            bool SaveHistry = false;
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            try
+            {
+                ResumeFolder = dashboardHandler.BulkResumeData(UserIds,user.UserId);
+                if (ResumeFolder != null || ResumeFolder=="")
+                {
+                    result = true;
+                    data = ResumeFolder;
+                    SaveHistry = dashboardHandler.SaveProfileHistory(user.UserId,UserIds,ResumeFolder);
+                }
+            }
+            catch (DataNotUpdatedException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(DashboardController), ex);
+                result = false;
+            }
+            return new JsonResult(new { result = result, data= data });
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult SingleUserProfileDownload(string UserIds)
+        {
+            bool result = false;
+            string ResumeFolder = "";
+            string data = null;
+            bool SaveHistry = false;
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            try
+            {
+                ResumeFolder = dashboardHandler.SingleUserProfileDownload(UserIds, user.UserId);
+                if (ResumeFolder != null || ResumeFolder == "")
+                {
+                    result = true;
+                    data = ResumeFolder;
+                    SaveHistry = dashboardHandler.SaveProfileHistory(user.UserId, UserIds, ResumeFolder);
+                }
+            }
+            catch (DataNotUpdatedException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(DashboardController), ex);
+                result = false;
+            }
+            return new JsonResult(new { result = result, data = data });
+        }
     }
 }

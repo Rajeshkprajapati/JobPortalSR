@@ -21,5 +21,9 @@ namespace JobPortal.Data.Interfaces.Employer
         bool UpdateJobSeekerMailStatus(int messageId,int userId);
         //DataTable GetJobSeekersByCity(string cityCode);
         //DataTable GetJobSeekersByYear(string year);
+        DataTable GetActiveCloseJobs(int empId, int year, int JobStatus);
+        bool DactiveActiveJobs(string id, int JobPostId);
+        DataTable BulkResumeData(string UserIds);
+        bool SaveProfileHistory(int UserId, string JobSeekerIds, string FileUrl);
     }
 }
