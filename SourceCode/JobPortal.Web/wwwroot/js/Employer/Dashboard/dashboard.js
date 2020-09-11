@@ -276,6 +276,16 @@ dashboard = (function () {
             $(this).addClass("active");
         });
     }
+    let getActiveCloseJobs = function () {
+        SendAJAXRequest(`/Dashboard/GetActiveAndCloseJob`, "GET", {}, "html", function (resp) {
+            if (resp && resp !== "") {
+                $("div#mycontentHolder").html(resp);
+            }
+            else {
+                return false;
+            }
+        });
+    };
     return {
         init: init,
         employerDetails: employerDetails,
@@ -293,8 +303,9 @@ dashboard = (function () {
         replyToJobSeeker: replyToJobSeeker,
         addjobs: addjobs,
         myProfile: myProfile,
-        draftjobs: draftjobs
-    };
+        draftjobs: draftjobs,
+ 		getActiveCloseJobs: getActiveCloseJobs
+};
 
 })();
 
@@ -383,3 +394,6 @@ function toggleCalendar() {
 $(function () {
     dashboard.init();
 });
+function getActiveCloseJobs() {
+    dashboard.getActiveCloseJobs();
+}
