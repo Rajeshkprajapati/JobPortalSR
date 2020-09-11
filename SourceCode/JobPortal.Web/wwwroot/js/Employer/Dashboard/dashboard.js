@@ -203,8 +203,9 @@ dashboard = (function () {
             if (resp && resp.isUpdated) {
                 closeModalManually($("div#editJob"));
                 $("ul.usernavdash").find("li").eq(2).click();
-                InformationDialog('Information', 'Successfully posted draft job!');
-                location.reload(true);
+                InformationDialogWithPageRelode('Information', 'Successfully posted draft job!');                
+                //debugger;
+                //PostDraftJob(data);
             }
             else {
                 return false;

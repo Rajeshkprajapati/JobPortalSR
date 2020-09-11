@@ -176,8 +176,14 @@
                         </div>
                     </div>
                 </div>
-                <input type="submit" class="button margin-top-30" value="Post Job">
-                <input type="button" class="button margin-top-30" onclick="return SaveJob(this)" value="Save Job">
+                <div style="font:12px;color:red;">
+                    <span>* Post job will be visible to the jobseekers</span><br />
+                    <span>* Draft job will be saved for post in near future</span>
+                </div>
+                <div>
+                    <input type="submit" class="button margin-top-30" value="Post Job">
+                    <input type="button" class="button margin-top-30" onclick="return SaveJob(this)" value="Draft Job">
+                </div>
             </form>
 
             @*<a href="#" class="button margin-top-30">Post <i class="fa fa-arrow-circle-right"></i></a>*@
@@ -208,7 +214,11 @@
                 ErrorDialog('Error', 'Saving Job Post Failed!');
             }
         });
-        resetForm($('#JobPostForm'));
+        //resetForm($('#JobPostForm'));
+        debugger;
+        $('#JobPostForm').trigger("reset");;
+        $(".chosen-select").trigger("chosen:updated");
+        $(".chosen-select-no-single").trigger("chosen:updated");
         CKEDITOR.instances['JobDetails'].setData("");
         initializeCalendars(true, true);
         return false;
