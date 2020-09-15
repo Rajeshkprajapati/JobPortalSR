@@ -146,7 +146,7 @@
         formData.append("Section", section);
         formData.append("Order", order);
         debugger
-        SendAJAXRequest(`/Advertisements/AddAdvertisement`, "POST", formData, 'JSON', function (resp) {
+        SendAJAXRequest(`/DigitalDisplay/AddDigitalDisplayData`, "POST", formData, 'JSON', function (resp) {
             if (resp) {
                 InformationDialogWithPageRelode('Information', 'Data Added Successfully!');
             }
@@ -189,7 +189,7 @@
         formData.append("Section", section);
         formData.append("Order", order);
         formData.append("Id", Id);
-        SendAJAXRequest(`/Advertisements/UpdateAdvertisement`, "POST", formData, 'JSON', function (resp) {
+        SendAJAXRequest(`/DigitalDisplay/UpdateDigitalDisplayData`, "POST", formData, 'JSON', function (resp) {
             if (resp) {
                 InformationDialogWithPageRelode('Information', 'Data updated Successfully!');
             }
@@ -201,24 +201,21 @@
             $("#Update").hide();
             $("#updatebtn").addClass('display-content');
             $("#SaveRec").show();
-            $("#Id").val('');
-            //$("#StoryType").val('0');
+            $("#Id").val('');            
             $("#section").val('');
             $("#order").val('');            
             $("#PopUpModalLabel").text("Add Ads Detail");
 
         });
     };
-    function deleteads(id) {
-        debugger;
-        SendAJAXRequest(`/Advertisements/DeleteAdvertisement`, "POST", id, 'JSON', function (resp) {
+    function deleteads(id) {        
+        SendAJAXRequest(`/DigitalDisplay/DeleteDigitalDisplayData`, "POST", id, 'JSON', function (resp) {
             if (resp) {
                 InformationDialogWithPageRelode('Information', 'Data Deleted Successfully!');
             }
         });
     };
-    function Confirmdeleteads(id) {
-        debugger;
+    function Confirmdeleteads(id) {        
         ConfirmationDialog('Information', 'Are You sure!', deleteads, id);
     }
 </script>

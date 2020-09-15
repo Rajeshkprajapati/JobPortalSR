@@ -584,5 +584,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             }
            return PartialView("SummaryDashboardPartial");
         }
+
+     
     }
 }

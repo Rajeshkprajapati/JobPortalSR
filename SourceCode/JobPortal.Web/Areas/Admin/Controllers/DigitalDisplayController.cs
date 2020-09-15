@@ -20,12 +20,12 @@ namespace JobPortal.Web.Areas.Admin.Controllers
     [Route("[controller]")]
     [HandleExceptionsAttribute]
     [UserAuthentication(Constants.AdminRole + "," + Constants.DemandAggregationRole)]
-    public class AdvertisementsController : Controller
+    public class DigitalDisplayController : Controller
     {
         private readonly IAdvertisementsHandler _advertisementsHandler;
         private readonly IHostingEnvironment _hostingEnviroment;
 
-        public AdvertisementsController(IAdvertisementsHandler advertisementsHandler, IHostingEnvironment hostingEnvironment)
+        public DigitalDisplayController(IAdvertisementsHandler advertisementsHandler, IHostingEnvironment hostingEnvironment)
         {
             _advertisementsHandler = advertisementsHandler;
             _hostingEnviroment = hostingEnvironment;
@@ -37,7 +37,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public PartialViewResult GetAllAdvertisement()
+        public PartialViewResult GetAllData()
         {
             var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             IEnumerable<AdvertisementsViewModel> model;
@@ -47,21 +47,22 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             }
             catch (DataNotFound ex)
             {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AdvertisementsController), ex);
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DigitalDisplayController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 model = null;
             }
             catch (Exception ex)
             {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AdvertisementsController), ex);
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DigitalDisplayController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 model = null;
             }
             return PartialView("ManageAdvertisementPartial", model);
-        }
+        }        
+
         [HttpPost]
         [Route("[action]")]
-        public JsonResult AddAdvertisement([FromForm]AdvertisementsViewModel model)
+        public JsonResult AddDigitalDisplayData([FromForm]AdvertisementsViewModel model)
         {
             var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             var resp = false;
@@ -88,13 +89,13 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             }
             catch (DataNotFound ex)
             {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AdvertisementsController), ex);
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DigitalDisplayController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 resp = false;
             }
             catch (Exception ex)
             {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AdvertisementsController), ex);
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DigitalDisplayController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 resp = false;
             }
@@ -103,7 +104,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public JsonResult UpdateAdvertisement([FromForm]AdvertisementsViewModel model)
+        public JsonResult UpdateDigitalDisplayData([FromForm]AdvertisementsViewModel model)
         {
             var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             var resp = false;
@@ -130,13 +131,13 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             }
             catch (DataNotFound ex)
             {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AdvertisementsController), ex);
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DigitalDisplayController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 resp = false;
             }
             catch (Exception ex)
             {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AdvertisementsController), ex);
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DigitalDisplayController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 resp = false;
             }
@@ -144,7 +145,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
         }
         [HttpPost]
         [Route("[action]")]
-        public JsonResult DeleteAdvertisement([FromBody]int adid)
+        public JsonResult DeleteDigitalDisplayData([FromBody]int adid)
         {
             var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             var resp = false;            
@@ -155,18 +156,18 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             }
             catch (DataNotFound ex)
             {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AdvertisementsController), ex);
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DigitalDisplayController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 resp = false;
             }
             catch (Exception ex)
             {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AdvertisementsController), ex);
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DigitalDisplayController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 resp = false;
             }
             return Json(resp);
-        }
+        }     
 
     }
 }
