@@ -60,7 +60,7 @@ namespace JobPortal.Data.Repositories.Admin
             {
                 SqlParameter[] parameter = new SqlParameter[]
                 {
-                    new SqlParameter("@id",adId),                    
+                    new SqlParameter("@id",adId),
                 };
                 try
                 {
@@ -85,18 +85,23 @@ namespace JobPortal.Data.Repositories.Admin
             return false;
         }
 
-        public DataTable GetAllData()
+        public DataTable GetAllData(int section = 0)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 try
-                {                    
+                {
+                    SqlParameter[] parameter = new SqlParameter[]
+                    {
+                        new SqlParameter("@section",section),
+                    };
                     var result =
                         SqlHelper.ExecuteDataset
                         (
                             connection,
                             CommandType.StoredProcedure,
-                            "usp_GetAdvertisements"                          
+                            "usp_GetAdvertisements",
+                            parameter
                             );
                     if (null != result && result.Tables.Count > 0)
                     {
@@ -112,7 +117,7 @@ namespace JobPortal.Data.Repositories.Admin
             throw new DataNotFound("Advertisement Data not found");
         }
 
-        public bool UpdateAds(AdvertisementDataModel model,int userid)
+        public bool UpdateAds(AdvertisementDataModel model, int userid)
         {
             using (var connection = new SqlConnection(connectionString))
             {

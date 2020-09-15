@@ -7,7 +7,7 @@ namespace JobPortal.Business.Interfaces.Admin
 {
     public interface IAdvertisementsHandler
     {
-        IEnumerable<AdvertisementsViewModel> GetAllData();
+        IEnumerable<AdvertisementsViewModel> GetAllData(int section=0);
         bool AddAds(AdvertisementsViewModel model);
         bool UpdateAds(AdvertisementsViewModel model,int userid);
         bool DeleteAds(int adId);

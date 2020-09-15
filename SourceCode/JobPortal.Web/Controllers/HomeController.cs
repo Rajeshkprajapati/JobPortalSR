@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using JobPortal.Business.Interfaces.Admin;
 using JobPortal.Business.Interfaces.Employer.JobPost;
 using JobPortal.Business.Interfaces.Home;
 using JobPortal.Business.Interfaces.Shared;
+using JobPortal.Model.DataViewModel.Admin.Advertisements;
 using JobPortal.Model.DataViewModel.Admin.JobIndustryArea;
 using JobPortal.Model.DataViewModel.Admin.SuccessStory;
 using JobPortal.Model.DataViewModel.Home;
@@ -28,11 +30,13 @@ namespace JobPortal.Web.Controllers
         private readonly IHomeHandler _homeHandler;
         private readonly IEMailHandler _mailHandler;
         private readonly IConfiguration _configuration;
-        public HomeController(IJobPostHandler jobpastHandler, IHomeHandler homeHandler, IEMailHandler mailhandler, IConfiguration configuration)
+        private readonly IAdvertisementsHandler _advertisementsHandler;
+        public HomeController(IJobPostHandler jobpastHandler, IHomeHandler homeHandler, IAdvertisementsHandler advertisementsHandler, IEMailHandler mailhandler, IConfiguration configuration)
         {
             _jobpastHandler = jobpastHandler;
             _homeHandler = homeHandler;
             _mailHandler = mailhandler;
+            _advertisementsHandler = advertisementsHandler;
             _configuration = configuration;
         }
 
@@ -51,6 +55,8 @@ namespace JobPortal.Web.Controllers
                 ViewBag.PopulerSearchesCategory = _homeHandler.PopulerSearchesCategory();
                 ViewBag.PopulerSearchesCity = _homeHandler.PopulerSearchesCity();
                 ViewBag.TopEmployer = _homeHandler.TopEmployer();
+                ViewBag.Section1 = _advertisementsHandler.GetAllData(1).OrderBy(o=>o.Order).ToList();
+                ViewBag.Section2 = _advertisementsHandler.GetAllData(2).OrderBy(o => o.Order).ToList();
                 List<SearchJobListViewModel> featurejobs = _homeHandler.GetFeaturedJobs();
                 featurejobs = featurejobs.OrderBy(o => o.FeaturedJobDisplayOrder).ToList();
                 var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
@@ -609,5 +615,33 @@ namespace JobPortal.Web.Controllers
 
             return View();
         }
+
+        //[HttpGet]
+        //[Route("[action]")]
+        //public JsonResult GetSectionData()
+        //{
+        //    var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+        //    IEnumerable<AdvertisementsViewModel> model;
+        //    var status = true;
+        //    try
+        //    {
+        //        model = _advertisementsHandler.GetAllData(section);
+        //    }
+        //    catch (DataNotFound ex)
+        //    {
+        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(HomeController), ex);
+        //        ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+        //        model = null;
+        //        status = false;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(HomeController), ex);
+        //        ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+        //        model = null;
+        //        status = false;
+        //    }
+        //    return Json(new { status, model });
+        //}
     }
 }

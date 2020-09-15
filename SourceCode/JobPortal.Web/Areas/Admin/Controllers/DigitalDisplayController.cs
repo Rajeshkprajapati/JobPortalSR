@@ -37,13 +37,13 @@ namespace JobPortal.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public PartialViewResult GetAllData()
+        public PartialViewResult GetAllData(int section = 0)
         {
             var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             IEnumerable<AdvertisementsViewModel> model;
             try
             {
-                model = _advertisementsHandler.GetAllData();
+                model = _advertisementsHandler.GetAllData(section);
             }
             catch (DataNotFound ex)
             {
@@ -58,7 +58,8 @@ namespace JobPortal.Web.Areas.Admin.Controllers
                 model = null;
             }
             return PartialView("ManageAdvertisementPartial", model);
-        }        
+        }
+        
 
         [HttpPost]
         [Route("[action]")]
@@ -127,7 +128,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             {
                 model.Id = user.UserId;
                 model.ImagePath = fName;
-                resp = _advertisementsHandler.UpdateAds(model,user.UserId);
+                resp = _advertisementsHandler.UpdateAds(model, user.UserId);
             }
             catch (DataNotFound ex)
             {
@@ -148,10 +149,10 @@ namespace JobPortal.Web.Areas.Admin.Controllers
         public JsonResult DeleteDigitalDisplayData([FromBody]int adid)
         {
             var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-            var resp = false;            
-            
+            var resp = false;
+
             try
-            {                
+            {
                 resp = _advertisementsHandler.DeleteAds(adid);
             }
             catch (DataNotFound ex)
@@ -167,7 +168,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
                 resp = false;
             }
             return Json(resp);
-        }     
+        }
 
     }
 }

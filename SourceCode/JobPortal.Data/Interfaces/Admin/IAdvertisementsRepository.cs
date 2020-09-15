@@ -8,7 +8,7 @@ namespace JobPortal.Data.Interfaces.Admin
 {
     public interface IAdvertisementsRepository
     {
-        DataTable GetAllData();
+        DataTable GetAllData(int section=0);
         bool AddAds(AdvertisementDataModel model);
         bool UpdateAds(AdvertisementDataModel model,int userid);
         bool DeleteAds(int adId);

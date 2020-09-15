@@ -53,14 +53,15 @@ $(document).ready(function () {
 
     });
 
-$(window).scroll(function () {
-    var scroll = $(window).scrollTop();
-    if (scroll >= 60) {
-        //console.log('a');
-        $(".popupdata").addClass("scrollPopup");
-    } else {
-        //console.log('a');
-        $(".popupdata").removeClass("scrollPopup");
-    }
+    $(window).scroll(function () {
+        var scroll = $(window).scrollTop();
+        if (scroll >= 60) {
+            //console.log('a');
+            $(".popupdata").addClass("scrollPopup");
+        } else {
+            //console.log('a');
+            $(".popupdata").removeClass("scrollPopup");
+        }
+    });
 });
 

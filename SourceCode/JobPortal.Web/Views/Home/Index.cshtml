@@ -6,6 +6,7 @@
 <link href="~/lib/bootstrap-multiselect/css/bootstrap-multiselect.css" rel="stylesheet" />
 <link href="~/css/autoComplete.css" rel="stylesheet" />
 <link href="~/css/Home/Home.css" rel="stylesheet" />
+<link href="~/css/Home/jssilder.css" rel="stylesheet" />
 <style>
     p {
         overflow: hidden;
@@ -224,15 +225,76 @@
         <!--snow biz 2-->
         <!-- Showbiz Container -->
         <div id="spotlightBanner" class="showbiz-container">
-            <div class="showbiz">
-                <img src="~/Assets/images/app-images-v3.png" width="100%">
-                <div class="clearfix"></div>
+            <div class="showbiz" id="jssor_1">
+                <div data-u="loading" class="jssorl-004-double-tail-spin">
+                    <img style="position:relative;top:50%;width:38px;height:38px;" src="~/Assets/images/double-tail-spin.svg" />
+                </div>
+                <div data-u="slides" style="cursor:default;position:relative;width:355px;height:320px;overflow:hidden;">
+                    @foreach (var item in ViewBag.Section1)
+                    {
+                        <div>
+                            <img data-u="image" src="@item.ImagePath" />
+                        </div>                        
+                    }
+                    <!-- Bullet Navigator -->
+                    <div data-u="navigator" class="jssorb031" style="position:absolute;bottom:16px;right:16px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
+                        <div data-u="prototype" class="i" style="width:13px;height:13px;">
+                            <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                                <circle class="b" cx="8000" cy="8000" r="5800"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- Arrow Navigator -->
+                    <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
+                        <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                            <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
+                        </svg>
+                    </div>
+                    <div data-u="arrowright" class="jssora051" style="width:55px;height:55px;top:0px;right:25px;" data-autocenter="2" data-scale="0.75" data-scale-right="0.75">
+                        <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                            <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
+                        </svg>
+                    </div>
+                </div>
+                
             </div>
         </div>
         <div id="spotlightBanner" class="showbiz-container">
-            <div class="showbiz">
-                <img src="~/Assets/images/beware.jpg" width="100%">
-                <div class="clearfix"></div>
+            <div  class="showbiz" id="jssor_2">
+                <div data-u="loading" class="jssorl-004-double-tail-spin">
+                    <img style="position:relative;top:50%;width:38px;height:38px;" src="~/Assets/images/double-tail-spin.svg" />
+                    <!--style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;"
+                    cursor:default;position:relative;top:0px;left:0px;width:355px;height:320px;overflow:hidden;
+                    -->
+                </div>
+                <div data-u="slides" style="cursor:default;position:relative;width:355px;height:320px;overflow:hidden;">
+                    @foreach (var item in ViewBag.Section2)
+                    {
+                        <div>
+                            <img data-u="image" src="@item.ImagePath" />
+                        </div>
+                    }                    
+                    <!-- Bullet Navigator -->
+                    <div data-u="navigator" class="jssorb031" style="position:absolute;bottom:16px;right:16px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
+                        <div data-u="prototype" class="i" style="width:13px;height:13px;">
+                            <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                                <circle class="b" cx="8000" cy="8000" r="5800"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- Arrow Navigator -->
+                    <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
+                        <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                            <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
+                        </svg>
+                    </div>
+                    <div data-u="arrowright" class="jssora051" style="width:55px;height:55px;top:0px;right:25px;" data-autocenter="2" data-scale="0.75" data-scale-right="0.75">
+                        <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                            <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
+                        </svg>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -339,15 +401,7 @@
                     else
                     {
                         <li class="col-md-6 col-sm-6"><span>Waiting....</span></li>
-                    }
-
-                    @*<li class="col-md-4 col-sm-4 col-xs-6"><a href="#.">Alexander City</a></li>
-                        <li class="col-md-4 col-sm-4 col-xs-6"><a href="#.">Andalusia</a></li>
-                        <li class="col-md-4 col-sm-4 col-xs-6"><a href="#.">Anniston</a></li>
-                        <li class="col-md-4 col-sm-4 col-xs-6"><a href="#.">Athens</a></li>
-                        <li class="col-md-4 col-sm-4 col-xs-6"><a href="#.">Atmore</a></li>
-                        <li class="col-md-4 col-sm-4 col-xs-6"><a href="#.">Auburn</a></li>
-                        <li class="col-md-4 col-sm-4 col-xs-6"><a href="#.">Bessemer</a></li>*@
+                    }                    
                 </ul>
                 <!--Cities end-->
             </div>
@@ -356,49 +410,49 @@
 </div>
 @if (ViewBag.Comment != null)
 {
-<section class="fullwidth-testimonial margin-top-15">
-    <!-- Info Section -->
-    <div class="container">
-        <div class="sixteen columns">
-            <h3 class="headline centered">
-                What Our Users Say 😍
-                <span class="margin-top-25">We collect reviews from our users so you can get an honest opinion of what an experience with our website are really like!</span>
-            </h3>
+    <section class="fullwidth-testimonial margin-top-15">
+        <!-- Info Section -->
+        <div class="container">
+            <div class="sixteen columns">
+                <h3 class="headline centered">
+                    What Our Users Say 😍
+                    <span class="margin-top-25">We collect reviews from our users so you can get an honest opinion of what an experience with our website are really like!</span>
+                </h3>
+            </div>
         </div>
-    </div>
-    <!-- Info Section / End -->
-    <!-- Testimonials Carousel -->
-    <div class="fullwidth-carousel-container margin-top-20">
-        <div class="testimonial-carousel testimonials">
+        <!-- Info Section / End -->
+        <!-- Testimonials Carousel -->
+        <div class="fullwidth-carousel-container margin-top-20">
+            <div class="testimonial-carousel testimonials">
 
-            <!-- Item -->
-            @if (ViewBag.Comment != null && ViewBag.Comment.Count > 0)
-            {
-                foreach (var row in ViewBag.Comment)
+                <!-- Item -->
+                @if (ViewBag.Comment != null && ViewBag.Comment.Count > 0)
                 {
-                    <div class="fw-carousel-review">
-                        <div class="testimonial-box">
-                            <div class="testimonial">@row.Message</div>
+                    foreach (var row in ViewBag.Comment)
+                    {
+                        <div class="fw-carousel-review">
+                            <div class="testimonial-box">
+                                <div class="testimonial">@row.Message</div>
+                            </div>
+                            <div class="testimonial-author">
+                                <img src="@row.ImgUrl" alt="">
+                                <h4>@row.name <span></span></h4>
+                            </div>
                         </div>
-                        <div class="testimonial-author">
-                            <img src="@row.ImgUrl" alt="">
-                            <h4>@row.name <span></span></h4>
-                        </div>
-                    </div>
+                    }
                 }
-            }
-            else
-            {
-                <p class="col-md-6 col-sm-6"><span></span></p>
-            }
+                else
+                {
+                    <p class="col-md-6 col-sm-6"><span></span></p>
+                }
+            </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="margin-top-30"></div>
-    <a href="/Home/SucessStoryAndReview" class="button centered">Post Your Feedback</a>
-    
-    <!-- Testimonials Carousel / End -->
-</section>
+        <div class="clearfix"></div>
+        <div class="margin-top-30"></div>
+        <a href="/Home/SucessStoryAndReview" class="button centered">Post Your Feedback</a>
+
+        <!-- Testimonials Carousel / End -->
+    </section>
 }
 <!-- Popular Searches ends -->
 <!-- Modal HTML -->
@@ -442,15 +496,19 @@
     {
     <!-- <script src="~/lib/bootstrap-multiselect/js/bootstrap-multiselect.min.js"></script>
     <script src="~/js/multiselector.js"></script> -->
+    <script src="~/js/Home/jssor.slider-28.0.0.min.js"></script>
+    <script src="~/js/Home/jsslider.js"></script>
     <script src="~/js/autoComplete.js"></script>
-    <script src="~/js/autoCompleteIntegration.js"></script> 
+    <script src="~/js/autoCompleteIntegration.js"></script>
     <script>
         $(document).ready(function () {
-            $(".chosen-select").chosen({});
+            $(".chosen-select").chosen({});            
+            jssor_1_slider_init("jssor_1");
+            jssor_1_slider_init("jssor_2");
         });
     </script>
     <script src="~/lib/jquery/slick.min.js"></script>
     <script src="~/js/Home/HomeIndex.js"></script>
     <script src="~/js/Jobseeker/JobDetails.js"></script>
-
+    @*<script src="~/js/Home/setdigitaldisplay.js"></script>*@
 }

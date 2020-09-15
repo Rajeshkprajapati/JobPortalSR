@@ -21,9 +21,9 @@ namespace JobPortal.Business.Handlers.Admin
         }
 
 
-        public IEnumerable<AdvertisementsViewModel> GetAllData()
+        public IEnumerable<AdvertisementsViewModel> GetAllData(int section=0)
         {
-            var ads = _advertisementsRepository.GetAllData();
+            var ads = _advertisementsRepository.GetAllData(section);
             IList<AdvertisementsViewModel> model = new List<AdvertisementsViewModel>();
             foreach(DataRow row in ads.Rows)
             {
