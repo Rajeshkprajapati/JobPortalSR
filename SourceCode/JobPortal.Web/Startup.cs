@@ -90,6 +90,8 @@ namespace JobPortal.Web
             (new ServiceDescriptor(typeof(INotificationHandler), typeof(NotificationHandler), ServiceLifetime.Scoped));
             services.Add
             (new ServiceDescriptor(typeof(IPlacedCandidateHandler), typeof(PlacedCandidateHandler), ServiceLifetime.Scoped));
+            services.Add
+            (new ServiceDescriptor(typeof(IAdvertisementsHandler), typeof(AdvertisementsHandler),ServiceLifetime.Scoped));
 
 
             services.AddHttpContextAccessor();

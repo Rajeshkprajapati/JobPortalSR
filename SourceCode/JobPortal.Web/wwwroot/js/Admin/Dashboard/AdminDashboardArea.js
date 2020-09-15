@@ -87,7 +87,7 @@ function UsersReviews() {
     });
 }
 
-function BulkJobs(){
+function BulkJobs() {
     SendAJAXRequest(`/Dashboard/GetAllBulkJobs`, "GET", {}, "html", function (resp) {
         if (resp && resp !== "") {
             $("div#contentHolder").html(resp);
@@ -97,4 +97,17 @@ function BulkJobs(){
         }
     });
 }
+
+function manageadveritsement() {    
+    SendAJAXRequest(`/Advertisements/GetAllAdvertisement`, "GET", {}, "html", function (resp) {
+        if (resp && resp !== "") {
+            $("div#contentHolder").html(resp);
+        }
+        else {
+            return false;
+        }
+    });
+
+}
+
 

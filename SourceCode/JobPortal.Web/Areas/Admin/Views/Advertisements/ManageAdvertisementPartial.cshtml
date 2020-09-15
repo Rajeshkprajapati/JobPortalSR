@@ -1,0 +1,224 @@
+﻿@model IEnumerable<JobPortal.Model.DataViewModel.Admin.Advertisements.AdvertisementsViewModel>
+@{
+    ViewData["Title"] = "Cities";
+}
+<link href="~/css/CommanPopup.css" rel="stylesheet" />
+<style>
+    .dashboard-content .submit-page {
+        display: block;
+    }
+</style>
+<div class="dashboard-content">
+    <div id="titlebar">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Breadcrumbs -->
+                <h3>Advertisements</h3>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="#">Dashboard</a></li>
+                        <li>Advertisements</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <div class="form">
+                <input type="submit" class="button border fw margin-top-0 pull-right" id="AddNew" data-toggle="modal" data-name="" onclick="AddNew()" data-target="#PopUpModal" value="Add New" />
+            </div>
+            <table class="table table-striped table-bordered dt-responsive nowrap" id="dataTable">
+                <thead>
+                    <tr>
+                        <th hidden>Id</th>
+                        <th>ImagePath</th>
+                        <th>Section</th>
+                        <th>Order</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td hidden>@item.Id</td>
+                            <td>@item.ImagePath</td>
+                            <td>@item.Section</td>
+                            <td>@item.Order</td>
+                            <td class="action">
+                                <a href="javascript:void(0);" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="edit(this)"><i class="fa fa-pencil"></i> Edit</a><br />
+                                <a href="javascript:void(0);" onclick="Confirmdeleteads('@(item.Id)')"><i class="fa fa-remove"></i> Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Modal-->
+
+<div class="modal fade" id="PopUpModal" tabindex="-1" role="dialog" aria-labelledby="locationModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
+    <div class="dashboard-content">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 popupdata">
+                <label class="close close-model" data-dismiss="modal">&times;</label>
+                <div class="dashboard-list-box margin-top-5">
+                    <h4 id="PopUpModalLabel">Edit Record</h4>
+                    <div class="dashboard-list-box-content">
+                        <div class="submit-page">                            
+                            <div class="form" style="display:none">
+                                <h5>User ID</h5>
+                                <input type="text" name="Id" id="Id" class="search-field eduModeltxtbox" placeholder="User Id">
+                            </div>
+
+                            <div class="form" style="width:100%">
+                                <h5>Image</h5>
+                                <input type="file" name="ImageFile" id="ImageFile" class="search-field eduModeltxtbox" placeholder="Select Image">
+                            </div>
+                            <div class="form" style="width:100%">
+                                <h5>Section</h5>
+                                <select class="selectDropdown" id="Section" required>
+                                    <option selected value="1">Section 1</option>
+                                    <option value="2">Section 2</option>
+                                </select>
+                            </div>
+                            <div class="form" style="width:100%">
+                                <h5>Order</h5>
+                                <input type="text" name="Order" id="order" required class="search-field eduModeltxtbox" placeholder="Order of Display">
+                            </div>                            
+
+                            <div class="form" style="width:33%" id="savebtn">
+                                <input type="submit" id="SaveRec" class="button border fw margin-top-10  pull-right" onclick="addads()" value="Save" />
+                            </div>
+                            <div class="form" style="width:33%" id="updatebtn">
+                                <input type="submit" id="Update" class="button border fw margin-top-10 pull-right" onclick="updateads()" value="Update data" />
+                            </div>
+                            <div class="form" style="width:33%">
+                                <input type="button" class="button border fw margin-top-10 " data-dismiss="modal" value="Close" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/lib/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#dataTable').dataTable({
+            // 'columnDefs': [{ "searchable": false, 'orderable': false, 'targets': 5 }]
+            aoColumnDefs: [
+                {
+                    bSortable: false,
+                    aTargets: [-1]
+
+                },
+                {
+                    bSearchable: false,
+                    aTargets: [-1]
+                }
+            ]
+        });
+        $('#dataTable_paginate').addClass('data-table-pasiganation');
+        $('#dataTable_length').addClass('data-table-lenthFilter');
+        $('#dataTable_filter').addClass('data-table-SearchFilter');
+    });
+    function addads() {
+        //$("#Update").hide();
+        //$("#Add").show();
+        //var form = $(_this).parent().parent().find('form');
+        //var formsData = ResolveFormData(form);
+        let section = $('#Section').val();
+        let order = $('#order').val();
+        var formData = new FormData();
+        if ($("#ImageFile").val()) {
+            var fileUpload = $("#ImageFile").get(0);
+            var files = fileUpload.files;
+            formData.append("ImageFile", files[0]);
+        }
+        formData.append("Section", section);
+        formData.append("Order", order);
+        debugger
+        SendAJAXRequest(`/Advertisements/AddAdvertisement`, "POST", formData, 'JSON', function (resp) {
+            if (resp) {
+                InformationDialogWithPageRelode('Information', 'Data Added Successfully!');
+            }
+        }, null, true);
+    }
+    function edit(_this) {
+        debugger;        
+        $('#PopUpModal').on('show.bs.modal', function (event) {
+            //var button = $(event.relatedTarget);
+            //var titlename = button.data('name');// Extract info from data-* attributes            
+            var modal = $(this);
+            $("#PopUpModalLabel").text("Update Ads Detail");
+            var row = $(_this).closest('tr').find('td');            
+            modal.find('#Id').val(row[0].innerText);
+            //modal.find('#image').val(row[1].innerText);
+            modal.find('#Section').val(row[2].innerText);
+            modal.find('#order').val(row[3].innerText);      
+
+            $("#SaveRec").hide();
+            $("#Update").show();
+            $("#updatebtn").removeClass('display-content');
+        });
+
+    };
+    function updateads() {
+        //$("#Update").hide();
+        //$("#Add").show();
+        //var form = $(_this).parent().parent().find('form');
+        //var formsData = ResolveFormData(form);
+
+        let Id = $('#Id').val();
+        let section = $('#Section').val();
+        let order = $('#order').val();
+        var formData = new FormData();
+        if ($("#ImageFile").val()) {
+            var fileUpload = $("#ImageFile").get(0);
+            var files = fileUpload.files;
+            formData.append("ImageFile", files[0]);
+        }
+        formData.append("Section", section);
+        formData.append("Order", order);
+        formData.append("Id", Id);
+        SendAJAXRequest(`/Advertisements/UpdateAdvertisement`, "POST", formData, 'JSON', function (resp) {
+            if (resp) {
+                InformationDialogWithPageRelode('Information', 'Data updated Successfully!');
+            }
+        }, null, true);
+    }
+    function AddNew() {
+        
+        $('#PopUpModal').on('show.bs.modal', function () {
+            $("#Update").hide();
+            $("#updatebtn").addClass('display-content');
+            $("#SaveRec").show();
+            $("#Id").val('');
+            //$("#StoryType").val('0');
+            $("#section").val('');
+            $("#order").val('');            
+            $("#PopUpModalLabel").text("Add Ads Detail");
+
+        });
+    };
+    function deleteads(id) {
+        debugger;
+        SendAJAXRequest(`/Advertisements/DeleteAdvertisement`, "POST", id, 'JSON', function (resp) {
+            if (resp) {
+                InformationDialogWithPageRelode('Information', 'Data Deleted Successfully!');
+            }
+        });
+    };
+    function Confirmdeleteads(id) {
+        debugger;
+        ConfirmationDialog('Information', 'Are You sure!', deleteads, id);
+    }
+</script>

@@ -571,8 +571,6 @@ namespace JobPortal.Web.Areas.Admin.Controllers
         [Route("[action]")]
         public PartialViewResult GetAdminDashboard(string country = "IN")
         {
-
-
             try
             {
                 var list = manageuserHandler.GetStates(country);

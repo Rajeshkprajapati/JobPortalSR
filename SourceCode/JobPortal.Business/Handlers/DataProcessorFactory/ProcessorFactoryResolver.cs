@@ -115,6 +115,9 @@ namespace JobPortal.Business.Handlers.DataProcessorFactory
                 case "IPlacedCandidateRepository":
                     IPlacedCandidateRepository placedCandidateRepository = new PlacedCandidateRepository(config);
                     return (T)placedCandidateRepository;
+                case "IAdvertisementsRepository":
+                    IAdvertisementsRepository advertisementsRepository = new AdvertisementsRepository(config);
+                    return (T)advertisementsRepository;
                 default:                   
                     throw new Exception("Can not create object");
             }
