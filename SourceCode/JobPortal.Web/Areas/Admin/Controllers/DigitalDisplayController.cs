@@ -125,8 +125,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
                 }
             }
             try
-            {
-                model.Id = user.UserId;
+            {                
                 model.ImagePath = fName;
                 resp = _advertisementsHandler.UpdateAds(model, user.UserId);
             }
