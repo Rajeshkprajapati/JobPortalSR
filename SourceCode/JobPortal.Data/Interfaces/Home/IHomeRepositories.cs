@@ -40,5 +40,6 @@ namespace JobPortal.Data.Interfaces.Home
         DataTable CompanyJobVacancies();
         DataTable AllJobsByCompany(int UserId);
         DataTable FreelancerJobs();
+        DataTable GetCounterLabelData();
     }
 }

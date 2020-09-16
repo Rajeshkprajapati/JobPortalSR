@@ -2044,7 +2044,7 @@ img.mfp-img {
     display: inline-block;
     font-size: 58px;
     font-weight: 500;
-    color: #505050;
+    color: #fff;
     line-height: 42px
 }
 
@@ -8475,7 +8475,7 @@ a.dashboard-responsive-nav-trigger {
     right: 0;
     justify-content: center;
     padding: 20px;
-    padding-bottom: 0
+    padding-bottom: 12px
 }
 
     .dashboard-content .submit-page .form {

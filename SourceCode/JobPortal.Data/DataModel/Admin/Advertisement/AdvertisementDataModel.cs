@@ -12,5 +12,7 @@ namespace JobPortal.Data.DataModel.Admin.Advertisement
         public int Order { get; set; }
 
         public int Section { get; set; }
+
+        public string JobPage { get; set; }
     }
 }

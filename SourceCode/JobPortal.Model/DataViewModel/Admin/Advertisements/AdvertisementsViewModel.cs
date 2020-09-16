@@ -17,5 +17,7 @@ namespace JobPortal.Model.DataViewModel.Admin.Advertisements
 
         public IFormFile ImageFile { get; set; }
 
+        public string JobPage { get; set; }
+
     }
 }

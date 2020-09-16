@@ -54,9 +54,7 @@ namespace JobPortal.Web.Controllers
                 ViewBag.AllJobRoles = _homeHandler.GetAllJobRoles();
                 ViewBag.PopulerSearchesCategory = _homeHandler.PopulerSearchesCategory();
                 ViewBag.PopulerSearchesCity = _homeHandler.PopulerSearchesCity();
-                ViewBag.TopEmployer = _homeHandler.TopEmployer();
-                ViewBag.Section1 = _advertisementsHandler.GetAllData(1).OrderBy(o=>o.Order).ToList();
-                ViewBag.Section2 = _advertisementsHandler.GetAllData(2).OrderBy(o => o.Order).ToList();
+                ViewBag.TopEmployer = _homeHandler.TopEmployer();               
                 List<SearchJobListViewModel> featurejobs = _homeHandler.GetFeaturedJobs();
                 featurejobs = featurejobs.OrderBy(o => o.FeaturedJobDisplayOrder).ToList();
                 var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
@@ -103,8 +101,11 @@ namespace JobPortal.Web.Controllers
                 ViewBag.Comment = _homeHandler.GetSuccussStory();
                 ViewBag.SuccessStoryVideo = _homeHandler.GetSuccussStoryVideos();
 
-
                 //    //ViewBag.City = homeHandler.GetCityList();
+
+                ViewBag.Section1 = _advertisementsHandler.GetAllData(1).OrderBy(o => o.Order).ToList();
+                ViewBag.Section2 = _advertisementsHandler.GetAllData(2).OrderBy(o => o.Order).ToList();
+                ViewBag.LabelCount = _homeHandler.GetCounterLabelData();
             }
             catch (DataNotFound ex)
             {

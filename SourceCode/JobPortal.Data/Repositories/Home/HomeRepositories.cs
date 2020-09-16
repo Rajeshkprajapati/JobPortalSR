@@ -887,5 +887,33 @@ namespace JobPortal.Data.Repositories.Home
             }
             throw new DataNotFound("Can not execute query");
         }
+
+        public DataTable GetCounterLabelData()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    var counter =
+                         SqlHelper.ExecuteReader
+                         (
+                             connection,
+                             CommandType.StoredProcedure,
+                             "usp_GetLabelsCount"
+                             );
+                    if (null != counter && counter.HasRows)
+                    {
+                        var dt = new DataTable();
+                        dt.Load(counter);
+                        return dt;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Can not execute query");
+        }
     }
 }

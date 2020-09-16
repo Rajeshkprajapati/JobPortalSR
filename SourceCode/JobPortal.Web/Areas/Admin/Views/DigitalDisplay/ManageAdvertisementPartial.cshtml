@@ -16,7 +16,7 @@
                 <h3>Advertisements</h3>
                 <nav id="breadcrumbs">
                     <ul>
-                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="javascript:void(0)">Dashboard</a></li>
                         <li>Advertisements</li>
                     </ul>
                 </nav>
@@ -34,8 +34,9 @@
                     <tr>
                         <th hidden>Id</th>
                         <th>ImagePath</th>
+                        <th>JobPage</th>
                         <th>Section</th>
-                        <th>Order</th>
+                        <th>Display Order</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -45,6 +46,7 @@
                         <tr>
                             <td hidden>@item.Id</td>
                             <td>@item.ImagePath</td>
+                            <td>@item.JobPage</td>
                             <td>@item.Section</td>
                             <td>@item.Order</td>
                             <td class="action">
@@ -61,7 +63,7 @@
 
 <!--Modal-->
 
-<div class="modal fade" id="PopUpModal" tabindex="-1" role="dialog" aria-labelledby="locationModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
+<div class="modal fade" id="PopUpModal" tabindex="-1" role="dialog" aria-labelledby="digitalModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
     <div class="dashboard-content">
         <div class="row">
             <div class="col-lg-6 col-md-6 popupdata">
@@ -87,20 +89,23 @@
                                 </select>
                             </div>
                             <div class="form" style="width:100%">
-                                <h5>Order</h5>
-                                <input type="text" name="Order" id="order" required class="search-field eduModeltxtbox" placeholder="Order of Display">
+                                <h5>Display Order</h5>
+                                <input type="number" min="0" maxlength="2" name="Order" id="order" required class="search-field eduModeltxtbox" placeholder="Order of Display">
+                            </div>
+                            <div class="form" style="width:100%">
+                                <h5>Job Page Link</h5>
+                                <input type="text" name="JobPage" id="JobPage" required class="search-field eduModeltxtbox" placeholder="Job Detail Page Link">
                             </div>
 
                             <div class="form" style="width:33%;display:inline" id="savebtn">
                                 <input type="submit" id="SaveRec" class="button border fw margin-top-10" onclick="adddigitaldisplay()" value="Save" />
                             </div>
                             <div class="form" style="width:33%;display:inline" id="updatebtn">
-                                <input type="submit" id="Update" class="button border fw margin-top-10" onclick="updatedigitaldisplay()" value="Update data" />
+                                <input type="submit" id="Update" class="button border fw margin-top-10" onclick="updatedigitaldisplay()" value="Update" />
                             </div>
                             <div class="form" style="width:33%;display:inline">
                                 <input type="button" class="button border fw margin-top-10 " data-dismiss="modal" value="Close" />
                             </div>
-                            <br />
                         </div>
 
                     </div>
@@ -112,7 +117,7 @@
 <script src="~/lib/datatable/js/jquery.dataTables.min.js"></script>
 <script src="~/lib/datatable/js/dataTables.bootstrap4.min.js"></script>
 <script>
-    $(document).ready(function () {        
+    $(document).ready(function () {
         $('#dataTable').dataTable({
             // 'columnDefs': [{ "searchable": false, 'orderable': false, 'targets': 5 }]
             aoColumnDefs: [
@@ -134,65 +139,62 @@
     $("#ImageFile").change(function (e) {
         var _URL = window.URL || window.webkitURL;
         var file, img;
-        if ((file = this.files[0])) {
-            img = new Image();
-            var objectUrl = _URL.createObjectURL(file);
-            img.onload = function () {
-                debugger;
-                //alert(this.width + " " + this.height);
-                //if ((this.wdth >= 350 || this.wdth <= 400) && (this.height >= 320 || this.height <= 400)) {
-                if ((this.width >= 350) && (this.height >= 320)) {
-                    _URL.revokeObjectURL(objectUrl);
-                } else {
-                    ErrorDialog('Worning','Please upload image in resolution width in 350-400 and height in 320-400!')
-                    $("#ImageFile").val('');
-                }
-            };
-            img.src = objectUrl;
+        if (file = this.files[0]) {
+            debugger;
+            var fileName, fileExtension;
+            // FILE NAME AND EXTENSION.
+            fileName = file.name;
+            fileExtension = fileName.replace(/^.*\./, '');
+
+            // CHECK IF ITS AN IMAGE FILE.
+            // TO GET THE IMAGE WIDTH AND HEIGHT, WE'LL USE fileReader().
+            if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'jpeg') {
+                img = new Image();
+                var objectUrl = _URL.createObjectURL(file);
+                img.onload = function () {
+
+                    //alert(this.width + " " + this.height);
+                    //if ((this.wdth >= 350 || this.wdth <= 400) && (this.height >= 320 || this.height <= 400)) {
+                    if ((this.width >= 350) && (this.height >= 320)) {
+                        _URL.revokeObjectURL(objectUrl);
+                    } else {
+                        ErrorDialog('Worning', 'Please upload image in resolution width in 350-400 and height in 320-400!')
+                        $("#ImageFile").val('');
+                    }
+                };
+                img.src = objectUrl;
+            } else {
+                $("#ImageFile").val('');
+                ErrorDialog('Error', 'Please select an image file!');
+                return false;
+            }
         }
     });
-    
+
 
     function adddigitaldisplay() {
         //$("#Update").hide();
         //$("#Add").show();
         //var form = $(_this).parent().parent().find('form');
         //var formsData = ResolveFormData(form);
-        let section = $('#Section').val();
-        let order = $('#order').val();
-        if (order == '') {
-            ErrorDialog('Warning', 'Enter order of display!');
-            return false;
-        }
         let img = $("#ImageFile").val();
         if (img == '') {
             ErrorDialog('Warning', 'Select an image!');
             return false;
         }
-        
-        //var fi = document.getElementById('ImageFile');
-        var fi = $("#ImageFile").get(0);
-        if (fi.files.length > 0) {      // FIRST CHECK IF ANY FILE IS SELECTED.
-            var fileName, fileExtension;
-            // FILE NAME AND EXTENSION.
-            fileName = fi.files[0].name;
-            fileExtension = fileName.replace(/^.*\./, '');
-
-            // CHECK IF ITS AN IMAGE FILE.
-            // TO GET THE IMAGE WIDTH AND HEIGHT, WE'LL USE fileReader().
-            if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'jpeg') {                
-                //if (!verifyImage()) {
-                //    ErrorDialog('Error', 'Please upload image !');
-                //    return false;
-                //}
-            }
-            else {
-                ErrorDialog('Error', 'Please select an image file!');
-                return false;
-            }
-
+        let section = $('#Section').val();
+        let order = $('#order').val();
+        let jobpage = $('#JobPage').val();
+        if (order == '' || order < 0) {
+            ErrorDialog('Warning', 'Enter valid order of display!');
+            return false;
         }
-        debugger;
+        if (jobpage == '') {
+            ErrorDialog('Warning', 'Enter the job page link!');
+            return false;
+        }
+
+
         var formData = new FormData();
         if ($("#ImageFile").val()) {
             var fileUpload = $("#ImageFile").get(0);
@@ -201,12 +203,16 @@
         }
         formData.append("Section", section);
         formData.append("Order", order);
+        formData.append("JobPage", jobpage);
         debugger
         SendAJAXRequest(`/DigitalDisplay/AddDigitalDisplayData`, "POST", formData, 'JSON', function (resp) {
             if (resp) {
                 InformationDialogWithPageRelode('Information', 'Data Added Successfully!');
             }
         }, null, true);
+
+
+
     }
     function edit(_this) {
         debugger;
@@ -218,8 +224,9 @@
             var row = $(_this).closest('tr').find('td');
             modal.find('#Id').val(row[0].innerText);
             //modal.find('#image').val(row[1].innerText);
-            modal.find('#Section').val(row[2].innerText);
-            modal.find('#order').val(row[3].innerText);
+            modal.find('#JobPage').val(row[2].innerText);
+            modal.find('#Section').val(row[3].innerText);
+            modal.find('#order').val(row[4].innerText);
 
             $("#SaveRec").hide();
             $("#Update").show();
@@ -236,8 +243,13 @@
         let Id = $('#Id').val();
         let section = $('#Section').val();
         let order = $('#order').val();
-        if (order == '') {
+        if (order == '' || order < 0) {
             ErrorDialog('Warning', 'Enter order of display!');
+            return false;
+        }
+        let jobpage = $('#JobPage').val();
+        if (jobpage == '') {
+            ErrorDialog('Warning', 'Enter the job page link!');
             return false;
         }
         //let img = $("#ImageFile").val();
@@ -254,6 +266,7 @@
         formData.append("Section", section);
         formData.append("Order", order);
         formData.append("Id", Id);
+        formData.append("JobPage", jobpage);
         SendAJAXRequest(`/DigitalDisplay/UpdateDigitalDisplayData`, "POST", formData, 'JSON', function (resp) {
             if (resp) {
                 InformationDialogWithPageRelode('Information', 'Data updated Successfully!');

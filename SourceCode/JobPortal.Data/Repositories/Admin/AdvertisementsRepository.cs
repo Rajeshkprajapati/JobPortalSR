@@ -29,6 +29,7 @@ namespace JobPortal.Data.Repositories.Admin
                     new SqlParameter("@id",model.Id),
                     new SqlParameter("@section",model.Section),
                     new SqlParameter("@order",model.Order),
+                    new SqlParameter("@jobpage",model.JobPage),
                     new SqlParameter("@imageurl",model.ImagePath),
                 };
                 try
@@ -127,6 +128,7 @@ namespace JobPortal.Data.Repositories.Admin
                     new SqlParameter("@userid",userid),
                     new SqlParameter("@section",model.Section),
                     new SqlParameter("@order",model.Order),
+                    new SqlParameter("@jobpage",model.JobPage),
                     new SqlParameter("@imageurl",model.ImagePath),
                 };
                 try

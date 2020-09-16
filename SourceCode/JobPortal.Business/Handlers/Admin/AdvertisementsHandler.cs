@@ -31,7 +31,8 @@ namespace JobPortal.Business.Handlers.Admin
                     Id= row["Id"] as int? ?? 0,
                     ImagePath = row["ImageUrl"] as string ?? "",
                     Section = row["Section"] as int? ?? 0,
-                    Order = row["Order"] as int? ?? 0
+                    Order = row["Order"] as int? ?? 0,
+                    JobPage = row["JobPage"] as string ?? ""
                 });
             }
             return model;
@@ -43,7 +44,8 @@ namespace JobPortal.Business.Handlers.Admin
                 Id = model.Id,
                 ImagePath = model.ImagePath,
                 Section = model.Section,
-                Order = model.Order
+                Order = model.Order,
+                JobPage = model.JobPage
             };
             return _advertisementsRepository.AddAds(ads);
         }
@@ -54,7 +56,8 @@ namespace JobPortal.Business.Handlers.Admin
                 Id = model.Id,
                 ImagePath = model.ImagePath,
                 Section = model.Section,
-                Order = model.Order
+                Order = model.Order,
+                JobPage = model.JobPage
             };
             return _advertisementsRepository.UpdateAds(ads,userid);
         }

@@ -18,6 +18,15 @@
     .chosen-container-multi .chosen-choices {
         height: 50px !important;
     }
+
+    /*.custom-btn {
+        display: none;
+    }
+
+    img:hover + .custom-btn {
+        display: inline-block;
+        background-color:red;
+    }*/
 </style>
 <!-- Search start -->
 <div class="searchwrap">
@@ -229,14 +238,21 @@
                 <div data-u="loading" class="jssorl-004-double-tail-spin">
                     <img style="position:relative;top:50%;width:38px;height:38px;" src="~/Assets/images/double-tail-spin.svg" />
                 </div>
-                <div data-u="slides" style="cursor:default;position:relative;width:355px;height:280px;overflow:hidden;">
-                    @foreach (var item in ViewBag.Section1)
+                <div data-u="slides" style="cursor:default;position:relative;width:265px;height:250px;overflow:hidden;">
+                    @if (ViewBag.Section1 != null && ViewBag.Section1.Count > 0)
                     {
-                        <div>
-                            <img data-u="image" src="@item.ImagePath" />
-                        </div>                        
+
+                        @foreach (var item in ViewBag.Section1)
+                        {
+                            <div>
+                                <a href="@item.JobPage" target="_blank">
+                                    <img data-u="image" class="custom-img1" src="@item.ImagePath" />
+                                </a>
+                                <a href="@item.JobPage" target="_blank" class="button" style="top: 80%;left: 42%;z-index: 11;padding: 6px !important;height: 37px;font-size: 16px;">Apply</a>
+                            </div>
+                        }
                     }
-                    <!-- Bullet Navigator 
+                    <!-- Bullet Navigator
                     <div data-u="navigator" class="jssorb031" style="position:absolute;bottom:16px;right:16px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
                         <div data-u="prototype" class="i" style="width:13px;height:13px;">
                             <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
@@ -244,7 +260,7 @@
                             </svg>
                         </div>
                     </div> -->
-                    <!-- Arrow Navigator 
+                    <!-- Arrow Navigator
                     <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:150px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
                         <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
                             <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
@@ -256,25 +272,30 @@
                         </svg>
                     </div>  -->
                 </div>
-                
+
             </div>
         </div>
         <div id="spotlightBanner" class="showbiz-container">
-            <div  class="showbiz" id="jssor_2">
+            <div class="showbiz" id="jssor_2">
                 <div data-u="loading" class="jssorl-004-double-tail-spin">
                     <img style="position:relative;top:50%;width:38px;height:38px;" src="~/Assets/images/double-tail-spin.svg" />
                     <!--style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;"
                     cursor:default;position:relative;top:0px;left:0px;width:355px;height:320px;overflow:hidden;
                     -->
                 </div>
-                <div data-u="slides" style="cursor:default;position:relative;width:355px;height:280px;overflow:hidden;">
-                    @foreach (var item in ViewBag.Section2)
+                <div data-u="slides" style="cursor:default;position:relative;width:265px;height:250px;overflow:hidden;">
+                    @if (ViewBag.Section2 != null && ViewBag.Section2.Count > 0)
                     {
-                        <div>
-                            <img data-u="image" src="@item.ImagePath" />
-                        </div>
-                    }                    
-                    <!-- Bullet Navigator 
+
+                        @foreach (var item in ViewBag.Section2)
+                        {
+                            <div>
+                                <a href="@item.JobPage" target="_blank"><img data-u="image" src="@item.ImagePath" /></a>
+                                <a href="@item.JobPage" target="_blank" class="button" style="top: 80%;left: 42%;z-index: 11;padding: 6px !important;height: 37px;font-size: 16px;">Apply</a>
+                            </div>
+                        }
+                    }
+                    <!-- Bullet Navigator
                     <div data-u="navigator" class="jssorb031" style="position:absolute;bottom:16px;right:16px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
                         <div data-u="prototype" class="i" style="width:13px;height:13px;">
                             <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
@@ -282,7 +303,7 @@
                             </svg>
                         </div>
                     </div> -->
-                    <!-- Arrow Navigator 
+                    <!-- Arrow Navigator
                     <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:150px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
                         <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
                             <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
@@ -294,7 +315,7 @@
                         </svg>
                     </div>-->
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -353,35 +374,40 @@
         <div class="margin-bottom-40"></div>
     </div>
 </div>
-
-<div id="counters">
-    <div class="container">
-        <div class="four columns">
-            <div class="counter-box">
-                <span class="counter">15</span><i>k</i>
-                <p>Job Offers</p>
+@if (ViewBag.LabelCount != null && ViewBag.LabelCount.Count > 0)
+{
+    @foreach (var item in ViewBag.LabelCount)
+    {
+        <div id="counters" style="background-color:#905a5a;padding:34px 0 30px">
+            <div class="container">
+                <div class="four columns">
+                    <div class="counter-box">
+                        <span class="counter">@item.JobOffers</span><i></i>
+                        <p>Jobs</p>
+                    </div>
+                </div>
+                <div class="four columns">
+                    <div class="counter-box">
+                        <span class="counter">@item.Companies</span>
+                        <p>Registered Companies</p>
+                    </div>
+                </div>
+                <div class="four columns">
+                    <div class="counter-box">
+                        <span class="counter">@item.ResumePost</span>
+                        <p>Resumes</p>
+                    </div>
+                </div>
+                <div class="four columns">
+                    <div class="counter-box">
+                        <span class="counter">@item.JobSeeker</span><i></i>
+                        <p>Registered JobSeeker</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="four columns">
-            <div class="counter-box">
-                <span class="counter">4982</span>
-                <p>Members</p>
-            </div>
-        </div>
-        <div class="four columns">
-            <div class="counter-box">
-                <span class="counter">768</span>
-                <p>Resumes Posted</p>
-            </div>
-        </div>
-        <div class="four columns">
-            <div class="counter-box">
-                <span class="counter">90</span><i>%</i>
-                <p>Clients Who Rehire</p>
-            </div>
-        </div>
-    </div>
-</div>
+    }
+}
 
 
 <!-- End Recent Jobs-->
@@ -428,7 +454,7 @@
                     else
                     {
                         <li class="col-md-6 col-sm-6"><span>Waiting....</span></li>
-                    }                    
+                    }
                 </ul>
                 <!--Cities end-->
             </div>
@@ -529,7 +555,7 @@
     <script src="~/js/autoCompleteIntegration.js"></script>
     <script>
         $(document).ready(function () {
-            $(".chosen-select").chosen({});            
+            $(".chosen-select").chosen({});
             jssor_1_slider_init("jssor_1");
             jssor_1_slider_init("jssor_2");
         });
@@ -537,5 +563,4 @@
     <script src="~/lib/jquery/slick.min.js"></script>
     <script src="~/js/Home/HomeIndex.js"></script>
     <script src="~/js/Jobseeker/JobDetails.js"></script>
-    @*<script src="~/js/Home/setdigitaldisplay.js"></script>*@
 }

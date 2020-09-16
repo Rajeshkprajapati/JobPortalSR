@@ -23,6 +23,7 @@ namespace JobPortal.Business.Interfaces.Home
         List<SearchJobListViewModel> GetFeaturedJobs();
         List<SearchJobListViewModel> ViewAllFeaturedJobs();
         List<PopulerSearchesViewModel> PopulerSearchesCategory();
+        List<CounterLabelViewModel> GetCounterLabelData();
         List<PopulerSearchesViewModel> PopulerSearchesCity();
         List<SearchJobListViewModel> AllJobsByCategory(int categoryId);
         List<SearchJobListViewModel> AllJobsByCity(string CityCode);

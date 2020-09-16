@@ -101,7 +101,7 @@ namespace JobPortal.Business.Handlers.Home
         {
             List<int> appliejobs = new List<int>();
             DataTable dt = _homeRepositories.GetAplliedJobs(userid);
-            if(dt!=null && dt.Rows.Count > 0)
+            if (dt != null && dt.Rows.Count > 0)
             {
                 for (int i = 0; dt != null && i < dt.Rows.Count; i++)
                 {
@@ -462,7 +462,8 @@ namespace JobPortal.Business.Handlers.Home
         public string GetContactUsEmail()
         {
             string ContactUs;
-            try {
+            try
+            {
                 ContactUs = _homeRepositories.GetContactUsEmail();
             }
             catch
@@ -544,7 +545,8 @@ namespace JobPortal.Business.Handlers.Home
                     }
                 }
             }
-            catch {
+            catch
+            {
                 throw new DataNotFound("data not found!");
             }
             return lstRecentJobs;
@@ -676,7 +678,7 @@ namespace JobPortal.Business.Handlers.Home
                         string fName = $@"\ProfilePic\" + "Avatar_company.jpg";
                         dt.Rows[i]["CompanyLogo"] = fName;
                     }
-                        SearchJobListViewModel companyJob = new SearchJobListViewModel
+                    SearchJobListViewModel companyJob = new SearchJobListViewModel
                     {
                         JobPostId = Convert.ToInt32(dt.Rows[i]["JobPostId"]),
                         CompanyLogo = Convert.ToString(dt.Rows[i]["CompanyLogo"]),
@@ -727,6 +729,24 @@ namespace JobPortal.Business.Handlers.Home
                 return lstFreelancerJobs;
             }
             throw new DataNotFound("Data not found");
+        }
+
+        public List<CounterLabelViewModel> GetCounterLabelData()
+        {
+            var data = _homeRepositories.GetCounterLabelData();
+            var model = new List<CounterLabelViewModel>();
+            foreach (DataRow row in data.Rows)
+            {
+                model.Add(new CounterLabelViewModel
+                {
+                    JobOffers = row["JobOffers"] as int? ?? 0,
+                    ResumePost = row["ResumePost"] as int? ?? 0,
+                    Companies = row["Companies"] as int? ?? 0,
+                    JobSeeker = row["JobSeeker"] as int? ?? 0,
+                });
+            }
+            return model;
+
         }
     }
 }
