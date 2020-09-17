@@ -54,7 +54,7 @@ namespace JobPortal.Web.Controllers
                 ViewBag.AllJobRoles = _homeHandler.GetAllJobRoles();
                 ViewBag.PopulerSearchesCategory = _homeHandler.PopulerSearchesCategory();
                 ViewBag.PopulerSearchesCity = _homeHandler.PopulerSearchesCity();
-                ViewBag.TopEmployer = _homeHandler.TopEmployer();               
+                ViewBag.TopEmployer = _homeHandler.TopEmployer();
                 List<SearchJobListViewModel> featurejobs = _homeHandler.GetFeaturedJobs();
                 featurejobs = featurejobs.OrderBy(o => o.FeaturedJobDisplayOrder).ToList();
                 var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
@@ -105,7 +105,11 @@ namespace JobPortal.Web.Controllers
 
                 ViewBag.Section1 = _advertisementsHandler.GetAllData(1).OrderBy(o => o.Order).ToList();
                 ViewBag.Section2 = _advertisementsHandler.GetAllData(2).OrderBy(o => o.Order).ToList();
-                ViewBag.LabelCount = _homeHandler.GetCounterLabelData();
+                var ViewLabel = _configuration["LabelCount:Enable"];
+                if (ViewLabel == "True")
+                {
+                    ViewBag.LabelCount = _homeHandler.GetCounterLabelData();
+                }
             }
             catch (DataNotFound ex)
             {
@@ -459,7 +463,7 @@ namespace JobPortal.Web.Controllers
                 {
                     To = toadmin,
                     Subject = "Job portal new inquiry",
-                    Body = "<p>New inquiry from job portal"+"</p>"+ "<p>Message:" + model.Details + " " + "<br/>Name:" + model.Fullname + "<br/>Email: " + model.Email + " <br/>Phone: " + model.Phone+ "<br/><br/>Thank You<br/>Team Job Portal"+"</p>",
+                    Body = "<p>New inquiry from job portal" + "</p>" + "<p>Message:" + model.Details + " " + "<br/>Name:" + model.Fullname + "<br/>Email: " + model.Email + " <br/>Phone: " + model.Phone + "<br/><br/>Thank You<br/>Team Job Portal" + "</p>",
                     IsHtml = true,
                     From = "nasscomtestmail@gmail.com",
                 };
@@ -576,7 +580,7 @@ namespace JobPortal.Web.Controllers
         }
         public IActionResult Aboutus()
         {
-           return View();
+            return View();
         }
 
         public IActionResult FreelancerJobs()

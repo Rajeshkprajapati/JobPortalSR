@@ -2016,19 +2016,20 @@ img.mfp-img {
 
 .counter-box {
     display: block;
-    padding: 0;
+    padding: 1rem;
+    height:9rem;
     text-align: center;
     border-right: 1px solid #444
 }
 
 #counters .container:before {
-    width: 1px;
+    /*width: 1px;*/
     position: absolute;
     height: 100%;
     display: inline-block;
     background-color: #282828;
     content: "";
-    right: 10px
+    /*right: 10px*/
 }
 
 .counter-box p {
