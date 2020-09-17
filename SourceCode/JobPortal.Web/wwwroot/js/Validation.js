@@ -64,7 +64,7 @@ const options = {
     backdrop: 'static',
     show: true
 };
-function updatedsucessfully(Message, icon) {   
+function updatedsucessfully(Message, icon) {
     $("#iconPopup").addClass(icon);
     $('#tagiging').html("Congratulation!!");
     $('#tagginMessage').html(Message);
@@ -86,4 +86,41 @@ function warnignPopup(Message) {
     $('#popwithoutRedirect').modal('show');
     $("#popwithoutRedirect").removeClass("open");
     $("#popwithoutRedirect").addClass("in");
+}
+//for two drop dwon type number validator
+function CompareValidator(field1, field2) {
+    let FirstField = field1.selectedOptions[0].innerText;
+    let SecondField = field2.selectedOptions[0].innerText;
+    $("#error_sp_msg").remove();
+    if (SecondField < FirstField) {
+        $return = SecondField;
+        if ($return) {
+            $(field1).prop('selectedIndex', 0);
+            $("<span/>", {
+                "id": "error_sp_msg",
+                "html": "<br/>Second field should be greater than first one!!!!!",
+                "style": "color:red;font-size: 0.7rem;"
+            }).insertAfter($(field2));
+            return false;
+        }
+    }
+}
+
+//for two input type number validator
+function CompareNumberType(field1, field2) {
+    let FirstField = $(field1).val();
+    let SecondField = $(field2).val();
+    $("#error_sp_msg").remove();
+    if (SecondField < FirstField) {
+        $return = SecondField;
+        if ($return) {
+            $(field1).val(0);
+            $("<span/>", {
+                "id": "error_sp_msg",
+                "html": "<br/>Second field should be greater than first one!!!!!",
+                "style": "color:red;font-size: 0.7rem;"
+            }).insertAfter($(field2));
+            return false;
+        }
+    }
 }

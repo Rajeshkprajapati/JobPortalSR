@@ -1,0 +1,179 @@
+﻿@using JobPortal.Model.DataViewModel.Employer.SearchResume
+@model IEnumerable<SearchResumeListViewModel>
+@{
+    ViewData["Title"] = "Advance Search Resume";
+}
+@*<link href="~/lib/jquery/jquery-ui.min.css" rel="stylesheet" />*@
+@*<link href="~/css/Employer/search-resume.css" rel="stylesheet" />*@
+<!-- Page Title start -->
+<style>
+    .pagination {
+        display: contents !important;
+    }
+
+    .listing {
+        padding: 0px !important;
+    }
+</style>
+<div class="pageTitle">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <h1 class="page-heading">Resume Listing</h1>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="breadCrumb">
+                    <a href="/Home/Index/">Home</a> /
+                    <a asp-controller="EmployerManagement" asp-action="SearchResume">Resume Search</a> /
+                    <span>Resume List</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@{
+<div class="container">
+    <!-- Recent Jobs -->
+    <div class="eleven columns">
+        <div class="padding-right">
+            @if (Model.Count() < 1)
+            {
+                <br />
+                <div class="alert alert-danger" role="alert"><strong>Oh snap!</strong>&nbsp; Candidates not found</div>
+
+            }
+            else
+            {
+
+                <ul class="resumes-list alternative">
+                    @foreach (var item in Model)
+                    {
+
+                        <li class="listing">
+                            <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId">
+                                @if (item.ProfilePic == "")
+                                {
+                                    <img src="~/images/jobs/jobimg.jpg" alt="Jobseeker photo" />
+                                }
+                                else
+                                {
+                                    <img src="@item.ProfilePic" alt="Jobseeker">
+                                }
+                                <div class="resumes-list-content">
+                                    <h4>
+                                        @item.FirstName @item.LastName <span>@item.Email</span>
+                                        <span>@item.JobTitle</span>
+                                    </h4>
+                                    @if (item.ExperienceDetails != null && item.ExperienceDetails[0].AnnualSalary != null)
+                                    {
+                                        <span><i class="fa fa-money"></i> @item.ExperienceDetails[0].AnnualSalary</span>
+                                    }
+                                    else
+                                    {
+                                        <span><i class="fa fa-money"></i> N/A</span>
+                                    }
+                                    <span><i class="fa fa-envelope" aria-hidden="true"></i>@item.Email</span>
+                                    <span>
+                                        <i class="fa fa-map-marker"></i>
+                                        @if (string.IsNullOrWhiteSpace(item.CityName))
+                                        {
+                                            <span>N/A</span>
+                                        }
+                                        else
+                                        {
+                                            @item.CityName
+                                        }
+                                    </span>
+                                    <span>@item.AboutMe</span>
+                                    <div class="skills">
+                                        @{
+                                            if (item.Skills != null && item.Skills.SkillSets != null && item.Skills.SkillSets.Length > 0)
+                                            {
+                                                string[] skills = item.Skills.SkillSets.Split(',');
+                                                foreach (var skill in skills)
+                                                {
+                                                    if (skill.Length > 1)
+                                                    {
+                                                        <span>@skill</span>
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span>N/A</span>
+                                            }
+                                        }
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                            <div class="clearfix"></div>
+                        </li>
+
+
+                    }
+                </ul>
+            }
+            <div class="clearfix"></div>
+            <div class="pagination-container">
+                <nav class="pagination">
+                    <ul id="pagin"></ul>
+                </nav>
+                <nav class="pagination-next-prev">
+                    <ul>
+                        <li><a class="prev">Previous</a></li>
+                        <li><a class="next">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Widgets -->
+    <div class="five columns">
+        <!-- Sort by -->
+        <div class="widget">
+            <img src="~/Assets/images/app-images-v3.png" width="100%">
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- Widgets / End -->
+</div>
+}
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            pageSize = 3;
+            incremSlide = 3;
+            startPage = 0;
+            numberPage = 0;
+            $('ul.expandible').each(function () {
+                var $ul = $(this),
+                    $lis = $ul.find('li:gt(4)'),
+                    isExpanded = $ul.hasClass('expanded');
+                $lis[isExpanded ? 'show' : 'hide']();
+
+                if ($lis.length > 0) {
+                    $ul
+                        .append($('<span class="showmore"><li class="expand">' + (isExpanded ? 'Show Less' : 'Show More') + '</li></span>')
+                            .click(function (event) {
+                                var isExpanded = $ul.hasClass('expanded');
+                                event.preventDefault();
+                                $(this).html(isExpanded ? 'Show More' : 'Show Less');
+                                $ul.toggleClass('expanded');
+                                $lis.toggle();
+                            }));
+                }
+            });
+        });
+    </script>
+    <script src="~/js/Employer/SearchResume/SearchResumeList.js"></script>
+    <script src="~/js/Shared/pagination.js"></script>
+}
+
+
+

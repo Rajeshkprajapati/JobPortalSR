@@ -1,0 +1,418 @@
+﻿@using JobPortal.Model.DataViewModel.Employer.AdvanceSearch
+@using JobPortal.Model.DataViewModel.Shared
+@model AdvanceResumeSearch
+@{
+    ViewData["Title"] = "AdvanceResumeSearch";
+}
+@{
+    int currYear = DateTime.Now.Year;
+    <style>
+        .experiance-field {
+            width: 44% !important;
+            display: inline-block !important;
+        }
+
+        .remove-hide {
+            display: block !important;
+        }
+
+        .skills span {
+            margin: 2px 3px 0 0 !important;
+        }
+    </style>
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar" class="single">
+        <div class="container">
+            <div class="sixteen columns">
+                <h2>Advance Searches</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>You are here:</li>
+                        <li><a href="#">Home</a></li>
+                        <li>Advance Searches</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Accordion
+        ================================================== -->
+        <div class="nine columns">
+            <div class="margin-bottom-20"></div>
+            <!-- Accordion -->
+            <div class="accordion">
+                <form asp-action="AdvanceResumeSearchData" method="post">
+                    <!-- Section 1 -->
+                    <h3><span class="ui-accordion-header-icon ui-icon ui-accordion-icon"></span>Advance Search <i class="fa fa-cog pull-right" aria-hidden="true"></i></h3>
+                    <div>
+                        <div class="form remove-hide">
+                            <input class="search-field" asp-for="HiringRequirement" id="HiringRequirement"  type="text" placeholder="Requiremet, You hiring for" value="" required />
+                        </div>
+                        <div class="form remove-hide">
+                            <h5>Any Keyword</h5>
+                            <input class="search-field" asp-for="AnyKeyword" id="AnyKeyword" type="text" placeholder="Any keyword(ex: Manager,Java,Delhi)" value="" />
+                        </div>
+                        <div class="form remove-hide">
+                            <h5 class="margin-top-5">All Keyword</h5>
+                            <input class="search-field" asp-for="AllKeyword" id="AllKeyword" type="text" placeholder="All keyword(ex: Manager,Java,Delhi)" value="" />
+                        </div>
+                        <div class="form remove-hide">
+                            <h5 class="margin-top-5">Excluding Keyword</h5>
+                            <input class="search-field" asp-for="ExculudeKeyword" id="ExculudeKeyword" type="text" placeholder="Excluding keyword(ex: Manager,Java,Delhi)" value="" />
+                        </div>
+                        <div class="form remove-hide">
+                            <h5 class="margin-top-5">Total Experiance <span> &nbsp;In Years</span></h5>
+                            <input class="search-field experiance-field" asp-for="MinExperiance" id="MinExperiance" type="Number" min="0" onmouseout="CompareNumberType(MinExperiance,MaxExperiance)" value="" placeholder="min" />
+                            <input class="search-field experiance-field" asp-for="MaxExperiance" id="MaxExperiance" type="Number"  min="0" onmouseout="CompareNumberType(MinExperiance,MaxExperiance)" value="" placeholder="max" />
+                        </div>
+                        <div class="form remove-hide">
+                            <h5 class="margin-top-5">Total Salary <span> &nbsp;In Rs</span></h5>
+                            <input class="search-field experiance-field" asp-for="MinSalary" id="MinSalary" type="Number" onmouseout="CompareNumberType(MinSalary,MaxSalary)"  min="0" value="" placeholder="min" />
+                            <input class="search-field experiance-field" asp-for="MaxSalary" id="MaxSalary" type="Number" onmouseout="CompareNumberType(MinSalary,MaxSalary)"  min="0" value="" placeholder="max" />
+                        </div>
+                        <div class="form remove-hide">
+                            <h5>Current Location</h5>
+                            <select data-placeholder="Full-Time" asp-for="CurrentLocation" id="CurrentLocation" class="chosen-select-no-single remove-hide" asp-items="@(new SelectList(@ViewBag.CityData,"CityCode", "City"))">
+                                <option value="">Select Current Location</option>
+
+                            </select>
+                        </div>
+                        <div class="form remove-hide">
+                            <h5>Preferred Location</h5>
+
+                            <select data-placeholder="Full-Time" asp-for="PreferredLocation1" id="PreferredLocation1" class="chosen-select-no-single remove-hide experiance-field" asp-items="@(new SelectList(@ViewBag.CityData,"CityCode", "City"))">
+                                <option value="">--Choose--</option>
+                            </select><br />
+                            <select data-placeholder="Full-Time" asp-for="PreferredLocation2" id="PreferredLocation2" class="chosen-select-no-single remove-hide experiance-field" asp-items="@(new SelectList(@ViewBag.CityData,"CityCode", "City"))">
+                                <option value="">--Choose--</option>
+                            </select><br />
+                            <select data-placeholder="Full-Time" asp-for="PreferredLocation3" id="PreferredLocation3" class="chosen-select-no-single remove-hide experiance-field" asp-items="@(new SelectList(@ViewBag.CityData,"CityCode", "City"))">
+                                <option value="">--Choose--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Section 2 -->
+                    <h3><span class="ui-accordion-header-icon ui-icon ui-accordion-icon"></span>Experience Details<i class="fa fa-plus pull-right" aria-hidden="true"></i></h3>
+                    <div>
+                        <div class="form remove-hide">
+                            <h5 class="margin-top-5">Functional Area</h5>
+                            <select data-placeholder="Full-Time" asp-for="FuncationlArea" id="FuncationlArea" class="chosen-select-no-single remove-hide" asp-items="@(new SelectList(@ViewBag.JobTitle,"JobTitleId", "JobTitleName"))">
+                                <option value="">--choose--</option>
+                            </select>
+                        </div>
+                        <div class="form remove-hide">
+                            <h5>Belong form industry</h5>
+                            <select data-placeholder="Full-Time" asp-for="JobIndustryAreaId" id="JobIndustryAreaId" name="JobIndustryAreaId" class="chosen-select-no-single remove-hide" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
+                                <option value="">Industary</option>
+                            </select>
+                        </div>
+                        @*<div class="form remove-hide">
+                                <h5>Employment Of</h5>
+                                <select data-placeholder="Full-Time" asp-for="EmploymentOf" class="chosen-select-no-single remove-hide" asp-items="@(new SelectList(@ViewBag.EmployersData,"UserId", "CompanyName"))">
+                                    <option value="">Industary Name</option>
+                                </select>
+                            </div>
+
+                            <div class="form remove-hide">
+                                <h5>Exclude Employment</h5>
+                                <select data-placeholder="Full-Time" asp-for="ExcludeEmployment" class="chosen-select-no-single remove-hide" asp-items="@(new SelectList(@ViewBag.EmployersData,"UserId", "CompanyName"))">
+                                    <option value="">Industary Name</option>
+                                </select>
+                            </div>*@
+
+                        <div class="form remove-hide">
+                            <h5>Current Designation</h5>
+                            <input class="search-field" type="text" asp-for="CurrentDesignation" id="CurrentDesignation"  placeholder="Current Designation" value="" />
+                        </div>
+                        <div class="form remove-hide">
+                            <h5>Notice Period</h5>
+                            <select data-placeholder="Full-Time" asp-for="NoticePeriod" id="NoticePeriod" class="chosen-select-no-single experiance-field">
+                                <option value="">0 Days</option>
+                                @for (int i = 15; i <= 120; i = i + 15)
+                                {
+                                    <option value=@i>@(i) Days</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Section 3 -->
+                    @*<h3><span class="ui-accordion-header-icon ui-icon ui-accordion-icon"></span>Education details<i class="fa fa-plus pull-right" aria-hidden="true"></i></h3>
+                        <div>
+
+                            <h4>Under Graduate</h4>
+                            <div class="form remove-hide">
+                                <select data-placeholder="Full-Time" asp-for="Undergraduatefrom" class="chosen-select-no-single experiance-field">
+                                    @{
+
+                                        @for (int i = (currYear - 20); i <= currYear; i++)
+                                        {
+                                            if (i == currYear)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <select data-placeholder="Full-Time" asp-for="UndergraduateTo" class="chosen-select-no-single experiance-field">
+                                    @{
+                                        @for (int i = (currYear - 20); i <= currYear; i++)
+                                        {
+                                            if (i == currYear)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+                                    }
+                                </select><span> &nbsp;In Years</span>
+                            </div>
+                            <br />
+                            <div class="form remove-hide">
+                                <input class="search-field" type="text" asp-for="SpecifyUnderGraduate" placeholder="Specify Under Graduate" value="" />
+                            </div>
+                            <br />
+                            <h4>Post Graduate</h4>
+                            <div class="form remove-hide">
+                                <select data-placeholder="Full-Time" asp-for="PostGraduatefrom" class="chosen-select-no-single experiance-field">
+                                    @{
+                                        @for (int i = (currYear - 20); i <= currYear; i++)
+                                        {
+                                            if (i == currYear)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <select data-placeholder="Full-Time" asp-for="PostGraduateTo" class="chosen-select-no-single experiance-field">
+                                    @{
+                                        @for (int i = (currYear - 20); i <= currYear; i++)
+                                        {
+                                            if (i == currYear)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+                                    }
+                                </select><span> &nbsp;In Years</span>
+                            </div>
+                            <br />
+                            <div class="form remove-hide">
+                                <input class="search-field" type="text" asp-for="SpecifyPostGraduatefrom" placeholder="Specify Post Graduate" value="" />
+                            </div>
+                        </div>*@
+
+                    <!-- Section 4 -->
+                    <h3><span class="ui-accordion-header-icon ui-icon ui-accordion-icon"></span>Additional Category<i class="fa fa-plus pull-right" aria-hidden="true"></i></h3>
+                    <div>
+                        <div class="form remove-hide">
+                            <h5>Age Range <span> &nbsp;In Years</span></h5>
+                            <select data-placeholder="Full-Time" asp-for="AgeFrom" id="AgeFrom" onchange="CompareValidator(AgeFrom,AgeTo)" class="chosen-select-no-single experiance-field">
+                                @for (int i = 18; i <= 50; i++)
+                                {
+                                    if (i == 55)
+                                    {
+                                    }
+                                    <option value=@i>@(i)</option>
+
+                                }
+                            </select>
+                            <select data-placeholder="Full-Time" asp-for="AgeTo" onchange="CompareValidator(AgeFrom,AgeTo)" id="AgeTo" class="chosen-select-no-single experiance-field">
+                                @for (int i = 18; i <= 55; i++)
+                                {
+                                    if (i == 55)
+                                    {
+                                        <option value=@i selected>@(i)</option>
+                                    }
+                                    else {
+                                        <option value=@i>@(i)</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form remove-hide">
+                            <h5>Genders</h5>
+                            <select data-placeholder="Full-Time" asp-for="Gender" id="Gender" class="chosen-select-no-single experiance-field" asp-items="@(new SelectList(@ViewBag.GenderData,"GenderCode", "Gender"))">
+                                @*<option value="">Male</option>
+                                    <option value="">Female</option>*@
+                            </select>
+                            @*<h5>Category Wise</h5>
+                                <select data-placeholder="Full-Time" class="chosen-select-no-single experiance-field">
+                                    <option value="">Gen.</option>
+                                    <option value="">OBC</option>
+                                    <option value="">SC</option>
+                                    <option value="">ST</option>
+                                </select>*@
+                        </div>
+                    </div>
+
+                    <!-- Section 5  -->
+                    <h3><span class="ui-accordion-header-icon ui-icon ui-accordion-icon"></span>Display Details<i class="fa fa-plus pull-right" aria-hidden="true"></i></h3>
+                    <div>
+                        <div class="col-md-6 remove-hide">
+                            <h5>Candidates</h5>
+                            <select data-placeholder="Full-Time" asp-for="CandidatesType" id="CandidatesType" class="remove-hide">
+                                <option value="all">All</option>
+                                <option value="new">New</option>
+                                <option value="Modified">Modified</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 remove-hide">
+                            <h5>Show candidate with</h5>
+                            <select data-placeholder="Full-Time" asp-for="ShowCandidateWith" id="ShowCandidateWith" class="remove-hide">
+                                <option value="all">All</option>
+                                <option value="mobile">Verified mobile number</option>
+                                <option value="email">Verified mail</option>
+                                <option value="resume">Attached  resume</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 remove-hide">
+                            <h5>Show candidate seeking</h5>
+                            <select data-placeholder="Full-Time" asp-for="ShowCandidateSeeking" id="ShowCandidateSeeking" class="" asp-items="@(new SelectList(@ViewBag.EmploymentStatus,"EmploymentStatusId", "EmploymentStatusName"))"></select>
+                        </div>
+                        @*<div class="col-md-6 remove-hide">
+                                <h5>Shorted by</h5>
+                                <select data-placeholder="Full-Time" asp-for="CandidateShortedby" class="">
+                                    <option value="">Resume Freshness</option>
+                                    <option value="">Last active date</option>
+                                    <option value="">Relevance</option>
+                                    <option value="">Email optimization</option>
+                                </select>
+                            </div>*@
+                        @*<div class="col-md-6 remove-hide">
+                                <h5>Active In month</h5>
+                                <select data-placeholder="Full-Time" asp-for="CandidateActiveInmonth" class="">
+                                    @for (int i = 1; i <= 12; i++)
+                                    {
+                                        <option value=@i>@(i)</option>
+
+                                    }
+                                </select>
+                            </div>*@
+                    </div>
+                    <input type="checkbox" asp-for="isSavedSearch" id="isSavedSearch"> Save Search
+                    <input type="submit" class="btn" value="Search">
+
+                </form>
+            </div>
+            <!-- Accordion / End -->
+        </div>
+
+        <!-- Tabs
+        ================================================= -->
+        <div class="seven columns">
+            <div class="margin-bottom-20"></div>
+            <!-- Tabs Navigation -->
+            <ul class="tabs-nav">
+                <li class="active"><a href="#tab1">Recent Searches</a></li>
+                <li><a href="#tab2">Saved Searches</a></li>
+                <li><a href="#tab3">Last Keyword</a></li>
+            </ul>
+            <!-- Tabs Content -->
+            <div class="tabs-container">
+                <div class="tab-content" id="tab1">
+                    <div class="skills">
+                        @if (ViewBag.AdvanceSearchStats != null)
+                        {
+                            foreach (var row in ViewBag.AdvanceSearchStats)
+                            {
+                                <span onclick="GetAdvanceSearchById(@row.id)" title="click">@row.HiringRequirement</span>
+                            }
+                        }
+                        else
+                        {
+                            <p>No data</p>
+                        }
+                        @*<span>Asp.net core software developer</span>
+                            <span>Business/Project manager</span>
+                            <span>Customer support and sales executive</span>*@
+                    </div>
+                </div>
+                <div class="tab-content" id="tab2">
+                    <div class="skills">
+                        @if (ViewBag.AdvanceSearchStats != null)
+                        {
+                            foreach (var row in ViewBag.AdvanceSearchStats)
+                            {
+                                if (@row.isSavedSearch == true)
+                                {
+                                    <span onclick="GetAdvanceSearchById(@row.id)" style="cursor:pointer">@row.HiringRequirement</span>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <p>No data</p>
+                        }
+                    </div>
+                </div>
+                <div class="tab-content" id="tab3">
+                    <div class="skills">
+                        @if (ViewBag.AdvanceSearchStats != null)
+                        {
+                            foreach (var row in ViewBag.AdvanceSearchStats)
+                            {
+                                if (!string.IsNullOrWhiteSpace(row.AllKeyword))
+                                {
+                                    <a href=""><span>@row.AllKeyword</span></a>
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            <p>No data</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+        <!-- Widgets -->
+        <div class="five columns">
+            <!-- Sort by -->
+            <div class="widget">
+                <img src="~/Assets/images/app-images-v3.png" width="100%">
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- Widgets / End -->
+    </div>
+}
+
+@section Scripts
+    {
+        <script>
+            $(document).ready(function () {
+                SpecialChar('#HiringRequirement');
+                SpecialChar('#AnyKeyword');
+                SpecialChar('#AllKeyword');
+                SpecialChar('#ExculudeKeyword');
+                SpecialChar('#CurrentDesignation');
+            });
+        </script>
+
+    <script src="~/js/Employer/SearchResume/AdvanceSearchResume.js"></script>
+    <script src="~/js/Validation.js"></script>
+}

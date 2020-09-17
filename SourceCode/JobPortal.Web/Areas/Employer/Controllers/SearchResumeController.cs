@@ -8,6 +8,7 @@ using JobPortal.Business.Interfaces.Employer.SearchResume;
 using JobPortal.Business.Interfaces.Home;
 using JobPortal.Business.Interfaces.Jobseeker;
 using JobPortal.Business.Interfaces.Shared;
+using JobPortal.Model.DataViewModel.Employer.AdvanceSearch;
 using JobPortal.Model.DataViewModel.Employer.SearchResume;
 using JobPortal.Model.DataViewModel.Shared;
 using JobPortal.Utility.Exceptions;
@@ -34,8 +35,8 @@ namespace JobPortal.Web.Areas.Employer.Controllers
         private readonly IEMailHandler emailHandler;
         private readonly IConfiguration config;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public SearchResumeController(IEMailHandler _emailHandler,IConfiguration _config, IJobPostHandler _jobpastHandler,
-            IHttpContextAccessor httpContextAccessor,IHomeHandler _homeHandler, ISearchResumeHandler _searchResumeHandler)
+        public SearchResumeController(IEMailHandler _emailHandler, IConfiguration _config, IJobPostHandler _jobpastHandler,
+            IHttpContextAccessor httpContextAccessor, IHomeHandler _homeHandler, ISearchResumeHandler _searchResumeHandler)
         {
             jobpastHandler = _jobpastHandler;
             homeHandler = _homeHandler;
@@ -82,7 +83,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 ViewBag.Searches = searches;
                 //GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
                 var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
-                searchresumehandler.LogSearchResumeList(searches,userip,user.UserId);
+                searchresumehandler.LogSearchResumeList(searches, userip, user.UserId);
                 lstResumeList = searchresumehandler.GetSearchResumeList(searches);
             }
 
@@ -115,11 +116,11 @@ namespace JobPortal.Web.Areas.Employer.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult SendMessage(string userEmail,string JobSeekerName)
+        public IActionResult SendMessage(string userEmail, string JobSeekerName)
         {
             bool isSend = true;
             string errorMessage;
-            var user  = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo) ?? new UserViewModel();
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo) ?? new UserViewModel();
             JobSeekerName = string.IsNullOrWhiteSpace(JobSeekerName) ? "Candidate" : JobSeekerName;
             try
             {
@@ -132,7 +133,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                     IsHtml = true,
                     MailType = (int)MailType.NotAllowed
                 };
-                emailHandler.SendMail(eModel,-1);
+                emailHandler.SendMail(eModel, -1);
 
                 errorMessage = "Your mail has been successfully send to the Jobseeker";
                 return Json(new { isSend, errorMessage });
@@ -147,5 +148,65 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             return Json(new { isSend, errorMessage });
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult AdvanceResumeSearch()
+        {
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            user = user ?? new UserViewModel();
+            ViewBag.JobTitle = jobpastHandler.GetJobTitleDetails();
+            ViewBag.JobIndustryArea = jobpastHandler.GetJobIndustryAreaDetails();
+            ViewBag.EmploymentStatus = jobpastHandler.GetJobJobEmploymentStatusDetails();
+            ViewBag.EmploymentType = jobpastHandler.GetJobJobEmploTypeDetails();
+            ViewBag.JobTypes = jobpastHandler.GetJobTypes();
+            ViewBag.CityData = searchresumehandler.GetCityList();
+            ViewBag.GenderData = searchresumehandler.GetGenders();
+            ViewBag.EmployersData = searchresumehandler.GetEmployers(true);
+            ViewBag.AdvanceSearchStats = searchresumehandler.AdvanceSearchStates(user.UserId);
+            return View();
+        }
+        [HttpPost]
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult AdvanceResumeSearchData(AdvanceResumeSearch model)
+        {
+            List<SearchResumeListViewModel> lstResumeList = new List<SearchResumeListViewModel>();
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            user = user ?? new UserViewModel();
+            try
+            {
+                lstResumeList = searchresumehandler.GetAdvanceSearchResumeList(model, user.UserId);
+            }
+            catch (UserNotFoundException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(SearchResumeController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+
+            }
+            return View(lstResumeList);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult GetAdvacedSeachById(int Id)
+        {
+            List<AdvanceResumeSearch> lstAdvanceResumeSearch = new List<AdvanceResumeSearch>();
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            user = user ?? new UserViewModel();
+            bool result = false;
+            try
+            {
+                lstAdvanceResumeSearch = searchresumehandler.AdvanceSearchById(Id, user.UserId);
+                result = true;
+            }
+            catch (UserNotFoundException ex)
+            {
+                result = false;
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(SearchResumeController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+
+            }
+            return Json(new { result, lstAdvanceResumeSearch });
+        }
     }
 }
