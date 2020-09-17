@@ -220,6 +220,7 @@ namespace JobPortal.Web.Controllers
 
         public IActionResult Logout(string returnUrl = "")
         {
+            authHandler.DeleteLogActiveUser(HttpContext.Session.Id);
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
             //return RedirectToAction("Index", new { returnUrl = returnUrl });
@@ -987,6 +988,7 @@ namespace JobPortal.Web.Controllers
                     result.ProfilePic = fName;
                 }
                 HttpContext.Session.Set<UserViewModel>(Constants.SessionKeyUserInfo, result);
+                authHandler.LogActiveUsers(HttpContext.Session.Id,result);
                 authHandler.UserActivity(result.UserId);
                 return GoAhead(result.RoleName, result.UserId);
                 //return View("Index");

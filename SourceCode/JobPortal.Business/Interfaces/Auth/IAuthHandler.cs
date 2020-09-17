@@ -22,9 +22,11 @@ namespace JobPortal.Business.Interfaces.Auth
         bool SubmitOTP(string otp, string email);
         //UserViewModel TPResult(string id);
         bool UserActivity(int userid);
+        bool LogActiveUsers(string sessionid, UserViewModel users);
+        bool DeleteLogActiveUser(string sessionid);
         bool VerifyEmail(int userId, string aKey);
-        bool ChangePassword(ResetPasswordViewModel user);     
-        
+        bool ChangePassword(ResetPasswordViewModel user);
+
         FBUserInfoResultViewModel GetFBUserInfo(string accessToken);
         GoogleUserInfoViewModel GetGoogleUserInfo(string accessToken);
     }

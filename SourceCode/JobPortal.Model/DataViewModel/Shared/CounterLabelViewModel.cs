@@ -10,5 +10,6 @@ namespace JobPortal.Model.DataViewModel.Shared
         public int Companies { get; set; }
         public int ResumePost { get; set; }
         public int JobSeeker { get; set; }
+        public int ActiveUsers { get; set; }
     }
 }

@@ -23,6 +23,8 @@ namespace JobPortal.Data.Interfaces.Auth
         bool GenerateOtp(string otp, string email);
         bool SubmitOTP(string otp, string email);
         bool UserActivity(int userid);
+        bool DeleteLogActiveUser(string sessionid);        
+        bool LogActiveUsers(string sessionid, string userdata);
         bool VerifyEmail(int userId, string aKey);
         bool CheckIfEmployerExists(string company, bool allEmployer = false);
     }

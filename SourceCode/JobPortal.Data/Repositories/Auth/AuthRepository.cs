@@ -583,5 +583,65 @@ namespace JobPortal.Data.Repositories.Auth
             return false;
         }
 
+        public bool LogActiveUsers(string sessionid, string userdata)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    SqlParameter[] parameters = new SqlParameter[]
+                    {
+                        new SqlParameter("@sessionid",sessionid),
+                        new SqlParameter("@userdata",userdata)
+                    };
+                    int status = SqlHelper.ExecuteNonQuery(
+                        connection,
+                        CommandType.StoredProcedure,
+                        "usp_LogActiveUsers",
+                        parameters
+                        );
+                    if (status > 0)
+                    {
+                        return true;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            return false;
+        }
+
+        public bool DeleteLogActiveUser(string sessionid)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlParameter[] parameters = new SqlParameter[]
+                    {
+                        new SqlParameter("@sessionid",sessionid),
+                    };
+                    int status = SqlHelper.ExecuteNonQuery(
+                        connection,
+                        CommandType.StoredProcedure,
+                        "usp_DeleteActiveUser",
+                        parameters
+                        );
+                    if (status > 0)
+                    {
+                        return true;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            return false;
+        }
+
     }
 }

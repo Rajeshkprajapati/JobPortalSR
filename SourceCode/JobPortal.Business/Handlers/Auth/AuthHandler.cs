@@ -298,6 +298,25 @@ namespace JobPortal.Business.Handlers.Auth
             return _authProcessor.UserActivity(userid);
         }
 
+        public bool LogActiveUsers(string sessionid, UserViewModel user)
+        {
+            //var model = new UserModel
+            //{
+            //    Email = user.Email,
+            //    FirstName = user.FirstName,
+            //    LastName = user.LastName,
+            //    CompanyName = user.CompanyName,
+            //    Address1 = user.Address1,
+            //    Address2 = user.Address2,
+            //    Address3 = user.Address3,
+            //    MobileNo = user.MobileNo,
+            //    RoleId = user.RoleId,
+            //    JobTitleId = user.JobTitleId
+            //};
+            var userdata = JsonConvert.SerializeObject(user);
+            return _authProcessor.LogActiveUsers(sessionid,userdata);
+        }
+
 
 
         public bool ChangePassword(ResetPasswordViewModel user)
@@ -416,7 +435,12 @@ namespace JobPortal.Business.Handlers.Auth
                     }
                 }
             }
-        }        
+        }
 
+        public bool DeleteLogActiveUser(string sessionid)
+        {
+            return _authProcessor.DeleteLogActiveUser(sessionid);
+        }
+        
     }
 }

@@ -743,6 +743,7 @@ namespace JobPortal.Business.Handlers.Home
                     ResumePost = row["ResumePost"] as int? ?? 0,
                     Companies = row["Companies"] as int? ?? 0,
                     JobSeeker = row["JobSeeker"] as int? ?? 0,
+                    ActiveUsers = row["ActiveUsers"] as int? ?? 0
                 });
             }
             return model;
