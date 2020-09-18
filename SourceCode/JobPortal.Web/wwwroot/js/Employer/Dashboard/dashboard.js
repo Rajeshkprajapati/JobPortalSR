@@ -384,6 +384,7 @@ function PostDraftJob(_this) {
     debugger;   
     let forms = $(_this).parent().parent().find("form");
     let formsData = ResolveFormData(forms);
+
     let jobrole = $('.jobRoles').val().toString();
     if (jobrole == null || jobrole.length <= 0) {
         ErrorDialog('Error','Select atleast on Job Title');
@@ -402,16 +403,47 @@ function PostDraftJob(_this) {
         return false;
     }
 
+    let ctc = $('input[name=CTC]').val();
+    if (ctc == "" || ctc <= 0) {
+        ErrorDialog('Error', 'CTC should be a positive number');
+        return false;
+    }
+    let hiringCriteria = $('input[name=HiringCriteria]').val();
+    if (hiringCriteria == "" || hiringCriteria.length <= 0) {
+        ErrorDialog('Error', 'Hiring Criteria should not be empty');
+        return false;
+    }
+    let contactperson = $('input[name=ContactPerson]').val();
+    if (contactperson == "" || contactperson.length <= 0) {
+        ErrorDialog('Error', 'Contact Person should not be empty');
+        return false;
+    }
+    let noposition = $('input[name=NoPosition]').val();
+    if (noposition == "" || noposition <= 0) {
+        ErrorDialog('Error', 'Number of position should be a positive number');
+        return false;
+    }
+    let spocemail = $('input[name=SPOCEmail]').val();
+    if (spocemail == "" || spocemail.length <= 0) {
+        ErrorDialog('Error', 'SPOC Email should not be empty');
+        return false;
+    }
     let mobile = $('input[name=Mobile]').val();
     if (mobile.length < 10) {
         ErrorDialog('Error', 'Mobile Number should be 10 digit long');
         return false;
     }
-    let jdetails = CKEDITOR.instances['JobDetails'].getData();
-    if (jdetails == null || jdetails == "") {
-        ErrorDialog('Error', 'Please fill job details');
-        return false;
-    }
+    //let jobdetail = $('input[name=JobDetails]').val();
+    //let jobdetail1 = $('#jobDetails iframe').contents().find("html").html();
+    //if (jobdetail.length < 10) {
+    //    ErrorDialog('Error', 'Please fill job details');
+    //    return false;
+    //}
+    //let jdetails = CKEDITOR.instances['JobDetails'].getData();
+    //if (jdetails == null || jdetails == "") {
+    //    ErrorDialog('Error', 'Please fill job details');
+    //    return false;
+    //}
     
     formsData[0].JobTitle = jobrole;
     dashboard.PostDraftJob(formsData[0]);

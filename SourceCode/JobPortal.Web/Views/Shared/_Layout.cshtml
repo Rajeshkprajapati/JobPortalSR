@@ -28,7 +28,7 @@
         @{
             UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             <!-- Header
-        ================================================== -->
+            ================================================== -->
             <header class="sticky-header">
                 <div class="container">
                     <div class="sixteen columns">
@@ -55,18 +55,6 @@
                                                 <li><a asp-controller="SearchResume" asp-action="AdvanceResumeSearch">Advance Search</a></li>
                                                 <!--<li><a asp-area="Employer" asp-controller="JobManagement" asp-action="JobPosting">Post Job</a></li> -->
                                                 <li><a asp-area="Shared" asp-controller="BulkJobPost" asp-action="Index">Bulk Job Post</a></li>
-                                            </ul>
-                                        </li>
-                                    }
-                                    else if (user.RoleName == Constants.TrainingPartnerRole)
-                                    {
-                                        <li>
-                                            <a asp-area="TrainingPartner" asp-controller="Dashboard" asp-action="TPDashboard">Dashboard</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">Training Partner</a>
-                                            <ul>
-                                                <li><a asp-area="TrainingPartner" asp-controller="BulkJobSeeker" asp-action="Index">Upload Candidates</a></li>
                                             </ul>
                                         </li>
                                     }
@@ -113,11 +101,7 @@
                                             @if (user.RoleName == Constants.StudentRole)
                                             {
                                                 <li><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Profile"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
-                                            }
-                                            else if (user.RoleName == Constants.TrainingPartnerRole)
-                                            {
-                                                <li><a asp-area="TrainingPartner" asp-controller="TrainingPartnerProfile" asp-action="EditProfile"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
-                                            }
+                                            }                                            
                                             else
                                             {
                                                 <li><a onclick="AddEditEmp()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
@@ -168,7 +152,7 @@
 
         @RenderBody()
         <!-- Footer
-    ================================================== -->
+        ================================================== -->
         <div class="margin-top-30"></div>
 
         <div id="footer">

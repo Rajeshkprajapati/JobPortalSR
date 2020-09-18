@@ -520,10 +520,10 @@ namespace JobPortal.Business.Handlers.Employer
                 JobTitleId = Convert.ToString(job.JobTitleId),
                 JobType = job.JobType,
                 MonthlySalary = job.MonthlySalary,
-                Quarter1 = job.Quarter1,
-                Quarter2 = job.Quarter2,
-                Quarter3 = job.Quarter3,
-                Quarter4 = job.Quarter4,
+                //Quarter1 = job.Quarter1,
+                //Quarter2 = job.Quarter2,
+                //Quarter3 = job.Quarter3,
+                //Quarter4 = job.Quarter4,
                 SPOC = job.ContactPerson,
                 SPOCContact = job.Mobile,
                 SPOCEmail = job.SPOCEmail,
@@ -533,7 +533,8 @@ namespace JobPortal.Business.Handlers.Employer
                 JobTitleByEmployer = job.JobTitleByEmployer,
                 PositionStartDate = job.PositionStartDate,
                 PositionEndDate = job.PositionEndDate,
-                FinancialYear = job.FinancialYear,                
+                FinancialYear = job.FinancialYear,        
+                NoPosition = job.NoPosition
             };
             return dashboardRepository.UpdateJob(userId, job.JobPostId, jModel);
         }
