@@ -48,7 +48,7 @@ namespace JobPortal.Business.Handlers.Employer.Profile
             var u = new UserModel
             {
                 CompanyName = model.CompanyName,
-                FirstName = model.FullName,
+                FirstName = model.FirstName,
                 MobileNo = model.MobileNo,
                 ProfilePic = model.ProfilePic,
                 Address1 = model.FullAddress,

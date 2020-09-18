@@ -106,7 +106,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(EmployerManagementController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
-            catch (UserNotFoundException ex)
+            catch (UserNotCreatedException ex)
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(EmployerManagementController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));

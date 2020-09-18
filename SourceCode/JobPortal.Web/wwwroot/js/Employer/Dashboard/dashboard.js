@@ -381,10 +381,39 @@ function updateJob(_this) {
     dashboard.updateJob(formsData[0]);
 }
 function PostDraftJob(_this) {
-    debugger;
+    debugger;   
     let forms = $(_this).parent().parent().find("form");
     let formsData = ResolveFormData(forms);
-    formsData[0].JobTitle = $('.jobRoles').val().toString();
+    let jobrole = $('.jobRoles').val().toString();
+    if (jobrole == null || jobrole.length <= 0) {
+        ErrorDialog('Error','Select atleast on Job Title');
+        return false;
+    }
+    let state = $('select[name=StateCode]').val();
+    if (state == null || state == "") {
+        ErrorDialog('Error', 'Please select state');
+        $("selct#ddlState .chosen-select-no-single").trigger("chosen:open");
+        return false;
+    }
+    let city = $('select[name=CityCode]').val();
+    if (city == null || city == "") {
+        ErrorDialog('Error', 'Please select city');
+        $("select#ddlCity .chosen-select-no-single").trigger("chosen:open");
+        return false;
+    }
+
+    let mobile = $('input[name=Mobile]').val();
+    if (mobile.length < 10) {
+        ErrorDialog('Error', 'Mobile Number should be 10 digit long');
+        return false;
+    }
+    let jdetails = CKEDITOR.instances['JobDetails'].getData();
+    if (jdetails == null || jdetails == "") {
+        ErrorDialog('Error', 'Please fill job details');
+        return false;
+    }
+    
+    formsData[0].JobTitle = jobrole;
     dashboard.PostDraftJob(formsData[0]);
 }
 

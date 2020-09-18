@@ -190,7 +190,7 @@ function initCalendar(selector, date, startDate) {
 function AddJobPost(_this) {    
     $('#JobPostForm').submit(function (e) {
         e.preventDefault();
-    });
+    });    
 
     let jobtitle = $('select[name=JobTitleId]').val().toString();
     if (jobtitle.length <= 0) {        
@@ -209,7 +209,13 @@ function AddJobPost(_this) {
         ErrorDialog('Error', 'Please select city');
         $("select#ddlCity .chosen-select-no-single").trigger("chosen:open");
         return false;
-    }    
+    }
+    
+    let mobile = $('input[name=Mobile]').val();
+    if (mobile.length < 10) {
+        ErrorDialog('Error', 'Mobile Number should be 10 digit long');
+        return false;
+    }
     let jdetails = CKEDITOR.instances['JobDetails'].getData();
     if (jdetails == null || jdetails == "") {
         ErrorDialog('Error', 'Please fill job details');
@@ -244,8 +250,14 @@ function AddJobPost(_this) {
             ErrorDialog('Error', 'Job Post Failed');            
         }
     });
-    resetForm($('#JobPostForm'));
-    //$('#JobPostForm')[0].reset();
+    //resetForm($('#JobPostForm'));
+    // //$('#JobPostForm')[0].reset();
+    //CKEDITOR.instances['JobDetails'].setData("");
+    //initializeCalendars(true, true);
+    //return false;
+    $('#JobPostForm').trigger("reset");;
+    $(".chosen-select").trigger("chosen:updated");
+    $(".chosen-select-no-single").trigger("chosen:updated");
     CKEDITOR.instances['JobDetails'].setData("");
     initializeCalendars(true, true);
     return false;

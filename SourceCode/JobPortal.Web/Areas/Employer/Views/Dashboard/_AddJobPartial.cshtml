@@ -203,10 +203,33 @@
         $('#JobPostForm').submit(function (e) {
             e.preventDefault();
         });
+        let JobTitleByEmployer = $('input[name=JobTitleByEmployer]').val();
+        if (JobTitleByEmployer.length < 5) {
+            ErrorDialog('Error','JobTitleByEmployer must be atleast 5 character long');
+            return false;
+        }
+        let State =  $('select[name=StateCode]').val();
+        let City = $('select[name=CityCode]').val();
+        if (State.length <= 0) {
+            ErrorDialog('Error', 'Please select state!');
+            return false;
+        }
+        if (City == null || City.length <= 0) {
+            ErrorDialog('Error', 'Please select city');
+            return false;
+        }
         let formsData = ResolveFormData($('#JobPostForm'));
         let jdetails = CKEDITOR.instances['JobDetails'].getData();
         formsData[0].JobDetails = jdetails;
-        formsData[0].JobTitle = $('select[name=JobTitleId]').val().toString();
+        let jobtitleid = $('select[name=JobTitleId]').val().toString();
+        if (jobtitleid.length <= 0) {
+            ErrorDialog('Error', 'Please select atleast one JobTitle !');
+            return false;
+        }
+        formsData[0].JobTitleId = jobtitleid == "" ? 0 : jobtitleid;
+        let openings = $('input[name=NoPosition]').val();
+        formsData[0].NoPosition = openings == "" ? 0 : openings;
+
         SendAJAXRequest('/JobManagement/SaveJobPost/', 'POST', formsData[0], 'JSON', (resp) => {
             if (resp) {
                 InformationDialog('Information', 'Job Post Saved Successful!');
@@ -215,7 +238,7 @@
             }
         });
         //resetForm($('#JobPostForm'));
-        debugger;
+        
         $('#JobPostForm').trigger("reset");;
         $(".chosen-select").trigger("chosen:updated");
         $(".chosen-select-no-single").trigger("chosen:updated");

@@ -94,7 +94,7 @@
                             <label asp-for="Email">
                                 Official Email:
                                 <i class="ln ln-icon-Mail"></i>
-                                <input type="text" class="input-text" asp-for="Email" id="email" placeholder="Office Email" autocomplete="off" />
+                                <input type="text" class="input-text" asp-for="Email" required id="email" placeholder="Office Email" autocomplete="off" />
                             </label>
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
@@ -103,7 +103,7 @@
                             <label asp-for="Password">
                                 Password:
                                 <i class="ln ln-icon-Lock-2"></i>
-                                <input class="input-text" type="password" asp-for="Password" id="password" placeholder="Password" />
+                                <input class="input-text" type="password" asp-for="Password" required id="password" placeholder="Password" />
                             </label>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
@@ -112,7 +112,7 @@
                             <label asp-for="Mobile">
                                 Mobile:
                                 <i class="ln ln-icon-Smartphone"></i>
-                                <input type="number" maxlength="10" class="input-text" asp-for="Mobile" id="mobile" placeholder="Mobile" />
+                                <input type="number" maxlength="10" class="input-text" asp-for="Mobile" required id="mobile" placeholder="Mobile" />
                             </label>
                             <span asp-validation-for="Mobile" class="text-danger"></span>
                         </div>

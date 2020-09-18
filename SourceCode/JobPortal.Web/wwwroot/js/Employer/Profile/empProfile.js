@@ -1,21 +1,28 @@
 ﻿function changePassword() {
-    
+
     $('#PasswordForm').submit(function (e) {
         e.preventDefault();
     });
-
+    
     //var formData = ResolveFormData(_this);
 
     let oldPassword = $('input[name=OldPassword]').val();
     let Password = $('input[name=Password]').val();
     let ConfirmPassword = $('input[name=ConfirmPassword]').val();
-    debugger;
+  
     if ((ConfirmPassword == null || ConfirmPassword == '') || (Password == null || Password == '')) {
         ErrorDialog('Warning', 'Empty password fields are not allowed');
         return false;
     }
     if (ConfirmPassword != Password) {
+        //if (ConfirmPassword.toUpperCase() != Password.toUpperCase()) {
         ErrorDialog('Warning', 'Password and Confirm Password must be same');
+        return false;
+    }
+
+    if (Password.length < 6) {
+        //if (ConfirmPassword.toUpperCase() != Password.toUpperCase()) {
+        ErrorDialog('Warning', 'Password must be atleast 6 character long');
         return false;
     }
 
@@ -24,15 +31,15 @@
     //formData.append('Password', Password);
 
     var formData = {
-        oldPassword,Password
+        oldPassword, Password
     }
 
-    SendAJAXRequest("/Auth/ChangePassword/", 'post', formData, 'json', function(result) {
+    SendAJAXRequest("/Auth/ChangePassword/", 'post', formData, 'json', function (result) {
         if (result === true) {
-            
-            InformationDialog('Information','Password successfully changed');
+
+            InformationDialog('Information', 'Password successfully changed');
         } else {
-            ErrorDialog('Error', 'Current password is not correct');            
+            ErrorDialog('Error', 'Current password is not correct');
         }
     });
     resetForm($('#PasswordForm'));
@@ -44,10 +51,31 @@ function UpdateEmpDetail() {
         e.preventDefault();
     });
     let Cname = $('input[name=CompanyName]').val();
+    if (Cname.length < 2) {
+        ErrorDialog('Error', 'Company Name should be atleast 2 character long');
+        return false;
+    }
     let ContactPerson = $('input[name=Fullname]').val();
+    if (ContactPerson.length < 2) {
+        ErrorDialog('Error', 'Name should be atleast 2 character long');
+        return false;
+    }
+
     let email = $('input[name=Email]').val();
+    if (Cname.length < 2) {
+        ErrorDialog('Error', 'Company Name should be atleast 2 character long');
+        return false;
+    }
     let phone = $('input[name=MobileNo]').val();
+    if (phone.length < 10) {
+        ErrorDialog('Error', 'Mobile Number should be atleast 10 digit long');
+        return false;
+    }
     let address = $('input[name=Address]').val();
+    if (address.length < 10) {
+        ErrorDialog('Error', 'Address should be atleast 10 character long');
+        return false;
+    }
 
     var formData = new FormData();
     if ($("#profilepic").val()) {
@@ -57,14 +85,14 @@ function UpdateEmpDetail() {
     }
 
     formData.append('CompanyName', Cname);
-    formData.append('FullName', ContactPerson);
+    formData.append('FirstName', ContactPerson);
     formData.append('Email', email);
     formData.append('MobileNo', phone);
-    formData.append('Address1', address);    
-    
+    formData.append('Address1', address);
+
 
     SendAJAXRequest("/EmployerManagement/UpdateProfile/", "POST", formData, "JSON", function (result) {
-        if (result === true) {            
+        if (result === true) {
             InformationDialog('Information', 'Profile details added/updated successfully');
             //location.reload(true);
         } else {

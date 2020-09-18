@@ -59,7 +59,7 @@
                         <label asp-for="FirstName">
                             First Name:
                             <i class="ln ln-icon-Male"></i>
-                            <input type="text" class="input-text" asp-for="FirstName" id="Firstname" placeholder="FirstName" />
+                            <input type="text" class="input-text" asp-for="FirstName" required id="Firstname" placeholder="FirstName" />
                         </label>
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
@@ -68,7 +68,7 @@
                         <label asp-for="LastName">
                             Last Name:
                             <i class="ln ln-icon-Male"></i>
-                            <input type="text" class="input-text" asp-for="LastName" id="Lastname" placeholder="LastName" />
+                            <input type="text" class="input-text" asp-for="LastName" required id="Lastname" placeholder="LastName" />
                         </label>
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
@@ -84,7 +84,7 @@
                         <label asp-for="Email">
                             Email Address:
                             <i class="ln ln-icon-Mail"></i>
-                            <input type="text" class="input-text" asp-for="Email" id="email" placeholder="Email" />
+                            <input type="text" class="input-text" asp-for="Email" required id="email" placeholder="Email" />
                         </label>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
@@ -93,7 +93,7 @@
                         <label asp-for="Password">
                             Password:
                             <i class="ln ln-icon-Lock-2"></i>
-                            <input class="input-text" type="password" asp-for="Password" placeholder="Password" />
+                            <input class="input-text" type="password" asp-for="Password" required placeholder="Password" />
                         </label>
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
@@ -109,7 +109,7 @@
                         <label for="Mobile">
                             Mobile:
                             <i class="ln ln-icon-Smartphone"></i>
-                            <input type="number" maxlength="10" class="input-text" asp-for="MobileNo" placeholder="Mobile" />
+                            <input type="number" maxlength="10" min="0" class="input-text" required asp-for="MobileNo" placeholder="Mobile" />
                         </label>
                         <span asp-validation-for="MobileNo" class="text-danger"></span>
                     </div>
@@ -138,7 +138,7 @@
                             <span asp-validation-for="PreferredLocation" class="text-danger"></span>
                         </div>*@
                     <div class="form-row">
-                        <input type="submit" class="button border fw margin-top-10" name="register" value="Register" />
+                        <input type="submit" class="button border fw margin-top-10" required name="register" value="Register" />
                     </div>
                 </form>
             </div>
@@ -148,7 +148,13 @@
 <div id="fb-root"></div>
 @section Scripts
     {
+        <script>
+            $(document).ready(function () {
+                //SpecialChar('#Firstname');
+                //SpecialChar('#Lastname');
+            });
 
+        </script>
     <script>
         gapi.load('auth2', function () {
             auth2 = gapi.auth2.init({
