@@ -224,14 +224,23 @@ namespace JobPortal.Business.Handlers.Jobseeker
 
                 model.Cities = ConvertDatatableToModelList.ConvertDataTable<CityViewModel>(allcities);
                 model.ITSkills = ConvertDatatableToModelList.ConvertDataTable<ITSkills>(ITSkills);
-                
-              //Adding preferred location
+
+                //Adding preferred location
                 if (preferredlocation != null && preferredlocation.Rows.Count > 0)
                 {
                     //checking if locationid is null then assign otherlocation
-                    model.PersonalDetails.PreferredLocation1 = (preferredlocation.Rows[0]["LocationId"] as string) ?? preferredlocation.Rows[0]["OtherLocation"] as string;
-                    model.PersonalDetails.PreferredLocation2 = (preferredlocation.Rows[1]["LocationId"] as string) ?? (preferredlocation.Rows[1]["OtherLocation"]) as string;
-                    model.PersonalDetails.PreferredLocation3 = (preferredlocation.Rows[2]["LocationId"] as string) ?? (preferredlocation.Rows[2]["OtherLocation"]) as string;
+                    if (preferredlocation.Rows.Count >= 1)
+                    {
+                        model.PersonalDetails.PreferredLocation1 = (preferredlocation.Rows[0]["LocationId"] as string) ?? preferredlocation.Rows[0]["OtherLocation"] as string;
+                    }
+                    if (preferredlocation.Rows.Count >= 2)
+                    {
+                        model.PersonalDetails.PreferredLocation2 = (preferredlocation.Rows[1]["LocationId"] as string) ?? (preferredlocation.Rows[1]["OtherLocation"]) as string;
+                    }
+                    if (preferredlocation.Rows.Count >= 3)
+                    {
+                        model.PersonalDetails.PreferredLocation3 = (preferredlocation.Rows[2]["LocationId"] as string) ?? (preferredlocation.Rows[2]["OtherLocation"]) as string;
+                    }
                 }
 
                 //model.PersonalDetails.Preferredlocation = ConvertDatatableToModelList.ConvertDataTable<string>(preferredlocation);
@@ -285,7 +294,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
                 model.PersonalDetails.Country = Convert.ToString(jobSeekerDetail.Rows[0]["Country"]);
                 model.PersonalDetails.State = Convert.ToString(jobSeekerDetail.Rows[0]["State"]);
                 model.PersonalDetails.Resume = Convert.ToString(jobSeekerDetail.Rows[0]["Resume"]);
-                model.PersonalDetails.LinkedinProfile = Convert.ToString(jobSeekerDetail.Rows[0]["LinkedinProfile"] as string) ??"";
+                model.PersonalDetails.LinkedinProfile = Convert.ToString(jobSeekerDetail.Rows[0]["LinkedinProfile"] as string) ?? "";
                 model.PersonalDetails.IsJobAlert = Convert.ToBoolean(jobSeekerDetail.Rows[0]["IsJobAlert"]);
                 //model.PersonalDetails.ProfileScore = ProfileScore;
                 if (!Convert.IsDBNull(jobSeekerDetail.Rows[0]["TotalExperience"]))
@@ -300,7 +309,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
                     model.PersonalDetails.Resume = fName;
                 }
 
-                if(ProfileScore!=null && ProfileScore.Rows.Count>0)
+                if (ProfileScore != null && ProfileScore.Rows.Count > 0)
                 {
                     model.PersonalDetails.ProfileScore = Convert.ToInt16(ProfileScore.Rows[0]["Total"]);
                 }
@@ -340,7 +349,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
                 CTC = model.CTC,
                 ECTC = model.ECTC,
                 TotalExperience = Math.Round(model.TotalExperience, 2),
-                LinkedinProfile=model.LinkedinProfile
+                LinkedinProfile = model.LinkedinProfile
 
             };
             bool isRegister = _userProfileRepository.AddNewProfileDetail(u);
@@ -443,8 +452,8 @@ namespace JobPortal.Business.Handlers.Jobseeker
                 Subject = "Applied Job from Placement Portal",
                 Body = "Dear " + name + ",<br/><br/> We have successfully forwarded your application for the position of " + e.JobTitlebyEmployer
                         + "<br/><br/>Corporate Name  : " + e.CompanyName + "<br/>JobRole  : " + e.JobTitleName + "<br/>Job Description  : " + e.Jobdetails
-                        + "<br/><br/>In case you don't find the above details appropriate, <a href="+jsProfile+">update profile</a> and apply again."
-                        + "<br/><br/>Recruiters will be contacting you on this mobile number +91" + e.MobileNo + "<br/>To update it, please <a href="+jsProfile+">click here</a>"+ "<br><br>Thank You<br>Placement Portal Team",
+                        + "<br/><br/>In case you don't find the above details appropriate, <a href=" + jsProfile + ">update profile</a> and apply again."
+                        + "<br/><br/>Recruiters will be contacting you on this mobile number +91" + e.MobileNo + "<br/>To update it, please <a href=" + jsProfile + ">click here</a>" + "<br><br>Thank You<br>Placement Portal Team",
                 To = new string[] { to },
                 From = e.Email,
                 IsHtml = true,
@@ -458,14 +467,14 @@ namespace JobPortal.Business.Handlers.Jobseeker
             string jobDetail =
             $"{URLprotocol}://" +
             $"{_httpContextAccessor.HttpContext.Request.Host.Value}" +
-            $"/Job/JobDetails/?jobid="+ jobpostid;
+            $"/Job/JobDetails/?jobid=" + jobpostid;
 
             var eModel = new EmailViewModel
             {
                 Subject = "You have recevied one job application",
                 Body = "Dear " + name + ",<br/><br/> You have received a new application for the job post " + e.JobTitlebyEmployer
                         + "<br/><br/>JobRole  : " + e.JobTitleName + "<br/>Job Description  : " + e.Jobdetails + "<br/>Job Posted On  : " + e.CreatedDate
-                        + "<br/><br/>To Check Completed details please <a href="+ jobDetail + ">click here</a>" + "<br><br>Thank You<br>Placement Portal Team",
+                        + "<br/><br/>To Check Completed details please <a href=" + jobDetail + ">click here</a>" + "<br><br>Thank You<br>Placement Portal Team",
                 To = new string[] { e.Email },
                 From = from,
                 IsHtml = true,
@@ -696,7 +705,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
             DataTable dt = _userProfileRepository.JobSeekerSkills(userId);
             try
             {
-               if (!Convert.IsDBNull(dt.Rows[0]["Skills"]))
+                if (!Convert.IsDBNull(dt.Rows[0]["Skills"]))
                 {
                     model = JsonConvert.DeserializeObject<Skills>(dt.Rows[0]["Skills"].ToString());
                 }
@@ -708,7 +717,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
             return model;
         }
 
-        public List<SearchJobListViewModel> JobSeekerJobsOnSkills(string skills,int UserId)
+        public List<SearchJobListViewModel> JobSeekerJobsOnSkills(string skills, int UserId)
         {
             DataTable dt = _userProfileRepository.JobSeekerJobsOnSkills(skills, UserId);
             List<SearchJobListViewModel> lstJobs = new List<SearchJobListViewModel>();
@@ -748,9 +757,9 @@ namespace JobPortal.Business.Handlers.Jobseeker
             return lstJobs;
         }
 
-        public bool JobsAlerts(int IsAlert,int UserId)
+        public bool JobsAlerts(int IsAlert, int UserId)
         {
-            bool isTrue = _userProfileRepository.JobsAlert(IsAlert,UserId);
+            bool isTrue = _userProfileRepository.JobsAlert(IsAlert, UserId);
             if (isTrue)
             {
                 return true;

@@ -365,15 +365,16 @@ function AddJobProfile(_this) {
             //debugger;
             //console.log(result);
             if (result === true) {
-                let icon = 'fa fa-thumbs-up';
-                let Message = "Experience details added/updated successfully";
-                updatedsucessfully(Message, icon);
-
+                //let icon = 'fa fa-thumbs-up';
+                //let Message = "Experience details added/updated successfully";
+                //updatedsucessfully(Message, icon);
+                InformationDialog('Information', 'Experience details added/updated successfully');
             }
             else {
-                let icon = 'fa fa-exclamation';
-                let Message = "Experience details could not added/updated";
-                updatedsucessfully(Message, icon);
+                //let icon = 'fa fa-exclamation';
+                //let Message = "Experience details could not added/updated";
+                //updatedsucessfully(Message, icon);
+                ErrorDialog('Error','Experience details could not added/updated');
             }
         });
 
@@ -440,15 +441,17 @@ function AddEducation(_this) {
                 }
                 else {
                     $('.element.style').hide();
-                    let Message = "Education details added/updated successfully";
-                    let icon = 'fa fa-thumbs-up';
-                    updatedsucessfully(Message, icon);
+                    //let Message = "Education details added/updated successfully";
+                    //let icon = 'fa fa-thumbs-up';
+                    //updatedsucessfully(Message, icon);
+                    InformationDialog('Information', 'Education details added/updated successfully');
                 }
             }
             else {
-                let Message = "Your education details could not insert/update";
-                let icon = 'fa-exclamation';
-                updatedsucessfully(Message, icon);
+                //let Message = "Your education details could not insert/update";
+                //let icon = 'fa-exclamation';
+                //updatedsucessfully(Message, icon);
+                ErrorDialog('Error', 'Your education details could not insert/update');
             }
         });
     }
@@ -459,6 +462,10 @@ function AddProfileDetail() {
     var email = $('#emailId1').val();
     var address = $('#txtAddress').val();
     var phn = $('#phoneNumber1').val();
+    if (phn == "" || phn.length < 10) {
+        ErrorDialog('Error', 'Mobile Number should be minimum 10 digit!');
+        return false;
+    }   
     var maritalStatus = $('#ddlMaritalStatus').val();
     var gender;
     if ($("#btnMale").is(":checked")) {
@@ -483,24 +490,20 @@ function AddProfileDetail() {
     if ($("input[type=radio][id=radioJobType]").val() === "1") {
         exp = `${expInYears}.${expInMonths}`;
     }
-    if (jobtitle === ""){
-        let Message = "Please select JobTitle";
-        warnignPopup(Message);
+    if (jobtitle === ""){        
+        ErrorDialog('Error', 'Please select JobTitle');
         return false;
     }
-    if (country === "") {
-        let Message = "Please select country";
-        warnignPopup(Message);
+    if (country === "") {        
+        ErrorDialog('Error', 'Please select country');
         return false;
     }
-    if (state === "") {
-        let Message = "Please select State";
-        warnignPopup(Message);
+    if (state === "") {        
+        ErrorDialog('Error', 'Please select State');
         return false;
     }
-    if (city === "") {
-        let Message = "Please select City";
-        warnignPopup(Message);
+    if (city === "") {       
+        ErrorDialog('Error', 'Please select City');
         return false;
     }
     let LinkedinProfile = $('#LinkedinProfile').val();
@@ -516,11 +519,12 @@ function AddProfileDetail() {
     $("#profileModalCenter").removeClass("close");
     SendAJAXRequest("/JobSeekerManagement/AddProfileDetail/", "POST", data, "JSON", function (result) {
         if (result === true) {
-            let icon = 'fa fa-thumbs-up';
-            let Message = "Personal details added/updated successfully";
-            //InformationDialog('Information', 'Personal details added/updated successfully');
-            updatedsucessfully(Message, icon);
-
+            //let icon = 'fa fa-thumbs-up';
+            //let Message = "Personal details added/updated successfully";
+            //updatedsucessfully(Message, icon);
+            InformationDialog('Information', 'Personal details added/updated successfully');
+        } else {
+            ErrorDialog('Error', 'Failed to update data');
         }
     });
 }
@@ -534,12 +538,15 @@ function AddProfileSummary() {
         var data = {};
         SendAJAXRequest("/JobSeekerManagement/AddProfileSummary/?profile=" + profileData + "&userId=" + userIdData + "", "POST", data, "JSON", function (result) {
             if (result === true) {
-                let icon = 'fa fa-thumbs-up';
-                let messagedata = "Profile summary added/updated successfully";
-                updatedsucessfully(messagedata, icon);
-
+                //let icon = 'fa fa-thumbs-up';
+                //let messagedata = "Profile summary added/updated successfully";
+                //updatedsucessfully(messagedata, icon);
+                InformationDialogWithPageRelode('Informationn', 'Profile summary added/updated successfully');
             }
         });
+    } else {
+        ErrorDialog('Warning', 'Enter a profile summary!');
+        return false;
     }
 }
 
@@ -557,70 +564,86 @@ function AddProfileSkills() {
                 else {
                     $('#skillsModalCenter').modal('hide');
                     $("#skillsModalCenter").addClass("close");
-                    let icon = 'fa fa-thumbs-up';
-                    let Message = "Skill updated successfully";
-                    updatedsucessfully(Message, icon);
-                    //InformationDialog('Information', Message);
+                    //let icon = 'fa fa-thumbs-up';
+                    //let Message = "Skill updated successfully";
+                    //updatedsucessfully(Message, icon);
+                    InformationDialogWithPageRelode('Information', Message);
                 }
             } else {
-                let icon = 'fa fa-exclamation';
-                let message = "Error in Adding Skills!";
-                warnignPopup(message, icon);
+                //let icon = 'fa fa-exclamation';
+                //let message = "Error in Adding Skills!";
+                //warnignPopup(message, icon);
+                ErrorDialog('Error', 'Error in Adding Skills!');
             }
         });
     } else {
-        let icon = 'fa fa-exclamation';
-        let message = "Enter valid skills only";
-        warnignPopup(message, icon);
+        //let icon = 'fa fa-exclamation';
+        //let message = "Enter valid skills only";
+        //warnignPopup(message, icon);
+        ErrorDialog('Error', 'Enter valid skills only!');
 
     }   
 }
 
 
 function UploadResume(inputId) {
+    
     let fileUpload = $("#" + inputId).get(0);
     let files = fileUpload.files;
     let format = files[0].name.split('.').pop();
-    if (format === "pdf" || format === "doc" || format === "docx") {
+    format = format.toLocaleUpperCase();
+    if (format === "PDF" || format === "DOC" || format === "DOCX") {
         let formData = new FormData();
         formData.append('resume', files[0]);
         SendAJAXRequest('/JobSeekerManagement/UploadFileValue/', 'POST', formData, 'JSON', (result) => {
             if (result) {
-                let message = "Resume upload successfully";
-                let icon = 'fa fa-thumbs-up';
-                updatedsucessfully(message, icon);
+                //let message = "Resume upload successfully";
+                //let icon = 'fa fa-thumbs-up';
+                //updatedsucessfully(message, icon);
+                InformationDialogWithPageRelode('Information', 'Resume upload successfully');
 
             } else {
-                let icon = 'fa fa-exclamation';
-                let message = "Error in Uploading Resume!";
-                warnignPopup(message, icon);
+                //let icon = 'fa fa-exclamation';
+                //let message = "Error in Uploading Resume!";
+                //warnignPopup(message, icon);
+                ErrorDialog('Error', 'Error in Uploading Resume!');
 
             }
         }, null, true);
     } else {
-        let icon = 'fa fa-exclamation';
-        let message = "Allowed File formats doc,docx and pdf!";
-        warnignPopup(message, icon);
+        //let icon = 'fa fa-exclamation';
+        //let message = "Allowed File formats doc,docx and pdf!";
+        //warnignPopup(message, icon);
+        ErrorDialog('Error', 'Allowed File formats doc,docx and pdf!');
     }
 
 }
 
 function UploadProfilePicture(_this) {
+    debugger;
     let pictureFile = $(_this).get(0);
     let picture = pictureFile.files;
-    let formData = new FormData();
-    formData.append('profilepic', picture[0]);
-    SendAJAXRequest(`/JobSeekerManagement/UploadProfilePicture/`, 'POST', formData, 'JSON', (result) => {
-        if (result) {
-            let message = "Profile Picture updated successfully";
-            let icon = 'fa fa-thumbs-up';
-            updatedsucessfully(message, icon);
-        } else {
-            let icon = 'fa fa-exclamation';
-            let message = "Error in updating Profile Picture!";
-            updatedsucessfully(message, icon);
-        }
-    }, null, true);
+    let format = picture[0].name.split('.').pop();
+    format = format.toLocaleUpperCase();
+    if (format === "JPG" || format === "JPEG" || format === "PNG") {
+        let formData = new FormData();
+        formData.append('profilepic', picture[0]);
+        SendAJAXRequest(`/JobSeekerManagement/UploadProfilePicture/`, 'POST', formData, 'JSON', (result) => {
+            if (result) {
+                //let message = "Profile Picture updated successfully";
+                //let icon = 'fa fa-thumbs-up';
+                //updatedsucessfully(message, icon);
+                InformationDialogWithPageRelode('Information', 'Profile Picture updated successfully');
+            } else {
+                //let icon = 'fa fa-exclamation';
+                //let message = "Error in updating Profile Picture!";
+                //updatedsucessfully(message, icon);
+                ErrorDialog('Error','Error in updating Profile Picture!');
+            }
+        }, null, true);
+    } else {
+        ErrorDialog('Error','Allowed format jpg, jpeg, and png files');
+    }
 }
 
 
@@ -913,16 +936,18 @@ function AddPreferredLocation() {
             $('#locationModalCenter').modal('hide');
             $("#locationModalCenter").addClass('close');
             //show custom popup
-            let icon = 'fa fa-thumbs-up';
-            let Message = "Preferred Location added/updated successfully";
-            updatedsucessfully(Message, icon);
+            //let icon = 'fa fa-thumbs-up';
+            //let Message = "Preferred Location added/updated successfully";
+            //updatedsucessfully(Message, icon);
+            InformationDialogWithPageRelode('Information', 'Preferred Location added/updated successfully');
             //alert('data saved');
         } else {
             $('#locationModalCenter').modal('hide');
             $("#locationModalCenter").addClass('close');
-            let icon = 'fa fa-exclamation';
-            let Message = "Failed to add/update Preferred Location";
-            updatedsucessfully(Message, icon);
+            //let icon = 'fa fa-exclamation';
+            //let Message = "Failed to add/update Preferred Location";
+            //updatedsucessfully(Message, icon);
+            ErrorDialog('Erroe', 'Failed to added/updated Preferred Location!');
         }
     });
 }
@@ -1014,8 +1039,10 @@ $("#btnJobAlert").change(function () {
 
             //let icon = 'fa fa-thumbs-up';
             //updatedsucessfully(result, icon);
+            InformationDialogWithPageRelode('Information', 'Now you will get job alerts via email');
         } else {
-            warnignPopup('Error');
+            //warnignPopup('Error');
+            ErrorDialog('Error', 'Failed,Please try again!');
         }
     });
 });
