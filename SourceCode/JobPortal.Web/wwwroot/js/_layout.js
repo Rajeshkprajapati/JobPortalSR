@@ -44,7 +44,7 @@
             var videSection = $('#videSection');
             $(videSection).empty();
             for (var i = 0; i < data.length; i++) {
-                $(videSection).append('<div class="col-md-5 video-border"> <iframe height = "100%" width = "100%" src="' + data[i].video + '" frameborder = "0" allowfullscreen = "allowfullscreen" ></iframe> </div>');
+                $(videSection).append('<div class="col-sm-6"><div class="embed-responsive embed-responsive-16by9"> <iframe class="embed-responsive-item" src="' + data[i].video + '" frameborder = "0" allowfullscreen = "allowfullscreen" ></iframe> </div></div>');
                }
         } else {
             warnignPopup('Error');
