@@ -565,7 +565,7 @@ function AddProfileSkills() {
                     $('#skillsModalCenter').modal('hide');
                     $("#skillsModalCenter").addClass("close");
                     //let icon = 'fa fa-thumbs-up';
-                    //let Message = "Skill updated successfully";
+                    let Message = "Skill updated successfully";
                     //updatedsucessfully(Message, icon);
                     InformationDialogWithPageRelode('Information', Message);
                 }
