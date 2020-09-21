@@ -1153,3 +1153,7 @@ div.jobimg > img{
     .video-border:hover {
         border: solid 5px #a63960;
     }
+.btn.focus, .btn:focus, .btn:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
