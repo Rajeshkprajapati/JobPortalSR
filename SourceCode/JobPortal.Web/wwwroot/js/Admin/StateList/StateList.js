@@ -17,6 +17,9 @@
     $('#dataTable_paginate').addClass('data-table-pasiganation');
     $('#dataTable_length').addClass('data-table-lenthFilter');
     $('#dataTable_filter').addClass('data-table-SearchFilter');
+
+    SpecialChar('#StateCode');
+    SpecialChar('#StateName');
 });
 function edit(_this) {
     //console.log(userid)
@@ -96,8 +99,9 @@ function AddData(_this) {
     }
 }
 
-function deletedata(CountryCode, stateCode) {
-    var data = { CountryCode: CountryCode, StateCode: stateCode };
+//function deletedata(CountryCode, stateCode) {
+function deletedata(data) {    
+   // var data = { CountryCode: CountryCode, StateCode: stateCode };
     SendAJAXRequest('/ManageCityState/DeleteState/', 'POST', data, 'JSON', (result) => {
         if (result) {
             InformationDialogWithPartialReload('Done', result, GetStateList);
@@ -147,11 +151,13 @@ $('#PopUpModal').on('hidden.bs.modal', function () {
 });
 
 function ConfrimationDeleteState(countryId, stateId) {
-    $('#confimationDeleteModel').modal({
-        dismissible: true
-    });
-    $('#btndelete').attr('onclick', 'deletedata("' + countryId + '","' + stateId + '")');
-    $('#confimationDeleteModel').modal('show');
-    $("#confimationDeleteModel").addClass("open");
-    $("#confimationDeleteModel").addClass("in");
+    //$('#confimationDeleteModel').modal({
+    //    dismissible: true
+    //});
+    //$('#btndelete').attr('onclick', 'deletedata("' + countryId + '","' + stateId + '")');
+    //$('#confimationDeleteModel').modal('show');
+    //$("#confimationDeleteModel").addClass("open");
+    //$("#confimationDeleteModel").addClass("in");
+    var data = { CountryCode: countryId, StateCode:stateId };
+    ConfirmationDialog('Confirmation', 'Are you sure', deletedata, data);
 }

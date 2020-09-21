@@ -3,6 +3,7 @@ let mastercity = {};
 
 mastercity = (function () {
     let addnew = function () {
+        debugger;
         $('#cityModal').find('form').get(0).reset();
         $('button[name=update][id=Update]').hide();
         $('button[name=add][id=Add]').show();
@@ -29,7 +30,8 @@ mastercity = (function () {
             if (resp && resp.msg) {
                InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetCityList);
             } else {
-                ErrorDialog('Warning', message);
+               let message = "Unable to delete city";
+               ErrorDialog('Warning', message);
             }
         });
     }
@@ -40,6 +42,7 @@ mastercity = (function () {
                 $('#PopUpModal').modal('toggle');
                 InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetCityList);
             } else {
+               let message = "Seems City Code is already exist! Please verify";
                ErrorDialog('Warning', message);
             }
         });
@@ -96,20 +99,27 @@ function updatecity(_this) {
     mastercity.updatedata(formData[0]);
 }
 
-function deletedata(cityid, stateid) {
-    mastercity.deletecity(cityid, stateid);
+function deletedata(citydata) {    
+    mastercity.deletecity(citydata.citycode, citydata.statecode);
 }
 
-function ConfrimationCityDeleteMessage(cityid, stateid) {
-    let options = {
-        backdrop: 'static',
-        show: true
-    };
-    $('#btndelete').attr('onclick', 'deletedata("' + cityid + '","' + stateid + '")');
-    $("#confimationDeleteModel").addClass("open");
-    $("#confimationDeleteModel").addClass("in");
-    $('#confimationDeleteModel').modal(options);
+function DeleteCityConfirmation(citycode, statecode) {
+    var data = { citycode, statecode };
+    ConfirmationDialog('Confirmation', 'Are you sure', deletedata, data);
+
 }
+
+
+//function ConfrimationCityDeleteMessage(cityid, stateid) {
+//    let options = {
+//        backdrop: 'static',
+//        show: true
+//    };
+//    $('#btndelete').attr('onclick', 'deletedata("' + cityid + '","' + stateid + '")');
+//    $("#confimationDeleteModel").addClass("open");
+//    $("#confimationDeleteModel").addClass("in");
+//    $('#confimationDeleteModel').modal(options);
+//}
 
 $(function () {
     $('#dataTable').dataTable({
@@ -130,4 +140,8 @@ $(function () {
      $('#dataTable_paginate').addClass('data-table-pasiganation');
     $('#dataTable_length').addClass('data-table-lenthFilter');
     $('#dataTable_filter').addClass('data-table-SearchFilter');
+
+    SpecialChar('#CityCode');
+    SpecialChar('#CityName');
+    SpecialChar('#StateCode');
 });

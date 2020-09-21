@@ -63,10 +63,11 @@
                                         <li>
                                             <a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Dashboard">Dashboard</a>
                                         </li>
-                                        <li>
-                                            <a asp-area="Jobseeker" asp-controller="Job" asp-action="RecommendedJobs">Recommended Jobs</a>
-                                            <!-- dropdown end -->
-                                        </li>
+                                        <!--<li>
+                                        <a asp-area="Jobseeker" asp-controller="Job" asp-action="RecommendedJobs">Recommended Jobs</a>
+                                         dropdown end
+                                         </li>-->
+
                                         <li>
                                             <a href="javascript:void(0)">Job Seeker</a>
                                             <ul>
@@ -101,7 +102,7 @@
                                             @if (user.RoleName == Constants.StudentRole)
                                             {
                                                 <li><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Profile"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
-                                            }                                            
+                                            }
                                             else
                                             {
                                                 <li><a onclick="AddEditEmp()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>

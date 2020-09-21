@@ -20,6 +20,8 @@
     $('#dataTable_length').addClass('data-table-lenthFilter');
     $('#dataTable_filter').addClass('data-table-SearchFilter');
 
+    SpecialChar('#JobTitelName');
+
 });
 function edit(_this) {
     //console.log(userid)
@@ -53,7 +55,7 @@ function Updatedata(_this) {
     SendAJAXRequest('/JobTitle/InsertUpdateJobTitle/', 'POST', data, 'JSON', (result) => {
         if (result) {
             $('#PopUpModal').modal('toggle');
-            InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetJobRoles);
+            InformationDialogWithPartialReload('Done', 'You have successfully added a job role.', GetJobRoles);
         } else {
             ErrorDialog('Error', 'Action faild with error');
         }
@@ -62,13 +64,16 @@ function Updatedata(_this) {
 function deletedata(JobTitleId) {
         SendAJAXRequest(`/JobTitle/DeleteJobTitle/?jobTitleId=${JobTitleId}`, 'GET', {},'JSON', (result) => {
             if (result) {
-                InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetJobRoles);
+                InformationDialogWithPartialReload('Done', 'You have successfully deleted job role.', GetJobRoles);
             } else {
                 ErrorDialog('Error', 'Action faild with error');
             }
         });
 }
-    
+
+function DeleteConfirmation(data) {
+    ConfirmationDialog('Confirmation', 'Are you sure', deletedata, data);
+}
 
     
  
@@ -84,19 +89,19 @@ function AddNew() {
  });
 
 };
-$("#JobTitelName").keypress(function (e) {
-    $("#error_sp_msg").remove();
-    var k = e.keyCode,
-        $return = ((k > 64 && k < 91) || (k > 96 && k < 123) || k === 8 || k === 32 || (k >= 48 && k <= 57));
-    if (!$return) {
-        $("<span/>", {
-            "id": "error_sp_msg",
-            "html": "Special characters not allowed !!!!!"
-        }).insertAfter($(this));
-        return false;
-    }
+//$("#JobTitelName").keypress(function (e) {
+//    $("#error_sp_msg").remove();
+//    var k = e.keyCode,
+//        $return = ((k > 64 && k < 91) || (k > 96 && k < 123) || k === 8 || k === 32 || (k >= 48 && k <= 57));
+//    if (!$return) {
+//        $("<span/>", {
+//            "id": "error_sp_msg",
+//            "html": "Special characters not allowed !!!!!"
+//        }).insertAfter($(this));
+//        return false;
+//    }
 
-});
+//});
 
 $('#PopUpModal').on('hidden.bs.modal', function () {
     $("#error_sp_msg").remove();
