@@ -29,5 +29,6 @@ namespace JobPortal.Business.Interfaces.Auth
 
         FBUserInfoResultViewModel GetFBUserInfo(string accessToken);
         GoogleUserInfoViewModel GetGoogleUserInfo(string accessToken);
+        int GetUserRole(string emailId);
     }
 }
