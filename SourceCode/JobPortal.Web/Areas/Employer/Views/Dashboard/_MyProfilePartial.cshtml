@@ -50,7 +50,7 @@
                             <input type="text" name="CompanyName" readonly value="@Model.CompanyName" placeholder="Company name">
 
                             <label for="FirstName">Your Name</label>
-                            <input type="text" name="Fullname" value="@Model.FullName" placeholder="Your name">
+                            <input type="text" name="Fullname" id="Fullname" value="@Model.FullName" placeholder="Your name">
 
 
                             <label for="MobileNo">Phone</label>
@@ -93,7 +93,7 @@
                             <input type="password" required name="Password">
                             <label>Confirm New Password</label>
                             <input type="password" required name="ConfirmPassword">
-                            <button type="submit" onclick="return changePassword()" class="button margin-top-15" >Change Password</button>
+                            <button type="submit" onclick="return changePassword()" class="button margin-top-15">Change Password</button>
                         </div>
                     </form>
                 </div>
@@ -104,3 +104,8 @@
 </div>
 
 <script src="~/js/Employer/Profile/empProfile.js"></script>
+<script>
+$(document).ready(function () {
+    SpecialChar('#Fullname');
+    });
+    </script>
