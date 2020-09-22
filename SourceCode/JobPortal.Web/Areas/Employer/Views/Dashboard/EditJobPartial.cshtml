@@ -296,7 +296,7 @@
                 position: "bottom",
                 closeButton: false,
                 //dateEnd: new Date('01/01/2030'),
-                dateStart: startDate ? startDate : new Date()
+                dateStart: startDate ? startDate : new Date('01/01/2015')
             })
                 .on("open", () => {
 
@@ -305,13 +305,21 @@
 
                 })
                 .on("change", () => {
+                    debugger;
+                    let sdate = $("input[type=date]#PostingDates").val();
+                    if (sdate == null || sdate == "") {
+                        sdate = $("input[type=date]#PostingDate").val();
+                    }
+                    initCalendar("input[type=date]#ExpiryDate", sdate);
 
                 });
             //dobCalendar.selectDate(date.getFullYear(), date.getMonth(), date.getDate());
         };
-        debugger;
         let sdate = $("input[type=date]#PostingDates").val();
-        initCalendar("input[type=date]#ExpiryDate",sdate);
+        if (sdate == null || sdate == "") {
+            sdate = $("input[type=date]#PostingDate").val();
+        }
+        initCalendar("input[type=date]#ExpiryDate", sdate);
         if ($('#PostingDate').length) {
             initCalendar("input[type=date]#PostingDate");
         }
