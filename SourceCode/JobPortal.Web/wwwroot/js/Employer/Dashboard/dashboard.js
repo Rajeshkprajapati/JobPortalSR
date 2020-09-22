@@ -380,8 +380,7 @@ function updateJob(_this) {
     let formsData = ResolveFormData(forms);
     dashboard.updateJob(formsData[0]);
 }
-function PostDraftJob(_this) {
-    debugger;   
+function PostDraftJob(_this) { 
     let forms = $(_this).parent().parent().find("form");
     let formsData = ResolveFormData(forms);
 
@@ -424,8 +423,8 @@ function PostDraftJob(_this) {
         return false;
     }
     let spocemail = $('input[name=SPOCEmail]').val();
-    if (spocemail == "" || spocemail.length <= 0) {
-        ErrorDialog('Error', 'SPOC Email should not be empty');
+    if (spocemail == "" || spocemail.length <= 0 || validateEmail(spocemail) === false) {
+        ErrorDialog('Error', 'SPOC Email should not be empty and should be valid');
         return false;
     }
     let mobile = $('input[name=Mobile]').val();

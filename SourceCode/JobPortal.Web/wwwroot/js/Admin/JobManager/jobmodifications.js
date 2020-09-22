@@ -62,6 +62,10 @@ dashboard = (function () {
     };
 
     let updateJob = function (data) {
+       if (data.SPOCEmail == "" || data.SPOCEmail.length <= 0 || validateEmail(data.SPOCEmail) === false) {
+            ErrorDialog('Error', 'SPOC Email should not be empty and should be valid');
+            return false;
+        }
         let bodyContent = $("#cke_jobDetails iframe").contents().find("body").html();
         data.jobDetails = bodyContent;
          SendAJAXRequest(`/Dashboard/UpdateJobDetails`, "POST", data, "JSON", function (resp) {
