@@ -253,8 +253,7 @@
                         <div class="form remove-hide">
                             <h5>Genders</h5>
                             <select data-placeholder="Full-Time" asp-for="Gender" id="Gender" class="chosen-select-no-single experiance-field" asp-items="@(new SelectList(@ViewBag.GenderData,"GenderCode", "Gender"))">
-                                @*<option value="">Male</option>
-                                    <option value="">Female</option>*@
+                             
                             </select>
                             @*<h5>Category Wise</h5>
                                 <select data-placeholder="Full-Time" class="chosen-select-no-single experiance-field">
@@ -289,7 +288,9 @@
 
                         <div class="col-md-6 remove-hide">
                             <h5>Show candidate seeking</h5>
-                            <select data-placeholder="Full-Time" asp-for="ShowCandidateSeeking" id="ShowCandidateSeeking" class="" asp-items="@(new SelectList(@ViewBag.EmploymentStatus,"EmploymentStatusId", "EmploymentStatusName"))"></select>
+                            <select data-placeholder="Full-Time" asp-for="ShowCandidateSeeking" id="ShowCandidateSeeking" class="" asp-items="@(new SelectList(@ViewBag.EmploymentStatus,"EmploymentStatusId", "EmploymentStatusName"))">
+                                <option value="0">All</option>
+                            </select>
                         </div>
                         @*<div class="col-md-6 remove-hide">
                                 <h5>Shorted by</h5>
@@ -375,7 +376,7 @@
                             {
                                 if (!string.IsNullOrWhiteSpace(row.AllKeyword))
                                 {
-                                    <a href=""><span>@row.AllKeyword</span></a>
+                                    <span>@row.AllKeyword</span>
                                 }
 
                             }

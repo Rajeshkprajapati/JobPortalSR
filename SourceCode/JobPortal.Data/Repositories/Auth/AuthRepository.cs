@@ -112,7 +112,8 @@ namespace JobPortal.Data.Repositories.Auth
                         new SqlParameter("@profilepic",user.ProfilePic),
                         new SqlParameter("@isRegisterOnlyForDemandAggregationData",isRegisterOnlyForDemandAggregationData),
                         new SqlParameter("@IsApproved",user.IsApproved),
-                        new SqlParameter("@IsActive",user.IsActive)
+                        new SqlParameter("@IsActive",user.IsActive),
+                        new SqlParameter("@Mobile",user.MobileNo)
                     };
                     var result =
                         SqlHelper.ExecuteNonQuery

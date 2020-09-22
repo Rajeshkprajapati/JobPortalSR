@@ -120,7 +120,8 @@ namespace JobPortal.Business.Handlers.Auth
                 Password = user.Password,
                 RoleId = user.RoleId,
                 IsActive = true,
-                IsApproved = true
+                IsApproved = true,
+                MobileNo = user.Mobile
             };
             bool isRegister = _authProcessor.RegisterEmployer(u);
             if (isRegister)
