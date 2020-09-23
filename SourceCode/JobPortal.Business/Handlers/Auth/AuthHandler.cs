@@ -511,5 +511,24 @@ namespace JobPortal.Business.Handlers.Auth
             return _authProcessor.DeleteLogActiveUser(sessionid);
         }
 
+        public int GetUserRole(string emailId)
+        {
+            var status = _authProcessor.CheckIfUserExists(emailId);
+            if (status)
+            {
+                int user = _authProcessor.GetUserRole(emailId);
+                if (user>0)
+                {
+                    return user;
+
+                }
+                throw new UserNotFoundException("User not found");
+            }
+            else
+            {
+                throw new DataNotFound("data not found");
+            }
+        }
+
     }
 }

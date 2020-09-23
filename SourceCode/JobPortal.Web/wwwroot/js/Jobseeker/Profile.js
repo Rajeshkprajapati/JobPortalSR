@@ -368,7 +368,7 @@ function AddJobProfile(_this) {
                 //let icon = 'fa fa-thumbs-up';
                 //let Message = "Experience details added/updated successfully";
                 //updatedsucessfully(Message, icon);
-                InformationDialog('Information', 'Experience details added/updated successfully');
+                InformationDialogWithPageRelode('Information', 'Experience details added/updated successfully');
             }
             else {
                 //let icon = 'fa fa-exclamation';
@@ -444,7 +444,7 @@ function AddEducation(_this) {
                     //let Message = "Education details added/updated successfully";
                     //let icon = 'fa fa-thumbs-up';
                     //updatedsucessfully(Message, icon);
-                    InformationDialog('Information', 'Education details added/updated successfully');
+                    InformationDialogWithPageRelode('Information', 'Education details added/updated successfully');
                 }
             }
             else {
@@ -522,7 +522,7 @@ function AddProfileDetail() {
             //let icon = 'fa fa-thumbs-up';
             //let Message = "Personal details added/updated successfully";
             //updatedsucessfully(Message, icon);
-            InformationDialog('Information', 'Personal details added/updated successfully');
+            InformationDialogWithPageRelode('Information', 'Personal details added/updated successfully');
         } else {
             ErrorDialog('Error', 'Failed to update data');
         }
@@ -1036,10 +1036,12 @@ $("#btnJobAlert").change(function () {
     data = "";
     SendAJAXRequest("/JobSeekerManagement/JobsAlert/?isAlert=" + isAlert + "", 'POST', data, 'JSON', function (result) {
         if (result) {
-
-            //let icon = 'fa fa-thumbs-up';
-            //updatedsucessfully(result, icon);
-            InformationDialogWithPageRelode('Information', 'Now you will get job alerts via email');
+            if (isAlert === 0) {
+                InformationDialogWithPageRelode('Information', 'You have successfully done this action');
+            }
+            else {
+                InformationDialogWithPageRelode('Information', 'Now you will get job alerts via email');
+            }
         } else {
             //warnignPopup('Error');
             ErrorDialog('Error', 'Failed,Please try again!');
