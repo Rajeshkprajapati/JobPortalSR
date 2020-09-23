@@ -621,6 +621,11 @@ namespace JobPortal.Web.Controllers
             return View();
         }
 
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
+
         //[HttpGet]
         //[Route("[action]")]
         //public JsonResult GetSectionData()
