@@ -205,9 +205,11 @@ namespace JobPortal.Web.Controllers
         [HttpPost]
         public ActionResult ResetPassword(UserViewModel user)
         {
+            int userRole = 0;
             try
             {
                 authHandler.ResetPasswordData(user);
+                userRole = authHandler.GetUserRole(user.Email);
                 ViewData["SuccessMessage"] = "Password change successfully, please login to proceed";
             }
             catch (UserNotCreatedException ex)
@@ -215,7 +217,22 @@ namespace JobPortal.Web.Controllers
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
-            return View("Index");
+            if (userRole == 1)
+            {
+                return View("AdminLogin");
+            }
+            else if (userRole == 2)
+            {
+                return View("JobSeekerLogin");
+            }
+            else if (userRole == 3 || userRole == 4)
+            {
+                return View("EmployerLogin");
+            }
+            else {
+                return View("Index");
+            }
+            
         }
 
         public IActionResult Logout(string returnUrl = "")

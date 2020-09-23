@@ -27,5 +27,6 @@ namespace JobPortal.Data.Interfaces.Auth
         bool LogActiveUsers(string sessionid, string userdata);
         bool VerifyEmail(int userId, string aKey);
         bool CheckIfEmployerExists(string company, bool allEmployer = false);
+        int GetUserRole(string emailId);
     }
 }

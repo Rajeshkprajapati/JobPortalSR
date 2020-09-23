@@ -644,5 +644,40 @@ namespace JobPortal.Data.Repositories.Auth
             return false;
         }
 
+        public int GetUserRole(string emailId)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@Email",emailId)
+                    };
+                    var user =
+                        SqlHelper.ExecuteReader
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetUserRole",
+                            parameters
+                            );
+                    if (null != user && user.HasRows)
+                    {
+                        var dt = new DataTable();
+                        dt.Load(user);
+                        return Convert.ToInt32(dt.Rows[0]["RoleId"]);
+
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new InvalidUserCredentialsException("Email Id is not valid");
+
+
+        }
+
     }
 }
