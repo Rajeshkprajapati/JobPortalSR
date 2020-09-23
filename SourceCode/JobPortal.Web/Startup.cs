@@ -93,6 +93,8 @@ namespace JobPortal.Web
             services.Add
             (new ServiceDescriptor(typeof(IAdvertisementsHandler), typeof(AdvertisementsHandler),ServiceLifetime.Scoped));
 
+            //services.Add
+            //(new ServiceDescriptor(typeof(VisitorCounterMiddleware), typeof(VisitorCounterMiddleware), ServiceLifetime.Scoped));
 
             services.AddHttpContextAccessor();
             services.AddHttpClient();
@@ -109,7 +111,13 @@ namespace JobPortal.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options=>
+                {
+                    options.LoginPath = "/Home/";
+                    options.Cookie.Name = "VisitorId";
+                }
+                );
             
 
             //services.AddAuthentication()
@@ -137,6 +145,7 @@ namespace JobPortal.Web
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
+            app.UseCookiePolicy();
 
             app.UseMvc(router =>
             {
@@ -151,6 +160,7 @@ namespace JobPortal.Web
                    template: "{controller}/{action}/{id?}"
                    );
             });
+            app.UseMiddleware(typeof(VisitorCounterMiddleware));
         }
     }
 }

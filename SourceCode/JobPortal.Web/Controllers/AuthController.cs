@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using JobPortal.Business.Interfaces.Auth;
 using JobPortal.Business.Interfaces.Jobseeker;
 using JobPortal.Business.Interfaces.Shared;
@@ -15,6 +16,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using JobPortal.Business.Handlers.Shared;
+using System.Collections.Generic;
 
 namespace JobPortal.Web.Controllers
 {
@@ -28,6 +31,7 @@ namespace JobPortal.Web.Controllers
         private readonly IUserProfileHandler userProfileHandler;
         private readonly IConfiguration config;
         private readonly string URLprotocol;
+        private readonly RequestDelegate _requestDelegate;
         public AuthController(IEMailHandler _emailHandler, IConfiguration _config, IAuthHandler _authHandler,
             IHostingEnvironment _hostingEnvironment, IUserProfileHandler _userProfileHandler)
         {
@@ -1017,6 +1021,8 @@ namespace JobPortal.Web.Controllers
                 HttpContext.Session.Set<UserViewModel>(Constants.SessionKeyUserInfo, result);
                 authHandler.LogActiveUsers(HttpContext.Session.Id,result);
                 authHandler.UserActivity(result.UserId);
+                VisitorCounterMiddleware data = new VisitorCounterMiddleware(_requestDelegate);
+                Task usercount= data.Invoke(HttpContext);
                 return GoAhead(result.RoleName, result.UserId);
                 //return View("Index");
             }
