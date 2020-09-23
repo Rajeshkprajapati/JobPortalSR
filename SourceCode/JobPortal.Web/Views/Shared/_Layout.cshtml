@@ -32,106 +32,108 @@
         <!-- Header
         ================================================== -->
         <header class="sticky-header container-fluid">
-            <div class="container">
-                <div class="d-flex align-center row">
-                    <!-- Logo -->
-                    <a href="/Home/Index/" class="logo"><img src="~/Assets/images/logo.png" class="img-responsive" alt="Job Portal" /></a>
-                    <a href="#menu" class="menu-trigger"><i class="fa fa-reorder open-menu"></i> <i class="fa fa-arrow-left close-menu" aria-hidden="true"></i></a>
-                    <!-- Menu -->
-                    <nav id="navigation" class="main-nav justify-content-end align-center d-flex flex-1">
-                        <ul id="responsive" class="page-nav d-flex">
-                            <li class="nav-item">
-                                <a href="/Home/Index/" class="nav-item-link">Home</a>
-                            </li>
-                            @if (user != null)
-                            {
-                                @if (user.RoleName == Constants.CorporateRole || user.RoleName == Constants.StaffingPartnerRole)
+            <div class="row">
+                <div class="container">
+                    <div class="d-flex align-center">
+                        <!-- Logo -->
+                        <a href="/Home/Index/" class="logo"><img src="~/Assets/images/logo.png" class="img-responsive" alt="Job Portal" /></a>
+                        <a href="#menu" class="menu-trigger"><i class="fa fa-reorder open-menu"></i> <i class="fa fa-arrow-left close-menu" aria-hidden="true"></i></a>
+                        <!-- Menu -->
+                        <nav id="navigation" class="main-nav justify-content-end align-center d-flex flex-1">
+                            <ul id="responsive" class="page-nav d-flex">
+                                <li class="nav-item">
+                                    <a href="/Home/Index/" class="nav-item-link">Home</a>
+                                </li>
+                                @if (user != null)
                                 {
-                                    <!--<li><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard">Dashboard</a></li> -->
-                                    <li class="nav-item subnav">
-                                        <a href="javascript:void(0);" class="nav-item-link">Employer</a>
-                                        <ul class="subnav-items">
-                                            <li class="subnav-item"><a asp-controller="Home" asp-action="Index" class="subnav-item-link">Search Resume</a></li>
-                                            <!--<li><a asp-area="Employer" asp-controller="JobManagement" asp-action="JobPosting">Post Job</a></li> -->
-                                            <li class="subnav-item"><a asp-area="Shared" asp-controller="BulkJobPost" asp-action="Index" class="subnav-item-link">Bulk Job Post</a></li>
-                                        </ul>
-                                    </li>
+                                    @if (user.RoleName == Constants.CorporateRole || user.RoleName == Constants.StaffingPartnerRole)
+                                    {
+                                        <!--<li><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard">Dashboard</a></li> -->
+                                        <li class="nav-item subnav">
+                                            <a href="javascript:void(0);" class="nav-item-link">Employer</a>
+                                            <ul class="subnav-items">
+                                                <li class="subnav-item"><a asp-controller="Home" asp-action="Index" class="subnav-item-link">Search Resume</a></li>
+                                                <!--<li><a asp-area="Employer" asp-controller="JobManagement" asp-action="JobPosting">Post Job</a></li> -->
+                                                <li class="subnav-item"><a asp-area="Shared" asp-controller="BulkJobPost" asp-action="Index" class="subnav-item-link">Bulk Job Post</a></li>
+                                            </ul>
+                                        </li>
+                                    }
+                                    else if (user.RoleName == Constants.StudentRole)
+                                    {
+                                        <li class="nav-link-item">
+                                            <a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Dashboard" class="nav-item-link">Dashboard</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-area="Jobseeker" asp-controller="Job" asp-action="RecommendedJobs" class="nav-item-link">Recommended Jobs</a>
+                                            <!-- dropdown end -->
+                                        </li>
+                                        <li class="nav-item subnav">
+                                            <a href="javascript:void(0)">Job Seeker</a>
+                                            <ul class="subnav-items">
+                                                <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Index" class="subnav-item-link">Search Job</a></li>
+                                                <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="ResumeBuilder" asp-action="Index" class="subnav-item-link">Create Resume</a></li>
+                                            </ul>
+                                        </li>
+                                    }
                                 }
-                                else if (user.RoleName == Constants.StudentRole)
+                                else
                                 {
-                                    <li class="nav-link-item">
-                                        <a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Dashboard" class="nav-item-link">Dashboard</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-area="Jobseeker" asp-controller="Job" asp-action="RecommendedJobs" class="nav-item-link">Recommended Jobs</a>
-                                        <!-- dropdown end -->
-                                    </li>
-                                    <li class="nav-item subnav">
-                                        <a href="javascript:void(0)">Job Seeker</a>
-                                        <ul class="subnav-items">
-                                            <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Index" class="subnav-item-link">Search Job</a></li>
-                                            <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="ResumeBuilder" asp-action="Index" class="subnav-item-link">Create Resume</a></li>
-                                        </ul>
-                                    </li>
-                                }
-                            }
-                            else
-                            {
 
-                                @*<li><a asp-controller="Auth" asp-action="Index">Login</a></li>*@
-                            }
-                            @if (user != null)
-                            {
-                                <li class="nav-item subnav">
-                                    @if (user.ProfilePic != "")
-                                    {
-                                        <span class="nav-item-link">
-                                            @user.FullName
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        @*<a href=""><img src="~/ProfilePic/Avatar.jpg" alt="" class="userimg" /></a>*@
-                                    }
-                                    <ul class="subnav-items">
-                                        <li class="subnav-item"><a href="javascript:void(0);" class="subnav-item-link"><i class="fa fa-tachometer" aria-hidden="true"></i> @user.FullName</a></li>
-                                        @if (user.RoleName == Constants.StudentRole)
+                                    @*<li><a asp-controller="Auth" asp-action="Index">Login</a></li>*@
+                                }
+                                @if (user != null)
+                                {
+                                    <li class="nav-item subnav">
+                                        @if (user.ProfilePic != "")
                                         {
-                                            <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Profile" class="subnav-item-link"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
+                                            <span class="nav-item-link">
+                                                @user.FullName
+                                            </span>
                                         }
                                         else
                                         {
-                                            <li class="subnav-item"><a onclick="AddEditEmp()" class="subnav-item-link"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
+                                            @*<a href=""><img src="~/ProfilePic/Avatar.jpg" alt="" class="userimg" /></a>*@
                                         }
+                                        <ul class="subnav-items">
+                                            <li class="subnav-item"><a href="javascript:void(0);" class="subnav-item-link"><i class="fa fa-tachometer" aria-hidden="true"></i> @user.FullName</a></li>
+                                            @if (user.RoleName == Constants.StudentRole)
+                                            {
+                                                <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Profile" class="subnav-item-link"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="subnav-item"><a onclick="AddEditEmp()" class="subnav-item-link"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
+                                            }
 
-                                        <li class="subnav-item"><a href="/Auth/CreateNewPassword/" class="subnav-item-link"><i class="fa fa-key" aria-hidden="true"></i> Change Password</a></li>
-                                        <li class="subnav-item"><a href="/Auth/Logout/" class="subnav-item-link"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
-                                    </ul>
-                                </li>
+                                            <li class="subnav-item"><a href="/Auth/CreateNewPassword/" class="subnav-item-link"><i class="fa fa-key" aria-hidden="true"></i> Change Password</a></li>
+                                            <li class="subnav-item"><a href="/Auth/Logout/" class="subnav-item-link"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                            @if (user != null && user.RoleName == Constants.CorporateRole)
+                            {
+                                <ul class="action-navlink d-flex">
+                                    <li class="nav-item"><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard" class="action-nav-link"><i class="fa fa-cog"></i> Dashboard</a></li>
+                                    <li class="nav-item"><a href="/Auth/Logout/" class="action-nav-link"><i class="fa fa-lock"></i> Log Out</a></li>
+                                </ul>
                             }
-                        </ul>
-                        @if (user != null && user.RoleName == Constants.CorporateRole)
-                        {
-                            <ul class="action-navlink d-flex">
-                                <li class="nav-item"><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard" class="action-nav-link"><i class="fa fa-cog"></i> Dashboard</a></li>
-                                <li class="nav-item"><a href="/Auth/Logout/" class="action-nav-link"><i class="fa fa-lock"></i> Log Out</a></li>
-                            </ul>
-                        }
-                        else if (user != null && user.RoleName == Constants.StudentRole)
-                        {
-                            <ul class="action-navlink d-flex">
-                                <li class="nav-item"><a href="/Auth/Logout/" class="action-nav-link"><i class="fa fa-lock"></i> Log Out</a></li>
-                            </ul>
-                        }
-                        else
-                        {
-                            <ul class="action-navlink d-flex">
-                                <li class="nav-item"><a href="/Auth/JobSeekerLogin/" class="action-nav-link jobseeker"> JOBSEEKER </a></li>
-                                <li class="nav-item"><a href="/Auth/EmployerLogin/" class="action-nav-link employer">EMPLOYER</a></li>
-                            </ul>
-                        }
-                    </nav>
-                    <!-- Menu end -->
+                            else if (user != null && user.RoleName == Constants.StudentRole)
+                            {
+                                <ul class="action-navlink d-flex">
+                                    <li class="nav-item"><a href="/Auth/Logout/" class="action-nav-link"><i class="fa fa-lock"></i> Log Out</a></li>
+                                </ul>
+                            }
+                            else
+                            {
+                                <ul class="action-navlink d-flex">
+                                    <li class="nav-item"><a href="/Auth/JobSeekerLogin/" class="action-nav-link jobseeker"> JOBSEEKER </a></li>
+                                    <li class="nav-item"><a href="/Auth/EmployerLogin/" class="action-nav-link employer">EMPLOYER</a></li>
+                                </ul>
+                            }
+                        </nav>
+                        <!-- Menu end -->
+                    </div>
                 </div>
             </div>
         </header>
@@ -140,75 +142,72 @@
     <div id="loader" hidden>
         <img id="imgloader" src="~/images/ajax-loader1.gif" />
     </div>
-    @RenderBody()
+    <main class="container-fluid">
+        @RenderBody()
+    </main>
     <!-- Footer
     ================================================== -->
-    <div id="footer" class="footer">
-        <div class="container-fluid video-panel">
+    <footer id="footer" class="footer container-fluid">
+        <div class="row video-panel">
             <div class="container">
-                <div class="row">
-                    <h2 class="blacktitle">Success Stories</h2>
-                    @*<p>Steeprise jobportal, success story.</p>*@
-                    <div id="videSection" class="row"></div>
-                </div>
+                <h2 class="blacktitle">Success Stories</h2>
+                <div id="videSection" class="row"></div>
             </div>
         </div>
         <!-- Main -->
-        <div class="container-fluid footer-top">
+        <div class="row footer-top">
             <div class="container">
                 <div class="row">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <h3>Company</h3>
-                            <ul class="footer-links">
-                                <li><a href="/Home/Aboutus">About Us</a></li>
-                                <li><a href="/Home/ContactUs">Contact Us</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">Our Blog</a></li>
-                                <li><a href="#">Terms of Service</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-3">
-                            <h3>Press</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">In the News</a></li>
-                                <li><a href="#">Press Releases</a></li>
-                                <li><a href="#">Awards</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Timeline</a></li>
-                            </ul>
-                        </div>
+                    <div class="col-sm-3">
+                        <h3>Company</h3>
+                        <ul class="footer-links">
+                            <li><a href="/Home/Aboutus">About Us</a></li>
+                            <li><a href="/Home/ContactUs">Contact Us</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Our Blog</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <h3>Press</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">In the News</a></li>
+                            <li><a href="#">Press Releases</a></li>
+                            <li><a href="#">Awards</a></li>
+                            <li><a href="#">Testimonials</a></li>
+                            <li><a href="#">Timeline</a></li>
+                        </ul>
+                    </div>
 
-                        <div class="col-sm-3">
-                            <h3>Browse</h3>
-                            <ul class="footer-links">
-                                <li><a href="/Home/FreelancerJobs">Freelancers Jobs</a></li>
-                                <li><a href="#">Freelancers in USA</a></li>
-                                <li><a href="#">Freelancers in UK</a></li>
-                                <li><a href="#">Freelancers in Canada</a></li>
-                                <li><a href="#">Freelancers in Australia</a></li>
-                                <li><a href="#">Find Jobs</a></li>
+                    <div class="col-sm-3">
+                        <h3>Browse</h3>
+                        <ul class="footer-links">
+                            <li><a href="/Home/FreelancerJobs">Freelancers Jobs</a></li>
+                            <li><a href="#">Freelancers in USA</a></li>
+                            <li><a href="#">Freelancers in UK</a></li>
+                            <li><a href="#">Freelancers in Canada</a></li>
+                            <li><a href="#">Freelancers in Australia</a></li>
+                            <li><a href="#">Find Jobs</a></li>
 
-                            </ul>
-                        </div>
-                        <div class="col-sm-3">
-                            <h3>Follow Us</h3>
-                            <ul class="social-icons">
-                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a class="gplus" href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                            </ul>
-                        </div>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <h3>Follow Us</h3>
+                        <ul class="social-icons">
+                            <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a class="gplus" href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom container-fluid">
+        <div class="footer-bottom row">
             <p class="copyrights container text-center">©  Copyright 2018 by <a href="#">Work Scout</a>. All Rights Reserved.</p>
         </div>
-    </div>
+    </footer>
     <div class="windows8">
         <div class="wBall" id="wBall_1">
             <div class="wInnerBall"></div>

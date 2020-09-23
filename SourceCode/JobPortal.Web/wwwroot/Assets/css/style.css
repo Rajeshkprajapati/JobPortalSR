@@ -554,9 +554,11 @@ h2.whitetitle.greenbdr:after {
     color: #2b9057;
 }
 
-.testimonial-carousel{
+.testimonial-carousel {
     padding-top: 30px;
     padding-bottom: 30px;
+    display: inline-block !important;
+    width: 100%;
 }
 
 .testimonial-carousel blockquote {
@@ -722,15 +724,14 @@ h2.whitetitle.greenbdr:after {
 }
 
 .achievement .counter-box {
-    background-color: rgba(0,0,0,0.2);
+    background-color: #d2d0d0;
     padding-top: 10px;
     padding-bottom: 10px;
     color: #000;
-    border-left: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.achievement .counter-box:first-child{
-    border-left: 0;
+    flex: 1 1 auto;
+    border: 1px solid #bdbbbb;
+    margin-top: -1px;
+    margin-left: -1px;
 }
 
 .achievement .counter-box .counter {
@@ -743,20 +744,138 @@ h2.whitetitle.greenbdr:after {
     color:#000;
 }
 
+@media screen and (max-width: 767px) and (min-width: 480px){
+    .achievement .counter-box:first-child + div,
+    .achievement .counter-box:first-child {
+        min-width: 50%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .achievement .counter-box {
+        min-width: 100%;
+    }
+}
+
+
+/* Spots light slider content */
+
+.jobspotlight-panel{
+    padding-bottom: 0;
+}
+.job-spotlight p {
+    color: #fff;
+}
+
+.myslideUl a.btn-link {
+    color: #53ea95;
+    text-transform: uppercase;
+    text-decoration: none;
+    background-color: rgba(255,255,255, 0.3);
+    border-radius: 3px;
+    margin-bottom: 30px;
+}
+.myslideUl a.btn-link:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.showbiz-slider-inner .apply-button {
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.3);
+    position: relative;
+    opacity:0;
+    transition: opacity ease-in-out 0.15ms;
+}
+
+.showbiz-slider-inner:hover .apply-button {
+    opacity: 1;
+}
+
+.spot-light-banner-active .showbiz-slider-inner{
+    border: 0;
+}
+
+.spot-light-banner-active img.custom-img1 {
+    border: 3px solid #53ea95;
+    padding: 5px;
+}
+
+.showbiz-slider-inner:hover .apply-button .btn-text {
+    background: #000;
+    padding: 8px 15px;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.spotlight-title {
+    font-size: 16px;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255,255,255,0.6);
+    margin-top: 0;
+    line-height: 1.2;
+}
+.spotlight-title a:hover,
+.spotlight-title a {
+    color: #53ea95;
+    text-decoration: none;
+}
+
+.spotlight-detail-list {
+    list-style: none;
+    margin: 0;
+    padding:10px 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+}
+.spotlight-detail-list li{
+    color: #fff;
+    margin: 5px 0;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+}
+
+.spotlight-detail-list li .fa{
+    width: 30px;
+    margin-right: 5px;
+    text-align: center;
+    font-size: 18px;
+}
+span.part-time {
+    background: #fff;
+    font-size: 10px;
+    color: #000;
+    padding: 2px 5px;
+    border-radius: 3px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.showbiz-slider-inner {
+    border: 1px solid rgba(255,255,255,0.6);
+    background-color: rgba(255,255,255,0.3);
+    padding: 5px;
+}
 
 /* showbiz slider */
-
 .showbiz-container {
     padding-top: 20px;
     padding-bottom: 10px;
     overflow: hidden;
-
 }
 .showbiz-slider {
     cursor: default;
     position: relative;
     width: 355px;
-    height: 280px;
+    height: 250px;
     overflow: hidden;
 }
 
@@ -834,7 +953,7 @@ h2.whitetitle.greenbdr:after {
 }
 .job-list-details h4 {
     font-size: 15px;
-    line-height: 1;
+    line-height: 1.2;
     margin: 0;
     padding: 0 0 8px;
     text-transform: capitalize;
@@ -863,7 +982,9 @@ h2.whitetitle.greenbdr:after {
 }
 
 .employer-lists{
-    
+    width: 100%;
+    margin-bottom: 20px;
+    display: inline-block;
 }
 
 .employer-lists-item {
@@ -908,10 +1029,11 @@ h2.whitetitle.greenbdr:after {
     margin-left: 10px;
 }
 
-.employer-lists .employer-lists-item:nth-child(2n+1) {
-    border-right: 2px solid #fff;
+@media screen and (min-width: 767px){
+    .employer-lists .employer-lists-item:nth-child(2n+1) {
+        border-right: 2px solid #fff;
+    }
 }
-
 
 /* Footer section style*/
 .footer {
@@ -1012,8 +1134,6 @@ h2.whitetitle.greenbdr:after {
 .showbiz img {
     max-width: 100%;
 }
-
-
 
 body[data-menu-position="closed"] .menu-trigger {
     order: 0;
