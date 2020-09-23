@@ -92,5 +92,7 @@ namespace JobPortal.Model.DataViewModel.Shared
         public string EmploymentStatusName { get; set; }
         public bool IsJobAlert { get; set; }
         public int ProfileScore { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
     }
 }

@@ -124,3 +124,13 @@ function CompareNumberType(field1, field2) {
         }
     }
 }
+
+function validateEmail($email) {
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    return emailReg.test($email);
+}
+
+function validatePassword($password) {
+    var passwordReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+    return passwordReg.test($password);
+}

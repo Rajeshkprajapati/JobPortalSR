@@ -5,8 +5,8 @@
             $('#AnyKeyword').val(result.lstAdvanceResumeSearch[0].anyKeyword);
             $('#AllKeyword').val(result.lstAdvanceResumeSearch[0].allKeyword);
             $('#ExculudeKeyword').val(result.lstAdvanceResumeSearch[0].exculudeKeyword);
-            $('#MinExperiance option:selected ').val(result.lstAdvanceResumeSearch[0].minExperiance);
-            $('#MaxExperiance option:selected ').val(result.lstAdvanceResumeSearch[0].maxExperiance);
+            $('#MinExperiance').val(result.lstAdvanceResumeSearch[0].minExperiance);
+            $('#MaxExperiance').val(result.lstAdvanceResumeSearch[0].maxExperiance);
             $('#MinSalary').val(result.lstAdvanceResumeSearch[0].minSalary);
             $('#MaxSalary').val(result.lstAdvanceResumeSearch[0].maxSalary);
             $('#CurrentLocation').val(result.lstAdvanceResumeSearch[0].currentLocation);

@@ -25,6 +25,11 @@
         ErrorDialog('Warning', 'Password must be atleast 6 character long');
         return false;
     }
+    if (validatePassword(Password) === false) {
+        //if (ConfirmPassword.toUpperCase() != Password.toUpperCase()) {
+        ErrorDialog('Warning', 'Password must contain at least one letter, one number and one special character');
+        return false;
+    }
 
     //var formData = new FormData();
     //formData.append('OldPassword', oldPassword);
@@ -134,3 +139,4 @@ $("#phoneNumber").each(function () {
         }
     });
 });
+
