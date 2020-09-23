@@ -39,6 +39,8 @@ namespace JobPortal.Data.DataModel.Shared
         public string ActivationKey { get; set; }
         public string LinkedinProfile { get; set; }
         public bool IsApproved { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
     }
     public class RolesModel
     {
@@ -52,6 +54,7 @@ namespace JobPortal.Data.DataModel.Shared
         public string Email { get; set; }
         public string OldPassword { get; set; }
         public string Password { get; set; }
-
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
     }
 }

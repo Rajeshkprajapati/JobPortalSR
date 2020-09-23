@@ -27,7 +27,7 @@ namespace JobPortal.Data.Repositories.Auth
 
                     SqlParameter[] parameters = new SqlParameter[] {
                         new SqlParameter("@Email",userName),
-                        new SqlParameter("@Password",password)
+                        //new SqlParameter("@Password",password)
                     };
                     var user =
                         SqlHelper.ExecuteDataset
@@ -68,8 +68,10 @@ namespace JobPortal.Data.Repositories.Auth
                         new SqlParameter("@FName",user.FirstName),
                         new SqlParameter("@LName",user.LastName),
                         new SqlParameter("@MobileNo",user.MobileNo),
-                        new SqlParameter("@Password",user.Password),
+                        //new SqlParameter("@Password",user.Password),
                         new SqlParameter("@RoleId",user.RoleId),                        
+                        new SqlParameter("@passwordSalt",user.PasswordSalt),                        
+                        new SqlParameter("@passwordHash",user.PasswordHash),                        
                         new SqlParameter("@IsActive",user.IsActive),
                         new SqlParameter("@ActivationKey",user.ActivationKey),
                         new SqlParameter("@CreatedBy",user.CreatedBy),
@@ -107,11 +109,13 @@ namespace JobPortal.Data.Repositories.Auth
                     SqlParameter[] parameters = new SqlParameter[] {
                         new SqlParameter("@CompanyName",user.CompanyName),
                         new SqlParameter("@Email",user.Email),
-                        new SqlParameter("@Password",user.Password),
+                        //new SqlParameter("@Password",user.Password),
                         new SqlParameter("@RoleId",user.RoleId),
                         new SqlParameter("@profilepic",user.ProfilePic),
                         new SqlParameter("@isRegisterOnlyForDemandAggregationData",isRegisterOnlyForDemandAggregationData),
                         new SqlParameter("@IsApproved",user.IsApproved),
+                        new SqlParameter("@passwordSalt",user.PasswordSalt),
+                        new SqlParameter("@passwordHash",user.PasswordHash),
                         new SqlParameter("@IsActive",user.IsActive),
                         new SqlParameter("@Mobile",user.MobileNo)
                     };
@@ -305,8 +309,9 @@ namespace JobPortal.Data.Repositories.Auth
                 {
                     SqlParameter[] parameters = new SqlParameter[] {
                         new SqlParameter("@Email",user.Email),
-                        new SqlParameter("@Password",user.Password)
-
+                        new SqlParameter("@passwordSalt",user.PasswordSalt),
+                        new SqlParameter("@passwordHash",user.PasswordHash),
+                        //new SqlParameter("@Password",user.Password)
                     };
                     var result =
                         SqlHelper.ExecuteNonQuery
@@ -338,8 +343,10 @@ namespace JobPortal.Data.Repositories.Auth
                 {
                     SqlParameter[] parameters = new SqlParameter[] {
                         new SqlParameter("@Email",user.Email),
-                        new SqlParameter("@Password",user.Password),
-                        new SqlParameter("@OldPassword",user.OldPassword)
+                        new SqlParameter("@passwordSalt",user.PasswordSalt),
+                        new SqlParameter("@passwordHash",user.PasswordHash),
+                        //new SqlParameter("@Password",user.Password),
+                        //new SqlParameter("@OldPassword",user.OldPassword)
 
                     };
                     var result =

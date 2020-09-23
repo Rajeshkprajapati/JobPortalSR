@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Net.Http;
+using System.Text;
 using JobPortal.Business.Handlers.DataProcessorFactory;
 using JobPortal.Business.Interfaces.Auth;
 using JobPortal.Business.Interfaces.Shared;
@@ -43,6 +44,7 @@ namespace JobPortal.Business.Handlers.Auth
         {
             var user = _authProcessor.Login(userName, password);
             var u = new UserViewModel();
+            string strPasswordHash = string.Empty, strPasswordSalt = string.Empty;
             if (null != user)
             {
                 u.UserId = Convert.ToInt32(user["UserId"]);
@@ -56,11 +58,20 @@ namespace JobPortal.Business.Handlers.Auth
                 u.IsApproved = Convert.ToString(user["IsApproved"]);
                 u.ProfilePic = Convert.ToString(user["ProfilePic"]);
                 u.JobTitleName = Convert.ToString(user["JobTitleName"]);
+                u.PasswordHash = user["PasswordHash"] as byte[];
+                u.PasswordSalt = user["PasswordSalt"] as byte[];
                 u.Address1 = Convert.ToString(user["Address1"]);
                 u.Address2 = Convert.ToString(user["Address2"]);
                 u.Address3 = Convert.ToString(user["Address3"]);
             }
-            return u;
+            if (u != null)
+            {
+                if (VerifyPassword(password, u.PasswordHash, u.PasswordSalt))
+                {
+                    return u;
+                }
+            }
+            throw new InvalidUserCredentialsException("Entered user credentials are not valid");
         }
 
 
@@ -75,6 +86,8 @@ namespace JobPortal.Business.Handlers.Auth
                     throw new UserAlreadyExists("Seems this user already exists in our record, please login with previous credentials.");
                 }
 
+                byte[] passwordHash, passwordSalt;
+                CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
 
                 var u = new UserModel
                 {
@@ -84,6 +97,8 @@ namespace JobPortal.Business.Handlers.Auth
                     MobileNo = user.MobileNo,
                     Password = user.Password,
                     RoleId = user.RoleId,
+                    PasswordSalt = passwordSalt,
+                    PasswordHash = passwordHash,
                     IsApproved = true,
                     IsActive = true
                 };
@@ -103,32 +118,68 @@ namespace JobPortal.Business.Handlers.Auth
 
         public bool RegisterEmployer(EmployeeViewModel user)
         {
+            try
+            {
 
-            if (_authProcessor.CheckIfEmployerExists(user.CompanyName))
-            {
-                throw new UserAlreadyExists("Seems this company already exists in our record, please login with previous credentials.");
-            }
+                if (_authProcessor.CheckIfEmployerExists(user.CompanyName))
+                {
+                    throw new UserAlreadyExists("Seems this company already exists in our record, please login with previous credentials.");
+                }
 
-            if (CheckIfUserExists(user.Email))
-            {
-                throw new UserAlreadyExists("Seems this user already exists in our record, please login with previous credentials.");
+                if (CheckIfUserExists(user.Email))
+                {
+                    throw new UserAlreadyExists("Seems this user already exists in our record, please login with previous credentials.");
+                }
+
+                byte[] passwordHash, passwordSalt;
+                CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
+
+                var u = new UserModel
+                {
+                    CompanyName = user.CompanyName,
+                    Email = user.Email,
+                    Password = user.Password,
+                    RoleId = user.RoleId,
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt,
+                    IsActive = true,
+                    IsApproved = true,
+                    MobileNo = user.Mobile
+                };
+                bool isRegister = _authProcessor.RegisterEmployer(u);
+                if (isRegister)
+                {
+                    return true;
+                }
             }
-            var u = new UserModel
+            catch (Exception ex)
             {
-                CompanyName = user.CompanyName,
-                Email = user.Email,
-                Password = user.Password,
-                RoleId = user.RoleId,
-                IsActive = true,
-                IsApproved = true,
-                MobileNo = user.Mobile
-            };
-            bool isRegister = _authProcessor.RegisterEmployer(u);
-            if (isRegister)
-            {
-                return true;
+                return false;
+                throw new UserNotCreatedException("Unable to create user, please contact your teck deck.");
             }
-            throw new UserNotCreatedException("Unable to create user, please contact your teck deck.");
+            return false;
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        private bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != passwordHash[i]) return false;
+                }
+            }
+            return true;
         }
 
         private bool CheckCandidateIdExist(string id)
@@ -232,9 +283,13 @@ namespace JobPortal.Business.Handlers.Auth
         }
         public bool ResetPasswordData(UserViewModel user)
         {
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
             var u = new UserModel
             {
-                Password = user.Password,
+                //Password = user.Password,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
                 Email = user.Email
 
             };
@@ -248,11 +303,24 @@ namespace JobPortal.Business.Handlers.Auth
 
         public bool CreateNewPassword(ResetPasswordViewModel user)
         {
+            byte[] passwordHash, passwordSalt;
+            var userlogin = Login(user.Email, user.OldPassword);
+            if (userlogin == null)
+            {
+                return false;
+            }
+            if (!VerifyPassword(user.OldPassword, userlogin.PasswordHash, userlogin.PasswordSalt))
+            {
+                return false;
+            }
+            CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
             var u = new CreateNewPasswordModel
             {
-                Password = user.Password,
                 Email = user.Email,
-                OldPassword = user.OldPassword
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
+                //Password = user.Password,
+                //OldPassword = user.OldPassword
             };
             bool isRegister = _authProcessor.CreateNewPassword(u);
             if (isRegister)
@@ -315,7 +383,7 @@ namespace JobPortal.Business.Handlers.Auth
             //    JobTitleId = user.JobTitleId
             //};
             var userdata = JsonConvert.SerializeObject(user);
-            return _authProcessor.LogActiveUsers(sessionid,userdata);
+            return _authProcessor.LogActiveUsers(sessionid, userdata);
         }
 
 
@@ -337,7 +405,7 @@ namespace JobPortal.Business.Handlers.Auth
             return status;
         }
 
-        
+
 
         private FBTokenValidatonViewModel ValidateFBAccessToken(string accessToken)
         {
@@ -347,7 +415,7 @@ namespace JobPortal.Business.Handlers.Auth
                 string appId = _configuration["FBSettings:AppId"];
                 string appSecret = _configuration["FBSettings:AppSecret"];
 
-                var formattedUrl = string.Format(tokenValidationUrl, accessToken, appId, appSecret);                
+                var formattedUrl = string.Format(tokenValidationUrl, accessToken, appId, appSecret);
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(formattedUrl);
@@ -360,7 +428,7 @@ namespace JobPortal.Business.Handlers.Auth
                             var response = result.Content.ReadAsStringAsync();
                             response.Wait();
                             var tokenmodel = JsonConvert.DeserializeObject<FBTokenValidatonViewModel>(response.Result);
-                            return tokenmodel;                            
+                            return tokenmodel;
                         }
                         else
                         {
@@ -372,10 +440,10 @@ namespace JobPortal.Business.Handlers.Auth
             catch (Exception ex)
             {
                 throw new UserNotCreatedException(ex.Message);
-            }            
+            }
         }
 
-        
+
 
         public FBUserInfoResultViewModel GetFBUserInfo(string accessToken)
         {
@@ -388,7 +456,7 @@ namespace JobPortal.Business.Handlers.Auth
             string userInfoUrl = _configuration["FBAPI:GetUserInfo"];
 
             var formattedUrl = string.Format(userInfoUrl, accessToken);
-            
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(formattedUrl);
@@ -442,6 +510,6 @@ namespace JobPortal.Business.Handlers.Auth
         {
             return _authProcessor.DeleteLogActiveUser(sessionid);
         }
-        
+
     }
 }
