@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
+
 namespace JobPortal.Web.Controllers
 {
 
@@ -235,12 +236,9 @@ namespace JobPortal.Web.Controllers
             {
                 return View("JobSeekerLogin");
             }
-            else if (userRole == 3 || userRole == 4)
+            else 
             {
                 return View("EmployerLogin");
-            }
-            else {
-                return View("Index");
             }
             
         }
@@ -1018,7 +1016,6 @@ namespace JobPortal.Web.Controllers
                 authHandler.LogActiveUsers(HttpContext.Session.Id,result);
                 authHandler.UserActivity(result.UserId);
                 return GoAhead(result.RoleName, result.UserId);
-                //return View("Index");
             }
             else
             {

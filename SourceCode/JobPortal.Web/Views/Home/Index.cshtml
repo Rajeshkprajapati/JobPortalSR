@@ -53,7 +53,7 @@
 <div class="container home-screen-section">
     <h2 class="blacktitle">Popular Categories</h2>
     <div class="row">
-        
+
         <!-- Popular Categories -->
         <ul class="categories col-sm-12">
             @if (ViewBag.PopulerSearchesCategory != null && ViewBag.PopulerSearchesCategory.Count > 0)
@@ -99,25 +99,25 @@
                                 foreach (var jobs in ViewBag.RecentJobs)
                                 {
                                     <div class="job-lists-item">
-                                         <div class="job-list-content col-xs-12">
-                                        <div class="col-xs-3 company">
-                                            <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo"><img src="@jobs.CompanyLogo" alt="" class="responsive-img"></a>
+                                        <div class="job-list-content col-xs-12">
+                                            <div class="col-xs-3 company">
+                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo"><img src="@jobs.CompanyLogo" alt="" class="responsive-img"></a>
+                                            </div>
+                                            <div class="job-list-details col-xs-9">
+                                                <h4>
+                                                    <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
+                                                        @jobs.JobTitleByEmployer / @jobs.JobTitle
+                                                    </a>
+                                                    <span class="listing-type">@jobs.EmploymentStatus</span>
+                                                </h4>
+                                                <ul class="job-discription">
+                                                    <li>@jobs.CompanyName</li>
+                                                    <li>  @jobs.City</li>
+                                                    <li> @jobs.CTC</li>
+                                                    <li><span>@jobs.NumberOfDays</span><span>d ago</span></li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                        <div class="job-list-details col-xs-9">
-                                            <h4>
-                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
-                                                    @jobs.JobTitleByEmployer / @jobs.JobTitle 
-                                                </a>
-                                                <span class="listing-type">@jobs.EmploymentStatus</span>
-                                            </h4>
-                                            <ul class="job-discription">
-                                                <li>@jobs.CompanyName</li>
-                                                <li>  @jobs.City</li>
-                                                <li> @jobs.CTC</li>
-                                                <li><span>@jobs.NumberOfDays</span><span>d ago</span></li>
-                                            </ul>
-                                        </div>
-                                       </div>
                                     </div>
                                 }
                             }
@@ -143,28 +143,28 @@
                                 {
                                     <div class="job-lists-item">
                                         <div class="job-list-content col-xs-12">
-                                        <div class="col-xs-3 company">
-                                            <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo">
-                                                <img src="@jobs.CompanyLogo" alt="" class="responsive-img">
-                                            </a>
-                                        </div>
-                                        <div class="job-list-details col-xs-9">
-                                            <h4>
-                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
-                                                    @jobs.JobTitleByEmployer 
+                                            <div class="col-xs-3 company">
+                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo">
+                                                    <img src="@jobs.CompanyLogo" alt="" class="responsive-img">
                                                 </a>
-                                                <span class="listing-type">@jobs.EmploymentStatus</span>
-                                            </h4>
-                                            <ul class="job-discription">
-                                                <li><i class="ln ln-icon-Management"></i> @jobs.CompanyName</li>
-                                                <li><i class="ln ln-icon-Map2"></i>  @jobs.City</li>
-                                                <li><i class="ln ln-icon-Money-2"></i> @jobs.CTC</li>
-                                                <li><span class="listing-date new">@jobs.NumberOfDays</span><span>d ago</span></li>
-                                            </ul>
-                                                
+                                            </div>
+                                            <div class="job-list-details col-xs-9">
+                                                <h4>
+                                                    <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
+                                                        @jobs.JobTitleByEmployer
+                                                    </a>
+                                                    <span class="listing-type">@jobs.EmploymentStatus</span>
+                                                </h4>
+                                                <ul class="job-discription">
+                                                    <li><i class="ln ln-icon-Management"></i> @jobs.CompanyName</li>
+                                                    <li><i class="ln ln-icon-Map2"></i>  @jobs.City</li>
+                                                    <li><i class="ln ln-icon-Money-2"></i> @jobs.CTC</li>
+                                                    <li><span class="listing-date new">@jobs.NumberOfDays</span><span>d ago</span></li>
+                                                </ul>
+
+                                            </div>
                                         </div>
                                     </div>
-                                        </div>
                                 }
 
                             }
@@ -278,59 +278,59 @@
     <div class="row">
         <div class="container">
             <div class="row">
-            <h2 class="blacktitle">Top Employers</h2>
-            <!-- Popular Categories -->
-            <div class="employer-lists">
-                @if (ViewBag.TopEmployer != null && ViewBag.TopEmployer.Count > 0)
-                {
-                    UserViewModel userInformation = Context.Session.Get<UserViewModel>
-                       (Constants.SessionKeyUserInfo);
-                    if (userInformation != null)
+                <h2 class="blacktitle">Top Employers</h2>
+                <!-- Popular Categories -->
+                <div class="employer-lists">
+                    @if (ViewBag.TopEmployer != null && ViewBag.TopEmployer.Count > 0)
                     {
-                        foreach (var row in ViewBag.TopEmployer)
+                        UserViewModel userInformation = Context.Session.Get<UserViewModel>
+                           (Constants.SessionKeyUserInfo);
+                        if (userInformation != null)
                         {
-                            if (@row.JobseekerId == userInformation.UserId && @row.FollowIsActive != 0)
+                            foreach (var row in ViewBag.TopEmployer)
+                            {
+                                if (@row.JobseekerId == userInformation.UserId && @row.FollowIsActive != 0)
+                                {
+                                    <div class="col-sm-6 employer-lists-item">
+                                        <a class="employer-lists-item-link">
+
+                                            <span class="name"> @row.CompanyName</span>
+                                            <span class="count">@row.Count</span>
+                                            <span class="btn btn-default btn-sm follow-btn">Follow</span>
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-6 employer-lists-item">
+                                        <a onclick="EmployerFollower(@row.UserId)" class="employer-lists-item-link">
+                                            <span class="name">@row.CompanyName</span>
+                                            <span class="count">@row.Count</span>
+                                            <span class="btn btn-default btn-sm follow-btn">Follow</span>
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var row in ViewBag.TopEmployer)
                             {
                                 <div class="col-sm-6 employer-lists-item">
-                               <a class="employer-lists-item-link">
-                                 
-                                    <span class="name"> @row.CompanyName</span>
-                                    <span class="count">@row.Count</span>
-                                    <span class="btn btn-default btn-sm follow-btn">Follow</span>
-                                </a>
-                                    </div>
-                            }
-                            else
-                            {
-                    <div class="col-sm-6 employer-lists-item">
-                                <a onclick="EmployerFollower(@row.UserId)" class="employer-lists-item-link">
-                                    <span class="name">@row.CompanyName</span>
-                                    <span class="count">@row.Count</span>
-                                    <span class="btn btn-default btn-sm follow-btn">Follow</span>
-                                </a>
-                        </div>
+                                    <a onclick="EmployerFollower(0)" class="employer-lists-item-link">
+                                        <span class="name">  @row.CompanyName  </span>
+                                        <span class="count">@row.Count</span>
+                                        <span class="btn btn-default btn-sm follow-btn">Follow</span>
+                                    </a>
+                                </div>
                             }
                         }
                     }
-                    else
-                    {
-                        foreach (var row in ViewBag.TopEmployer)
-                        {
-                    <div class="col-sm-6 employer-lists-item">        
-                               <a onclick="EmployerFollower(0)" class="employer-lists-item-link">
-                                 <span class="name">  @row.CompanyName  </span>
-                                <span class="count">@row.Count</span>
-                                <span class="btn btn-default btn-sm follow-btn">Follow</span>
-                          </a>
-                        </div>
-                        }
-                    }
-                }
+                </div>
             </div>
-                </div>
             <div class="btn-row text-center">
-            <a href="/home/FindJobVacancies/#CompanyVacancies" class="btn btn-primary">Browse All Companies</a>
-                </div>
+                <a href="/home/FindJobVacancies/#CompanyVacancies" class="btn btn-primary">Browse All Companies</a>
+            </div>
         </div>
     </div>
 </div>
@@ -361,7 +361,8 @@
                             <p>JobSeeker</p>
                         </div>
                         <div class="col-sm-3 counter-box text-center">
-                            <span class="counter">@item.JobSeeker</span>
+                            @*<span class="counter">@item.ActiveUsers</span><i></i>*@
+                            <span class="counter" id="activeUserCount"></span>
                             <p>Active Users</p>
                         </div>
                     </div>
@@ -521,6 +522,7 @@
     </script>
     <script src="~/lib/jquery/slick.min.js"></script>
     <script src="~/js/Home/HomeIndex.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/Jobseeker/JobDetails.js"></script>
-    @*<script src="~/js/Home/setdigitaldisplay.js"></script>*@
+    <script src="~/js/Shared/ActiveUsers.js"></script>
 }
