@@ -17,6 +17,7 @@ using JobPortal.Business.Interfaces.Home;
 using JobPortal.Business.Interfaces.Jobseeker;
 using JobPortal.Business.Interfaces.Shared;
 using JobPortal.Business.Interfaces.TrainingPartner;
+using JobPortal.Web.Controllers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +25,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using JobPortal.Web.Controllers.Hubs;
 
 namespace JobPortal.Web
 {
@@ -93,8 +95,6 @@ namespace JobPortal.Web
             services.Add
             (new ServiceDescriptor(typeof(IAdvertisementsHandler), typeof(AdvertisementsHandler),ServiceLifetime.Scoped));
 
-            //services.Add
-            //(new ServiceDescriptor(typeof(VisitorCounterMiddleware), typeof(VisitorCounterMiddleware), ServiceLifetime.Scoped));
 
             services.AddHttpContextAccessor();
             services.AddHttpClient();
@@ -104,20 +104,14 @@ namespace JobPortal.Web
             services.AddDistributedMemoryCache();//To Store session in Memory, This is default implementation of IDistributedCache 
 
 
-
+            services.AddSignalR();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options=>
-                {
-                    options.LoginPath = "/Home/";
-                    options.Cookie.Name = "VisitorId";
-                }
-                );
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             
 
             //services.AddAuthentication()
@@ -145,8 +139,10 @@ namespace JobPortal.Web
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
-            app.UseCookiePolicy();
-
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ActiveUsers>("/ActiveUsers");
+            });
             app.UseMvc(router =>
             {
                 router.MapRoute(
@@ -160,7 +156,6 @@ namespace JobPortal.Web
                    template: "{controller}/{action}/{id?}"
                    );
             });
-            app.UseMiddleware(typeof(VisitorCounterMiddleware));
         }
     }
 }

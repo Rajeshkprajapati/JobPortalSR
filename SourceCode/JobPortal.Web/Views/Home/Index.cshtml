@@ -406,7 +406,8 @@
                 </div>
                 <div class="three columns">
                     <div class="counter-box">
-                        <span class="counter">@item.ActiveUsers</span><i></i>
+                        @*<span class="counter">@item.ActiveUsers</span><i></i>*@
+                        <span class="counter" id="activeUserCount"></span><i></i>
                         <p>Currently Active Users</p>
                     </div>
                 </div>
@@ -568,5 +569,7 @@
     </script>
     <script src="~/lib/jquery/slick.min.js"></script>
     <script src="~/js/Home/HomeIndex.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/Jobseeker/JobDetails.js"></script>
+    <script src="~/js/Shared/ActiveUsers.js"></script>
 }
