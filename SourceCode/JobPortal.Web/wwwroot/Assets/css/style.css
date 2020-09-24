@@ -181,9 +181,6 @@ body {
 }
 
 @media(max-width: 991px){
-    .jPanelMenu-panel{
-        pointer-events: none;
-    }
     .jPanelMenu-panel:after {
         position: fixed;
         left: 0;
@@ -1029,4 +1026,65 @@ body[data-menu-position="closed"] .menu-trigger .close-menu{
 
 body[data-menu-position="closed"] #jPanelMenu-menu {
     opacity: 0;
+    pointer-events: all;
+}
+
+body[data-menu-position="closed"] .jPanelMenu-panel:after {
+    display:none;
+}
+
+
+/* Login Registration screen */
+.screen-height {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form {
+    width: 450px;
+    padding: 70px;
+    background: rgba(0,0,0,0.06);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+@media screen and (max-width: 480px) {
+    .login-form {
+        width: 100%;
+        padding: 40px;
+    }
+}
+
+.spacer-top-20{
+    padding-top: 20px;
+}
+
+.login-form .form-group{
+    margin-bottom: 20px;
+}
+
+
+label.input-label {
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.form-control.input-elements{
+    border-radius: 3px;
+    box-shadow: none;
+    min-height: 40px;
+}
+
+.quick-links {
+    color: #26ae61;
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+.quick-links:hover {
+    color: #26ae61;
+    text-decoration: none;
 }
