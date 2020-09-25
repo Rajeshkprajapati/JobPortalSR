@@ -3,63 +3,35 @@
     ViewData["Title"] = "Employer Login";
 }
 @model UserViewModel
-<link href="~/css/Auth/auth.css" rel="stylesheet" />
-<!-- Titlebar
-================================================== -->
-<div id="titlebar" class="single">
-    <div class="container">
-        <div class="sixteen columns">
-            <h2 class="LoginHeading">Employer Login</h2>
-            <nav id="breadcrumbs">
-                <ul>
-                    <li>You are here:</li>
-                    <li><a href="/Home/Index/">Home</a></li>
-                    <li>Employer Login</li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</div>
 
 <!-- Content
 ================================================== -->
 <!-- Container -->
-<div class="container">
-    <div class="my-account">
-        <div class="tabs-container">
-            <!-- Login -->
-            <div class="tab-content" style="display: none;">
-                <form method="post" class="login" action="/Auth/Login">
-                    <p class="form-row form-row-wide">
-                        <label for="username">
-                            Username:
-                            <i class="ln ln-icon-Male"></i>
-                            <input type="text" class="input-text" asp-for="Email" required name="Email" id="Email" placeholder="Enter Email" />
-                        </label>
-                    </p>
-                    <p class="form-row form-row-wide">
-                        <label for="password">
-                            Password:
-                            <i class="ln ln-icon-Lock-2"></i>
-                            <input class="input-text" type="password" asp-for="Password" required name="password" id="password" placeholder="Enter Password" />
-                        </label>
-                    </p>                    
-                    <p class="form-row">
-                        <input type="submit" class="button border fw margin-top-10" name="login" value="Login" />
-                        <label for="rememberme" class="rememberme">
-                            <!--<input name="rememberme" type="checkbox" id="rememberme" value="forever" /> Remember Me -->
-                        </label>
-                    </p>
-                    <div class="form-row form-row-wide">
-                        <span class="col-sm-6" style="padding-left:0px !important;font-weight:bold">
-                            <a href="/Auth/ForgotPassword" class="headingReg">Lost Your Password?</a>
-                        </span>
-                        <span class="col-sm-6" style="text-align:right;font-weight:bold">
-                            <a href="/Auth/EmployerRegistration" class="headingReg">New Registration</a>
-                        </span>
-                    </div>
-                </form>
+<div class="container screen-height home-screen-section">
+    <div class="login-form">
+        <h2 class="blacktitle">Employer Login</h2>
+        <form method="post" class="login spacer-top-20" action="/Auth/Login">
+            <div class="form-group">
+                <label for="username" class="input-label">
+                    Username:
+                </label>
+                <input type="text" class="form-control input-elements" asp-for="Email" required name="Email" id="Email" placeholder="Enter Email" />
             </div>
-        </div>
+            <div class="form-group">
+                <label for="password" class="input-label">
+                    Password:
+                </label>
+                <input class="form-control input-elements" type="password" asp-for="Password" required name="password" id="password" placeholder="Enter Password" />
+                <p class="text-right"> <a href="/Auth/ForgotPassword" class="quick-links">Lost Your Password?</a></p>
+            </div>
+            <div class="form-group spacer-top-20">
+                <p>
+                    <input type="submit" class="btn btn-primary btn-block" name="login" value="Login" />
+                </p>
+                <p class="text-center">
+                    <a href="/Auth/EmployerRegistration" class="quick-links text-uppercase">Register</a>
+                </p>
+            </div>
+        </form>
     </div>
 </div>

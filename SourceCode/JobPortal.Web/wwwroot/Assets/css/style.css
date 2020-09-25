@@ -21,13 +21,12 @@ body {
     align-items: center;
 }
 
-
-
 /* Header style */
 .sticky-header {
     background-color: rgba(0,0,0,0.03);
     padding-top: 10px;
     padding-bottom: 10px;
+    box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.1);
 }
 
 .logo{
@@ -1036,7 +1035,7 @@ body[data-menu-position="closed"] .jPanelMenu-panel:after {
 
 /* Login Registration screen */
 .screen-height {
-    min-height: 70vh;
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1044,7 +1043,7 @@ body[data-menu-position="closed"] .jPanelMenu-panel:after {
 
 .login-form {
     width: 450px;
-    padding: 70px;
+    padding:40px 70px;
     background: rgba(0,0,0,0.06);
     border-radius: 5px;
     display: flex;
@@ -1065,6 +1064,22 @@ body[data-menu-position="closed"] .jPanelMenu-panel:after {
     margin-bottom: 20px;
 }
 
+.login-form .social-icons{
+    justify-content: center;
+}
+
+.login-form .social-icons a {
+    width: 100px;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 16px;
+}
+.login-form .social-icons .facebook {
+    background-color: #38529a;
+}
+.login-form .social-icons .gplus {
+    background-color: #d64936;
+}
 
 label.input-label {
     margin-bottom: 0;
@@ -1088,3 +1103,44 @@ label.input-label {
     color: #26ae61;
     text-decoration: none;
 }
+
+.login-form .nav-tabs {
+    border-bottom: 0;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.login-form .nav > li > a {
+    padding: 0;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #656565;
+    font-size: 13px;
+}
+
+.nav-tabs > li{
+    margin-right: 5px;
+    margin-left: 5px;
+    border-bottom: 5px solid transparent;
+}
+
+.nav-tabs > li.active {
+    border-bottom: 5px solid #2b9057;
+}
+
+.nav-tabs > li.active a {
+    color: #2b9057;
+    border:0;
+    background-color: transparent;
+}
+
+.nav-tabs > li.active a:hover,
+.nav-tabs > li.active a:focus {
+    background-color: transparent;
+    border-width: 0;
+    border-color: transparent;
+    box-shadow: none;
+}
+

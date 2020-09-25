@@ -6,155 +6,82 @@
     ViewData["Title"] = "Jobseeker Registration";
 }
 
-<style>
-    span.text-danger {
-        color: red !important;
-    }
 
-    .header {
-        box-shadow: 0 12px 0 rgba(0,0,0,.12) !important;
-    }
-</style>
 @section header {
     <meta name="google-signin-client_id" content="959100024495-sshngggnec7htiprelkoqvb5f70l6afq.apps.googleusercontent.com" />
     <meta name="google-signin-scope" content="profile email">
     <script src="https://apis.google.com/js/api:client.js" async defer></script>
 }
-<!-- Titlebar
-================================================== -->
+
 <!-- Content
 ================================================== -->
 <!-- Container -->
-<div class="container">
-    <div class="my-account">
-        <div class="tabs-container">
-            @if (TempData["successMsg"] != null)
-            {
-                <p style="color:green;font-weight:bold">@TempData["successMsg"]</p>
-            }
-            @if (TempData["errorMsg"] != null)
-            {
-                <p style="color:red;font-weight:bold">@TempData["errorMsg"]</p>
-            }
-            <!-- Register -->
-            <div class="tab-content" id="tab2">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label for="socialmedia">
-                            Register Via:
-                        </label>
-                    </div>
-                    <div class="col-sm-8">
-                        <ul class="social-icons">
-                            <li>                                
-                                <a class="facebook" href="javascript:void(0)" onclick="checkLoginState();"><i class="icon-facebook"></i></a>
-                            </li>
-                            <li><a class="gplus" id="signin" href="javascript:void(0)"><i class="icon-gplus"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <form autocomplete="off" method="post" class="register" asp-action="/Auth/JobseekerRegistration">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-row form-row-wide">
-                        <label asp-for="FirstName">
-                            First Name:
-                            <i class="ln ln-icon-Male"></i>
-                            <input type="text" class="input-text" asp-for="FirstName" required id="Firstname" placeholder="FirstName" />
-                        </label>
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                    </div>
+<div class="container screen-height home-screen-section">
+    <div class="login-form">
+        <h2 class="blacktitle">New Registration</h2>
 
-                    <div class="form-row form-row-wide">
-                        <label asp-for="LastName">
-                            Last Name:
-                            <i class="ln ln-icon-Male"></i>
-                            <input type="text" class="input-text" asp-for="LastName" required id="Lastname" placeholder="LastName" />
-                        </label>
-                        <span asp-validation-for="LastName" class="text-danger"></span>
-                    </div>
-                    @*<p class="form-row" >
-                            <label>
-                                Gender:
-                                <input type="radio" asp-for="Gender" value="Male" />Male
-                                <input type="radio" asp-for="Gender" value="Female"/>Female
-                            </label>
-                        </p>*@
+        @if (TempData["successMsg"] != null)
+        {
+            <div class="alert alert-success" role="alert">@TempData["successMsg"]</div>
+        }
+        @if (TempData["errorMsg"] != null)
+        {
+            <div class="alert alert-danger" role="alert">@TempData["errorMsg"]</div>
+        }
 
-                    <div class="form-row form-row-wide">
-                        <label asp-for="Email">
-                            Email Address:
-                            <i class="ln ln-icon-Mail"></i>
-                            <input type="text" class="input-text" asp-for="Email" required id="email" placeholder="Email" />
-                        </label>
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-row form-row-wide">
-                        <label asp-for="Password">
-                            Password:
-                            <i class="ln ln-icon-Lock-2"></i>
-                            <input class="input-text" type="password" asp-for="Password" required placeholder="Password" />
-                        </label>
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    @*<div class="form-row form-row-wide">
-                            <label asp-for="TotalExperience">
-                                Experiance:
-                                <i class="ln ln-icon-Mouse-2"></i>
-                                <input type="number" class="input-text" asp-for="TotalExperience" placeholder="Experience in years" />
-                            </label>
-                            <span asp-validation-for="TotalExperience" class="text-danger"></span>
-                        </div>*@
-                    <div class="form-row form-row-wide">
-                        <label for="Mobile">
-                            Mobile:
-                            <i class="ln ln-icon-Smartphone"></i>
-                            <input type="number" maxlength="10" min="0" class="input-text" required asp-for="MobileNo" placeholder="Mobile" />
-                        </label>
-                        <span asp-validation-for="MobileNo" class="text-danger"></span>
-                    </div>
-                    @*<div class="form-row form-row-wide">
-                            <label asp-for="Skills">
-                                Skills:
-                                <i class="ln ln-icon-Wrench"></i>
-                                <input type="text" class="input-text" asp-for="Skills" id="Skills" placeholder="skills" />
-                            </label>
-                            <span asp-validation-for="Skills" class="text-danger"></span>
-                        </div>*@
-                    @*<div class="form-row form-row-wide">
-                            <label asp-for="Industry">
-                                Industry:
-                                <i class="ln ln-icon-Building"></i>
-                                <input type="text" class="input-text" asp-for="Industry" id="JobIndustryArea" placeholder="Industry" />
-                            </label>
-                            <span asp-validation-for="Industry" class="text-danger"></span>
-                        </div>*@
-                    @*<div class="form-row form-row-wide">
-                            <label asp-for="PreferredLocation">
-                                Preferred Location:
-                                <i class="ln ln-icon-Map-Marker2"></i>
-                                <input type="text" class="input-text" asp-for="PreferredLocation" placeholder="Location" />
-                            </label>
-                            <span asp-validation-for="PreferredLocation" class="text-danger"></span>
-                        </div>*@
-                    <div class="form-row">
-                        <input type="submit" class="button border fw margin-top-10" required name="register" value="Register" />
-                    </div>
-                </form>
+        <form autocomplete="off" method="post" class="login spacer-top-20" asp-action="/Auth/JobseekerRegistration">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="input-label">
+                    First Name:
+                </label>
+                <input type="text" class="form-control input-elements" asp-for="FirstName" required id="Firstname" placeholder="FirstName" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-        </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="input-label">
+                    Last Name:
+                </label>
+                <input type="text" class="form-control input-elements" asp-for="LastName" required id="Lastname" placeholder="LastName" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="input-label">
+                    Email Address:
+                </label>
+                <input type="text" class="form-control input-elements" asp-for="Email" required id="email" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="input-label">
+                    Password:
+                </label>
+                <input class="form-control input-elements" type="password" asp-for="Password" required placeholder="Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Mobile" class="input-label">
+                    Mobile:
+                </label>
+                <input type="number" maxlength="10" min="0" class="form-control input-elements" required asp-for="MobileNo" placeholder="Mobile" />
+                <span asp-validation-for="MobileNo" class="text-danger"></span>
+            </div>
+            <div class="form-group spacer-top-20">
+                <input type="submit" class="btn btn-primary btn-block" required name="register" value="Register" />
+            </div>
+        </form>
+        <ul class="social-icons">
+            <li>
+                <a class="facebook" href="javascript:void(0)" onclick="checkLoginState();"><i class="fa fa-facebook"></i></a>
+            </li>
+            <li><a class="gplus" id="signin" href="javascript:void(0)"><i class="fa fa-google-plus"></i></a></li>
+        </ul>
     </div>
 </div>
 <div id="fb-root"></div>
 @section Scripts
     {
-        <script>
-            $(document).ready(function () {
-                //SpecialChar('#Firstname');
-                //SpecialChar('#Lastname');
-            });
 
-        </script>
     <script>
         gapi.load('auth2', function () {
             auth2 = gapi.auth2.init({
@@ -172,22 +99,11 @@
                     console.log(JSON.stringify(error, undefined, 2));
                 });
         }
-        //function onSignIn(googleUser) {
-        //    var profile = googleUser.getBasicProfile();
-        //    var id_token = googleUser.getAuthResponse().id_token;
-        //    console.log(id_token);
-        //    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        //    console.log('Name: ' + profile.getName());
-        //    console.log('Image URL: ' + profile.getImageUrl());
-        //    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-        //    googleRegistration(id_token);
-        //}
         function googleRegistration(response) {
             if (response.getAuthResponse().id_token) {
                 var accessToken = response.getAuthResponse().id_token;
                 SendAJAXRequest(`/Auth/JobseekerGoogleRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
                     if (resp && resp.isSuccess) {
-                        //console.log('Success');
                         InformationDialog('Information', 'Registration Successfull!');
                     } else {
                         ErrorDialog('Warning', resp.msg);
@@ -234,7 +150,6 @@
             var accessToken = response.authResponse.accessToken;
             SendAJAXRequest(`/Auth/FBJobseekerRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
                 if (resp && resp.isSuccess) {
-                    //console.log('Success');
                     InformationDialog('Information', 'Registration Successfull!');
                 } else {
                     ErrorDialog('Warning', 'Email already exist!');
