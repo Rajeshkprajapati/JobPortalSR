@@ -9,316 +9,299 @@
 <link href="~/css/Home/jssilder.css" rel="stylesheet" />
 
 <!-- Search start -->
-<div class="searchwrap container-fluid">
+<div class="searchwrap row">
     <!--home page Banner-->
-    <div class="row">
-        <div class="container text-center banner">
-            <h1>Digital India Power To Empower</h1>
-            <p class="col-sm-8 col-sm-offset-2">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-            <!-- button start -->
-        </div>
-        <!-- button end -->
-        <!--home page Banner end-->
-        <div class="container">
-            @{
-                UserViewModel user = Context.Session.Get<UserViewModel>
-                   (Constants.SessionKeyUserInfo);
-                if (user != null)
+    <div class="container text-center banner">
+        <h1>Digital India Power To Empower</h1>
+        <p class="col-sm-8 col-sm-offset-2">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <!-- button start -->
+    </div>
+    <!-- button end -->
+    <!--home page Banner end-->
+    <div class="container">
+        @{
+            UserViewModel user = Context.Session.Get<UserViewModel>
+               (Constants.SessionKeyUserInfo);
+            if (user != null)
+            {
+                @if (user.RoleName == Constants.CorporateRole || user.RoleName == Constants.StaffingPartnerRole)
                 {
-                    @if (user.RoleName == Constants.CorporateRole || user.RoleName == Constants.StaffingPartnerRole)
-                    {
-                        <partial name="~/Views/Shared/SearchResumePartial.cshtml" />
-                    }
-                    else if (user.RoleName == Constants.DemandAggregationRole)
-                    {
-                        @*<partial name="~/Views/Shared/SearchJobPartial.cshtml" />*@
-                    }
-                    else
-                    {
-                        <partial name="~/Views/Shared/SearchJobPartial.cshtml" />
-                    }
+                    <partial name="~/Views/Shared/SearchResumePartial.cshtml" />
+                }
+                else if (user.RoleName == Constants.DemandAggregationRole)
+                {
+                    @*<partial name="~/Views/Shared/SearchJobPartial.cshtml" />*@
                 }
                 else
                 {
                     <partial name="~/Views/Shared/SearchJobPartial.cshtml" />
                 }
             }
-        </div>
+            else
+            {
+                <partial name="~/Views/Shared/SearchJobPartial.cshtml" />
+            }
+        }
     </div>
 </div>
 
 <!-- Search End -->
 <!-- Start New Layout Popular Categories-->
 <!-- Categories -->
-<div class="container home-screen-section">
-    <h2 class="blacktitle">Popular Categories</h2>
-    <div class="row">
-
+<div class="row">
+    <div class="container home-screen-section">
+        <h2 class="blacktitle">Popular Categories</h2>
         <!-- Popular Categories -->
-        <ul class="categories col-sm-12">
-            @if (ViewBag.PopulerSearchesCategory != null && ViewBag.PopulerSearchesCategory.Count > 0)
-            {
-                foreach (var row in ViewBag.PopulerSearchesCategory)
+        <div class="row">
+            <ul class="categories">
+                @if (ViewBag.PopulerSearchesCategory != null && ViewBag.PopulerSearchesCategory.Count > 0)
                 {
-                    <li class="categories-item col-sm-6">
-                        <a href="/Home/AllJobsByCategory/?id=@row.JobIndustryAreaId" class="categories-item-link">
-                            <i class="fa fa-laptop"></i>
-                            <span class="category-name">@row.JobIndustryAreaName</span>
-                            <span class="job-count">@row.TotalCount</span>
-                        </a>
-                    </li>
+                    foreach (var row in ViewBag.PopulerSearchesCategory)
+                    {
+                        <li class="categories-item col-sm-6">
+                            <a href="/Home/AllJobsByCategory/?id=@row.JobIndustryAreaId" class="categories-item-link">
+                                <i class="fa fa-laptop"></i>
+                                <span class="category-name">@row.JobIndustryAreaName</span>
+                                <span class="job-count">@row.TotalCount</span>
+                            </a>
+                        </li>
+                    }
                 }
-            }
-        </ul>
+            </ul>
+            <div class="btn-row text-center">
+                <a href="/home/FindJobVacancies" class="btn btn-primary btn-lg">Browse All Categories</a>
+            </div>
+        </div>
     </div>
-    <div class="btn-row text-center">
-        <a href="/home/FindJobVacancies" class="btn btn-primary btn-lg">Browse All Categories</a>
-    </div>
-
 </div>
-
 <!-- END New Layout Popular Categories-->
 <!-- Start Recent Jobs-->
 
-<div class="container-fluid panelbg-lghtgrey home-screen-section">
+<div class="row panelbg-lghtgrey home-screen-section">
 
     <!-- Recent Jobs -->
-    <div class="row">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h2 class="blacktitle">Recent Jobs</h2>
-                        </div>
-                        <div class="job-lists col-xs-12">
-
-                            <!-- Listing -->
-                            @if (ViewBag.RecentJobs != null && Enumerable.Count(ViewBag.RecentJobs) > 0)
-                            {
-                                foreach (var jobs in ViewBag.RecentJobs)
-                                {
-                                    <div class="job-lists-item">
-                                        <div class="job-list-content col-xs-12">
-                                            <div class="col-xs-3 company">
-                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo"><img src="@jobs.CompanyLogo" alt="" class="responsive-img"></a>
-                                            </div>
-                                            <div class="job-list-details col-xs-9">
-                                                <h4>
-                                                    <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
-                                                        @jobs.JobTitleByEmployer / @jobs.JobTitle
-                                                    </a>
-                                                    <span class="listing-type">@jobs.EmploymentStatus</span>
-                                                </h4>
-                                                <ul class="job-discription">
-                                                    <li>@jobs.CompanyName</li>
-                                                    <li>  @jobs.City</li>
-                                                    <li> @jobs.CTC</li>
-                                                    <li><span>@jobs.NumberOfDays</span><span>d ago</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            else
-                            {
-                                <a href="dfh.html" class="listing full-time">
-                                    <h3>Now data found!</h3>
-                                </a>
-                            }
-                        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2 class="blacktitle">Recent Jobs</h2>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h2 class="blacktitle">Walk-in Jobs</h2>
-                        </div>
-                        <div class="job-lists col-xs-12">
-                            <!-- Listing -->
-                            @if (ViewBag.WalkinJobs != null && Enumerable.Count(ViewBag.WalkinJobs) > 0)
-                            {
-                                foreach (var jobs in ViewBag.WalkinJobs)
-                                {
-                                    <div class="job-lists-item">
-                                        <div class="job-list-content col-xs-12">
-                                            <div class="col-xs-3 company">
-                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo">
-                                                    <img src="@jobs.CompanyLogo" alt="" class="responsive-img">
-                                                </a>
-                                            </div>
-                                            <div class="job-list-details col-xs-9">
-                                                <h4>
-                                                    <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
-                                                        @jobs.JobTitleByEmployer
-                                                    </a>
-                                                    <span class="listing-type">@jobs.EmploymentStatus</span>
-                                                </h4>
-                                                <ul class="job-discription">
-                                                    <li><i class="ln ln-icon-Management"></i> @jobs.CompanyName</li>
-                                                    <li><i class="ln ln-icon-Map2"></i>  @jobs.City</li>
-                                                    <li><i class="ln ln-icon-Money-2"></i> @jobs.CTC</li>
-                                                    <li><span class="listing-date new">@jobs.NumberOfDays</span><span>d ago</span></li>
-                                                </ul>
+                    <div class="job-lists col-xs-12">
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-
-                            }
-                            else
-                            {
-                                <a href="dfh.html" class="listing full-time">
-                                    <h3>No data found!</h3>
-                                </a>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid panelbg-black home-screen-section">
-    <!-- Job Spotlight -->
-    <div class="row">
-        <div class="container">
-            <h2 class="whitetitle greenbdr">Job Spotlight</h2>
-            <!-- Showbiz Container -->
-            <div class="row showbiz-container">
-                <div class="col-sm-4">
-                    <div class="showbiz" data-left="#showbiz_left_1" data-right="#showbiz_right_1" data-play="#showbiz_play_1">
-                        <div class="overflowholder">
-                            <ul class="myslideUl" id="myslideUl">
-                                @if (ViewBag.FeaturedJobs != null && Enumerable.Count(ViewBag.FeaturedJobs) > 0)
-                                {
-                                    foreach (var jobs in ViewBag.FeaturedJobs)
-                                    {
-                                        <li class="mySlides">
-                                            <div class="job-spotlight">
-                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId"><h4>@jobs.JobTitleByEmployer <span class="part-time">@jobs.EmploymentStatus</span></h4></a>
-                                                <span><i class="fa fa-briefcase"></i> @jobs.CompanyName</span>
-                                                <span><i class="fa fa-map-marker"></i> @jobs.City</span>
-                                                @if (@jobs.CTC == "N/A")
-                                                {
-                                                    <span><i class="fa fa-money"></i> -</span>
-                                                }
-                                                else
-                                                {
-                                                    <span><i class="fa fa-money"></i> @jobs.CTC INR</span>
-                                                }
-
-                                                <p maxlength="20">@Html.Raw(@jobs.JobDetails)</p>
-                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="button">Apply For This Job</a>
-                                            </div>
-                                        </li>
-                                    }
-                                }
-                                else
-                                {
-                                    <li>No data found</li>
-                                }
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-                <!--snow biz 2-->
-                <!-- Showbiz Container -->
-                <div class="col-sm-4">
-                    <div id="spotlightBanner">
-                        <div class="showbiz" id="jssor_1">
-                            <div data-u="loading" class="jssorl-004-double-tail-spin">
-                                <img src="~/Assets/images/double-tail-spin.svg" />
-                            </div>
-                            <div data-u="slides" class="showbiz-slider">
-                                @if (ViewBag.Section1 != null && ViewBag.Section1.Count > 0)
-                                {
-
-                                    @foreach (var item in ViewBag.Section1)
-                                    {
-                                        <div>
-                                            <a href="@item.JobPage" target="_blank">
-                                                <img data-u="image" class="custom-img1" src="@item.ImagePath" />
-                                            </a>
-                                            <a href="@item.JobPage" target="_blank" class="button">Apply</a>
-                                        </div>
-                                    }
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div id="spotlightBanner">
-                        <div class="showbiz" id="jssor_2">
-                            <div data-u="loading" class="jssorl-004-double-tail-spin">
-                                <img src="~/Assets/images/double-tail-spin.svg" />
-                            </div>
-                            <div data-u="slides" class="showbiz-slider">
-                                @foreach (var item in ViewBag.Section2)
-                                {
-                                    <div>
-                                        <img data-u="image" src="@item.ImagePath" />
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid home-screen-section">
-    <div class="row">
-        <div class="container">
-            <div class="row">
-                <h2 class="blacktitle">Top Employers</h2>
-                <!-- Popular Categories -->
-                <div class="employer-lists">
-                    @if (ViewBag.TopEmployer != null && ViewBag.TopEmployer.Count > 0)
-                    {
-                        UserViewModel userInformation = Context.Session.Get<UserViewModel>
-                           (Constants.SessionKeyUserInfo);
-                        if (userInformation != null)
+                        <!-- Listing -->
+                        @if (ViewBag.RecentJobs != null && Enumerable.Count(ViewBag.RecentJobs) > 0)
                         {
-                            foreach (var row in ViewBag.TopEmployer)
+                            foreach (var jobs in ViewBag.RecentJobs)
                             {
-                                if (@row.JobseekerId == userInformation.UserId && @row.FollowIsActive != 0)
-                                {
-                                    <div class="col-sm-6 employer-lists-item">
-                                        <a class="employer-lists-item-link">
-
-                                            <span class="name"> @row.CompanyName</span>
-                                            <span class="count">@row.Count</span>
-                                            <span class="btn btn-default btn-sm follow-btn">Follow</span>
-                                        </a>
+                                <div class="job-lists-item">
+                                    <div class="job-list-content col-xs-12">
+                                        <div class="col-xs-3 company">
+                                            <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo"><img src="@jobs.CompanyLogo" alt="" class="responsive-img"></a>
+                                        </div>
+                                        <div class="job-list-details col-xs-9">
+                                            <h4>
+                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
+                                                    @jobs.JobTitleByEmployer / @jobs.JobTitle
+                                                </a>
+                                                <span class="listing-type">@jobs.EmploymentStatus</span>
+                                            </h4>
+                                            <ul class="job-discription">
+                                                <li>@jobs.CompanyName</li>
+                                                <li>  @jobs.City</li>
+                                                <li> @jobs.CTC</li>
+                                                <li><span>@jobs.NumberOfDays</span><span>d ago</span></li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                }
-                                else
-                                {
-                                    <div class="col-sm-6 employer-lists-item">
-                                        <a onclick="EmployerFollower(@row.UserId)" class="employer-lists-item-link">
-                                            <span class="name">@row.CompanyName</span>
-                                            <span class="count">@row.Count</span>
-                                            <span class="btn btn-default btn-sm follow-btn">Follow</span>
-                                        </a>
-                                    </div>
-                                }
+                                </div>
                             }
                         }
                         else
                         {
-                            foreach (var row in ViewBag.TopEmployer)
+                            <a href="dfh.html" class="listing full-time">
+                                <h3>Now data found!</h3>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2 class="blacktitle">Walk-in Jobs</h2>
+                    </div>
+                    <div class="job-lists col-xs-12">
+                        <!-- Listing -->
+                        @if (ViewBag.WalkinJobs != null && Enumerable.Count(ViewBag.WalkinJobs) > 0)
+                        {
+                            foreach (var jobs in ViewBag.WalkinJobs)
+                            {
+                                <div class="job-lists-item">
+                                    <div class="job-list-content col-xs-12">
+                                        <div class="col-xs-3 company">
+                                            <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo">
+                                                <img src="@jobs.CompanyLogo" alt="" class="responsive-img">
+                                            </a>
+                                        </div>
+                                        <div class="job-list-details col-xs-9">
+                                            <h4>
+                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
+                                                    @jobs.JobTitleByEmployer
+                                                </a>
+                                                <span class="listing-type">@jobs.EmploymentStatus</span>
+                                            </h4>
+                                            <ul class="job-discription">
+                                                <li><i class="ln ln-icon-Management"></i> @jobs.CompanyName</li>
+                                                <li><i class="ln ln-icon-Map2"></i>  @jobs.City</li>
+                                                <li><i class="ln ln-icon-Money-2"></i> @jobs.CTC</li>
+                                                <li><span class="listing-date new">@jobs.NumberOfDays</span><span>d ago</span></li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+                            <a href="dfh.html" class="listing full-time">
+                                <h3>No data found!</h3>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row panelbg-black home-screen-section jobspotlight-panel">
+    <!-- Job Spotlight -->
+    <div class="container">
+        <h2 class="whitetitle greenbdr">Job Spotlight</h2>
+        <!-- Showbiz Container -->
+        <div class="row showbiz-container">
+            <div class="col-sm-4">
+                <div class="showbiz" data-left="#showbiz_left_1" data-right="#showbiz_right_1" data-play="#showbiz_play_1">
+                    <div class="overflowholder">
+                        <ul class="myslideUl" id="myslideUl">
+                            @if (ViewBag.FeaturedJobs != null && Enumerable.Count(ViewBag.FeaturedJobs) > 0)
+                            {
+                                foreach (var jobs in ViewBag.FeaturedJobs)
+                                {
+                                    <li class="mySlides job-spotlight">
+                                        <h4 class="spotlight-title">
+                                            <a href="/Job/JobDetails/?jobid=@jobs.JobPostId">
+                                                @jobs.JobTitleByEmployer <span class="part-time">@jobs.EmploymentStatus</span>
+                                            </a>
+                                        </h4>
+                                        <ul class="spotlight-detail-list">
+                                            <li><i class="fa fa-briefcase"></i><span>@jobs.CompanyName</span> </li>
+                                            <li><i class="fa fa-map-marker"></i><span>@jobs.City</span></li>
+                                            @if (@jobs.CTC == "N/A")
+                                            {
+                                                <li><i class="fa fa-money"></i>-</li>
+                                            }
+                                            else
+                                            {
+                                                <li><i class="fa fa-money"></i><span>@jobs.CTC INR</span></li>
+                                            }
+                                        </ul>
+                                        @Html.Raw(@jobs.JobDetails)
+                                        <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="btn btn-link">Apply For This Job</a>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li><p>No data found</p></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--snow biz 2-->
+            <!-- Showbiz Container -->
+            <div class="col-sm-4">
+                <div id="spotlightBanner" class="spot-light-banner-active">
+                    <div class="showbiz" id="jssor_1">
+                        <div data-u="loading" class="jssorl-004-double-tail-spin">
+                            <img src="~/Assets/images/double-tail-spin.svg" />
+                        </div>
+                        <div data-u="slides" class="showbiz-slider">
+                            @if (ViewBag.Section1 != null && ViewBag.Section1.Count > 0)
+                            {
+
+                                @foreach (var item in ViewBag.Section1)
+                                {
+                                    <div class="showbiz-slider-inner">
+                                        <a href="@item.JobPage" target="_blank">
+                                            <img data-u="image" class="custom-img1" src="@item.ImagePath" />
+                                        </a>
+                                        <a href="@item.JobPage" target="_blank" class="btn btn-link apply-button">
+                                            <span class="btn-text">Apply</span>
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div id="spotlightBanner">
+                    <div class="showbiz" id="jssor_2">
+                        <div data-u="loading" class="jssorl-004-double-tail-spin">
+                            <img src="~/Assets/images/double-tail-spin.svg" />
+                        </div>
+                        <div data-u="slides" class="showbiz-slider">
+                            @foreach (var item in ViewBag.Section2)
+                            {
+                                <div class="showbiz-slider-inner">
+                                    <img data-u="image" src="@item.ImagePath" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row home-screen-section">
+    <div class="container">
+
+        <h2 class="blacktitle">Top Employers</h2>
+        <div class="row">
+            <!-- Popular Categories -->
+            <div class="employer-lists col-xs-12">
+                @if (ViewBag.TopEmployer != null && ViewBag.TopEmployer.Count > 0)
+                {
+                    UserViewModel userInformation = Context.Session.Get<UserViewModel>
+                       (Constants.SessionKeyUserInfo);
+                    if (userInformation != null)
+                    {
+                        foreach (var row in ViewBag.TopEmployer)
+                        {
+                            if (@row.JobseekerId == userInformation.UserId && @row.FollowIsActive != 0)
                             {
                                 <div class="col-sm-6 employer-lists-item">
-                                    <a onclick="EmployerFollower(0)" class="employer-lists-item-link">
-                                        <span class="name">  @row.CompanyName  </span>
+                                    <a class="employer-lists-item-link">
+
+                                        <span class="name"> @row.CompanyName</span>
+                                        <span class="count">@row.Count</span>
+                                        <span class="btn btn-default btn-sm follow-btn">Follow</span>
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm-6 employer-lists-item">
+                                    <a onclick="EmployerFollower(@row.UserId)" class="employer-lists-item-link">
+                                        <span class="name">@row.CompanyName</span>
                                         <span class="count">@row.Count</span>
                                         <span class="btn btn-default btn-sm follow-btn">Follow</span>
                                     </a>
@@ -326,11 +309,24 @@
                             }
                         }
                     }
-                </div>
+                    else
+                    {
+                        foreach (var row in ViewBag.TopEmployer)
+                        {
+                            <div class="col-sm-6 employer-lists-item">
+                                <a onclick="EmployerFollower(0)" class="employer-lists-item-link">
+                                    <span class="name">  @row.CompanyName  </span>
+                                    <span class="count">@row.Count</span>
+                                    <span class="btn btn-default btn-sm follow-btn">Follow</span>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
             </div>
-            <div class="btn-row text-center">
-                <a href="/home/FindJobVacancies/#CompanyVacancies" class="btn btn-primary">Browse All Companies</a>
-            </div>
+        </div>
+        <div class="btn-row text-center">
+            <a href="/home/FindJobVacancies/#CompanyVacancies" class="btn btn-primary">Browse All Companies</a>
         </div>
     </div>
 </div>
@@ -340,31 +336,28 @@
 {
     @foreach (var item in ViewBag.LabelCount)
     {
-        <div id="counters" class="container-fluid home-screen-section panelbg-gray10">
-            <div class="row">
-                <div class="container">
-                    <div class="row achievement">
-                        <div class="col-sm-3 counter-box text-center">
-                            <span class="counter">@item.JobOffers</span>
-                            <p>Jobs</p>
-                        </div>
-                        <div class="col-sm-2 counter-box text-center">
-                            <span class="counter">@item.Companies</span>
-                            <p>Companies</p>
-                        </div>
-                        <div class="col-sm-2 counter-box text-center">
-                            <span class="counter">@item.ResumePost</span>
-                            <p>Resumes</p>
-                        </div>
-                        <div class="col-sm-2 counter-box text-center">
-                            <span class="counter">@item.JobSeeker</span>
-                            <p>JobSeeker</p>
-                        </div>
-                        <div class="col-sm-3 counter-box text-center">
-                            @*<span class="counter">@item.ActiveUsers</span><i></i>*@
-                            <span class="counter" id="activeUserCount"></span>
-                            <p>Active Users</p>
-                        </div>
+        <div id="counters" class="row home-screen-section panelbg-gray10">
+            <div class="container">
+                <div class="achievement">
+                    <div class="counter-box text-center">
+                        <span class="counter">@item.JobOffers</span>
+                        <p>Jobs</p>
+                    </div>
+                    <div class="counter-box text-center">
+                        <span class="counter">@item.Companies</span>
+                        <p>Companies</p>
+                    </div>
+                    <div class="counter-box text-center">
+                        <span class="counter">@item.ResumePost</span>
+                        <p>Resumes</p>
+                    </div>
+                    <div class="counter-box text-center">
+                        <span class="counter">@item.JobSeeker</span>
+                        <p>JobSeeker</p>
+                    </div>
+                    <div class="counter-box text-center">
+                        <span class="counter" id="activeUserCount"></span><i></i>
+                        <p>Active Users</p>
                     </div>
                 </div>
             </div>
@@ -375,10 +368,10 @@
 <!-- End Recent Jobs-->
 <!-- Start Recent Jobs-->
 <!-- Popular Searches start -->
-<div class="panelbg-green container-fluid topsearchwrap">
+<div class="panelbg-green row topsearchwrap">
     <div class="container">
-        <h2 class="whitetitle row">Popular Searches</h2>
-        <div class="row popular-search">
+        <h2 class="whitetitle">Popular Searches</h2>
+        <div class="popular-search">
             <div class="col-sm-6 popular-search-list">
                 <!--Categories start-->
                 <div class="row">
@@ -421,49 +414,46 @@
                 </div>
                 <!--Cities end-->
             </div>
-
         </div>
     </div>
 </div>
 @if (ViewBag.Comment != null)
 {
-    <section class="container-fluid testimonial-panel">
+    <section class="row testimonial-panel">
         <!-- Info Section -->
         <div class="container">
-            <div class="row">
-                <h2 class="blacktitle">
-                    What Our Users Say 😍
-                </h2>
-                <h4>We collect reviews from our users so you can get an honest opinion of what an experience with our website are really like!</h4>
-                <!-- Info Section / End -->
-                <!-- Testimonials Carousel -->
-                <div class="testimonial-carousel">
-                    <!-- Item -->
-                    @if (ViewBag.Comment != null && ViewBag.Comment.Count > 0)
+            <h2 class="blacktitle">
+                What Our Users Say 😍
+            </h2>
+            <h4 class="col-md-8 row">We collect reviews from our users so you can get an honest opinion of what an experience with our website are really like!</h4>
+            <!-- Info Section / End -->
+            <!-- Testimonials Carousel -->
+            <div class="testimonial-carousel">
+                <!-- Item -->
+                @if (ViewBag.Comment != null && ViewBag.Comment.Count > 0)
+                {
+                    foreach (var row in ViewBag.Comment)
                     {
-                        foreach (var row in ViewBag.Comment)
-                        {
-                            <div class="fw-carousel-review">
-                                <blockquote>@row.Message</blockquote>
-                                <div class="testimonial-author">
-                                    <div class="author-img">
-                                        <img src="@row.ImgUrl" alt="">
-                                    </div>
-                                    <p>@row.name</p>
+                        <div class="fw-carousel-review">
+                            <blockquote>@row.Message</blockquote>
+                            <div class="testimonial-author">
+                                <div class="author-img">
+                                    <img src="@row.ImgUrl" alt="">
                                 </div>
+                                <p>@row.name</p>
                             </div>
-                        }
+                        </div>
                     }
-                    else
-                    {
-                        <p class="col-md-6 col-sm-6"><span></span></p>
-                    }
-                </div>
-                <div class="col-sm-12 text-center">
-                    <a href="/Home/SucessStoryAndReview" class="btn btn-primary btn-lg">Post Your Feedback</a>
-                </div>
-                <!-- Testimonials Carousel / End -->
+                }
+                else
+                {
+                    <p class="col-md-6 col-sm-6"><span></span></p>
+                }
             </div>
+            <div class="col-sm-12 text-center">
+                <a href="/Home/SucessStoryAndReview" class="btn btn-primary btn-lg">Post Your Feedback</a>
+            </div>
+            <!-- Testimonials Carousel / End -->
         </div>
     </section>
 }
