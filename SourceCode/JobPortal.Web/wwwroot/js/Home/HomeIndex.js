@@ -11,7 +11,29 @@
         });
     });
 
-    
+    //Job Title Bind By job industry are id  
+    $("#JobIndustryAreaId").change(function () {
+        debugger;
+        var JobIndustryAreaId = $(this).val();
+        if (JobIndustryAreaId !== "") {
+            var ddlJobRoles = $('#JobTitle');
+            SendAJAXRequest(`/Home/JobTitlesById/?JobIndustryAreaId=${JobIndustryAreaId}`, 'GET', {}, 'JSON', (d) => {
+                if (d) {
+                    ddlJobRoles.empty(); // Clear the plese wait  
+                    var valueofJobRoles = "";
+                    var v = "";
+                    $.each(d, function (i, v1) {
+                        v += "<option value=" + v1.jobTitleId + ">" + v1.jobTitleName + "</option>";
+                    });
+                    $("#JobTitle").html(v);
+                    $(".chosen-select").trigger("chosen:updated");
+                } else {
+                    warnignPopup('Error!');
+                }
+            });
+
+        }
+    });
     
 
     //multiselector.initSelector(

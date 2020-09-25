@@ -27,5 +27,6 @@ namespace JobPortal.Business.Interfaces.Employer.JobPost
         bool AddPreferredLocation(string[] location,int userid);
         List<JobTypeViewModel> GetJobTypes();
         List<SearchJobListViewModel> RecommendedJobs(int roleid);
+        List<JobTitleViewModel> GetJobTitleById(int JobIndustrialArea);
     }
 }

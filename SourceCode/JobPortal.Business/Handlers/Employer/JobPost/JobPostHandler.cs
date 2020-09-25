@@ -350,5 +350,17 @@ namespace JobPortal.Business.Handlers.Employer.JobPost
             }
             throw new DataNotFound("Data not found");
         }
+
+        public List<JobTitleViewModel> GetJobTitleById(int JobIndustrialArea)
+        {
+            DataTable jobTitle = masterDataRepository.GetJobTitlesById(JobIndustrialArea);
+            List<JobTitleViewModel> lstJobTitle = new List<JobTitleViewModel>();
+            if (jobTitle.Rows.Count > 0)
+            {
+                lstJobTitle = ConvertDatatableToModelList.ConvertDataTable<JobTitleViewModel>(jobTitle);
+                return lstJobTitle;
+            }
+            return lstJobTitle;
+        }
     }
 }

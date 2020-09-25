@@ -50,7 +50,6 @@
         var StateId = $(this).val();
         if (StateId !== "") {
             var ddlCity = $('#ddlCity');
-
             SendAJAXRequest(`/JobManagement/CityDetails/?stateCode=${StateId}`, 'GET', {}, 'JSON', (d) => {
                 if (d) {
                     ddlCity.empty(); // Clear the plese wait  
@@ -61,6 +60,30 @@
                     });
                     $("#ddlCity").html(v);
                     $(".chosen-select-no-single").trigger("chosen:updated");
+                } else {
+                    warnignPopup('Error!');
+                }
+            });
+
+        }
+    });
+
+    //Job Title Bind By job industry are id  
+    $("#JobIndustryAreaId").change(function () {
+        debugger;
+        var JobIndustryAreaId = $(this).val();
+        if (JobIndustryAreaId !== "") {
+            var ddlJobRoles = $('#ddlJobRoles');
+            SendAJAXRequest(`/JobManagement/JobTitles/?JobIndustryAreaId=${JobIndustryAreaId}`, 'GET', {}, 'JSON', (d) => {
+                if (d) {
+                    ddlJobRoles.empty(); // Clear the plese wait  
+                    var valueofJobRoles = "";
+                    var v = "<option value=" + valueofJobRoles + ">Select Job Role</option>";
+                    $.each(d, function (i, v1) {
+                        v += "<option value=" + v1.jobTitleId + ">" + v1.jobTitleName + "</option>";
+                    });
+                    $("#ddlJobRoles").html(v);
+                    $(".chosen-select").trigger("chosen:updated");
                 } else {
                     warnignPopup('Error!');
                 }
@@ -187,15 +210,22 @@ function initCalendar(selector, date, startDate) {
     $(selector).data(cal);
 }
 
-function AddJobPost(_this) {    
+function AddJobPost(_this) {
+    debugger;
     $('#JobPostForm').submit(function (e) {
         e.preventDefault();
     });    
+    let JobIndustryArea = $('select[name=JobIndustryAreaId]').val();
+    if (JobIndustryArea == null || JobIndustryArea == 0) {
+        ErrorDialog('Error', 'Please select Job Industry Area');
+        $("select#JobIndustryAreaId .chosen-select-no-single").trigger("chosen:open");
+        return false;
+    }
 
     let jobtitle = $('select[name=JobTitleId]').val().toString();
     if (jobtitle.length <= 0) {        
         ErrorDialog('Error', 'Please select one or more job title');
-        $(".chosen-select").trigger("chosen:open");
+        $("selct#ddlJobRoles .chosen-select").trigger("chosen:open");
         return false;
     }
     let state = $('select[name=StateCode]').val();

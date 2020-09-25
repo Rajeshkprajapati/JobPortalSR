@@ -54,6 +54,7 @@ namespace JobPortal.Data.Repositories.Admin
                     SqlParameter[] parameters = new SqlParameter[] {
                     new SqlParameter("@JobTitleId",jobTitle.JobTitleId),
                     new SqlParameter("@JobTitleName",jobTitle.JobTitleName),
+                    new SqlParameter("@JobIndustryAreaId",jobTitle.JobIndustryAreaId),
                     new SqlParameter("@UpdatedBy",jobTitle.UpdatedBy),
                     };
                     var data =

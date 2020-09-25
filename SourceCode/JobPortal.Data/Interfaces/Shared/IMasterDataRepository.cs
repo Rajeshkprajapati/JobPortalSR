@@ -22,5 +22,7 @@ namespace JobPortal.Data.Interfaces.Shared
         DataTable GetAllCitiesWithoutState();
         DataTable GetAllGender(bool withAll=false);
         DataTable GetMaritalStatusMaster();
+        DataTable JobIndustryArea();
+        DataTable GetJobTitlesById(int JobIndustryAreaId);
     }
 }

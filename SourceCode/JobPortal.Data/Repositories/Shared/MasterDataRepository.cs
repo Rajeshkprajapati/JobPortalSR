@@ -426,5 +426,63 @@ namespace JobPortal.Data.Repositories.Shared
             }
             throw new DataNotFound("No data found");
         }
+
+        public DataTable JobIndustryArea()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    var IndustryArea =
+                        SqlHelper.ExecuteDataset
+                        (
+                            connection,
+                        CommandType.StoredProcedure,
+                        "usp_GetIndustryArea"
+                           );
+                    if (null != IndustryArea && IndustryArea.Tables.Count > 0)
+                    {
+                        return IndustryArea.Tables[0];
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("No data found");
+        }
+
+        public DataTable GetJobTitlesById(int JobIndustryAreaId)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@JobIndustryAreaId",JobIndustryAreaId)
+                    };
+                    var result =
+                        SqlHelper.ExecuteDataset
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetJobRolesById",
+                            parameters
+                            );
+                    if (null != result && result.Tables.Count > 0)
+                    {
+                        return result.Tables[0];
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Job roles not found, please contact your tech deck.");
+        }
     }
 }

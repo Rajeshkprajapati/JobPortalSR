@@ -14,28 +14,29 @@
 
 
         <form asp-area="Jobseeker" id="formJobPartial" asp-controller="Job" asp-action="SearchJobList" method="post">
-            <div class="col-md-3">
-                @*<input type="hidden" asp-for="JobRole" value="@jRoleId" id="hiddenjobtitle" />*@
-                <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>
-            </div>
-            <div class="col-md-2 autocomplete">
-                <input type="text" asp-for="Skills" class="form" placeholder="Skill" />
-            </div>
-           
             <div class="col-md-2">
                 @if (ViewBag.JobIndustryArea != null)
                 {
-                    <select asp-for="JobCategory[0]" class="form" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
-                        <option value="">Job Category</option>
+                    <select asp-for="JobCategory[0]" id="JobIndustryAreaId" class="form" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
+                        <option value="">Job Industry</option>
                     </select>
                 }
                 else
                 {
                     <select asp-for="JobCategory" class="form" >
-                        <option value="">Job Category</option>
+                        <option value="">Job Industry</option>
                     </select>
                 }
             </div>
+            <div class="col-md-3">
+                @*<input type="hidden" asp-for="JobRole" value="@jRoleId" id="hiddenjobtitle" />*@
+                @*<select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select> <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select> <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>*@
+                <select type="text" asp-for="JobTitle" id="JobTitle" name="JobTitle" multiple  autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>
+            </div>
+            <div class="col-md-2 autocomplete">
+                <input type="text" asp-for="Skills" class="form" placeholder="Skill" />
+            </div>
+           
             <div class="col-md-1">
                 <select class="form" asp-for="Experiance">
                     <option value="-1">Year</option>

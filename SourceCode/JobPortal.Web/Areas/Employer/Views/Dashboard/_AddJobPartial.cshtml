@@ -37,7 +37,9 @@
 
                             <div class="form">
                                 <h5>Job Industry</h5>
-                                <select asp-for="JobIndustryAreaId" data-placeholder="Industry Type" class="chosen-select-no-single" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))"></select>
+                                <select asp-for="JobIndustryAreaId" data-placeholder="Industry Type" id="JobIndustryAreaId" name="JobIndustryAreaId" class="chosen-select-no-single" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
+                                    <option value="0">Select Industry</option>
+                                </select>
                             </div>
 
                             <!--<div class="form">
@@ -54,7 +56,7 @@
                                 <div class="select">
                                     <h5>Job Title</h5>
                                     <!-- <input type="hidden" id="hdnJobTitleId" asp-for="JobTitleId" /> -->
-                                    <select id="ddlJobRoles" asp-for="JobTitleId" data-placeholder="Choose Job Title" class="chosen-select" multiple asp-items="@(new SelectList(@ViewBag.JobTitle,"JobTitleId", "JobTitleName"))"></select>
+                                    <select id="ddlJobRoles" asp-for="JobTitleId" data-placeholder="Choose Job Title" name="JobTitleId" class="chosen-select" multiple></select>
                                 </div>
                             </div>
 

@@ -138,5 +138,23 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             }
             return Json(cityList);
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult JobTitles(int JobIndustryAreaId)
+        {
+            var jobTitle = new List<JobTitleViewModel>();
+            try
+            {
+                jobTitle = jobpastHandler.GetJobTitleById(JobIndustryAreaId);
+
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(JobManagementController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return Json(jobTitle);
+        }
     }
 }

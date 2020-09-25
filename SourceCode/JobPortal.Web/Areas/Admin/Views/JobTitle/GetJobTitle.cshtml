@@ -30,6 +30,7 @@
                     <tr>
                         <th hidden>Job Title</th>
                         <th>Job Titles</th>
+                        <th hidden>Job Industry Area</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -39,6 +40,7 @@
                         <tr>
                             <td hidden>@jobTitleModel.JobTitleId</td>
                             <td>@jobTitleModel.JobTitleName</td>
+                            <td hidden>@jobTitleModel.JobIndustryAreaId</td>
 
                             <td class="action">
                                 <a href="javascript:void(0);" data-toggle="modal" data-name="" data-target="#PopUpModal" onclick="edit(this)"><i class="fa fa-pencil"></i> Edit</a><br />
@@ -64,6 +66,12 @@
                                 <div class="form" style="display:none">
                                     <h5>User ID</h5>
                                     <input type="text" name="JobTitleId" id="JobTitleId" class="search-field eduModeltxtbox" placeholder="User Id">
+                                </div>
+                                <div class="form" style="width:100%">
+                                    <h5>Job Industry</h5>
+                                    <select class="selectDropdown" id="JobIndustry" name="JobIndustry" asp-items="@(new SelectList(@ViewBag.JobIndustryArea, "JobIndustryAreaId", "JobIndustryAreaName"))">
+                                        <option value="">--Select Job Industry--</option>
+                                    </select>
                                 </div>
 
                                 <div class="form" style="width:100%">

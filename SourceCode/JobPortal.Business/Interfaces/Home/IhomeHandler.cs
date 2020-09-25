@@ -47,5 +47,6 @@ namespace JobPortal.Business.Interfaces.Home
         List<PopulerSearchesViewModel> CompanyJobVacancies();
         List<SearchJobListViewModel> AllJobsByCompany(int UserId);
         List<SearchJobListViewModel> FreelancerJobs();
+        List<JobTitleViewModel> GetJobTitleById(int JobIndustrialArea);
     }
 }

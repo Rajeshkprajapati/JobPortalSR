@@ -37,6 +37,7 @@ function edit(_this) {
         //    console.log(row[i].innerText);
         modal.find('#JobTitleId').val(row[0].innerText);
         modal.find('#JobTitelName').val(row[1].innerText);
+        modal.find('#JobIndustry').val(row[2].innerText);
         $("#SaveRec").hide();
         $("#Update").show();
         $("#updatebtn").removeClass('display-content');
@@ -44,14 +45,20 @@ function edit(_this) {
 
 };
 function Updatedata(_this) {
+    debugger;
     //alert($('#UserId').val());
     let jtitleId = $('#JobTitleId').val().trim();
     let JobTitleName = $('#JobTitelName').val().trim();
+    let JobIndustry = $('#JobIndustry').val().trim();
+    if (JobIndustry === "") {
+        warnignPopup('Please choose job industry');
+        return false;
+    }
     if (JobTitleName === "") {
         warnignPopup('Please fill job title name');
         return false;
     }
-    var data = { JobTitleId: jtitleId === "" ? 0 : jtitleId, JobTitleName: $('#JobTitelName').val() };
+    var data = { JobTitleId: jtitleId === "" ? 0 : jtitleId, JobTitleName: $('#JobTitelName').val(), JobIndustryAreaId: JobIndustry};
     SendAJAXRequest('/JobTitle/InsertUpdateJobTitle/', 'POST', data, 'JSON', (result) => {
         if (result) {
             $('#PopUpModal').modal('toggle');
