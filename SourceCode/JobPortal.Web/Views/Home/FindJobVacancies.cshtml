@@ -25,87 +25,74 @@
 
 <!-- Titlebar
 ================================================== -->
-<div id="titlebar" class="photo-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+<div id="titlebar" class="banner-bg row" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
     <div class="container">
-        <div class="ten columns">
-            <h2>All Categories</h2>
-        </div>
-        <div class="six columns">
-             <a href="/JobSeekerManagement" class="button">Search more jobs</a>
+        <div class="col-lg-10 col-sm-10 col-xs-12 innerpage-banner">
+            <h2 class="whitetitle">All Categories</h2>
         </div>
     </div>
 </div>
 
 <!-- Content
 ================================================== -->
-<div id="categories">
-    <!-- Categories Group -->
-    <div class="categories-group">
-        <div class="container">
-            <div align="left"><h4>Jobs by Industry & Categories  <span class="ln ln-icon-Engineering"></span></h4></div><br/>
-            @if (ViewBag.CategoryJobs != null && Enumerable.Count(ViewBag.CategoryJobs) > 0)
-            {
+<!-- Categories Group -->
+<div class="home-screen-section row">
+    <div class="container">
+        <h2 class="blacktitle">Jobs by Industry & Categories</h2>
+        @if (ViewBag.CategoryJobs != null && Enumerable.Count(ViewBag.CategoryJobs) > 0)
+        {
+            <ul>
                 @foreach (var row in ViewBag.CategoryJobs)
                 {
-            <div class="four columns">
-                <ul>
-                    <li><a class="text-overflow" href="/Home/AllJobsByCategory/?id=@row.JobIndustryAreaId">@row.JobIndustryAreaName<span> </span></a></li>
-
-                </ul>
-            </div>
+                    <li><a class="text-overflow" href="/Home/AllJobsByCategory/?id=@row.JobIndustryAreaId">@row.JobIndustryAreaName</a></li>
                 }
-            }
-            else
-            {
-                <p> No data found!</p>
-            }
-        </div>
+            </ul>
+        }
+        else
+        {
+            <p> No data found!</p>
+        }
     </div>
-    <!-- Categories Group -->
-    <div class="categories-group" id="CityVacancies">
-        <div class="container">
-            <div align="left"><h4>Vacancies by Cities  <span class="ln ln-icon-Location-2"></span></h4></div><br />
-            @if (ViewBag.CityJobs != null && Enumerable.Count(ViewBag.CityJobs) > 0)
-            {
+</div>
+<!-- Categories Group -->
+<div class="home-screen-section row panelbg-lghtgrey" id="CityVacancies">
+    <div class="container">
+        <h2 class="blacktitle">Vacancies by Cities </h2>
+        @if (ViewBag.CityJobs != null && Enumerable.Count(ViewBag.CityJobs) > 0)
+        {
+            <ul class="">
                 @foreach (var row in ViewBag.CityJobs)
                 {
-                    <div class="four columns">
-                        <ul>
-                            <li><a href="/Home/AllJobsByCity/?citycode=@row.CityCode">@row.City<span></span></a></li>
-
-                        </ul>
-                    </div>
+                    <li><a href="/Home/AllJobsByCity/?citycode=@row.CityCode">@row.City</a></li>
                 }
-            }
-            else
-            {
-                <p> No data found!</p>
-            }
-
-
-        </div>
+            </ul>
+        }
+        else
+        {
+            <p> No data found!</p>
+        }
     </div>
-    <!-- Categories Group -->
-    <div class="categories-group" id="CompanyVacancies">
-        <div class="container">
-            <div align="left"><h4>Vacancies by Company  <span class="ln ln-icon-Building"></span></h4></div><br />
-            @if (ViewBag.CompanyJobs != null && Enumerable.Count(ViewBag.CompanyJobs) > 0)
-            {
+</div>
+<!-- Categories Group -->
+<div class="home-screen-section row" id="CompanyVacancies">
+    <div class="container">
+        <h2 class="blacktitle">Vacancies by Company  </h2>
+        @if (ViewBag.CompanyJobs != null && Enumerable.Count(ViewBag.CompanyJobs) > 0)
+        {
+            <ul>
                 @foreach (var row in ViewBag.CompanyJobs)
                 {
-                    <div class="four columns">
-                        <ul>
-                            <li><a href="/Home/AllJobsByCompany/?UserId=@row.UserId">@row.CompanyName<span></span></a></li>
-
-                        </ul>
-                    </div>
+                    <li><a href="/Home/AllJobsByCompany/?UserId=@row.UserId">@row.CompanyName</a></li>
                 }
-            }
-            else
-            {
-                <p> No data found!</p>
-            }
-        </div>
+            </ul>
+        }
+        else
+        {
+            <p> No data found!</p>
+        }
     </div>
+</div>
+<div class="btn-row text-center spacer-top-20">
+    <a href="/JobSeekerManagement" class="btn btn-primary btn-lg">Search more jobs</a>
 </div>
 
