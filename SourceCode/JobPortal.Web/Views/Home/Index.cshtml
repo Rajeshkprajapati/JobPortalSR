@@ -119,7 +119,7 @@
                         }
                         else
                         {
-                            <a href="dfh.html" class="listing full-time">
+                            <a href="javascript:void(0)" class="listing full-time">
                                 <h3>Now data found!</h3>
                             </a>
                         }
@@ -166,7 +166,7 @@
                         }
                         else
                         {
-                            <a href="dfh.html" class="listing full-time">
+                            <a href="javascript:void(0)" class="listing full-time">
                                 <h3>No data found!</h3>
                             </a>
                         }
@@ -323,6 +323,9 @@
                         }
                     }
                 }
+                else{
+                    <p>No data found</p>
+                }
             </div>
         </div>
         <div class="btn-row text-center">
@@ -381,12 +384,17 @@
                         {
                             foreach (var row in ViewBag.PopulerSearchesCategory)
                             {
-                                <li><a href="/Home/AllJobsByCategory/?id=@row.JobIndustryAreaId" class="jslogin">@row.JobIndustryAreaName <span>(@row.TotalCount)</span></a></li>
+                                <li>
+                                    <a href="/Home/AllJobsByCategory/?id=@row.JobIndustryAreaId" class="jslogin">
+                                        @row.JobIndustryAreaName
+                                        <span>(@row.TotalCount)</span>
+                                    </a>
+                                </li>
                             }
                         }
                         else
                         {
-                            <li><span>Waiting....</span></li>
+                            <li>No data found</li>
                         }
                     </ul>
                 </div>

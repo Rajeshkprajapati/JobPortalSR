@@ -17,9 +17,10 @@
         <div class="col-xs-12">
             <div class="row">
                 <div class="col-sm-12 search-form-element">
-                    <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>
+                    @*<input type="hidden" asp-for="JobRole" value="@jRoleId" id="hiddenjobtitle" />*@
+                    @*<select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select> <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select> <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>*@
+                    <select type="text" asp-for="JobTitle" id="JobTitle" name="JobTitle" multiple autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-sm-3 search-form-element">
@@ -29,13 +30,13 @@
                     @if (ViewBag.JobIndustryArea != null)
                     {
                         <select asp-for="JobCategory[0]" class="form-control" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
-                            <option value="">Job Category</option>
+                            <option value="">Job Industry</option>
                         </select>
                     }
                     else
                     {
                         <select asp-for="JobCategory" class="form-control">
-                            <option value="">Job Category</option>
+                            <option value="">Job Industry</option>
                         </select>
                     }
                 </div>
