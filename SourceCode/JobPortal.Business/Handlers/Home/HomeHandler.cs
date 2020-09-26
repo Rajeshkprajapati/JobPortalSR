@@ -749,5 +749,17 @@ namespace JobPortal.Business.Handlers.Home
             return model;
 
         }
+
+        public List<JobTitleViewModel> GetJobTitleById(int JobIndustrialArea)
+        {
+            DataTable jobTitle = masterDataRepository.GetJobTitlesById(JobIndustrialArea);
+            List<JobTitleViewModel> lstJobTitle = new List<JobTitleViewModel>();
+            if (jobTitle.Rows.Count > 0)
+            {
+                lstJobTitle = ConvertDatatableToModelList.ConvertDataTable<JobTitleViewModel>(jobTitle);
+                return lstJobTitle;
+            }
+            return lstJobTitle;
+        }
     }
 }

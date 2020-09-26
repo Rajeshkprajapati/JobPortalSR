@@ -653,5 +653,22 @@ namespace JobPortal.Web.Controllers
         //    }
         //    return Json(new { status, model });
         //}
+
+        [HttpGet]
+        public IActionResult JobTitlesById(int JobIndustryAreaId)
+        {
+            var jobTitle = new List<JobTitleViewModel>();
+            try
+            {
+                jobTitle = _homeHandler.GetJobTitleById(JobIndustryAreaId);
+
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(HomeController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return Json(jobTitle);
+        }
     }
 }

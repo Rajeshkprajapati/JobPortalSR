@@ -88,6 +88,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             try
             {
                 list = _jobTitleHandler.GetJobTitle();
+                ViewBag.JobIndustryArea = _jobTitleHandler.JobIndustryArea();
             }
             catch (DataNotFound ex)
             {

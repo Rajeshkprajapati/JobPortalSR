@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using JobPortal.Data.DataModel.Admin.JobTitle;
 using JobPortal.Model.DataViewModel.Shared;
 using JobPortal.Data.Interfaces.Shared;
+using JobPortal.Data.DataModel.Admin.JobIndustryArea;
 
 namespace JobPortal.Business.Handlers.Admin
 {
@@ -33,6 +34,7 @@ namespace JobPortal.Business.Handlers.Admin
                 {
                     JobTitleId = Convert.ToInt32(dt.Rows[i]["JobTitleId"]),
                     JobTitleName = Convert.ToString(dt.Rows[i]["JobTitleName"]),
+                    JobIndustryAreaId = Convert.ToInt32(dt.Rows[i]["JobIndustryAreaId"])
                 };
                 jobTitlesList.Add(jobTitles);
             }
@@ -44,6 +46,7 @@ namespace JobPortal.Business.Handlers.Admin
             {
                 JobTitleId = jobTitleViewModel.JobTitleId,
                 JobTitleName = jobTitleViewModel.JobTitleName,
+                JobIndustryAreaId = jobTitleViewModel.JobIndustryAreaId,
                 UpdatedBy = jobTitleViewModel.UpdatedBy
             };
             var result = jobTitleRepositroy.InsertUpdateJobTile(jobTitle);
@@ -61,6 +64,22 @@ namespace JobPortal.Business.Handlers.Admin
                 return true;
             }
             throw new Exception("Unable to delete data");
+        }
+
+        public List<JobIndustryAreaModel> JobIndustryArea()
+        {
+            DataTable dt = masterRepository.JobIndustryArea();
+            List<JobIndustryAreaModel> jobIndustryArea = new List<JobIndustryAreaModel>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                JobIndustryAreaModel JobIndustry = new JobIndustryAreaModel()
+                {
+                    JobIndustryAreaId = Convert.ToInt32(dt.Rows[i]["JobIndustryAreaId"]),
+                    JobIndustryAreaName = Convert.ToString(dt.Rows[i]["JobIndustryAreaName"]),
+                };
+                jobIndustryArea.Add(JobIndustry);
+            }
+            return (jobIndustryArea);
         }
     }
 }
