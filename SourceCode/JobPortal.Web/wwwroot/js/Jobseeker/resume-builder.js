@@ -183,7 +183,8 @@ function changeCourseCategory(_this) {
         timeFormat: false,
         position: "top",
         closeButton: false,
-        dateEnd: new Date()
+        dateEnd: new Date(),
+        dateStart:'01/01/1950'
     })
         .on("open", () => {
 

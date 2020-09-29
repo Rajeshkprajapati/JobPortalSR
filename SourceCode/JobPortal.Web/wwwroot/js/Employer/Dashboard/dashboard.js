@@ -51,7 +51,8 @@ dashboard = (function () {
             timeFormat: false,
             position: "bottom",
             closeButton: false,
-            dateStart: new Date('01/01/2015')
+            dateStart: new Date('01/01/2015'),
+            dateEnd: new Date()  
         })
             .on("open", () => {
                 isCalendarOpen = true;

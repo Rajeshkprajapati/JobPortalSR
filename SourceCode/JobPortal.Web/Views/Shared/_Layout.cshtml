@@ -53,7 +53,8 @@
                                             <a href="javascript:void(0);">Employer</a>
                                             <ul>
                                                 <li><a asp-controller="Home" asp-action="Index">Search Resume</a></li>
-                                                <li><a asp-controller="SearchResume" asp-action="AdvanceResumeSearch">Advance Search</a></li>
+                                                <li><a asp-area="Employer" asp-controller="SearchResume" asp-action="AdvanceResumeSearch">Advance Search</a></li>
+
                                                 <!--<li><a asp-area="Employer" asp-controller="JobManagement" asp-action="JobPosting">Post Job</a></li> -->
                                                 <li><a asp-area="Shared" asp-controller="BulkJobPost" asp-action="Index">Bulk Job Post</a></li>
                                             </ul>
@@ -89,7 +90,7 @@
                                     <li class="userbtn">
                                         @if (user.ProfilePic != "")
                                         {
-                                            <a href="">
+                                            <a href="javascript:void(0);">
                                                 @*<img src="@user.ProfilePic" alt="" class="userimg" />*@
                                                 &nbsp;&nbsp;@user.FullName
                                             </a>
@@ -106,7 +107,7 @@
                                             }
                                             else
                                             {
-                                                <li><a onclick="AddEditEmp()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
+                                                @*<li><a onclick="AddEditEmp()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>*@
                                             }
 
                                             <li><a href="/Auth/CreateNewPassword/"><i class="fa fa-key" aria-hidden="true">&nbsp;</i>Change Password</a></li>

@@ -62,7 +62,7 @@
                     </div>
                     <div>
                         <label>Mobile:</label>
-                        <input type="text" name="phone" id="phone" placeholder="Phone Number" required/>
+                        <input type="text" name="phone" id="phone" placeholder="Phone Number" minlength="10" maxlength="10" required/>
                     </div>
                     @{
                         var user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
