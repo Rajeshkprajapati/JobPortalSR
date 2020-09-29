@@ -1,124 +1,126 @@
 ﻿@model JobPortal.Model.DataViewModel.Employer.Dashboard.DashboardSummary
-
-
 <!-- Navigation / End -->
 <!-- Content
 ================================================== -->
-<div class="dashboard-content">
-    <!-- Titlebar -->
-    <div id="titlebar">
-        <div class="row">
-            <div class="col-md-12">
-                @{
-                    UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-                    <h2>Welcome, @user.FirstName</h2>
-                }
-                <!-- Breadcrumbs -->
-                <nav id="breadcrumbs">
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li>Dashboard</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-
-    <!-- Content -->
-    <div class="row">
-        <div class="col-lg-3 col-md-6">
-            <div class="dashboard-stat color-1" onclick="getViewedProfiles()">
-                <div class="dashboard-stat-content"><h4 class="counter">@Model.TotalProfileViewes</h4> <span>Profle View</span></div>
-                <div class="dashboard-stat-icon"><i class="ln ln-icon-File-Link"></i></div>
-            </div>
-        </div>
-    <!-- Item -->
-        <div class="col-lg-3 col-md-6">
-            <div class="dashboard-stat color-2" onclick="getMessages()">
-                <div class="dashboard-stat-content"><h4 class="counter">@Model.TotalMessages</h4> <span>Messages</span></div>
-                <div class="dashboard-stat-icon"><i class="ln ln-icon-Mail"></i></div>
-            </div>
-        </div>
-
-        <!-- Item -->
-        <div class="col-lg-3 col-md-6">
-            <div class="dashboard-stat color-3" onclick="getJobSeekers()">
-                <div class="dashboard-stat-content"><h4 class="counter">@Model.TotalResumeList</h4> <span>Total Applications</span></div>
-                <div class="dashboard-stat-icon"><i class="ln ln-icon-Business-ManWoman"></i></div>
-            </div>
-        </div>
-
-        <!-- Item -->
-        <div class="col-lg-3 col-md-6">
-            <div class="dashboard-stat color-4">
-                <div class="dashboard-stat-content"><h4 class="counter">@Model.RespondTime</h4> <span>Average Response Time</span></div>
-                <div class="dashboard-stat-icon"><i class="ln ln-icon-Over-Time2"></i></div>
-            </div>
-        </div>
-        <!-- Item -->
-        
-    </div>
-
-    <div class="row">
-
-        <!-- Recent Activity -->
-        <div class="col-lg-6 col-md-12">
-            <div class="dashboard-list-box margin-top-20">
-                <h4>Recent Activities</h4>
-                <ul>
-                    <li>
-                        Your listing <strong><a href="#">Marketing Coordinator - SEO / SEM Experience </a></strong> has been approved!
-                        <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                    </li>
-                    <li>
-                        Kathy Brown has sent you <strong><a href="#">private message</a></strong>!
-                        <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                    </li>
-                    <li>
-                        Someone bookmarked your <strong><a href="#">Restaurant Team Member - Crew</a></strong>!
-                        <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                    </li>
-                    <li>
-                        You have new application for <strong><a href="#">Power Systems User Experience Designer</a></strong>!
-                        <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                    </li>
-                    <li>
-                        Someone bookmarked your <strong><a href="#">Core PHP Developer for Site Maintenance  </a></strong> listing!
-                        <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                    </li>
-                    <li>
-                        Your job listing <strong><a href="#">Core PHP Developer for Site Maintenance  </a></strong> is expiring!
-                        <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Recent Activity -->
-        <div class="col-lg-6 col-md-12">
-            <div class="dashboard-list-box with-icons margin-top-20">
-                <h4>Your Packages</h4>
-                <ul class="dashboard-packages">
-                    <li>
-                        <i class="list-box-icon fa fa-shopping-cart"></i>
-                        <strong>Basic</strong>
-                        <span>You have 2 listings posted</span>
-                    </li>
-                    <li>
-                        <i class="list-box-icon fa fa-shopping-cart"></i>
-                        <strong>Extended</strong>
-                        <span>You have 2 listings posted</span>
-                    </li>
-                    <li>
-                        <i class="list-box-icon fa fa-shopping-cart"></i>
-                        <strong>Professional</strong>
-                        <span>You have 5 listings posted</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-
+<!-- Titlebar -->
+<div id="titlebar" class="container-fluid banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    <div class="container titlebar-inner">
+        @{
+            UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+            <h2 class="whitetitle"><span class="title-bdr-black-4">Welcome, @user.FirstName</span></h2>
+        }
     </div>
 </div>
+<nav id="breadcrumbs" class="container">
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</nav>
+
+<!-- Content -->
+<div class="container-fluid home-screen-section panelbg-gray10">
+    <div class="container dashboard-stats">
+        <div class="dashboard-stat color-1 col-md-3 col-sm-6" onclick="getViewedProfiles()">
+
+            <h4 class="counter">
+                <span>
+                    @Model.TotalProfileViewes
+                </span>
+            </h4>
+            <p>Profle View</p>
+        </div>
+        <!-- Item -->
+        <div class="dashboard-stat color-2 col-md-3 col-sm-6" onclick="getMessages()">
+            <h4 class="counter">
+                <span>
+                    @Model.TotalMessages
+                </span>
+            </h4>
+            <p>Messages</p>
+        </div>
+        <!-- Item -->
+        <div class="dashboard-stat color-3 col-md-3 col-sm-6" onclick="getJobSeekers()">
+            <h4 class="counter">
+                <span>@Model.TotalResumeList</span>
+            </h4>
+            <p>Total Applications</p>
+        </div>
+        <!-- Item -->
+        <div class="dashboard-stat color-4 col-md-3 col-sm-6">
+            <h4 class="counter">
+                <span>
+                    @Model.RespondTime
+                </span>
+            </h4>
+            <p>Average Response Time</p>
+        </div>
+        <!-- Item -->
+    </div>
+</div>
+
+<div class="container home-screen-section">
+
+    <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <h2 class="blacktitle">Recent Activities</h2>
+            <ul class="activity-lists">
+                <li class="activity-list-item">
+                    <div class="msg-content">
+                        <p>Your listing <a href="#">Marketing Coordinator - SEO / SEM Experience </a> has been approved!</p>
+                    </div>
+                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                </li>
+                <li class="activity-list-item">
+                    <div class="msg-content">
+                        <p>Kathy Brown has sent you <a href="#">private message</a>!</p>
+                    </div>
+                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                </li>
+                <li class="activity-list-item">
+                    <div class="msg-content">
+                        <p>Someone bookmarked your <a href="#">Restaurant Team Member - Crew</a>!</p>
+                    </div>
+                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                </li>
+                <li class="activity-list-item">
+                    <div class="msg-content">
+                        <p>You have new application for <a href="#">Power Systems User Experience Designer</a>!</p>
+                    </div>
+                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                </li>
+                <li class="activity-list-item">
+                    <div class="msg-content">
+                        <p>Someone bookmarked your <a href="#">Core PHP Developer for Site Maintenance</a> listing!</p>
+                    </div>
+                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                </li>
+                <li class="activity-list-item">
+                    <div class="msg-content">
+                        <p>Your job listing <a href="#">Core PHP Developer for Site Maintenance</a> is expiring!</p>
+                    </div>
+                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <h2 class="blacktitle">Your Packages</h2>
+            <ul class="package-details">
+                <li class="package-item">
+                    <h3><span>Basic</span></h3>
+                    <span>You have 2 listings posted</span>
+                </li>
+                <li class="package-item">
+                    <h3><span>Extended</span></h3>
+                    <span>You have 2 listings posted</span>
+                </li>
+                <li class="package-item">
+                    <h3><span>Professional</span></h3>
+                    <span>You have 5 listings posted</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 

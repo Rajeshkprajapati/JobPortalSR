@@ -3,64 +3,56 @@
     ViewData["Title"] = "DashBoard";
 }
 
-<div id="dashboard">
-    <!-- Navigation
-    ================================================== -->
-    <!-- Responsive Navigation Trigger -->
-    <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Dashboard Navigation</a>
 
-    <div class="dashboard-nav">
-        <div class="dashboard-nav-inner">
+<!-- Navigation
+================================================== -->
+<!-- Responsive Navigation Trigger -->
 
-            <ul data-submenu-title="Start">
-                <li class="active"><a href="">Dashboard</a></li>
-                <li onclick="getMessages()"><a href="javascript:void(0)">Messages</a></li>
-                <!-- <li><a href="#">Messages <span class="nav-tag">Model.TotalMessages</span></a></li> -->
+<a href="#" class="dashboard-responsive-nav-trigger"><span class="nav-bdr"></span></a>
+<nav class="dashboard-nav">
+    <ul data-submenu-title="Start">
+        <li class="active"><a href="">Dashboard</a></li>
+        <li onclick="getMessages()"><a href="javascript:void(0)">Messages</a></li>
+        <!-- <li><a href="#">Messages <span class="nav-tag">Model.TotalMessages</span></a></li> -->
+        <li>
+            <span class="sublink-item">For Employers</span>
+            <ul class="subnav-list">
+                <li onclick="addjobs()"><a href="javascript:void(0)">Add Job</a></li>
+                <li onclick="draftjobs()"><a href="javascript:void(0)">Draft Jobs</a></li>
+                <li onclick="getMyJobs()"><a href="javascript:void(0)">Manage Jobs</a></li>
+                <li onclick="getJobSeekersBasedOnEmployerHiringCriteria()"><a href="javascript:void(0)">View JobSeekers</a></li>
+                <li onclick="getJobSeekers()"><a href="javascript:void(0);">Manage Application</a></li>
+                <li onclick="getActiveCloseJobs()"><a href="javascript:void(0);">Active/Close Jobs</a></li>
             </ul>
-
-            <ul data-submenu-title="Management">
-                <li>
-                    <a>For Employers</a>
-                    <ul>
-                        <li onclick="addjobs()"><a href="javascript:void(0)">Add Job</a></li>
-                        <li onclick="draftjobs()"><a href="javascript:void(0)">Draft Jobs</a></li>
-                        <li onclick="getMyJobs()"><a href="javascript:void(0)">Manage Jobs</a></li>
-                        <li onclick="getJobSeekersBasedOnEmployerHiringCriteria()"><a href="javascript:void(0)">View JobSeekers</a></li>
-                        <li onclick="getJobSeekers()"><a href="javascript:void(0);">Manage Application</a></li>
-                        <li onclick="getActiveCloseJobs()"><a href="javascript:void(0);">Active/Close Jobs</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>Premium Section</a>
-                    <ul>
-                        <li><a href="#">Comming Soon <span class="nav-tag">2</span></a></li>
-                        <!--<li><a href="#">Job Alerts</a></li>
-                        <li><a href="#">Add Resume</a></li> -->
-                    </ul>
-                </li>
+        </li>
+        <li>
+            <span class="sublink-item">Premium Section</span>
+            <ul class="subnav-list">
+                <li><a href="#">Comming Soon <span class="nav-tag">2</span></a></li>
+                <!--<li><a href="#">Job Alerts</a></li>
+                <li><a href="#">Add Resume</a></li> -->
             </ul>
+        </li>
+        <li onclick="myProfile()"><a href="javascript:void(0)">My Profile</a></li>
+        <!-- <li><a href="index-2.html">Logout</a></li> -->
+    </ul>
+</nav>
 
-            <ul data-submenu-title="Account">
-                <li onclick="myProfile()"><a href="javascript:void(0)">My Profile</a></li>
-                <!-- <li><a href="index-2.html">Logout</a></li> -->
-            </ul>
-
-        </div>
-    </div>
-
-    <div id="mycontentHolder">
-    </div>
-    <!-- Content / End -->
+<div id="mycontentHolder" class="row">
 </div>
+
+
+<!-- Content / End -->
+
 
 
 
 @section Scripts
-    {   
+    {
     <script src="~/js/multiselector.js"></script>
     <script src="~/js/autoComplete.js"></script>
     <script src="~/js/autoCompleteIntegration.js"></script>
-    <script src="~/js/Employer/Dashboard/dashboard.js?v=28032020"></script>    
+    <script src="~/js/Employer/Dashboard/dashboard.js?v=28032020"></script>
     <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
     <script type="text/javascript">
         $(".chosen-select").chosen({});

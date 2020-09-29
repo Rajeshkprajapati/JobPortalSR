@@ -83,56 +83,58 @@
 
                                     @*<li><a asp-controller="Auth" asp-action="Index">Login</a></li>*@
                                 }
+
+                                @*if (user != null && user.RoleName == Constants.CorporateRole)
+                                    {
+                                        <ul class="action-navlink d-flex">
+                                            <li class="nav-item"><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard" class="action-nav-link">Dashboard</a></li>
+                                        </ul>
+                                    }
+                                    @*else if (user != null && user.RoleName == Constants.StudentRole)
+                                    {
+                                        <ul class="action-navlink d-flex">
+                                            <li class="nav-item"><a href="/Auth/Logout/" class="action-nav-link">Log Out</a></li>
+                                        </ul>
+                                    }*@
                                 @if (user != null)
                                 {
-                                    <li class="nav-item subnav">
+
+                                    <li class="action-navlink-nav-item subnav">
                                         @if (user.ProfilePic != "")
                                         {
-                                            <span class="nav-item-link">
+                                            <span class="action-nav-link-text employer">
                                                 @user.FullName
                                             </span>
                                         }
-                                        else
-                                        {
-                                            @*<a href=""><img src="~/ProfilePic/Avatar.jpg" alt="" class="userimg" /></a>*@
-                                        }
                                         <ul class="subnav-items">
-                                            <li class="subnav-item"><a href="javascript:void(0);" class="subnav-item-link"><i class="fa fa-tachometer" aria-hidden="true"></i> @user.FullName</a></li>
+                                            @if (user != null && user.RoleName == Constants.CorporateRole)
+                                            {
+                                                <li class="subnav-item"><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard" class="subnav-item-link">Dashboard</a></li>
+
+                                            }
                                             @if (user.RoleName == Constants.StudentRole)
                                             {
-                                                <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Profile" class="subnav-item-link"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
+                                                <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Profile" class="subnav-item-link">Edit Profile</a></li>
                                             }
                                             else
                                             {
-                                                <li class="subnav-item"><a onclick="AddEditEmp()" class="subnav-item-link"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
+                                                <li class="subnav-item"><a onclick="AddEditEmp()" class="subnav-item-link">Edit Profile</a></li>
                                             }
 
-                                            <li class="subnav-item"><a href="/Auth/CreateNewPassword/" class="subnav-item-link"><i class="fa fa-key" aria-hidden="true"></i> Change Password</a></li>
-                                            <li class="subnav-item"><a href="/Auth/Logout/" class="subnav-item-link"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+                                            <li class="subnav-item"><a href="/Auth/CreateNewPassword/" class="subnav-item-link">Change Password</a></li>
+                                            <li class="subnav-item"><a href="/Auth/Logout/" class="subnav-item-link">Logout</a></li>
                                         </ul>
+                                    </li>
+
+                                }
+                                else
+                                {
+                                    <li class="action-navlink-nav-item">
+                                        <a href="/Auth/JobSeekerLogin/" class="action-nav-link jobseeker">JOBSEEKER </a>
+                                        <a href="/Auth/EmployerLogin/" class="action-nav-link employer">EMPLOYER</a>
                                     </li>
                                 }
                             </ul>
-                            @if (user != null && user.RoleName == Constants.CorporateRole)
-                            {
-                                <ul class="action-navlink d-flex">
-                                    <li class="nav-item"><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard" class="action-nav-link"><i class="fa fa-cog"></i> Dashboard</a></li>
-                                    <li class="nav-item"><a href="/Auth/Logout/" class="action-nav-link"><i class="fa fa-lock"></i> Log Out</a></li>
-                                </ul>
-                            }
-                            else if (user != null && user.RoleName == Constants.StudentRole)
-                            {
-                                <ul class="action-navlink d-flex">
-                                    <li class="nav-item"><a href="/Auth/Logout/" class="action-nav-link"><i class="fa fa-lock"></i> Log Out</a></li>
-                                </ul>
-                            }
-                            else
-                            {
-                                <ul class="action-navlink d-flex">
-                                    <li class="nav-item"><a href="/Auth/JobSeekerLogin/" class="action-nav-link jobseeker"> JOBSEEKER </a></li>
-                                    <li class="nav-item"><a href="/Auth/EmployerLogin/" class="action-nav-link employer">EMPLOYER</a></li>
-                                </ul>
-                            }
                         </nav>
                         <!-- Menu end -->
                     </div>

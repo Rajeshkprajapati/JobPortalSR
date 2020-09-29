@@ -100,11 +100,12 @@
                                             <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo"><img src="@jobs.CompanyLogo" alt="" class="responsive-img"></a>
                                         </div>
                                         <div class="job-list-details col-xs-9">
+                                            <span class="listing-type">@jobs.EmploymentStatus</span>
                                             <h4>
                                                 <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
                                                     @jobs.JobTitleByEmployer / @jobs.JobTitle
                                                 </a>
-                                                <span class="listing-type">@jobs.EmploymentStatus</span>
+
                                             </h4>
                                             <ul class="job-discription">
                                                 <li>@jobs.CompanyName</li>
@@ -145,11 +146,12 @@
                                             </a>
                                         </div>
                                         <div class="job-list-details col-xs-9">
+                                            <span class="listing-type">@jobs.EmploymentStatus</span>
                                             <h4>
                                                 <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
                                                     @jobs.JobTitleByEmployer
                                                 </a>
-                                                <span class="listing-type">@jobs.EmploymentStatus</span>
+
                                             </h4>
                                             <ul class="job-discription">
                                                 <li><i class="ln ln-icon-Management"></i> @jobs.CompanyName</li>

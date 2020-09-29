@@ -27,53 +27,54 @@
 
 
 <!-- Dashboard -->
-<div id="dashboard">
+<div id="dashboard" class="row">
     <!-- Navigation
     ================================================== -->
     <!-- Responsive Navigation Trigger -->
-    <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Dashboard Navigation</a>
-    <div class="dashboard-nav">
-        <div class="dashboard-nav-inner">
-            <ul data-submenu-title="Start">
-                <li class="active"><a href="/Dashboard">Dashboard</a></li>
-                @*<li><a href="dashboard-messages.html">Messages <span class="nav-tag">2</span></a></li>*@
-            </ul>
-            <ul>
-                <li>
-                    <a>Administrator</a>
-                    <ul>
-                        <li onclick="ManageUsers()"><a href="javascript:void(0);">Manage Users<span class="badge nav-tag notification-badge" id="manage-users-badge">0</span></a></li>
-                        <li onclick="GetSuccessStoryVideo()"><a href="javascript:void(0);">Success Story</a></li>
-                        <li onclick="GetJobRoles()"><a href="javascript:void(0);">Job Title</a></li>
-                        <li onclick="GetStateList()"><a href="javascript:void(0);">States</a></li>
-                        <li onclick="GetCityList()"><a href="javascript:void(0);">Cities</a></li>
-                        <li onclick=" MangeJobsData()"><a href="javascript:void(0);">Manage Jobs</a></li>
-                        <li onclick="BulkJobs()"><a href="javascript:void(0);">Bulk Uploads</a></li>
-                        <li onclick=" FeaturedJobs()"><a href="javascript:void(0);">Featured Jobs</a></li>
-                        <li onclick="UsersReviews()"><a href="javascript:void(0);">Users Review</a></li>
-                        <li onclick="manageadveritsement()"><a href="javascript:void(0);">Manage Advertisement</a></li>
-
-                        @*<li><a href="dashboard-manage-applications.html">Manage Applications <span class="nav-tag">4</span></a></li>
-                            <li><a href="dashboard-add-job.html">Add Job</a></li>*@
-                    </ul>
-                </li>
-                @*<li>
-                        <a>For Candidates</a>
+    <div class="col-xs-12">
+        <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Dashboard Navigation</a>
+        <div class="dashboard-nav">
+            <div class="dashboard-nav-inner">
+                <ul data-submenu-title="Start">
+                    <li class="active"><a href="/Dashboard">Dashboard</a></li>
+                    @*<li><a href="dashboard-messages.html">Messages <span class="nav-tag">2</span></a></li>*@
+                </ul>
+                <ul>
+                    <li>
+                        <a>Administrator</a>
                         <ul>
-                            <li><a href="dashboard-manage-resumes.html">Manage Resumes <span class="nav-tag">2</span></a></li>
-                            <li><a href="dashboard-job-alerts.html">Job Alerts</a></li>
-                            <li><a href="dashboard-add-resume.html">Add Resume</a></li>
-                        </ul>
-                    </li>*@
-            </ul>
-            <ul data-submenu-title="Account">
-                @*<li><a href="dashboard-my-profile.html">My Profile</a></li>*@
-                <li><a href="/Auth/Logout/">Logout</a></li>
-            </ul>
+                            <li onclick="ManageUsers()"><a href="javascript:void(0);">Manage Users<span class="badge nav-tag notification-badge" id="manage-users-badge">0</span></a></li>
+                            <li onclick="GetSuccessStoryVideo()"><a href="javascript:void(0);">Success Story</a></li>
+                            <li onclick="GetJobRoles()"><a href="javascript:void(0);">Job Title</a></li>
+                            <li onclick="GetStateList()"><a href="javascript:void(0);">States</a></li>
+                            <li onclick="GetCityList()"><a href="javascript:void(0);">Cities</a></li>
+                            <li onclick=" MangeJobsData()"><a href="javascript:void(0);">Manage Jobs</a></li>
+                            <li onclick="BulkJobs()"><a href="javascript:void(0);">Bulk Uploads</a></li>
+                            <li onclick=" FeaturedJobs()"><a href="javascript:void(0);">Featured Jobs</a></li>
+                            <li onclick="UsersReviews()"><a href="javascript:void(0);">Users Review</a></li>
+                            <li onclick="manageadveritsement()"><a href="javascript:void(0);">Manage Advertisement</a></li>
 
+                            @*<li><a href="dashboard-manage-applications.html">Manage Applications <span class="nav-tag">4</span></a></li>
+                                <li><a href="dashboard-add-job.html">Add Job</a></li>*@
+                        </ul>
+                    </li>
+                    @*<li>
+                            <a>For Candidates</a>
+                            <ul>
+                                <li><a href="dashboard-manage-resumes.html">Manage Resumes <span class="nav-tag">2</span></a></li>
+                                <li><a href="dashboard-job-alerts.html">Job Alerts</a></li>
+                                <li><a href="dashboard-add-resume.html">Add Resume</a></li>
+                            </ul>
+                        </li>*@
+                </ul>
+                <ul data-submenu-title="Account">
+                    @*<li><a href="dashboard-my-profile.html">My Profile</a></li>*@
+                    <li><a href="/Auth/Logout/">Logout</a></li>
+                </ul>
+            </div>
         </div>
+        <!-- Navigation / End -->
     </div>
-    <!-- Navigation / End -->
     <!-- Content
     ================================================== -->
     <div id="contentHolder">
@@ -94,4 +95,4 @@
     @*<script src="~/js/Admin/Calendar.js"></script>*@
     <script src="~/js/Admin/JobManager/jobmodifications.js"></script>
     <script src="~/js/Admin/Index/Index.js"></script>
- }
+}

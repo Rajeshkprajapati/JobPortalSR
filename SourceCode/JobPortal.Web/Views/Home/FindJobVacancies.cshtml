@@ -26,9 +26,14 @@
 <!-- Titlebar
 ================================================== -->
 <div id="titlebar" class="banner-bg row" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
-    <div class="container">
-        <div class="col-lg-10 col-sm-10 col-xs-12 innerpage-banner">
-            <h2 class="whitetitle">All Categories</h2>
+    <div class="container titlebar-inner">
+        <div class="row">
+            <div class="col-sm-8">
+                <h2 class="whitetitle"><span class="title-bdr-black-4">All Categories</span></h2>
+            </div>
+            <div class="col-sm-4 text-right spacer-top-20">
+                <a href="/JobSeekerManagement" class="btn btn-primary btn-lg">Search more jobs</a>
+            </div>
         </div>
     </div>
 </div>
@@ -41,10 +46,10 @@
         <h2 class="blacktitle">Jobs by Industry & Categories</h2>
         @if (ViewBag.CategoryJobs != null && Enumerable.Count(ViewBag.CategoryJobs) > 0)
         {
-            <ul>
+            <ul class="black-bg link-lists">
                 @foreach (var row in ViewBag.CategoryJobs)
                 {
-                    <li><a class="text-overflow" href="/Home/AllJobsByCategory/?id=@row.JobIndustryAreaId">@row.JobIndustryAreaName</a></li>
+                    <li><a href="/Home/AllJobsByCategory/?id=@row.JobIndustryAreaId">@row.JobIndustryAreaName</a></li>
                 }
             </ul>
         }
@@ -55,12 +60,12 @@
     </div>
 </div>
 <!-- Categories Group -->
-<div class="home-screen-section row panelbg-lghtgrey" id="CityVacancies">
+<div class="home-screen-section row panelbg-black" id="CityVacancies">
     <div class="container">
-        <h2 class="blacktitle">Vacancies by Cities </h2>
+        <h2 class="whitetitle greenbdr">Vacancies by Cities </h2>
         @if (ViewBag.CityJobs != null && Enumerable.Count(ViewBag.CityJobs) > 0)
         {
-            <ul class="">
+            <ul class="white-bg link-lists">
                 @foreach (var row in ViewBag.CityJobs)
                 {
                     <li><a href="/Home/AllJobsByCity/?citycode=@row.CityCode">@row.City</a></li>
@@ -79,7 +84,7 @@
         <h2 class="blacktitle">Vacancies by Company  </h2>
         @if (ViewBag.CompanyJobs != null && Enumerable.Count(ViewBag.CompanyJobs) > 0)
         {
-            <ul>
+            <ul class="black-bg link-lists">
                 @foreach (var row in ViewBag.CompanyJobs)
                 {
                     <li><a href="/Home/AllJobsByCompany/?UserId=@row.UserId">@row.CompanyName</a></li>
@@ -92,7 +97,5 @@
         }
     </div>
 </div>
-<div class="btn-row text-center spacer-top-20">
-    <a href="/JobSeekerManagement" class="btn btn-primary btn-lg">Search more jobs</a>
-</div>
+
 

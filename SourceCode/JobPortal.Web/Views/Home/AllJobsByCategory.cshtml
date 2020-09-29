@@ -29,88 +29,94 @@
     }
 }
 
-    }
+
 
 <!-- Titlebar
 ================================================== -->
-<div id="titlebar">
-    <div class="container">
-        <div class="ten columns">
-            <span>We found best matching:</span>
-            <h2>Jobs of categories</h2>
-        </div>
-        <div class="six columns">
-            <a href="/JobSeekerManagement" class="button">Search more jobs</a>
+<div id="titlebar" class="banner-bg row" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    <div class="container titlebar-inner">
+        <div class="row">
+            <div class="col-sm-8">
+                <h2 class="whitetitle"><span class="title-bdr-black-4">Jobs of categories</span></h2>
+            </div>
+            <div class="col-sm-4 text-right spacer-top-20">
+                <a href="/JobSeekerManagement" class="btn btn-primary btn-lg">Search more jobs</a>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Content
 ================================================== -->
-<div class="container">
-    <!-- Recent Jobs -->
-    <div class="eleven columns">
-        <div class="padding-right">
-            <div class="listings-container">
+<div class="home-screen-section row">
+    <div class="container">
+        <h2 class="blacktitle">We found best matching:</h2>
+        <!-- Recent Jobs -->
+        <div class="job-lists row two-column">
 
-                @if (ViewBag.AllJobsCategory != null)
+            @if (ViewBag.AllJobsCategory != null)
+            {
+                @foreach (var jobs in ViewBag.AllJobsCategory)
                 {
-                    @foreach (var jobs in ViewBag.AllJobsCategory)
-                    {
-                        <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing full-time">
-                            <div class="listing-logo">
-                                <img src="@jobs.CompanyLogo" alt="">
+                    <div class="job-lists-item col-md-6 col-xs-12">
+                        <div class="job-list-content col-xs-12">
+                            <div class="col-xs-3 company">
+                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo"><img src="@jobs.CompanyLogo" alt="" class="responsive-img"></a>
                             </div>
-                            <div class="listing-title">
-                                <h4> @jobs.JobTitle <span class="listing-type">@jobs.EmploymentStatus</span></h4>
-                                <ul class="listing-icons">
-                                    <li><i class="ln ln-icon-Management"></i> @jobs.CompanyName</li>
-                                    <li><i class="ln ln-icon-Map2"></i> @jobs.City</li>
-                                    <li><i class="ln ln-icon-Money-2"></i>@jobs.CTC</li>
-                                    <li><div class="listing-date new">@jobs.NumberOfDays&#8203;d ago</div></li>
+                            <div class="job-list-details col-xs-9">
+                                <h4>
+                                    <a href="/Job/JobDetails/?jobid=@jobs.JobPostId">
+                                        @jobs.JobTitle <span class="listing-type">@jobs.EmploymentStatus</span>
+                                    </a>
+                                </h4>
+                                <ul class="job-discription">
+                                    <li> @jobs.CompanyName</li>
+                                    <li> @jobs.City</li>
+                                    <li> @jobs.CTC</li>
+                                    <li><span>@jobs.NumberOfDays</span><span>d ago</span></li>
                                 </ul>
                             </div>
-                        </a>
-                    }
-
+                        </div>
+                    </div>
                 }
-                else
-                {
-                    <p> No data found</p>
-                }
-            </div>
-            <div class="pagination-container">
-                <nav class="pagination">
-                    <ul id="pagin">
-                        @*<li><a href="#" class="current-page">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li class="blank">...</li>
-                            <li><a href="#">22</a></li>*@
-                    </ul>
-                </nav>
-                <nav class="pagination-next-prev">
-                    <ul>
-                        <li><a class="prev">Previous</a></li>
-                        <li><a class="next">Next</a></li>
-                    </ul>
-                </nav>
-            </div>
+            }
+            else
+            {
+                <p> No data found</p>
+            }
         </div>
+        <nav class="pagination-next-prev graypanel">
+            <ul>
+                <li><a class="prev quick-links btn btn-link text-uppercase">Previous</a></li>
+                <li><a class="next quick-links btn btn-link text-uppercase">Next</a></li>
+            </ul>
+        </nav>
     </div>
-
-    <!-- Widgets -->
-    <div class="five columns">
-        <!-- Sort by -->
-        <div class="widget">
-            <img src="~/Assets/images/app-images-v3.png" width="100%">
-            <div class="clearfix"></div>
-        </div>
-    </div>
-    <!-- Widgets / End -->
-
 </div>
-
+<div class="home-screen-section row panelbg-green">
+    <div class="container">
+        <!-- Widgets -->
+        <!-- Sort by -->
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="widget text-center">
+                    <img src="~/Assets/images/app-images-v3.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="widget text-center">
+                    <img src="~/Assets/images/app-images-v3.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="widget text-center">
+                    <img src="~/Assets/images/app-images-v3.png" class="responsive-img">
+                </div>
+            </div>
+        </div>
+        <!-- Widgets / End -->
+    </div>
+</div>
 @section Scripts
     {
     <script src="~/js/Jobseeker/JobDetails.js"></script>
