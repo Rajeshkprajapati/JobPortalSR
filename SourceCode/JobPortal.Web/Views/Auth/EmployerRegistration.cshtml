@@ -300,7 +300,7 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-        function checkConsultancyLoginState() {
+        function checkEmployeeLoginState() {
             FB.login(function (response) {
                 if (response.status === 'connected') {
                     statusChangeCallbackForEmployee(response);
