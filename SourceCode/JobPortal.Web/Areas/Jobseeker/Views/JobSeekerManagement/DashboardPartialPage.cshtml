@@ -15,77 +15,72 @@
         <li>Dashboard</li>
     </ol>
 </nav>
-
-
 <!-- Content -->
-<div class="row">
+<div class="col-sm-12 dashboard-stats">
     <!-- Item -->
-    <div class="col-lg-3 col-md-6" onclick="JobseekerViewedProfile()">
-        <div class="dashboard-stat color-1">
-            <div class="dashboard-stat-content"><h4 class="counter">@Model.ViewedYourProfile</h4> <span>Viewed your profile</span></div>
-            <div class="dashboard-stat-icon"><i class="ln ln-icon-File-Link"></i></div>
-        </div>
+    <div class="dashboard-stat color-1 col-sm-3 col-xs-6" onclick="JobseekerViewedProfile()">
+        <h4 class="counter">
+            <span>@Model.ViewedYourProfile</span>
+        </h4>
+        <p>Viewed your profile</p>
     </div>
     <!-- Item -->
-    <div class="col-lg-3 col-md-6" onclick="JobseekerAppliedJobs()">
-        <div class="dashboard-stat color-2">
-            <div class="dashboard-stat-content"><h4 class="counter">@Model.TotalAppliedJobs</h4> <span>Total Job Applied</span></div>
-            <div class="dashboard-stat-icon"><i class="ln ln-icon-Bar-Chart"></i></div>
-        </div>
-    </div>
+    <div class="dashboard-stat color-2 col-sm-3 col-xs-6" onclick="JobseekerAppliedJobs()">
+        <h4 class="counter">
+            <span>
+                @Model.TotalAppliedJobs
+            </span>
+        </h4>
+        <p>Total Job Applied</p>
 
-    <!-- Item -->
-    <div class="col-lg-3 col-md-6" onclick="JobseekerContactedDetails()">
-        <div class="dashboard-stat color-3">
-            <div class="dashboard-stat-content"><h4 class="counter">@Model.TotalContactedNo</h4> <span>Contacted you</span></div>
-            <div class="dashboard-stat-icon"><i class="ln ln-icon-Business-ManWoman"></i></div>
-        </div>
     </div>
-
     <!-- Item -->
-    <div class="col-lg-3 col-md-6" onclick="EmployerFollowers()">
-        <div class="dashboard-stat color-4">
-            <div class="dashboard-stat-content"><h4 class="counter">@Model.TotalCompaniesFollowed</h4> <span>Companies followed</span></div>
-            <div class="dashboard-stat-icon"><i class="ln ln-icon-Add-UserStar "></i></div>
-        </div>
+    <div class="dashboard-stat color-3 col-sm-3 col-xs-6" onclick="JobseekerContactedDetails()">
+        <h4 class="counter">
+            <span>@Model.TotalContactedNo</span>
+        </h4>
+        <p>Contacted you</p>
+    </div>
+    <!-- Item -->
+    <div class="dashboard-stat color-4 col-sm-3 col-xs-6" onclick="EmployerFollowers()">
+        <h4 class="counter">
+            <span>@Model.TotalCompaniesFollowed</span>
+        </h4>
+        <p>Companies followed</p>
     </div>
 </div>
 
-<div class="container">
-    <!-- Recent Jobs -->
-    <h3 class="margin-bottom-20 margin-top-10">Recommended Jobs</h3>
-    <div class="eleven columns">
-        <div class="padding-right">
-            <div class="listings-container">
+<div class="col-sm-12 spacer-top-20">
+    <h2 class="blacktitle">
+        Recommended Jobs
+    </h2>
+    <!-- Listing -->
+    @if (ViewBag.SkillsJobs != null && ViewBag.SkillsJobs.Count > 0)
+    {
+        <div class="job-lists two-column">
+            foreach (var row in ViewBag.SkillsJobs)
+            {
+            <div class="job-lists-item col-sm-6">
+                <div class="listing-logo">
+                    <a href="/Job/JobDetails/?jobid=@row.JobPostId" class="listing full-time"> <img src="@row.CompanyLogo" alt=""> </a>
+                </div>
+                <div class="listing-title">
+                    <h4>@row.JobTitleByEmployer<span class="listing-type">@row.EmploymentStatus</span></h4>
+                    <ul class="listing-icons">
+                        <li><i class="ln ln-icon-Management"></i> @row.CompanyName</li>
+                        <li><i class="ln ln-icon-Map2"></i> @row.City</li>
+                        <li><i class="ln ln-icon-Money-2"></i>@row.CTC</li>
+                        <li><i class="ln ln-icon-Archery-2"></i>@row.Skills</li>
+                    </ul>
+                </div>
 
-                <!-- Listing -->
-                @if (ViewBag.SkillsJobs != null && ViewBag.SkillsJobs.Count > 0)
-                {
-                    foreach (var row in ViewBag.SkillsJobs)
-                    {
-                        <a href="/Job/JobDetails/?jobid=@row.JobPostId" class="listing full-time">
-                            <div class="listing-logo">
-                                <img src="@row.CompanyLogo" alt="">
-                            </div>
-                            <div class="listing-title">
-                                <h4>@row.JobTitleByEmployer<span class="listing-type">@row.EmploymentStatus</span></h4>
-                                <ul class="listing-icons">
-                                    <li><i class="ln ln-icon-Management"></i> @row.CompanyName</li>
-                                    <li><i class="ln ln-icon-Map2"></i> @row.City</li>
-                                    <li><i class="ln ln-icon-Money-2"></i>@row.CTC</li>
-                                    <li><i class="ln ln-icon-Archery-2"></i>@row.Skills</li>
-                                    @*<li><div class="listing-date new"></div></li>*@
-                                </ul>
-                            </div>
-                        </a>
-                    }
-                }
-                else
-                {
-                    <p>No recommended jobs! </p>
-                }
             </div>
+            }
         </div>
-    </div>
-</div>
+    }
+    else
+    {
+        <p>No recommended jobs! </p>
+    }
 
+</div>

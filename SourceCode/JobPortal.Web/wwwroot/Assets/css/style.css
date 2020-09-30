@@ -24,12 +24,10 @@ body {
 /* Header style */
 .sticky-header {
     background-color: rgba(0,0,0,0.03);
-    padding-top: 10px;
-    padding-bottom: 10px;
     box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.1);
 }
 
-.logo{
+.logo {
     max-width: 160px;
 }
 
@@ -944,9 +942,10 @@ span.part-time {
     flex-wrap: wrap;
 }
 
-.job-lists-item{
-    padding-top:7px;
+.job-lists-item {
+    padding-top: 7px;
     padding-bottom: 7px;
+    .close-list-item
 }
 
 .job-list-content {
@@ -956,16 +955,16 @@ span.part-time {
     padding-top: 15px;
     padding-bottom: 15px;
     align-items: flex-start;
+    height: 100%;
 }
 
 .job-list-content .company {
     border: 1px solid #f1f1f1;
+    padding: 5px;
 }
 
 .job-lists-item .company-logo {
     display: inline-block;
-    padding-top: 15px;
-    padding-bottom: 15px;
 }
 
 .job-lists-item .responsive-img {
@@ -1680,8 +1679,8 @@ label.input-label {
     padding-right: 8px;
 }
 .close-list-item {
-    width: 20px;
-    height: 20px;
+    min-width: 25px;
+    height: 25px;
     text-align: center;
     color: #c75555;
     opacity: 0.6;
