@@ -49,11 +49,11 @@
                                 {
                                     @if (user.RoleName == Constants.CorporateRole || user.RoleName == Constants.StaffingPartnerRole)
                                     {
-                                        <!--<li><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard">Dashboard</a></li> -->
                                         <li class="nav-item subnav">
                                             <a href="javascript:void(0);" class="nav-item-link">Employer</a>
                                             <ul class="subnav-items">
                                                 <li class="subnav-item"><a asp-controller="Home" asp-action="Index" class="subnav-item-link">Search Resume</a></li>
+                                                <li><a asp-area="Employer" asp-controller="SearchResume" asp-action="AdvanceResumeSearch">Advance Search</a></li>
                                                 <!--<li><a asp-area="Employer" asp-controller="JobManagement" asp-action="JobPosting">Post Job</a></li> -->
                                                 <li class="subnav-item"><a asp-area="Shared" asp-controller="BulkJobPost" asp-action="Index" class="subnav-item-link">Bulk Job Post</a></li>
                                             </ul>
@@ -73,45 +73,45 @@
 
                                 @if (user != null)
                                 {
-                            <li class="action-navlink-nav-item subnav">
-                                @if (user.ProfilePic != "")
-                                {
-                                    @if (user != null && user.RoleName == Constants.CorporateRole)
-                                    {
-                                        <span class="action-nav-link-text employer">
-                                            @user.FullName
-                                        </span>
-                                    }
-                                    else if (user.RoleName == Constants.StudentRole)
-                                    {
-                                        <span class="action-nav-link-text jobseeker">
-                                            @user.FullName
-                                        </span>
-                                    }
+                                    <li class="action-navlink-nav-item subnav">
+                                        @if (user.ProfilePic != "")
+                                        {
+                                            @if (user != null && user.RoleName == Constants.CorporateRole)
+                                            {
+                                                <span class="action-nav-link-text employer">
+                                                    @user.FullName
+                                                </span>
+                                            }
+                                            else if (user.RoleName == Constants.StudentRole)
+                                            {
+                                                <span class="action-nav-link-text jobseeker">
+                                                    @user.FullName
+                                                </span>
+                                            }
 
-                                }
-                                <ul class="subnav-items">
-                                    @if (user != null && user.RoleName == Constants.CorporateRole)
-                                    {
-                                        <li class="subnav-item"><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard" class="subnav-item-link">Dashboard</a></li>
+                                        }
+                                        <ul class="subnav-items">
+                                            @if (user != null && user.RoleName == Constants.CorporateRole)
+                                            {
+                                                <li class="subnav-item"><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard" class="subnav-item-link">Dashboard</a></li>
 
-                                    }
-                                    @if (user.RoleName == Constants.StudentRole)
-                                    {
-                                        <li class="subnav-item">
-                                            <a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Dashboard" class="subnav-item-link">Dashboard</a>
-                                        </li>
-                                        <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Profile" class="subnav-item-link">Edit Profile</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li class="subnav-item"><a onclick="AddEditEmp()" class="subnav-item-link">Edit Profile</a></li>
-                                    }
+                                            }
+                                            @if (user.RoleName == Constants.StudentRole)
+                                            {
+                                                <li class="subnav-item">
+                                                    <a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Dashboard" class="subnav-item-link">Dashboard</a>
+                                                </li>
+                                                <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Profile" class="subnav-item-link">Edit Profile</a></li>
+                                            }
+                                            else
+                                            {
+                                                @*<li class="subnav-item"><a onclick="AddEditEmp()" class="subnav-item-link">Edit Profile</a></li>*@
+                                            }
 
-                                    <li class="subnav-item"><a href="/Auth/CreateNewPassword/" class="subnav-item-link">Change Password</a></li>
-                                    <li class="subnav-item"><a href="/Auth/Logout/" class="subnav-item-link">Logout</a></li>
-                                </ul>
-                            </li>
+                                            <li class="subnav-item"><a href="/Auth/CreateNewPassword/" class="subnav-item-link">Change Password</a></li>
+                                            <li class="subnav-item"><a href="/Auth/Logout/" class="subnav-item-link">Logout</a></li>
+                                        </ul>
+                                    </li>
 
                                 }
                                 else
@@ -154,20 +154,12 @@
                         <ul class="footer-links">
                             <li><a href="/Home/Aboutus">About Us</a></li>
                             <li><a href="/Home/ContactUs">Contact Us</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Our Blog</a></li>
-                            <li><a href="#">Terms of Service</a></li>
-                            <li><a asp-controller="Home" asp-action="PrivacyPolicy">Privacy Policy</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-3">
-                        <h3>Press</h3>
+                        <h4>Privacy & Policy</h4>
                         <ul class="footer-links">
-                            <li><a href="#">In the News</a></li>
-                            <li><a href="#">Press Releases</a></li>
-                            <li><a href="#">Awards</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                            <li><a href="#">Timeline</a></li>
+                            <li><a asp-controller="Home" asp-action="PrivacyPolicy">Privacy Policy</a></li>
                         </ul>
                     </div>
 
@@ -175,12 +167,6 @@
                         <h3>Browse</h3>
                         <ul class="footer-links">
                             <li><a href="/Home/FreelancerJobs">Freelancers Jobs</a></li>
-                            <li><a href="#">Freelancers in USA</a></li>
-                            <li><a href="#">Freelancers in UK</a></li>
-                            <li><a href="#">Freelancers in Canada</a></li>
-                            <li><a href="#">Freelancers in Australia</a></li>
-                            <li><a href="#">Find Jobs</a></li>
-
                         </ul>
                     </div>
                     <div class="col-sm-3">
@@ -196,7 +182,7 @@
             </div>
         </div>
         <div class="footer-bottom row">
-            <p class="copyrights container text-center">©  Copyright 2018 by <a href="#">Work Scout</a>. All Rights Reserved.</p>
+            <p class="copyrights container text-center">©  Copyright 2020 by <a href="javascript:void(0);">CareerIndeed</a>. All Rights Reserved.</p>
         </div>
     </footer>
     <div class="windows8">

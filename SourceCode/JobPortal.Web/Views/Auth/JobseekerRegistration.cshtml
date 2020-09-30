@@ -81,15 +81,24 @@
 <div id="fb-root"></div>
 @section Scripts
     {
-
     <script>
-        gapi.load('auth2', function () {
-            auth2 = gapi.auth2.init({
-                client_id: '959100024495-sshngggnec7htiprelkoqvb5f70l6afq.apps.googleusercontent.com',
-                cookiepolicy: 'single_host_origin',
-            });
-            attachSignin(document.getElementById('signin'));
+        $(document).ready(function () {
+            //SpecialChar('#Firstname');
+            //SpecialChar('#Lastname');
         });
+
+    </script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
+    <script>
+        window.onLoadCallback = function () {
+            gapi.load('auth2', function () {
+                auth2 = gapi.auth2.init({
+                    client_id: '959100024495-sshngggnec7htiprelkoqvb5f70l6afq.apps.googleusercontent.com',
+                    cookiepolicy: 'single_host_origin',
+                });
+                attachSignin(document.getElementById('signin'));
+            });
+        };
         function attachSignin(element) {
             console.log(element.id);
             auth2.attachClickHandler(element, {},
@@ -99,11 +108,22 @@
                     console.log(JSON.stringify(error, undefined, 2));
                 });
         }
+        //function onSignIn(googleUser) {
+        //    var profile = googleUser.getBasicProfile();
+        //    var id_token = googleUser.getAuthResponse().id_token;
+        //    console.log(id_token);
+        //    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        //    console.log('Name: ' + profile.getName());
+        //    console.log('Image URL: ' + profile.getImageUrl());
+        //    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        //    googleRegistration(id_token);
+        //}
         function googleRegistration(response) {
             if (response.getAuthResponse().id_token) {
                 var accessToken = response.getAuthResponse().id_token;
                 SendAJAXRequest(`/Auth/JobseekerGoogleRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
                     if (resp && resp.isSuccess) {
+                        //console.log('Success');
                         InformationDialog('Information', 'Registration Successfull!');
                     } else {
                         ErrorDialog('Warning', resp.msg);
@@ -150,6 +170,7 @@
             var accessToken = response.authResponse.accessToken;
             SendAJAXRequest(`/Auth/FBJobseekerRegistration/`, 'POST', accessToken, 'JSON', (resp) => {
                 if (resp && resp.isSuccess) {
+                    //console.log('Success');
                     InformationDialog('Information', 'Registration Successfull!');
                 } else {
                     ErrorDialog('Warning', 'Email already exist!');
@@ -158,3 +179,4 @@
         }
     </script>
 }
+
