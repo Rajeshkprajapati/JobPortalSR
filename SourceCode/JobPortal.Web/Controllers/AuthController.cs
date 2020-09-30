@@ -192,6 +192,12 @@ namespace JobPortal.Web.Controllers
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 ViewData["SuccessMessage"] = ex.Message;
             }
+            catch(Exception ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+                ViewData["SuccessMessage"] = "Error Occured,Please contact Admin";
+            }
             return View();
         }
 

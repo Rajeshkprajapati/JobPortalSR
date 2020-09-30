@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-sm-8">
                         <ul class="social-icons">
-                            <li>                                
+                            <li>
                                 <a class="facebook" href="javascript:void(0)" onclick="checkLoginState();"><i class="icon-facebook"></i></a>
                             </li>
                             <li><a class="gplus" id="signin" href="javascript:void(0)"><i class="icon-gplus"></i></a></li>
@@ -148,21 +148,24 @@
 <div id="fb-root"></div>
 @section Scripts
     {
-        <script>
-            $(document).ready(function () {
-                //SpecialChar('#Firstname');
-                //SpecialChar('#Lastname');
-            });
-
-        </script>
     <script>
-        gapi.load('auth2', function () {
-            auth2 = gapi.auth2.init({
-                client_id: '959100024495-sshngggnec7htiprelkoqvb5f70l6afq.apps.googleusercontent.com',
-                cookiepolicy: 'single_host_origin',
-            });
-            attachSignin(document.getElementById('signin'));
+        $(document).ready(function () {
+            //SpecialChar('#Firstname');
+            //SpecialChar('#Lastname');
         });
+
+    </script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
+    <script>
+        window.onLoadCallback = function () {
+            gapi.load('auth2', function () {
+                auth2 = gapi.auth2.init({
+                    client_id: '959100024495-sshngggnec7htiprelkoqvb5f70l6afq.apps.googleusercontent.com',
+                    cookiepolicy: 'single_host_origin',
+                });
+                attachSignin(document.getElementById('signin'));
+            });
+        };
         function attachSignin(element) {
             console.log(element.id);
             auth2.attachClickHandler(element, {},
