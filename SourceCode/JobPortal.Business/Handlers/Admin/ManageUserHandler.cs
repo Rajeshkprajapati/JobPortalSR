@@ -328,7 +328,7 @@ namespace JobPortal.Business.Handlers.Admin
                 {
                     Subject = "Account Approval",
                     Body = "Dear " + user.FirstName + "," + "<br/>You have successfully registered with us.You are one step away to explore our application.<br/><br/>Please <a href=" + loginUrl + ">click here</a> to proceed." +
-                    "<br/><br/><br/>Thank You<br/>Placement Portal Team",
+                    "<br/><br/><br/>Thank You<br/>Career Indeed Team",
                     To = new string[] { user.Email },
                     From = config["EmailCredential:Fromemail"],
                     IsHtml = true,

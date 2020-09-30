@@ -451,7 +451,7 @@ namespace JobPortal.Web.Controllers
                 EmailViewModel mailtouser = new EmailViewModel()
                 {
                     To = to,
-                    Subject = "Team Job Portal",
+                    Subject = "Career Inddeed Team",
                     Body = "We have received your request,We will get back to you soon.",
                     IsHtml = false,
                     From = "nasscomtestmail@gmail.com",
@@ -462,8 +462,8 @@ namespace JobPortal.Web.Controllers
                 EmailViewModel mailtoadmin = new EmailViewModel()
                 {
                     To = toadmin,
-                    Subject = "Job portal new inquiry",
-                    Body = "<p>New inquiry from job portal" + "</p>" + "<p>Message:" + model.Details + " " + "<br/>Name:" + model.Fullname + "<br/>Email: " + model.Email + " <br/>Phone: " + model.Phone + "<br/><br/>Thank You<br/>Team Job Portal" + "</p>",
+                    Subject = "Career Indeed new inquiry",
+                    Body = "<p>New inquiry from Career Indeed" + "</p>" + "<p>Message:" + model.Details + " " + "<br/>Name:" + model.Fullname + "<br/>Email: " + model.Email + " <br/>Phone: " + model.Phone + "<br/><br/>Thank You<br/>Career Indeed Team" + "</p>",
                     IsHtml = true,
                     From = "nasscomtestmail@gmail.com",
                 };
