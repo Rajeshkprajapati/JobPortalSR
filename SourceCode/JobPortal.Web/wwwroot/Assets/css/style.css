@@ -71,6 +71,8 @@ body {
     margin-left: 5px;
 }
 
+#jPanelMenu-menu .jobseeker,
+#jPanelMenu-menu .employer,
 .main-nav .nav-item-link {
     font-weight: 800;
     letter-spacing: -0.2px;
@@ -80,16 +82,21 @@ body {
     cursor: pointer;
 }
 
+#jPanelMenu-menu .jobseeker,
+#jPanelMenu-menu .employer,
 .main-nav .jobseeker,
 .main-nav .employer {
     color: #fff;
-    padding-left:5px;
+    padding-left: 5px;
     padding-right: 5px;
 }
+
+#jPanelMenu-menu .jobseeker,
 .main-nav .jobseeker {
     background-color: #000;
 }
 
+#jPanelMenu-menu .employer,
 .main-nav .employer {
     background-color: #26ae61;
 }
@@ -140,6 +147,11 @@ body {
     border-top: 1px solid #e0e0e0;
 }
 
+.action-navlink-nav-item {
+    display: flex;
+    flex-direction: column;
+}
+
 @media (min-width: 992px) {
     .subnav-items {
         left: 15px;
@@ -149,9 +161,10 @@ body {
         position: absolute;
         z-index: 1;
     }
+
     .action-navlink-nav-item {
         position: relative;
-        display: flex;
+        flex-direction: row;
         align-items: center;
         padding-left: 15px;
         font-weight: 800;
@@ -162,10 +175,10 @@ body {
         cursor: pointer;
     }
 
-    .action-navlink-nav-item .subnav-items {
-        left: auto;
-        right: 0;
-    }
+        .action-navlink-nav-item .subnav-items {
+            left: auto;
+            right: 0;
+        }
 
     .subnav-items .subnav-item {
         white-space: nowrap;
@@ -190,7 +203,7 @@ body {
     }
 }
 
-@media(max-width: 991px){
+@media(max-width: 991px) {
     .jPanelMenu-panel:after {
         position: fixed;
         left: 0;
@@ -198,8 +211,9 @@ body {
         bottom: 0;
         top: 50px;
         content: '';
-        background-color:rgba(0,0,0,0.3);
+        background-color: rgba(0,0,0,0.3);
     }
+
     .menu-trigger {
         display: inline-flex;
         margin-left: auto;
@@ -216,11 +230,13 @@ body {
         position: relative;
         text-shadow: none;
     }
+
     .menu-trigger:hover {
         text-decoration: none;
         background-color: #26ae61;
         color: #fff;
     }
+
     .menu-trigger .fa {
         font-size: 18px;
     }
@@ -232,7 +248,7 @@ body {
     }
 
     .menu-trigger .close-menu,
-    .menu-trigger .open-menu{
+    .menu-trigger .open-menu {
         position: absolute;
         left: 6px;
         top: 5px;
@@ -247,8 +263,9 @@ body {
     }
 
     .menu-trigger.active .close-menu {
-       opacity: 1;
+        opacity: 1;
     }
+
     .menu-trigger.active .open-menu {
         opacity: 0;
     }
@@ -257,14 +274,13 @@ body {
         display: none;
     }
 }
-
 /* Navigation style end*/
 /* Header style end*/
 
+
 /*Banner section style*/
-.banner,
-.searchbar{
-    position: relative;
+.banner, .searchbar{
+position: relative;
 }
 /*Search Section style*/
 .searchwrap {
@@ -290,10 +306,13 @@ body {
     font-weight: 800;
     text-transform: lowercase;
     color: #fff;
+    letter-spacing: -3px;
 }
+
 .banner p {
     color: #fff;
     font-size: 16px;
+    letter-spacing: -0.3px;
 }
 
 @media screen and (max-width: 991px){
@@ -510,15 +529,6 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
 /* Typography style */
 h2.whitetitle,
 h2.blacktitle {
@@ -528,6 +538,7 @@ h2.blacktitle {
     padding-bottom: 10px;
     margin-bottom: 10px;
     position: relative;
+    letter-spacing: -0.7px;
 }
 
 h2.blacktitle {
@@ -1316,11 +1327,33 @@ label.input-label {
 .banner-bg h2.whitetitle {
     font-size: 45px;
     font-weight: 800;
+    margin:0;
+    padding: 0;
 }
 
 .banner-bg h2.whitetitle:after{
     display: none;
 }
+@media screen and (max-width: 1024px) {
+    .banner-bg h2.whitetitle {
+        font-size: 38px;
+    }
+
+    .banner-bg {
+        min-height: 25vh;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .banner-bg h2.whitetitle{
+        font-size: 30px;
+    }
+    .banner-bg {
+        min-height: 20vh;
+    }
+}
+
+
 
 .title-bdr-black-4{
  
@@ -1411,17 +1444,18 @@ label.input-label {
 /* Profile nav UI */
 
 .dashboard-nav {
-    width: 300px;
-    box-shadow: 0 0 20px 2px rgba(0,0,0,0.3);
-    position: fixed;
-    right: -300px;
-    bottom: 0;
-    top: 0;
-    background-color: #fff;
+    min-width: 300px;
+    max-width: 300px;
     z-index: 2;
     transition: all ease-in-out 0.15ms;
     background-color: #e6e5e5;
+    position: fixed;
+    right: -300px;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
 }
+
 .dashboard-nav:before {
     content: '';
     left: 0;
@@ -1434,6 +1468,7 @@ label.input-label {
 }
 .dashboard-nav.active {
     right: 0;
+    transition: right ease-in-out 0.60ms;
 }
 .dashboard-nav.active:before{
     display: flex;
@@ -1549,6 +1584,16 @@ label.input-label {
     transform: rotate(-45deg);
 }
 
+@media screen and (min-width: 992px){
+    .dashboard-responsive-nav-trigger{
+        display: none;
+    }
+    .dashboard-nav{
+        display: inline-block;
+        position: static;
+    }
+}
+
 .breadcrumb {
     background-color: transparent;
     padding: 3px 0;
@@ -1567,14 +1612,21 @@ label.input-label {
     flex-wrap: wrap;
 }
 
-.dashboard-stat{
+.dashboard-stat {
     display: flex;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     color: #fff;
     flex-direction: column;
-    padding-left: 40px;
+    padding-left: 20px;
+    cursor: pointer;
 }
+@media screen and (max-width: 767px) and (min-width: 650px){
+    .dashboard-stat{
+        max-width: 25%;
+    }
+}
+
 .dashboard-stat .counter {
     font-size: 60px;
 }
@@ -1632,7 +1684,7 @@ label.input-label {
     height: 20px;
     text-align: center;
     color: #c75555;
-    opacity: 0;
+    opacity: 0.6;
 }
 .activity-list-item:hover .close-list-item {
     opacity: 1;
@@ -1672,4 +1724,48 @@ label.input-label {
     font-size: 16px;
     font-weight: 800;
     margin-top: 0;
+}
+
+
+/* 2 column layout container*/
+
+@media screen and (max-width: 767px){
+    .body-container {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+}
+
+@media screen and (max-width: 991px){
+    .mobile-full-screen{
+        max-width: 100%;
+    }
+}
+
+.margin-top-20{
+    margin-top: 20px;
+}
+
+.table-responsive {
+    border-top: 0px;
+}
+
+.table > tbody > tr > th{
+    font-size: 12px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.table > tbody > tr > td {
+    font-size: 13px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.table > tbody > tr > td a {
+    color: #2b9057;
+    text-decoration: underline;
+}
+.table > tbody > tr > td a:hover{
+    text-decoration: none;
 }

@@ -61,16 +61,8 @@
                                     }
                                     else if (user.RoleName == Constants.StudentRole)
                                     {
-                                        <li class="nav-link-item">
-                                            <a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Dashboard" class="nav-item-link">Dashboard</a>
-                                        </li>
-                                        <!--
-                                            <li class="nav-item">
-                                                <a asp-area="Jobseeker" asp-controller="Job" asp-action="RecommendedJobs" class="nav-item-link">Recommended Jobs</a>
-                                            </li>
-                                        -->
                                         <li class="nav-item subnav">
-                                            <a href="javascript:void(0)">Job Seeker</a>
+                                            <a href="javascript:void(0)" class="nav-item-link">Job Seeker</a>
                                             <ul class="subnav-items">
                                                 <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Index" class="subnav-item-link">Search Job</a></li>
                                                 <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="ResumeBuilder" asp-action="Index" class="subnav-item-link">Create Resume</a></li>
@@ -78,53 +70,48 @@
                                         </li>
                                     }
                                 }
-                                else
-                                {
 
-                                    @*<li><a asp-controller="Auth" asp-action="Index">Login</a></li>*@
-                                }
-
-                                @*if (user != null && user.RoleName == Constants.CorporateRole)
-                                    {
-                                        <ul class="action-navlink d-flex">
-                                            <li class="nav-item"><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard" class="action-nav-link">Dashboard</a></li>
-                                        </ul>
-                                    }
-                                    @*else if (user != null && user.RoleName == Constants.StudentRole)
-                                    {
-                                        <ul class="action-navlink d-flex">
-                                            <li class="nav-item"><a href="/Auth/Logout/" class="action-nav-link">Log Out</a></li>
-                                        </ul>
-                                    }*@
                                 @if (user != null)
                                 {
+                            <li class="action-navlink-nav-item subnav">
+                                @if (user.ProfilePic != "")
+                                {
+                                    @if (user != null && user.RoleName == Constants.CorporateRole)
+                                    {
+                                        <span class="action-nav-link-text employer">
+                                            @user.FullName
+                                        </span>
+                                    }
+                                    else if (user.RoleName == Constants.StudentRole)
+                                    {
+                                        <span class="action-nav-link-text jobseeker">
+                                            @user.FullName
+                                        </span>
+                                    }
 
-                                    <li class="action-navlink-nav-item subnav">
-                                        @if (user.ProfilePic != "")
-                                        {
-                                            <span class="action-nav-link-text employer">
-                                                @user.FullName
-                                            </span>
-                                        }
-                                        <ul class="subnav-items">
-                                            @if (user != null && user.RoleName == Constants.CorporateRole)
-                                            {
-                                                <li class="subnav-item"><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard" class="subnav-item-link">Dashboard</a></li>
+                                }
+                                <ul class="subnav-items">
+                                    @if (user != null && user.RoleName == Constants.CorporateRole)
+                                    {
+                                        <li class="subnav-item"><a asp-area="Employer" asp-controller="Dashboard" asp-action="EmpDashboard" class="subnav-item-link">Dashboard</a></li>
 
-                                            }
-                                            @if (user.RoleName == Constants.StudentRole)
-                                            {
-                                                <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Profile" class="subnav-item-link">Edit Profile</a></li>
-                                            }
-                                            else
-                                            {
-                                                <li class="subnav-item"><a onclick="AddEditEmp()" class="subnav-item-link">Edit Profile</a></li>
-                                            }
+                                    }
+                                    @if (user.RoleName == Constants.StudentRole)
+                                    {
+                                        <li class="subnav-item">
+                                            <a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Dashboard" class="subnav-item-link">Dashboard</a>
+                                        </li>
+                                        <li class="subnav-item"><a asp-area="Jobseeker" asp-controller="JobSeekerManagement" asp-action="Profile" class="subnav-item-link">Edit Profile</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="subnav-item"><a onclick="AddEditEmp()" class="subnav-item-link">Edit Profile</a></li>
+                                    }
 
-                                            <li class="subnav-item"><a href="/Auth/CreateNewPassword/" class="subnav-item-link">Change Password</a></li>
-                                            <li class="subnav-item"><a href="/Auth/Logout/" class="subnav-item-link">Logout</a></li>
-                                        </ul>
-                                    </li>
+                                    <li class="subnav-item"><a href="/Auth/CreateNewPassword/" class="subnav-item-link">Change Password</a></li>
+                                    <li class="subnav-item"><a href="/Auth/Logout/" class="subnav-item-link">Logout</a></li>
+                                </ul>
+                            </li>
 
                                 }
                                 else

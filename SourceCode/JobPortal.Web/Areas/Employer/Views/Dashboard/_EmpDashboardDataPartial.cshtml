@@ -3,15 +3,13 @@
 <!-- Content
 ================================================== -->
 <!-- Titlebar -->
-<div id="titlebar" class="container-fluid banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
-    <div class="container titlebar-inner">
-        @{
-            UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-            <h2 class="whitetitle"><span class="title-bdr-black-4">Welcome, @user.FirstName</span></h2>
-        }
-    </div>
+<div id="titlebar" class="col-sm-12 banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    @{
+        UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+        <h2 class="whitetitle"><span class="title-bdr-black-4">Welcome, @user.FirstName</span></h2>
+    }
 </div>
-<nav id="breadcrumbs" class="container">
+<nav id="breadcrumbs" class="col-sm-12">
     <ol class="breadcrumb">
         <li><a href="#">Home</a></li>
         <li class="active">Dashboard</li>
@@ -19,50 +17,47 @@
 </nav>
 
 <!-- Content -->
-<div class="container-fluid home-screen-section panelbg-gray10">
-    <div class="container dashboard-stats">
-        <div class="dashboard-stat color-1 col-md-3 col-sm-6" onclick="getViewedProfiles()">
+<div class="col-sm-12 dashboard-stats">
+    <div class="dashboard-stat color-1 col-sm-3 col-xs-6" onclick="getViewedProfiles()">
 
-            <h4 class="counter">
-                <span>
-                    @Model.TotalProfileViewes
-                </span>
-            </h4>
-            <p>Profle View</p>
-        </div>
-        <!-- Item -->
-        <div class="dashboard-stat color-2 col-md-3 col-sm-6" onclick="getMessages()">
-            <h4 class="counter">
-                <span>
-                    @Model.TotalMessages
-                </span>
-            </h4>
-            <p>Messages</p>
-        </div>
-        <!-- Item -->
-        <div class="dashboard-stat color-3 col-md-3 col-sm-6" onclick="getJobSeekers()">
-            <h4 class="counter">
-                <span>@Model.TotalResumeList</span>
-            </h4>
-            <p>Total Applications</p>
-        </div>
-        <!-- Item -->
-        <div class="dashboard-stat color-4 col-md-3 col-sm-6">
-            <h4 class="counter">
-                <span>
-                    @Model.RespondTime
-                </span>
-            </h4>
-            <p>Average Response Time</p>
-        </div>
-        <!-- Item -->
+        <h4 class="counter">
+            <span>
+                @Model.TotalProfileViewes
+            </span>
+        </h4>
+        <p>Profle View</p>
     </div>
+    <!-- Item -->
+    <div class="dashboard-stat color-2 col-sm-3 col-xs-6" onclick="getMessages()">
+        <h4 class="counter">
+            <span>
+                @Model.TotalMessages
+            </span>
+        </h4>
+        <p>Messages</p>
+    </div>
+    <!-- Item -->
+    <div class="dashboard-stat color-3 col-sm-3 col-xs-6" onclick="getJobSeekers()">
+        <h4 class="counter">
+            <span>@Model.TotalResumeList</span>
+        </h4>
+        <p>Total Applications</p>
+    </div>
+    <!-- Item -->
+    <div class="dashboard-stat color-4 col-sm-3 col-xs-6">
+        <h4 class="counter">
+            <span>
+                @Model.RespondTime
+            </span>
+        </h4>
+        <p>Average Response Time</p>
+    </div>
+    <!-- Item -->
 </div>
 
-<div class="container home-screen-section">
-
+<div class="col-sm-12">
     <div class="row">
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12 spacer-top-20">
             <h2 class="blacktitle">Recent Activities</h2>
             <ul class="activity-lists">
                 <li class="activity-list-item">
@@ -103,7 +98,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12 spacer-top-20">
             <h2 class="blacktitle">Your Packages</h2>
             <ul class="package-details">
                 <li class="package-item">

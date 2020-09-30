@@ -1,23 +1,21 @@
 ﻿@using JobPortal.Model.DataViewModel.JobSeeker
 @model JobSeekerDashboardSummary
-<div id="titlebar">
-    <div class="row">
-        <div class="col-md-12">
-            @{
-                UserViewModel usrData = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-                <h2>Welcome, @usrData.FirstName!</h2>
-            }
 
-            <!-- Breadcrumbs -->
-            <nav id="breadcrumbs">
-                <ul>
-                    <li><a href="">Home</a></li>
-                    <li>Dashboard</li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+
+<div id="titlebar" class="col-sm-12 banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    @{
+        UserViewModel usrData = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+        <h2 class="whitetitle"><span class="title-bdr-black-4">Welcome, @usrData.FirstName!</h2>
+    }
 </div>
+<!-- Breadcrumbs -->
+<nav id="breadcrumbs" class="col-sm-12">
+    <ol class="breadcrumb">
+        <li><a href="">Home</a></li>
+        <li>Dashboard</li>
+    </ol>
+</nav>
+
 
 <!-- Content -->
 <div class="row">
@@ -29,9 +27,9 @@
         </div>
     </div>
     <!-- Item -->
-    <div class="col-lg-3 col-md-6"  onclick="JobseekerAppliedJobs()">
+    <div class="col-lg-3 col-md-6" onclick="JobseekerAppliedJobs()">
         <div class="dashboard-stat color-2">
-            <div class="dashboard-stat-content" ><h4 class="counter">@Model.TotalAppliedJobs</h4> <span>Total Job Applied</span></div>
+            <div class="dashboard-stat-content"><h4 class="counter">@Model.TotalAppliedJobs</h4> <span>Total Job Applied</span></div>
             <div class="dashboard-stat-icon"><i class="ln ln-icon-Bar-Chart"></i></div>
         </div>
     </div>
@@ -84,11 +82,9 @@
                 }
                 else
                 {
-                        <p>No recommended jobs! </p>
+                    <p>No recommended jobs! </p>
                 }
-
             </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </div>

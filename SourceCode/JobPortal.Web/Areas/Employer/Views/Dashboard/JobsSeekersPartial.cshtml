@@ -2,9 +2,7 @@
 @model IEnumerable<UserViewModel>
 
 <div id="titlebar" class="container-fluid banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
-    <div class="container titlebar-inner">
-        <h2 class="whitetitle"><span class="title-bdr-black-4">JobSeekers</span></h2>
-    </div>
+    <h2 class="whitetitle">JobSeekers</h2>
 </div>
 
 <nav id="breadcrumbs" class="container">
@@ -15,118 +13,112 @@
     </ol>
 </nav>
 
-<div class="container home-screen-section">
-    <div class="row">
-        <div class="col-xs-9">
-            <h2 class="blacktitle">Jobseekers</h2>
-        </div>
-        <div class="col-xs-3">
-            <input type="button" onclick="DownloadResume()" class="btn btn-primary" value="Download Resume" />
-        </div>
-    </div>
-    <div class="row spacer-top-20">
-        @if (Convert.ToString(ViewData["isViewdProfile"]) == "1")
-        {
-            <a href="" id="ziplink" class="btn btn-primary" hidden>Data</a>
-        }
-        else
-        {
-            <div class="col-md-12">
-                <select class="chosen-select" data-placeholder="Choose JobRole" name="ddlJobRoles" multiple="multiple" asp-items="@(new SelectList( ViewBag.AllJobRoles, "JobTitleId", "JobTitleName"))" id="ddlJobRoles"></select>
-                <select id="ddlCity" name="ddlCity" class="chosen-select-no-single" data-placeholder="Choose City" asp-items="@(new SelectList(ViewBag.AllCities,"CityCode","City"))"></select>
-                <select id="dropFilterYear" class="form-control" style="height: 44px;">
-                    @{
-                        int currYears = DateTime.Now.Year;
-                        @for (int i = (currYears - 2); i <= currYears; i++)
+<div class="container spacer-top-20">
+    <input type="button" onclick="DownloadResume()" class="btn btn-primary pull-right" value="Download Resume" />
+
+    @if (Convert.ToString(ViewData["isViewdProfile"]) == "1")
+    {
+        <a href="" id="ziplink" hidden>Data</a>
+    }
+    else
+    {
+        <div class="col-md-12 spacer-top-20">
+            <select class="chosen-select" data-placeholder="Choose JobRole" name="ddlJobRoles" multiple="multiple" asp-items="@(new SelectList( ViewBag.AllJobRoles, "JobTitleId", "JobTitleName"))" id="ddlJobRoles"></select>
+            <select id="ddlCity" name="ddlCity" class="chosen-select-no-single" data-placeholder="Choose City" asp-items="@(new SelectList(ViewBag.AllCities,"CityCode","City"))"></select>
+            <select id="dropFilterYear" class="form-control" style="height: 44px;">
+                @{
+                    int currYears = DateTime.Now.Year;
+                    @for (int i = (currYears - 2); i <= currYears; i++)
+                    {
+                        if (i == currYears)
                         {
-                            if (i == currYears)
-                            {
-                                <option selected value="@i">@i</option>
-                            }
-                            else
-                            {
-                                <option value="@i">@i</option>
-                            }
+                            <option selected value="@i">@i</option>
+                        }
+                        else
+                        {
+                            <option value="@i">@i</option>
                         }
                     }
+                }
 
-                </select>
-                <input type="button" onclick="getJobSeekersBasedOnEmployerHiringCriteria()" class="btn searchJobseekerbtn" value="Search" />
+            </select>
+            <input type="button" onclick="getJobSeekersBasedOnEmployerHiringCriteria()" class="btn searchJobseekerbtn" value="Search" />
+        </div>
+        <a href="" id="ziplink" hidden>Data</a>
+    }
+    <div class="col-xs-12 margin-top-20">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="JobSeekerTable">
+                    <tr class="active">
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Contact No
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Resume
+                        </th>
+                        <th>Select Resume</th>
+                    </tr>
+                    <!-- Item #1 -->
+                    @if (Model.Count() > 0)
+                    {
+                        @foreach (var employee in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/SearchResume/ShowCandidateDetail/?userId=@employee.UserId" target="_blank">
+                                        @employee.FullName
+                                    </a>
+                                </td>
+                                <td>
+                                    @employee.MobileNo
+                                </td>
+                                <td>
+                                    @employee.Email
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(employee.Resume))
+                                    {
+                                        <a target="_blank" download href="@employee.Resume">Download Resume</a>
+                                    }
+                                    else
+                                    {
+                                        <span>Resume not attached</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(employee.Resume))
+                                    {
+                                        <input type="checkbox" class="checkBoxClass" value="@employee.UserId" id="bulkResumeChkbox" name="bulkResumeChkbox" onchange="SelectJob(this)">
+                                    }
+                                    else
+                                    {
+                                        <span>No resume</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5">
+                                <label>
+                                    Data not found to display
+                                </label>
+                            </td>
+                        </tr>
+                    }
+                </table>
             </div>
-            <div class="btn-row">
-                <a href="" id="ziplink" class="btn btn-primary" hidden>Data</a>
-            </div>
-        }
+        </div>
     </div>
-    <table class="manage-table responsive-table" id="JobSeekerTable">
-        <tr>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Contact No
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Resume
-            </th>
-            <th>Select Resume</th>
-        </tr>
-        <!-- Item #1 -->
-        @if (Model.Count() > 0)
-        {
-            @foreach (var employee in Model)
-            {
-                <tr>
-                    <td>
-                        <a href="/SearchResume/ShowCandidateDetail/?userId=@employee.UserId" target="_blank">
-                            @employee.FullName
-                        </a>
-                    </td>
-                    <td>
-                        @employee.MobileNo
-                    </td>
-                    <td>
-                        @employee.Email
-                    </td>
-                    <td>
-                        @if (!string.IsNullOrWhiteSpace(employee.Resume))
-                        {
-                            <a target="_blank" download href="@employee.Resume">Download Resume</a>
-                        }
-                        else
-                        {
-                            <span>Resume not attached</span>
-                        }
-                    </td>
-                    <td>
-                        @if (!string.IsNullOrWhiteSpace(employee.Resume))
-                        {
-                            <input type="checkbox" class="checkBoxClass" value="@employee.UserId" id="bulkResumeChkbox" name="bulkResumeChkbox" onchange="SelectJob(this)">
-                        }
-                        else
-                        {
-                            <span>No resume</span>
-                        }
-                    </td>
-
-                </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="8">
-                    <label>
-                        Data not found to display
-                    </label>
-                </td>
-            </tr>
-        }
-    </table>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
