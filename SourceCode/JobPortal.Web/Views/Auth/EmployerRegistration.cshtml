@@ -126,16 +126,18 @@
 @section Scripts
     {
     @*<script src="https://apis.google.com/js/platform.js" async defer></script>*@
-
+    <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
     <script>
-        gapi.load('auth2', function () {
-            auth2 = gapi.auth2.init({
-                client_id: '959100024495-sshngggnec7htiprelkoqvb5f70l6afq.apps.googleusercontent.com',
-                cookiepolicy: 'single_host_origin',
+        window.onLoadCallback = function () {
+            gapi.load('auth2', function () {
+                auth2 = gapi.auth2.init({
+                    client_id: '959100024495-sshngggnec7htiprelkoqvb5f70l6afq.apps.googleusercontent.com',
+                    cookiepolicy: 'single_host_origin',
+                });
+                attachSignin(document.getElementById('employersignin'));
+                attachSignin(document.getElementById('consultantsignin'));
             });
-            attachSignin(document.getElementById('employersignin'));
-            attachSignin(document.getElementById('consultantsignin'));
-        });
+        };
         function attachSignin(element) {
             auth2.attachClickHandler(element, {},
                 function (googleUser) {
@@ -195,7 +197,7 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-        function checkConsultancyLoginState() {
+        function checkEmployeeLoginState() {
             FB.login(function (response) {
                 if (response.status === 'connected') {
                     statusChangeCallbackForEmployee(response);

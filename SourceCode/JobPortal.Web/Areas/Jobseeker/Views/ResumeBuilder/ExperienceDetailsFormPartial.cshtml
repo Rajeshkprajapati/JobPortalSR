@@ -49,7 +49,7 @@
                     <option value="">Year</option>
                     @{
                         int currYear = DateTime.Now.Year;
-                        @for (int i = (currYear - 50); i <= (currYear + 50); i++)
+                        @for (int i = (currYear - 50); i <= (currYear); i++)
                         {
                             <option value="@i">@i</option>
                         }
@@ -73,7 +73,7 @@
                 <select name="WorkingTill" class="form-control">
                     <option value="">Year</option>
                     int currYear = DateTime.Now.Year;
-                    @for (int i = (currYear - 50); i <= (currYear + 50); i++)
+                    @for (int i = (currYear - 50); i <= (currYear); i++)
                     {
                         <option value="@i">@i</option>
                     }

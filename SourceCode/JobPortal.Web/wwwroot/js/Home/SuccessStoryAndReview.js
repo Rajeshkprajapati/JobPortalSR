@@ -1,6 +1,15 @@
 ﻿$("#ImgUrl").change(function () {
     $("#profilelabel").text(this.files[0].name);
 });
+
+$("#areaCommet").on('keyup', function () {
+    var str = this.value;
+    if (str === null || str.match(/^ *$/) !== null) {
+        this.value="";
+        InformationDialog('Required', 'Text field is required');
+    }
+});
+
 $("#areaCommet").on('keyup', function () {
     var words = this.value.match(/\S+/g).length;
     if (words > 100) {
@@ -20,3 +29,4 @@ $("#txtTagline").on('keyup', function () {
         $(this).val(trimmed + " ");
     }
 });
+

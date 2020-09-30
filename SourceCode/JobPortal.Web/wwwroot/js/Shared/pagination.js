@@ -41,14 +41,14 @@
             $("#pagin li").eq(t + 1).show();
         }
         if (startPage == 0) {
-            next.show();
-            prev.hide();
+           next.show();
+           prev.show();
         } else if (numberPage == totalSlidepPage) {
-            next.hide();
+           next.show();
             prev.show();
         } else {
-            next.hide();
-            prev.hide();
+            next.show();
+            prev.show();
         }
 
 
