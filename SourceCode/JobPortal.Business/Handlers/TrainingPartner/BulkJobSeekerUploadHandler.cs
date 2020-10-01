@@ -271,7 +271,7 @@ namespace JobPortal.Business.Handlers.TrainingPartner
                 $"You are one step away to explore our application," +
                 $"Please <a href={activationLink}>click here</a> to activate your account." +
                 $"Your login details are below:<br/><br/>User Name:  {user.Email}<br/>Password: {user.Password} " +
-                $"<br/><br/>Thank You <br/> Career Indeed Team",
+                $"<br/><br/>Thank You <br/> CareerIndeed Team",
 
                 To = new string[] { user.Email },
                 From = config["EmailCredential:Fromemail"],

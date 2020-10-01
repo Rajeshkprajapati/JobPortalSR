@@ -168,8 +168,8 @@ namespace JobPortal.Web.Controllers
                 var eModel = new EmailViewModel
                 {
                     Subject = "Reset Password",
-                    Body = "Dear Sir/Madam,<br/>You initiated a request to help with your account password. Click the link below to set a new password for Career Indeed portal" +
-                    "<br/><a href=" + link + ">Reset Password link</a><br><br>" + "Thank You<br>Career Indeed Team",
+                    Body = "Dear Sir/Madam,<br/>You initiated a request to help with your account password. Click the link below to set a new password for CareerIndeed portal" +
+                    "<br/><a href=" + link + ">Reset Password link</a><br><br>" + "Thank You<br>CareerIndeed Team",
                     To = new string[] { emailID },
                     From = config["EmailCredential:Fromemail"],
                     IsHtml = true,
@@ -196,7 +196,7 @@ namespace JobPortal.Web.Controllers
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
-                ViewData["SuccessMessage"] = "Error Occured,Please contact Admin";
+                ViewData["SuccessMessage"] = "Error Occured,Please contact at support@careerindeed.in";
             }
             return View();
         }
@@ -314,7 +314,7 @@ namespace JobPortal.Web.Controllers
                     {
                         Subject = "Login OTP",
                         Body = "Dear " + Name + "," + "<br/>" + Gotp + " is OTP to complete the registration."
-                                                + "<br/>Do not disclose the OTP to anyone.<br/>Happy job post and search candidate with Career Indeed placement portal." + "<br><br> Thank You" + "<br>Career Indeed Team",
+                                                + "<br/>Do not disclose the OTP to anyone.<br/>Happy job post and search candidate with CareerIndeed placement portal." + "<br><br> Thank You" + "<br>CareerIndeed Team",
                         To = new string[] { Email },
                         From = config["EmailCredential:Fromemail"],
                         IsHtml = true,
@@ -338,7 +338,7 @@ namespace JobPortal.Web.Controllers
                     {
                         Subject = "Login OTP",
                         Body = "Dear " + Name + "," + "<br/>" + Gotp + " is OTP to complete the registration."
-                                                + "<br/>Do not disclose the OTP to anyone.<br/>Happy job post and search candidate with Career Indeed placement portal." + "<br><br> Thank You" + "<br>Career Indeed Team",
+                                                + "<br/>Do not disclose the OTP to anyone.<br/>Happy job post and search candidate with CareerIndeed placement portal." + "<br><br> Thank You" + "<br>CareerIndeed Team",
                         To = new string[] { Email },
                         From = config["EmailCredential:Fromemail"],
                         IsHtml = true,
@@ -561,7 +561,7 @@ namespace JobPortal.Web.Controllers
                     "We are delighted to have you on board." +
                     "<br/><br/>Your login details are below:<br/><br/>" + "User Name: " + user.Email + "<br>Password: " + user.Password +
                     "<br/><br/>You can update your contact and registration details at any time by logging on to https://careerindeed.in/" +
-                    "<br/><br/>See you on board!<br/><a href=" + link + "> Career Indeed</a> Team",
+                    "<br/><br/>See you on board!<br/><a href=" + link + "> CareerIndeed</a> Team",
                     To = new string[] { user.Email },
                     From = config["EmailCredential:Fromemail"],
                     IsHtml = true,
@@ -629,7 +629,7 @@ namespace JobPortal.Web.Controllers
                             "User Name: " + user.Email +
                             "<br>Password: " + user.Password +
                             "<br/><br/>You can update your contact and registration details at any time by logging on to careerindeed.in" +
-                            "<br/><br/>Wish you all the best!<br/><a href=" + link + "> Career Indeed</a> Team",
+                            "<br/><br/>Wish you all the best!<br/><a href=" + link + "> CareerIndeed</a> Team",
                     To = new string[] { user.Email },
                     From = config["EmailCredential:Fromemail"],
                     IsHtml = true,
@@ -660,7 +660,7 @@ namespace JobPortal.Web.Controllers
                 {
                     Subject = "Welcome to CareerIndeed Portal | Activate your Profile",
                     Body = "Dear " + email + ",<br/>Please varify email to activate your account instantly.<br/>Click the link below " +
-                    "<br/><a href=" + link + ">Verify Email now !</a><br><br>" + "Thank You<br>Career Indeed Team",
+                    "<br/><a href=" + link + ">Verify Email now !</a><br><br>" + "Thank You<br>CareerIndeed Team",
                     To = new string[] { emailID },
                     From = config["EmailCredential:Fromemail"],
                     IsHtml = true,

@@ -352,7 +352,7 @@ namespace JobPortal.Business.Handlers.Shared
                     Subject = "BulkJobPost",
                     Body = "Dear Admin," + "<br/><br/>" +
                     "An Employer " + Name + "(" + Email + ") was trying to add " + data + " as " +
-                    columnName + ", which does not belong to our database.please do the needful.<br><br> Thank You <br>Career Indeed Team",
+                    columnName + ", which does not belong to our database.please do the needful.<br><br> Thank You <br>CareerIndeed Team",
                     To = new string[] { config["AdminMail:Email"] },
                     From = config["EmailCredential:Fromemail"],
                     IsHtml = true,

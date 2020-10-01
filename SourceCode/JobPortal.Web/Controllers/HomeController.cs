@@ -454,7 +454,7 @@ namespace JobPortal.Web.Controllers
                     Subject = "Career Inddeed Team",
                     Body = "We have received your request,We will get back to you soon.",
                     IsHtml = false,
-                    From = "nasscomtestmail@gmail.com",
+                    From = _configuration["EmailCredential:Fromemail"],
                 };
                 _mailHandler.SendMail(mailtouser, 0, false);
                 string adminmail = _configuration["AdminMail:Email"];
@@ -462,10 +462,10 @@ namespace JobPortal.Web.Controllers
                 EmailViewModel mailtoadmin = new EmailViewModel()
                 {
                     To = toadmin,
-                    Subject = "Career Indeed new inquiry",
-                    Body = "<p>New inquiry from Career Indeed" + "</p>" + "<p>Message:" + model.Details + " " + "<br/>Name:" + model.Fullname + "<br/>Email: " + model.Email + " <br/>Phone: " + model.Phone + "<br/><br/>Thank You<br/>Career Indeed Team" + "</p>",
+                    Subject = "CareerIndeed new inquiry",
+                    Body = "<p>New inquiry from CareerIndeed" + "</p>" + "<p>Message:" + model.Details + " " + "<br/>Name:" + model.Fullname + "<br/>Email: " + model.Email + " <br/>Phone: " + model.Phone + "<br/><br/>Thank You<br/>CareerIndeed Team" + "</p>",
                     IsHtml = true,
-                    From = "nasscomtestmail@gmail.com",
+                    From = _configuration["EmailCredential:Fromemail"],
                 };
                 _mailHandler.SendMail(mailtoadmin, 0, false);
                 ViewBag.Contact = "We have received your request,We will get back to you soon.";
