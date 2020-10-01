@@ -58,7 +58,7 @@
     @if (ViewBag.SkillsJobs != null && ViewBag.SkillsJobs.Count > 0)
     {
         <div class="job-lists two-column">
-            foreach (var row in ViewBag.SkillsJobs)
+            @foreach (var row in ViewBag.SkillsJobs)
             {
             <div class="job-lists-item col-sm-6">
                 <div class="listing-logo">
