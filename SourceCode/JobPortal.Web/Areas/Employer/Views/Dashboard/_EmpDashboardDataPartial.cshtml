@@ -59,44 +59,23 @@
     <div class="row">
         <div class="col-lg-6 col-md-12 spacer-top-20">
             <h2 class="blacktitle">Recent Activities</h2>
-            <ul class="activity-lists">
-                <li class="activity-list-item">
-                    <div class="msg-content">
-                        <p>Your listing <a href="#">Marketing Coordinator - SEO / SEM Experience </a> has been approved!</p>
-                    </div>
-                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                </li>
-                <li class="activity-list-item">
-                    <div class="msg-content">
-                        <p>Kathy Brown has sent you <a href="#">private message</a>!</p>
-                    </div>
-                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                </li>
-                <li class="activity-list-item">
-                    <div class="msg-content">
-                        <p>Someone bookmarked your <a href="#">Restaurant Team Member - Crew</a>!</p>
-                    </div>
-                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                </li>
-                <li class="activity-list-item">
-                    <div class="msg-content">
-                        <p>You have new application for <a href="#">Power Systems User Experience Designer</a>!</p>
-                    </div>
-                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                </li>
-                <li class="activity-list-item">
-                    <div class="msg-content">
-                        <p>Someone bookmarked your <a href="#">Core PHP Developer for Site Maintenance</a> listing!</p>
-                    </div>
-                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                </li>
-                <li class="activity-list-item">
-                    <div class="msg-content">
-                        <p>Your job listing <a href="#">Core PHP Developer for Site Maintenance</a> is expiring!</p>
-                    </div>
-                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-                </li>
-            </ul>
+            @if (ViewBag.RecentJobs != null)
+            {
+                <ul class="activity-lists">
+                    @foreach (var jobs in ViewBag.RecentJobs)
+                    {
+                        <li class="activity-list-item">
+                            <div class="msg-content">
+                                <p> <a href="/Job/JobDetails/?jobid=@jobs.JobPostId">Your recent job post with title <strong>@jobs.JobTitleByEmployer </strong> has been approved!</a></p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p> No data found</p>
+            }
         </div>
         <div class="col-lg-6 col-md-12 spacer-top-20">
             <h2 class="blacktitle">Your Packages</h2>
