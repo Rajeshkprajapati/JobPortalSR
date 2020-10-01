@@ -482,6 +482,37 @@ namespace JobPortal.Data.Repositories.Employer
             }
             throw new Exception("Unable to close job");
         }
+
+        public DataTable EmployerRecentJobPost(int empId)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@EmpId",empId)
+                    };
+                    var result =
+                        SqlHelper.ExecuteDataset
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetEmployerRecentJobs",
+                            parameters
+                            );
+                    if (null != result && result.Tables.Count > 0)
+                    {
+                        return result.Tables[0];
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Job seekers information found, please contact your tech deck.");
+        }
     }
 }
 
