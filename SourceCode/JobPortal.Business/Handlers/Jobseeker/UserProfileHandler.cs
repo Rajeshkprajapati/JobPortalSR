@@ -449,11 +449,11 @@ namespace JobPortal.Business.Handlers.Jobseeker
 
             var eModel = new EmailViewModel
             {
-                Subject = "Applied Job from Career Indeed Portal",
+                Subject = "Applied Job from CareerIndeed Portal",
                 Body = "Dear " + name + ",<br/><br/> We have successfully forwarded your application for the position of " + e.JobTitlebyEmployer
                         + "<br/><br/>Corporate Name  : " + e.CompanyName + "<br/>JobRole  : " + e.JobTitleName + "<br/>Job Description  : " + e.Jobdetails
                         + "<br/><br/>In case you don't find the above details appropriate, <a href=" + jsProfile + ">update profile</a> and apply again."
-                        + "<br/><br/>Recruiters will be contacting you on this mobile number +91" + e.MobileNo + "<br/>To update it, please <a href=" + jsProfile + ">click here</a>" + "<br><br>Thank You<br>Career Indeed Team",
+                        + "<br/><br/>Recruiters will be contacting you on this mobile number +91" + e.MobileNo + "<br/>To update it, please <a href=" + jsProfile + ">click here</a>" + "<br><br>Thank You<br>CareerIndeed Team",
                 To = new string[] { to },
                 From = e.Email,
                 IsHtml = true,
@@ -474,7 +474,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
                 Subject = "You have recevied one job application",
                 Body = "Dear " + name + ",<br/><br/> You have received a new application for the job post " + e.JobTitlebyEmployer
                         + "<br/><br/>JobRole  : " + e.JobTitleName + "<br/>Job Description  : " + e.Jobdetails + "<br/>Job Posted On  : " + e.CreatedDate
-                        + "<br/><br/>To Check Completed details please <a href=" + jobDetail + ">click here</a>" + "<br><br>Thank You<br>Career Indeed Team",
+                        + "<br/><br/>To Check Completed details please <a href=" + jobDetail + ">click here</a>" + "<br><br>Thank You<br>CareerIndeed Team",
                 To = new string[] { e.Email },
                 From = from,
                 IsHtml = true,

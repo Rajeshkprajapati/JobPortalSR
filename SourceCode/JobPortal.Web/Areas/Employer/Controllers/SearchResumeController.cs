@@ -126,8 +126,8 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             {
                 var eModel = new EmailViewModel
                 {
-                    Subject = "New Job from Career Indeed",
-                    Body = "Dear " + JobSeekerName + ",<br/>Your resume has been shortlisted by " + user.CompanyName + ".<br/>The employer will connect with you for further processing.<br/><br/>Thank You<br/>Career Indeed Team",
+                    Subject = "New Job from CareerIndeed",
+                    Body = "Dear " + JobSeekerName + ",<br/>Your resume has been shortlisted by " + user.CompanyName + ".<br/>The employer will connect with you for further processing.<br/><br/>Thank You<br/>CareerIndeed Team",
                     To = new string[] { userEmail },
                     From = config["EmailCredential:Fromemail"],
                     IsHtml = true,
