@@ -1328,6 +1328,7 @@ label.input-label {
     font-weight: 800;
     margin:0;
     padding: 0;
+    letter-spacing: -2px;
 }
 
 .banner-bg h2.whitetitle:after{
@@ -1336,6 +1337,7 @@ label.input-label {
 @media screen and (max-width: 1024px) {
     .banner-bg h2.whitetitle {
         font-size: 38px;
+        letter-spacing: -1px;
     }
 
     .banner-bg {
@@ -1767,4 +1769,35 @@ label.input-label {
 }
 .table > tbody > tr > td a:hover{
     text-decoration: none;
+}
+
+.job-title{
+    background: #fff;
+    padding: 3px 8px;
+    color: #000;
+    font-size: 12px;
+    text-transform: uppercase;
+    border-radius: 3px;
+}
+.job-title:hover{
+    text-decoration: none;
+}
+
+
+.job-type {
+    font-size: 13px;
+    letter-spacing: 0;
+    background: #000;
+    padding: 3px 8px;
+    border-radius: 3px;
+    line-height: 1;
+}
+
+.employer-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e2e2e2;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }

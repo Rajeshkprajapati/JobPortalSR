@@ -8,213 +8,167 @@
 @section header {
     <meta property="og:url" content="/Job/JobDetails/?jobid=@Model.JobPostId" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="@Model.JobTitleByEmployer" />    
+    <meta property="og:title" content="@Model.JobTitleByEmployer" />
     <meta property="og:description" content="@ViewBag.jDetails" />
     <meta property="og:image" content="@Model.CompanyLogo" />
 }
 
-<style>
-    .widget {
-        /* width: 32%; */
-        border: 0px solid #F5F1F1 !important;
-        /* padding: 0px !important; */
-        box-shadow: 0px 0px 0px 0px !important;
-    }
-
-    .content span {
-        padding: 0 8px;
-    }
-
-    .content a:hover {
-        font-weight: 900;
-    }
-
-    .content .fa-facebook-square {
-        transform: scale(2.2);
-        color: #3b5998;
-    }
-
-    .content .fa-twitter {
-        transform: scale(2);
-        color: #1da1f2;
-    }
-
-    .content .fa-whatsapp {
-        transform: scale(2);
-        color: #075e54;
-    }
-</style>
 <!-- Page Title End -->
 @{
     UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
     <!-- Titlebar
     ================================================== -->
-    <div id="titlebar">
-        <div class="container">
-            <div class="ten columns">
-                <span><a href="#">@Model.JobTitleByEmployer</a></span>
-                <h2>@Model.CompanyName <span class="full-time">@Model.EmploymentStatusName</span></h2>
-            </div>
-            <div class="six columns">
-                <a href="/JobSeekerManagement" class="button dark"><i class=""></i> Search more jobs</a>
+
+    <div id="titlebar" class="banner-bg row" style="background-image: url(/Assets/images/all-categories-photo.jpg)">
+        <div class="container titlebar-inner">
+            <a href="#" class="employer-website">Website</a>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2 class="whitetitle">@Model.CompanyName</h2>
+                </div>
+                <div class="col-sm-4 text-right spacer-top-20">
+                    <a href="/JobSeekerManagement" class="btn btn-primary btn-lg">Search more jobs</a>
+                </div>
             </div>
         </div>
     </div>
-
 
     <!-- Content================================================== -->
-    <div class="container">
+<div class="container company-info spacer-top-20">
+    <div class="employer-logo col-sm-4">
+        <img src="@Model.CompanyLogo" alt="" class="responsive-img">
+    </div>
+    <div class="job-details col-sm-8">
+        <h2 class="blacktitle"> @Model.JobTitleByEmployer</h2>
+        <span class="job-type">@Model.EmploymentStatusName</span>
 
-        <!-- Recent Jobs -->
-        <div class="eleven columns">
-            <div class="padding-right">
-
-                <!-- Company Info -->
-                <div class="company-info">
-                    <img src="@Model.CompanyLogo" alt="">
-                    <div class="content">
-                        <h4>@Model.CompanyName</h4>
-                        <span><a href="#"><i class="fa fa-link"></i> Website</a></span>
-                        <span class="bold-content">Share on</span>
-                        <span><a href="@ViewBag.TwitterUrl@Model.JobPostId" target="_blank"><i class="fa fa-twitter"></i></a></span>
-                        <span><a href="@ViewBag.FBUrl@Model.JobPostId" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></span>
-                        <span><a href="@ViewBag.WhatsAppUrl@Model.JobPostId" target="_blank"><i class="fa fa-whatsapp"></i></a></span>
-                        <!--<div class="fb-share-button"
-                             data-href="ViewBag.FBUrl Model.JobPostId"
-                             data-layout="button">
-                        </div>-->
-                        
-                        <div class="skills">                            
-                            @{
-                                if (Model.Skills != null && Model.Skills.Length > 0)
-                                {
-                                    string[] skills = Model.Skills.Split(',');
-                                    foreach (var skill in skills)
-                                    {
-                                        if (skill.Length > 1)
-                                        {
-                                            <span>@skill</span>
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    <span>N/A</span>
-                                }
-                            }                               
-                        </div>
-
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                @*job details here*@
-                <p>@Model.JobTitleByEmployer</p>
-                <h4 class="margin-bottom-10">Job Details</h4>
-                @Html.Raw(Model.JobDetails)
-            </div>
-        </div>
-
-        <!-- Widgets -->
-        <div class="five columns">
-            <!-- Sort by -->
-            <div class="widget">
-                <h3>Overview</h3>
-                <div class="job-overview">
-
-                    <ul>
-                        <li>
-                            <i class="fa fa-map-marker"></i>
-                            <div>
-                                <strong>Location:</strong>
-                                <span>@Model.StateCode, @Model.CityCode</span>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa fa-user"></i>
-                            <div>
-                                <strong>Job Title:</strong>
-                                <span>@Model.JobTitle</span>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa fa-user"></i>
-                            <div>
-                                <strong>Career Level:</strong>
-                                <span>@Model.JobTypeSummary</span>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa fa-money"></i>
-                            <div>
-                                <strong>Annual Salary:</strong>
-                                <span>@Model.CTC</span>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa fa-clock-o"></i>
-                            <div>
-                                <strong>Job Posted Date:</strong>
-                                <span>@Model.PositionStartDate</span>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                    @if (@Model.IsApplied)
+        <ul class="job-skills">
+            @{
+                if (Model.Skills != null && Model.Skills.Length > 0)
+                {
+                    string[] skills = Model.Skills.Split(',');
+                    foreach (var skill in skills)
                     {
-                        <a href="javascript:void(0)" id="btnApply" class="button">Applied</a>
+                        if (skill.Length > 1)
+                        {
+                            <li class="job-skill">@skill</li>
+                        }
                     }
-                    else
-                    {
-                        if (@user == null)
-                        {
-                            <a href="#" id="btnApply" class="button" onclick="WarningPopup()">Apply For This Job</a>
-                        }
-                        else if (@user.RoleName == "Student")
-                        {
-                            <a href="#" id="btnApply" class="button" onclick="ConfrimationFoJobApply(@Model.JobPostId)">Apply For This Job</a>
-                        }
-
-                        else
-                        {
-                            <a href="#" id="btnApply" class="button" onclick="ApplyJobs(@Model.JobPostId)">Apply For This Job</a>
-                        }
-
-                    }
-                    @*<a href="" class="popup-with-zoom-anim button">Apply For This Job</a>*@
+                }
+                else
+                {
+                    <li class="job-skill">N/A</li>
+                }
+            }
+        </ul>
 
 
+        <ul class="shareon-icon">
+            <li><a href="@ViewBag.TwitterUrl@Model.JobPostId" target="_blank"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="@ViewBag.FBUrl@Model.JobPostId" target="_blank"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="@ViewBag.WhatsAppUrl@Model.JobPostId" target="_blank"><i class="fa fa-whatsapp"></i> </a></li>
+        </ul>
 
-                    <div id="small-dialog" class="zoom-anim-dialog mfp-hide apply-popup">
-                        <div class="small-dialog-headline">
-                            <h2>Apply For This Job</h2>
-                        </div>
-                        <div class="small-dialog-content">
-                            <form action="#" method="get">
-                                <input type="text" placeholder="Full Name" value="" />
-                                <input type="text" placeholder="Email Address" value="" />
-                                <textarea placeholder="Your message / cover letter sent to the employer"></textarea>
-                                <!-- Upload CV -->
-                                <div class="upload-info"><strong>Upload your CV (optional)</strong> <span>Max. file size: 5MB</span></div>
-                                <div class="clearfix"></div>
-                                <label class="upload-btn">
-                                    <input type="file" multiple />
-                                    <i class="fa fa-upload"></i> Browse
-                                </label>
-                                <span class="fake-input">No file selected</span>
-                                <div class="divider"></div>
-                                <button class="send">Send Application</button>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Widgets / End -->
+        <h2 class="blacktitle margin-top-30">Job Details</h2>
+        @Html.Raw(Model.JobDetails)
 
     </div>
+</div>
+    <!-- Widgets -->
+    <div class="five columns">
+        <!-- Sort by -->
+        <div class="widget">
+            <h3>Overview</h3>
+            <div class="job-overview">
 
+                <ul>
+                    <li>
+                        <i class="fa fa-map-marker"></i>
+                        <div>
+                            <strong>Location:</strong>
+                            <span>@Model.StateCode, @Model.CityCode</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-user"></i>
+                        <div>
+                            <strong>Job Title:</strong>
+                            <span>@Model.JobTitle</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-user"></i>
+                        <div>
+                            <strong>Career Level:</strong>
+                            <span>@Model.JobTypeSummary</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-money"></i>
+                        <div>
+                            <strong>Annual Salary:</strong>
+                            <span>@Model.CTC</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-clock-o"></i>
+                        <div>
+                            <strong>Job Posted Date:</strong>
+                            <span>@Model.PositionStartDate</span>
+                        </div>
+                    </li>
+
+                </ul>
+
+                @if (@Model.IsApplied)
+                {
+                    <a href="javascript:void(0)" id="btnApply" class="button">Applied</a>
+                }
+                else
+                {
+                    if (@user == null)
+                    {
+                        <a href="#" id="btnApply" class="button" onclick="WarningPopup()">Apply For This Job</a>
+                    }
+                    else if (@user.RoleName == "Student")
+                    {
+                        <a href="#" id="btnApply" class="button" onclick="ConfrimationFoJobApply(@Model.JobPostId)">Apply For This Job</a>
+                    }
+
+                    else
+                    {
+                        <a href="#" id="btnApply" class="button" onclick="ApplyJobs(@Model.JobPostId)">Apply For This Job</a>
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Widgets / End -->
+
+    <div id="small-dialog" class="zoom-anim-dialog mfp-hide apply-popup">
+        <div class="small-dialog-headline">
+            <h2>Apply For This Job</h2>
+        </div>
+        <div class="small-dialog-content">
+            <form action="#" method="get">
+                <input type="text" placeholder="Full Name" value="" />
+                <input type="text" placeholder="Email Address" value="" />
+                <textarea placeholder="Your message / cover letter sent to the employer"></textarea>
+                <!-- Upload CV -->
+                <div class="upload-info"><strong>Upload your CV (optional)</strong> <span>Max. file size: 5MB</span></div>
+                <div class="clearfix"></div>
+                <label class="upload-btn">
+                    <input type="file" multiple />
+                    <i class="fa fa-upload"></i> Browse
+                </label>
+                <span class="fake-input">No file selected</span>
+                <div class="divider"></div>
+                <button class="send">Send Application</button>
+            </form>
+        </div>
+
+    </div>
 
     <!-- Modal -->
     <!-- ON Apply Job Begin -->
