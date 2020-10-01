@@ -30,5 +30,6 @@ namespace JobPortal.Business.Interfaces.Employer
         string BulkResumeData(string UserIds, int userId);
         string SingleUserProfileDownload(string JobseekerId, int userId);
         bool SaveProfileHistory(int UserId, string JobSeekerIds, string FileUrl);
+        IEnumerable<JobPostViewModel> EmployerRecentJobs(int empId);
     }
 }

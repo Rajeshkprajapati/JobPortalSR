@@ -731,7 +731,29 @@ namespace JobPortal.Business.Handlers.Employer
             return fileUrl;
             throw new Exception("not find file");
         }
-
+        public IEnumerable<JobPostViewModel> EmployerRecentJobs(int empId)
+        {
+            var ActiveJobCloseJobData = dashboardRepository.EmployerRecentJobPost(empId);
+            IList<JobPostViewModel> activeCloseJobs = new List<JobPostViewModel>();
+            if (null != ActiveJobCloseJobData && ActiveJobCloseJobData.Rows.Count > 0)
+            {
+                foreach (DataRow row in ActiveJobCloseJobData.Rows)
+                {
+                    activeCloseJobs.Add(
+                        new JobPostViewModel
+                        {
+                            JobPostId = Convert.ToInt32(row["JobPostId"]),
+                            JobTitleByEmployer = Convert.ToString(row["JobTitleByEmployer"]),
+                            HiringCriteria = Convert.ToString(row["HiringCriteria"]),
+                            CTC = Convert.ToString(row["CTC"]),
+                            PostedOn = Convert.ToDateTime(row["PostedOn"]),
+                            PositionEndDate = Convert.ToString(row["PositionEndDate"])
+                        });
+                }
+                return activeCloseJobs;
+            }
+            return activeCloseJobs;
+        }
     }
 }
 

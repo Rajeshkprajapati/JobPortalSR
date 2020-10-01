@@ -25,5 +25,6 @@ namespace JobPortal.Data.Interfaces.Employer
         bool DactiveActiveJobs(string id, int JobPostId);
         DataTable BulkResumeData(string UserIds);
         bool SaveProfileHistory(int UserId, string JobSeekerIds, string FileUrl);
+        DataTable EmployerRecentJobPost(int empId);
     }
 }

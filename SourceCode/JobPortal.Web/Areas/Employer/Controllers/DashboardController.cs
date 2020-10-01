@@ -53,6 +53,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             var dBoard = dashboardHandler.GetDashboard(user.UserId);
             ViewBag.JobTitle = _jobpastHandler.GetJobTitleDetails() ?? new List<JobTitleViewModel>();
             ViewBag.CityList = dashboardHandler.GetCityListWithoutState() ?? new List<CityViewModel>();
+            ViewBag.RecentJobs = dashboardHandler.EmployerRecentJobs(user.UserId);
             return PartialView("_EmpDashboardDataPartial", dBoard);
         }
 
