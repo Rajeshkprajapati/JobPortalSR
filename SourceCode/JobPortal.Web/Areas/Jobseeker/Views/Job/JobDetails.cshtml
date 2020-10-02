@@ -34,46 +34,55 @@
     </div>
 
     <!-- Content================================================== -->
-<div class="container company-info spacer-top-20">
-    <div class="employer-logo col-sm-4">
-        <img src="@Model.CompanyLogo" alt="" class="responsive-img">
-    </div>
-    <div class="job-details col-sm-8">
-        <h2 class="blacktitle"> @Model.JobTitleByEmployer</h2>
-        <span class="job-type">@Model.EmploymentStatusName</span>
+    <div class="container company-info spacer-top-20">
+        <div class="employer-logo col-sm-4">
+            <img src="@Model.CompanyLogo" alt="" class="responsive-img">
+        </div>
+        <div class="job-details col-sm-8">
+            <div class="row">
+                <div class="col-sm-7">
+                    <h2 class="blacktitle"> @Model.JobTitleByEmployer </h2>
+                </div>
+                <div class="col-sm-5">
+                    <ul class="shareon-icon pull-right">
+                        <li class="labeltext">Share On:</li>
+                        <li><a href="@ViewBag.TwitterUrl@Model.JobPostId" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="@ViewBag.FBUrl@Model.JobPostId" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="@ViewBag.WhatsAppUrl@Model.JobPostId" target="_blank"><i class="fa fa-whatsapp"></i> </a></li>
+                    </ul>
+                </div>
+            </div>
+            <span class="job-type">@Model.EmploymentStatusName</span>
 
-        <ul class="job-skills">
-            @{
-                if (Model.Skills != null && Model.Skills.Length > 0)
-                {
-                    string[] skills = Model.Skills.Split(',');
-                    foreach (var skill in skills)
+            <h4 class="spacer-top-20 subtitleblack">Required Skills</h4>
+            <ul class="job-skills">
+                @{
+                    if (Model.Skills != null && Model.Skills.Length > 0)
                     {
-                        if (skill.Length > 1)
+                        string[] skills = Model.Skills.Split(',');
+                        foreach (var skill in skills)
                         {
-                            <li class="job-skill">@skill</li>
+                            if (skill.Length > 1)
+                            {
+                                <li class="job-skill">@skill</li>
+                            }
                         }
                     }
+                    else
+                    {
+                        <li class="job-skill">N/A</li>
+                    }
                 }
-                else
-                {
-                    <li class="job-skill">N/A</li>
-                }
-            }
-        </ul>
+            </ul>
 
 
-        <ul class="shareon-icon">
-            <li><a href="@ViewBag.TwitterUrl@Model.JobPostId" target="_blank"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="@ViewBag.FBUrl@Model.JobPostId" target="_blank"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="@ViewBag.WhatsAppUrl@Model.JobPostId" target="_blank"><i class="fa fa-whatsapp"></i> </a></li>
-        </ul>
 
-        <h2 class="blacktitle margin-top-30">Job Details</h2>
-        @Html.Raw(Model.JobDetails)
 
+            <h4 class="spacer-top-20 subtitleblack">Job Details</h4>
+            @Html.Raw(Model.JobDetails)
+
+        </div>
     </div>
-</div>
     <!-- Widgets -->
     <div class="five columns">
         <!-- Sort by -->

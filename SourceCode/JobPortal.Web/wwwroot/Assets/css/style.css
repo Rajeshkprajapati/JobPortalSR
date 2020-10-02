@@ -1771,7 +1771,18 @@ label.input-label {
     text-decoration: none;
 }
 
-.job-title{
+
+
+a.employer-website{
+    font-size: 13px;
+    color: #fff;
+    text-decoration: underline;
+}
+a.employer-website:hover{
+    text-decoration: none
+}
+
+.job-title {
     background: #fff;
     padding: 3px 8px;
     color: #000;
@@ -1779,18 +1790,20 @@ label.input-label {
     text-transform: uppercase;
     border-radius: 3px;
 }
+
 .job-title:hover{
     text-decoration: none;
 }
-
 
 .job-type {
     font-size: 13px;
     letter-spacing: 0;
     background: #000;
-    padding: 3px 8px;
+    padding: 2px 8px;
     border-radius: 3px;
     line-height: 1;
+    color:#fff;
+    text-transform: uppercase;
 }
 
 .employer-logo {
@@ -1800,4 +1813,60 @@ label.input-label {
     border: 1px solid #e2e2e2;
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+
+.job-skills {
+    list-style: none;
+    margin: 10px 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.job-skill {
+    background: rgba(0,0,0,0.2);
+    padding: 3px 10px;
+    border-radius: 30px;
+    margin-right: 5px;
+}
+
+.shareon-icon{
+    padding: 0;
+    list-style:none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.shareon-icon li {
+    margin-right: 8px;
+    font-size: 18px;
+}
+.shareon-icon .labeltext {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 800;
+}
+    .shareon-icon li a {
+        color: #fff;
+        background-color: #2b9057;
+        text-decoration: none;
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        font-size: 15px;
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+        line-height: 1;
+    }
+    .shareon-icon li a:hover {
+        text-decoration: none;
+        background-color: #000;
+    }
+
+.subtitleblack {
+    font-size: 15px;
+    font-weight: 800;
+    color: #000;
 }
