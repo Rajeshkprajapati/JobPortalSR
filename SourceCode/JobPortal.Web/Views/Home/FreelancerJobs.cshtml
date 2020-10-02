@@ -29,56 +29,58 @@
     }
 }
 
-    }
+
 
 <!-- Titlebar
 ================================================== -->
-<div id="titlebar">
-    <div class="container">
-        <div class="ten columns">
-            <span>We found best matching:</span>
-            <h2>Freelancer Jobs</h2>
-        </div>
-        <div class="six columns">
-            <a href="/JobSeekerManagement" class="button">Search more jobs</a>
+<div id="titlebar" class="banner-bg row" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    <div class="container titlebar-inner">
+        <div class="row">
+            <div class="col-sm-8">
+                <h2 class="whitetitle"><span class="title-bdr-black-4">Jobs of cities</span></h2>
+            </div>
+            <div class="col-sm-4 text-right spacer-top-10">
+                <a href="/JobSeekerManagement" class="btn btn-primary btn-lg">Search more jobs</a>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Content
 ================================================== -->
-<div class="container">
+<div class="home-screen-section container">
+    <h2 class="blacktitle">We found best matching:</h2>
     <!-- Recent Jobs -->
     <div class="eleven columns">
         <div class="padding-right">
             <div class="listings-container">
-               
-                        @if (ViewBag.FreelancerJobs != null)
-                        {
-                            @foreach (var jobs in ViewBag.FreelancerJobs)
-                            {
-                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing full-time">
-                                    <div class="listing-logo">
-                                        <img src="@jobs.CompanyLogo" alt="">
-                                    </div>
-                                    <div class="listing-title">
-                                        <h4> @jobs.JobTitle <span class="listing-type">@jobs.EmploymentStatus</span></h4>
-                                        <ul class="listing-icons">
-                                            <li><i class="ln ln-icon-Management"></i> @jobs.CompanyName</li>
-                                            <li><i class="ln ln-icon-Map2"></i> @jobs.City</li>
-                                            <li><i class="ln ln-icon-Money-2"></i>@jobs.CTC</li>
-                                            <li><div class="listing-date new">@jobs.NumberOfDays&#8203;d ago</div></li>
-                                        </ul>
-                                    </div>
-                                </a>
-                            }
 
-                        }
-                        else
-                        {
-                            <p> No data found</p>
-                        }
-                  </div>
+                @if (ViewBag.FreelancerJobs != null)
+                {
+                    @foreach (var jobs in ViewBag.FreelancerJobs)
+                    {
+                        <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing full-time">
+                            <div class="listing-logo">
+                                <img src="@jobs.CompanyLogo" alt="">
+                            </div>
+                            <div class="listing-title">
+                                <h4> @jobs.JobTitle <span class="listing-type">@jobs.EmploymentStatus</span></h4>
+                                <ul class="listing-icons">
+                                    <li><i class="ln ln-icon-Management"></i> @jobs.CompanyName</li>
+                                    <li><i class="ln ln-icon-Map2"></i> @jobs.City</li>
+                                    <li><i class="ln ln-icon-Money-2"></i>@jobs.CTC</li>
+                                    <li><div class="listing-date new">@jobs.NumberOfDays&#8203;d ago</div></li>
+                                </ul>
+                            </div>
+                        </a>
+                    }
+
+                }
+                else
+                {
+                    <p> No data found</p>
+                }
+            </div>
             <div class="pagination-container">
                 <nav class="pagination">
                     <ul id="pagin">
@@ -98,17 +100,31 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Widgets -->
-    <div class="five columns">
+<div class="home-screen-section row panelbg-green">
+    <div class="container">
+        <!-- Widgets -->
         <!-- Sort by -->
-        <div class="widget">
-            <img src="~/Assets/images/app-images-v3.png" width="100%">
-            <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="widget text-center">
+                    <img src="/Assets/images/app-images-v3.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="widget text-center">
+                    <img src="/Assets/images/app-images-v3.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="widget text-center">
+                    <img src="/Assets/images/app-images-v3.png" class="responsive-img">
+                </div>
+            </div>
         </div>
+        <!-- Widgets / End -->
     </div>
-    <!-- Widgets / End -->
-
 </div>
 
 @section Scripts
