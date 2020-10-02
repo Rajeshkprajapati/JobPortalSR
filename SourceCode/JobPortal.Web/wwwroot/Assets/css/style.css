@@ -503,14 +503,21 @@ position: relative;
 .btn-row {
     margin-top: 10px;
 }
+.btn{
+    border-radius: 3px;
+}
 
-.btn-primary {
+.btn-primary,
+.btn-success {
     font-size: 14px;
     text-transform: uppercase;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.btn-primary {
     background-color: #2b9057;
     border: 1px solid #2b9057;
-    padding-left: 30px;
-    padding-right: 30px;
 }
 
 .btn-primary:focus,
@@ -520,12 +527,23 @@ position: relative;
     background-color: #257d4c;
 }
 
+.btn-success {
+    color: #fff;
+    background-color: #b58509;
+    border-color: #9c791f;
+}
+
+.btn-success:focus,
+.btn-success:focus:hover,
+.btn-success:hover {
+    border: 1px solid #9c791f;
+    background-color: #b58509;
+}
 
 .achievement {
     padding-top: 30px;
     padding-bottom: 30px;
 }
-
 
 /* Typography style */
 h2.whitetitle,
@@ -537,6 +555,7 @@ h2.blacktitle {
     margin-bottom: 10px;
     position: relative;
     letter-spacing: -0.7px;
+    text-transform: capitalize;
 }
 
 h2.blacktitle {
@@ -566,6 +585,10 @@ h2.whitetitle.greenbdr:after {
     background-color: #26ae61;
 }
 
+h2.blacktitle.text-center:after{
+    left: 50%;
+    margin-left: -20px;
+}
 
 /* Layout style */
 .video-panel .embed-responsive {
@@ -1260,6 +1283,10 @@ label.input-label {
     min-height: 40px;
 }
 
+.min-width-100{
+    min-width: 100%
+}
+
 .quick-links {
     color: #26ae61;
     font-size: 13px;
@@ -1825,7 +1852,7 @@ a.employer-website:hover{
 }
 
 .job-skill {
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.1);
     padding: 3px 10px;
     border-radius: 30px;
     margin-right: 5px;
@@ -1842,31 +1869,73 @@ a.employer-website:hover{
     margin-right: 8px;
     font-size: 18px;
 }
+.shareon-icon li:last-child{
+    margin-right: 0;
+}
+
 .shareon-icon .labeltext {
     text-transform: uppercase;
     font-size: 13px;
     font-weight: 800;
 }
-    .shareon-icon li a {
-        color: #fff;
-        background-color: #2b9057;
-        text-decoration: none;
-        width: 28px;
-        height: 28px;
-        display: inline-flex;
-        font-size: 15px;
-        border-radius: 50%;
-        justify-content: center;
-        align-items: center;
-        line-height: 1;
-    }
-    .shareon-icon li a:hover {
-        text-decoration: none;
-        background-color: #000;
-    }
+.shareon-icon li a {
+    color: #fff;
+    background-color: #2b9057;
+    text-decoration: none;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    font-size: 15px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+}
+.shareon-icon li a:hover {
+    text-decoration: none;
+    background-color: #000;
+}
 
 .subtitleblack {
     font-size: 15px;
     font-weight: 800;
     color: #000;
+}
+
+.job-overview {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+.job-overview li{
+    margin-top: 10px;
+}
+.job-overview li strong {
+    font-size: 14px;
+       
+    color: rgba(0,0,0,0.4);
+}
+.job-overview li span {
+    font-size: 13px;
+    color: #000;
+}
+
+
+.google-map-container{
+    height: 400px;
+}
+.google-map-container .google-map {
+    height: 100%
+}
+
+
+.info-block {
+    border-left: 5px solid #26ae61;
+    text-align: left;
+    flex: auto;
+    padding: 0 10px;
+    font-size: 14px;
 }

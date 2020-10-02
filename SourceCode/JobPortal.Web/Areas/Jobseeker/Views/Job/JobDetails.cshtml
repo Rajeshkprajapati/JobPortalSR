@@ -34,12 +34,12 @@
     </div>
 
     <!-- Content================================================== -->
-    <div class="container company-info spacer-top-20">
-        <div class="employer-logo col-sm-4">
+    <div class="container company-info home-screen-section">
+        <div class="employer-logo col-sm-3">
             <img src="@Model.CompanyLogo" alt="" class="responsive-img">
         </div>
-        <div class="job-details col-sm-8">
-            <div class="row">
+        <div class="job-details col-sm-9">
+            <div class="row spacer-top-20">
                 <div class="col-sm-7">
                     <h2 class="blacktitle"> @Model.JobTitleByEmployer </h2>
                 </div>
@@ -83,100 +83,92 @@
 
         </div>
     </div>
-    <!-- Widgets -->
-    <div class="five columns">
-        <!-- Sort by -->
-        <div class="widget">
-            <h3>Overview</h3>
-            <div class="job-overview">
-
-                <ul>
-                    <li>
-                        <i class="fa fa-map-marker"></i>
-                        <div>
-                            <strong>Location:</strong>
-                            <span>@Model.StateCode, @Model.CityCode</span>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa fa-user"></i>
-                        <div>
-                            <strong>Job Title:</strong>
-                            <span>@Model.JobTitle</span>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa fa-user"></i>
-                        <div>
-                            <strong>Career Level:</strong>
-                            <span>@Model.JobTypeSummary</span>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa fa-money"></i>
-                        <div>
-                            <strong>Annual Salary:</strong>
-                            <span>@Model.CTC</span>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa fa-clock-o"></i>
-                        <div>
-                            <strong>Job Posted Date:</strong>
-                            <span>@Model.PositionStartDate</span>
-                        </div>
-                    </li>
-
-                </ul>
-
+    <div class="row panelbg-gray10 home-screen-section">
+        <!-- Widgets -->
+        <div class="container home-screen-section">
+            <!-- Sort by -->
+            <h2 class="blacktitle">Overview</h2>
+            <ul class="job-overview row">
+                <li class="col-sm-6">
+                    <div class="row">
+                        <strong class="col-xs-4">Location:</strong>
+                        <span class="col-xs-8">@Model.StateCode, @Model.CityCode</span>
+                    </div>
+                </li>
+                <li class="col-sm-6">
+                    <div class="row">
+                        <strong class="col-xs-4">Job Title:</strong>
+                        <span class="col-xs-8">@Model.JobTitle</span>
+                    </div>
+                </li>
+                <li class="col-sm-6">
+                    <div class="row">
+                        <strong class="col-xs-4">Career Level:</strong>
+                        <span class="col-xs-8">@Model.JobTypeSummary</span>
+                    </div>
+                </li>
+                <li class="col-sm-6">
+                    <div class="row">
+                        <strong class="col-xs-4">Annual Salary:</strong>
+                        <span class="col-xs-8">@Model.CTC</span>
+                    </div>
+                </li>
+                <li class="col-sm-6">
+                    <div class="row">
+                        <strong class="col-xs-4">Job Posted Date:</strong>
+                        <span class="col-xs-8">@Model.PositionStartDate</span>
+                    </div>
+                </li>
+            </ul>
+            <div class="btn-row spacer-top-20 text-center">
                 @if (@Model.IsApplied)
                 {
-                    <a href="javascript:void(0)" id="btnApply" class="button">Applied</a>
+                    <a href="javascript:void(0)" id="btnApply" class="btn btn-primary">Applied</a>
                 }
                 else
                 {
                     if (@user == null)
                     {
-                        <a href="#" id="btnApply" class="button" onclick="WarningPopup()">Apply For This Job</a>
+                        <a href="#" id="btnApply" class="btn btn-primary" onclick="WarningPopup()">Apply For This Job</a>
                     }
                     else if (@user.RoleName == "Student")
                     {
-                        <a href="#" id="btnApply" class="button" onclick="ConfrimationFoJobApply(@Model.JobPostId)">Apply For This Job</a>
+                        <a href="#" id="btnApply" class="btn btn-primary" onclick="ConfrimationFoJobApply(@Model.JobPostId)">Apply For This Job</a>
                     }
 
                     else
                     {
-                        <a href="#" id="btnApply" class="button" onclick="ApplyJobs(@Model.JobPostId)">Apply For This Job</a>
+                        <a href="#" id="btnApply" class="btn btn-primary" onclick="ApplyJobs(@Model.JobPostId)">Apply For This Job</a>
                     }
 
                 }
             </div>
         </div>
+        <!-- Widgets / End -->
     </div>
-    <!-- Widgets / End -->
-
-    <div id="small-dialog" class="zoom-anim-dialog mfp-hide apply-popup">
-        <div class="small-dialog-headline">
-            <h2>Apply For This Job</h2>
-        </div>
-        <div class="small-dialog-content">
-            <form action="#" method="get">
-                <input type="text" placeholder="Full Name" value="" />
-                <input type="text" placeholder="Email Address" value="" />
-                <textarea placeholder="Your message / cover letter sent to the employer"></textarea>
-                <!-- Upload CV -->
-                <div class="upload-info"><strong>Upload your CV (optional)</strong> <span>Max. file size: 5MB</span></div>
-                <div class="clearfix"></div>
-                <label class="upload-btn">
-                    <input type="file" multiple />
-                    <i class="fa fa-upload"></i> Browse
-                </label>
-                <span class="fake-input">No file selected</span>
-                <div class="divider"></div>
-                <button class="send">Send Application</button>
-            </form>
-        </div>
-
+    <div id="small-dialog" class="container home-screen-section">
+        <h2 class="text-center blacktitle">Apply For This Job</h2>
+        <form action="#" method="get" class="col-sm-6 col-sm-offset-3">
+            <div class="form-group">
+                <label class="input-label">Full Name</label>
+                <input type="text" placeholder="Full Name" value="" class="form-control input-elements" />
+            </div>
+            <div class="form-group">
+                <label class="input-label">Email Address</label>
+                <input type="text" placeholder="Email Address" value="" class="form-control input-elements" />
+            </div>
+            <div class="form-group">
+                <label class="input-label">Message to employer</label>
+                <textarea placeholder="Your message / cover letter sent to the employer" class="form-control input-elements"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="input-label">Upload your CV (Optional) <small>Max. file size: 5MB</small></label>
+                <input type="file" multiple class="min-w-full form-control input-elements min-width-100" />
+            </div>
+            <div class="btn-row text-center spacer-top-20">
+                <button class="btn btn-success">Send Application</button>
+            </div>
+        </form>
     </div>
 
     <!-- Modal -->
