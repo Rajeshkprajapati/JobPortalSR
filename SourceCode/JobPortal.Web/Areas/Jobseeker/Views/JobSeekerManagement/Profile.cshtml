@@ -5,85 +5,84 @@
 }
 <link href="~/css/CommanPopup.css" rel="stylesheet" />
 <link href="~/lib/Calendar/css/tail.datetime-default-red.css" rel="stylesheet" />
-<link href="~/css/Profile.css" rel="stylesheet" />
 <link href="~/lib/tag-editor/jquery.tag-editor.css" rel="stylesheet" />
 
 <!-- Dashboard -->
-<div id="dashboard" class="row">
+<div id="dashboard" class="d-flex container body-container">
     <!-- Navigation
     ================================================== -->
     <!-- Responsive Navigation Trigger -->
-    <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Dashboard Navigation</a>
+    <a href="#" class="dashboard-responsive-nav-trigger"><span class="nav-bdr"></span></a>
     <div class="dashboard-nav">
-        <div class="dashboard-nav-inner">
-            <div class="testimonial-author">
-                <h4>Profile Score</h4>
-                <div class="progress ProgressDiv" id="ProgressDiv">
-                    @*<div class="progress-bar" role="progressbar"  style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>*@
-                </div>
 
-            </div>
-        </div>
-        <div class="dashboard-nav-inner usrProfile">
-            <ul data-submenu-title="">
-                <li><a id="ResumeUploadWithLabel">Attach Resume <span class="listing-type">Add</span></a></li>
-                <li><a id="ProfileSkillsModalCenterADD" data-toggle="modal" onclick="EditProfileSkills()">Key Skills<span class="listing-type">Add</span></a></li>
-                <li><a href="" id="employementModalCenterADD" data-toggle="modal" onclick="ShowModal('employementModalCenter')">Employment<span class="listing-type">Add</span></a></li>
-                <li><a href="" id="educationModalCenterADD" data-toggle="modal" onclick="ShowModal('educationModalCenter')">Education<span class="listing-type">Add</span></a></li>
-                <li><a href="" id="ProfileSummaryModalCenterADD" onclick="EditProfileSummary()" data-toggle="modal">Profile Summary<span class="listing-type">Add</span></a></li>
-                <li><a href="" id="profileModalCenterADD" data-toggle="modal" onclick="EditProfileData()">Personal Details<span class="listing-type">Add</span></a></li>
-                <li><a href="" id="locationeModalCenterADD" data-toggle="modal" onclick="ShowModal('locationModalCenter')">Pref. Location<span class="listing-type">Add</span></a></li>
-            </ul>
-        </div>
 
-        <div class="dashboard-nav-inner usrProfile">
-            <div class="testimonial-author">
-                @{
-                    UserViewModel usrProfile = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-                    <input type="file" name="ImageFile" class="custom-file-input" onchange="UploadProfilePicture(this)" id="customImageFile" accept=".jpg, .jpeg,.png" required style="display:none" />
-
-                    <a id="usrprofilepicupload" class="addMorebtn"><img src="" id="profileimage" alt=""><i class="fa fa-camera" aria-hidden="true" style="margin-left:-10px"></i></a>
-                    <h4>@usrProfile.FullName <span>@usrProfile.MobileNo</span><span>@usrProfile.JobTitleName</span></h4>
-                    <h6>@usrProfile.Email &nbsp;<img src="~/Assets/images/RightMark.png" style="max-width:17px"></h6>
-                    <h6><strong>Annual salary:</strong>&nbsp;<span id="usrProfileCTC"></span></h6>
-                    <h6><strong>Employment :</strong>&nbsp;<span id="usrEmploymentStatus"></span></h6>
-                    <h6><strong>Allow job alert :</strong>&nbsp; <input type="checkbox" class="form-check-input" id="btnJobAlert"></h6>
-                }
-            </div>
-        </div>
+        <ul data-submenu-title="">
+            <li><a href="javascript:void(0)" id="ResumeUploadWithLabel">Attach Resume <span class="listing-type">Add</span></a></li>
+            <li><a href="javascript:void(0)" id="ProfileSkillsModalCenterADD" data-toggle="modal" onclick="EditProfileSkills()">Key Skills<span class="listing-type">Add</span></a></li>
+            <li><a href="" id="employementModalCenterADD" data-toggle="modal" onclick="ShowModal('employementModalCenter')">Employment<span class="listing-type">Add</span></a></li>
+            <li><a href="" id="educationModalCenterADD" data-toggle="modal" onclick="ShowModal('educationModalCenter')">Education<span class="listing-type">Add</span></a></li>
+            <li><a href="" id="ProfileSummaryModalCenterADD" onclick="EditProfileSummary()" data-toggle="modal">Profile Summary<span class="listing-type">Add</span></a></li>
+            <li><a href="" id="profileModalCenterADD" data-toggle="modal" onclick="EditProfileData()">Personal Details<span class="listing-type">Add</span></a></li>
+            <li><a href="" id="locationeModalCenterADD" data-toggle="modal" onclick="ShowModal('locationModalCenter')">Pref. Location<span class="listing-type">Add</span></a></li>
+        </ul>
     </div>
     <!-- Navigation / End -->
     <!-- Content
     ================================================== -->
-    <div class="dashboard-content">
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="dashboard-list-box margin-top-0">
-                    <h4>Resume</h4>
-                </div>
-                <div class="application">
+    <div class="flex-1 mobile-full-screen">
+        <div id="titlebar" class="col-sm-12 banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+            <div class="usrProfile col-xs-12">
 
-                    <div class="app-content">
-
-                        <div class="info">
-                            <img src="~/Assets/images/Resume.png" alt="">
-                            <span id="Resumename"></span>
-                            <ul>
-                                <li><a href="javascript:void(0)" target="_blank" id="Resumefile"><i class="fa fa-file-text"></i> Download CV</a></li>
-                                <li><a asp-area="Jobseeker" asp-controller="ResumeBuilder" asp-action="Index"><i class="fa fa-envelope"></i> Build Resume</a></li>
+                <div class="row d-flex align-center">
+                    <div class="profile-img">
+                        <input type="file" name="ImageFile" class="custom-file-input" onchange="UploadProfilePicture(this)" id="customImageFile" accept=".jpg, .jpeg,.png" required style="display:none" />
+                        <img src="" class="img-responsive user-img" id="profileimage" alt="">
+                        <a id="usrprofilepicupload" class="changeimage"><i class="fa fa-camera" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="flex-1 profile-details">
+                        @{
+                            UserViewModel usrProfile = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+                            <h2 class="whitetitle">@usrProfile.FullName</h2>
+                           
+                            <ul class="profile-info-text row">
+                                <li class="profile-info col-sm-6">
+                                    Email Id:
+                                    @usrProfile.Email
+                                    <img src="~/Assets/images/RightMark.png" class="verified-mark" />
+                                </li>
+                                <li class="profile-info col-sm-6">Phone No: @usrProfile.MobileNo</li>
+                                <li class="profile-info col-sm-6">Job Title: @usrProfile.JobTitleName</li>
+                                <li class="profile-info col-sm-6">Annual salary: <span id="usrProfileCTC"></span></li>
+                                <li class="profile-info col-sm-6">Employment: <span id="usrEmploymentStatus"></span></li>
+                                <li class="profile-info col-sm-6"><input type="checkbox" class="form-check-input" id="btnJobAlert"> Allow job alert </li>
                             </ul>
-                        </div>
-                        <!-- Buttons -->
-                        <div class="buttons">
-
-                            <label class="upload-btn">
-                                <input type="file" name="files" id="uplaodFile" accept=".doc, .docx,.pdf" onchange="UploadResume('uplaodFile')" style="" />
-                                <i class="fa fa-upload"></i> Browse Resume
-                            </label>
-                        </div>
-                        <div class="clearfix"></div>
+                        }
                     </div>
                 </div>
+            </div>
+            <div class="profile-score">
+                <div class="progress ProgressDiv" id="ProgressDiv">
+                    <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="jobseeker-doc">
+            <img src="~/Assets/images/Resume.png" alt="">
+            <span id="Resumename"></span>
+            <ul>
+                <li><a href="javascript:void(0)" target="_blank" id="Resumefile"><i class="fa fa-file-text"></i> Download CV</a></li>
+                <li><a asp-area="Jobseeker" asp-controller="ResumeBuilder" asp-action="Index"><i class="fa fa-envelope"></i> Build Resume</a></li>
+            </ul>
+
+            <label class="upload-btn">
+                <input type="file" name="files" id="uplaodFile" accept=".doc, .docx,.pdf" onchange="UploadResume('uplaodFile')" style="" />
+            </label>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
 
                 <div class="dashboard-list-box margin-top-3">
                     <h4>Add Key Skill</h4>
@@ -418,7 +417,7 @@
                                 <div class="form">
                                     <h5>Education</h5>
                                     <select class="selectDropdown" id="CourseCategory" name="Qualification" asp-items="@(new SelectList(@ViewBag.Coursecategory, "Id", "Name"))" required>
-                                        <option  value="">--Select Course Category--</option>
+                                        <option value="">--Select Course Category--</option>
                                     </select>
                                 </div>
 

@@ -1952,3 +1952,88 @@ a.employer-website:hover{
     margin-left: 30px;
 }
 
+
+
+
+.profile-img {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #fff;
+    background-color: #f1f1f1;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+.changeimage{
+    display: none;
+    position: absolute;
+    left:0;
+    right: 0;
+    top: 0;
+    bottom:0;
+    align-items: center;
+    justify-content: center;
+}
+.profile-img:hover .changeimage {
+    display: inline-flex;
+}
+.user-img {
+    max-width: 100%;
+}
+
+.changeimage {
+
+}
+
+.verified-mark{
+    width: 14px;
+
+}
+
+
+.profile-score{
+    position: absolute;
+    bottom: 0;
+    height: 10px;
+    left:0;
+    right: 0;
+    overflow: hidden;
+}
+.progress {
+    border-radius: 0;
+    background-color: #fff;
+    box-shadow: none;
+}
+.progress-bar {
+    background-color: #26ae61;
+}
+
+.profile-info-text {
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.2;
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile-info-text .profile-info {
+    margin-top: 2px;
+    color: #fff;
+    border-radius: 3px;
+    white-space: nowrap;
+    word-break: keep-all;
+    display:flex;
+    align-items: center;
+}
+.profile-info-text .profile-info input[type="checkbox"]{
+    margin-top: 0;
+    margin-right: 8px;
+}
