@@ -109,7 +109,7 @@
                         <label for="Mobile">
                             Mobile:
                             <i class="ln ln-icon-Smartphone"></i>
-                            <input type="number" maxlength="10" min="0" class="input-text" required asp-for="MobileNo" placeholder="Mobile" />
+                            <input type="number" maxlength="10" min="0" class="input-text" required asp-for="MobileNo" placeholder="Mobile" onblur="PhoneLengthValidation(this)" />
                         </label>
                         <span asp-validation-for="MobileNo" class="text-danger"></span>
                     </div>
