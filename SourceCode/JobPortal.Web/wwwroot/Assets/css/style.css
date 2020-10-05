@@ -285,19 +285,20 @@ body {
 }
 /*Search Section style*/
 .searchwrap {
-    background: #2b9057 url(https://i.ytimg.com/vi/FgxJ1etZHGo/maxresdefault.jpg) center 0;
+    background: #2b9057 url(https://i.ytimg.com/vi/FgxJ1etZHGo/maxresdefault.jpg) no-repeat center 0;
     position: relative;
+    background-size: cover;
 }
 
-    .searchwrap:before {
-        left: 0;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        content: '';
-        background-color: rgba(0,0,0,0.3);
-        position: absolute;
-    }
+.searchwrap:before {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    content: '';
+    background-color: rgba(0,0,0,0.3);
+    position: absolute;
+}
 
 .banner {
     padding-top: 40px;
@@ -2103,4 +2104,9 @@ a.employer-website {
 .profile-info-text .profile-info input[type="checkbox"] {
     margin-top: 0;
     margin-left: 8px;
+}
+
+.sidebar-search{
+    width: 300px;
+    border: 1px solid rgba(0,0,0,0.1);
 }
