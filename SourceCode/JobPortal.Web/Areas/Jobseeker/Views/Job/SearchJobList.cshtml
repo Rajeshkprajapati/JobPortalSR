@@ -32,10 +32,13 @@
             <div class="col-sm-12">
                 <div class="row d-flex">
                     <div class="sidebar-search">
+                        <h4 class="col-xs-12">Search Filter</h4>
                         <div class="sidebar-widget col-xs-12">
-                            <h4>Jobs By City</h4>
-                            <input type="text" class="filter-search-box" placeholder="Search" />
-                            <ul class="checkboxes">
+
+                            <label class="input-label"><strong>Jobs By City</strong></label>
+                            <input type="text" class="filter-search-box form-control input-elements" placeholder="Search" />
+
+                            <ul class="checkboxes expandible filter-option-item">
                                 @{
                                     if (ViewBag.City != null && ViewBag.City.Count > 0)
                                     {
@@ -46,8 +49,9 @@
                                             {
                                                 <li>
                                                     <input type="checkbox" @if (filters.City.Any(c => c == item.CityCode)) { <text> checked</text> } name="checkname" id="Name_@j" value="@item.CityCode" onchange="SearchCity(this)" />
-                                                    <label for="Name_@j"></label>
-                                                    @item.City (<span>@item.CountValue</span>)
+                                                    <label for="Name_@j" class="input-label">
+                                                        @item.City (<span>@item.CountValue</span>)
+                                                    </label>
                                                 </li>
                                                 j = j + 1;
                                             }
@@ -55,17 +59,18 @@
                                     }
                                     else
                                     {
-                                        <li>
-                                            <label style="color:red;"> Cities not available</label>
+                                        <li class="alert alert-danger">
+                                            Cities not available
                                         </li>
                                     }
                                 }
                             </ul>
                         </div>
+                        <hr />
                         <div class="sidebar-widget col-xs-12">
-                            <h4>Jobs By Company</h4>
-                            <input type="text" class="filter-search-box" placeholder="Search" />
-                            <ul class="checkboxes expandible expanded">
+                            <label class="input-label"><strong>Jobs By Company</strong></label>
+                            <input type="text" class="filter-search-box form-control input-elements" placeholder="Search" />
+                            <ul class="checkboxes expandible expanded filter-option-item">
                                 @{
                                     if (ViewBag.Company != null && ViewBag.Company.Count > 0)
                                     {
@@ -76,7 +81,7 @@
                                             {
                                                 <li>
                                                     <input type="checkbox" @if (filters.CompanyUserId.Any(c => c == Convert.ToString(item.UserId))) { <text> checked</text> } name="CompanyName" id="CompanyName_@k" value="@item.UserId" onchange="SearchCompany(this)" />
-                                                    <label for="CompanyName_@k">
+                                                    <label for="CompanyName_@k" class="input-label">
                                                         @item.CompanyName (<span>@item.CountValue</span>)
                                                     </label>
                                                 </li>
@@ -86,8 +91,8 @@
                                     }
                                     else
                                     {
-                                        <li>
-                                            <label style="color:red;"> Company not available</label>
+                                        <li class="alert alert-danger">
+                                            Company not available
                                         </li>
                                     }
                                 }
@@ -102,9 +107,13 @@
                         }
                         else
                         {
-                            <div class="col-sm-12">
+                            <div class="col-xs-12">
                                 <h2 class="blacktitle">We found best matching:</h2>
-                                <div class="job-lists row two-column">
+                            </div>
+                            <div class="row">
+
+                                <div class="job-lists col-sm-12 two-column">
+
                                     @foreach (var item in Model)
                                     {
                                         <div class="job-lists-item col-md-6 col-xs-12">
@@ -122,7 +131,7 @@
                                                         <li>@item.CTC</li>
                                                         <li><span>@item.NumberOfDays</span><span> days ago</span></li>
                                                     </ul>
-                                                    <div class="skills">
+                                                    <ul class="job-skills">
                                                         <!--<span style="background-color:white;color:#808080 !important;font-weight:300 !important">Skills: </span>-->
                                                         @{
                                                             if (!string.IsNullOrEmpty(item.Skills) && item.Skills.Length > 0)
@@ -132,16 +141,16 @@
                                                                 {
                                                                     if (skill.Length > 1)
                                                                     {
-                                                                        <span>@skill</span>
+                                                                        <li class="job-skill">@skill</li>
                                                                     }
                                                                 }
                                                             }
                                                             else
                                                             {
-                                                                <span>N/A</span>
+                                                                <li>N/A</li>
                                                             }
                                                         }
-                                                    </div>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>

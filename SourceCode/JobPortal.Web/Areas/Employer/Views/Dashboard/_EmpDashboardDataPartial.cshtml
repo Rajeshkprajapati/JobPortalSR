@@ -6,7 +6,7 @@
 <div id="titlebar" class="col-sm-12 banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
     @{
         UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-        <h2 class="whitetitle"><span class="title-bdr-black-4">Welcome, @user.FirstName</span></h2>
+        <h2 class="whitetitle">Welcome, @user.FirstName</h2>
     }
 </div>
 <nav id="breadcrumbs" class="col-sm-12">

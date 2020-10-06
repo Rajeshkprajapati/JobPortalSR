@@ -3,86 +3,53 @@
 @{
     ViewData["Title"] = "Sucess Story And Review";
 }
-<style>
-    .message-des {
-        /*background-image: url('/images/review.jpg');*/
-        background-color: #05969aa3;
-        border-radius: 15px
-    }
-    
-    .heading-color {
-        color: #eaf3ec;
-    }
-    .text-area-editor {
-        border: 3px solid #dfb69e;
-        border-radius: 10px
-    }
-    #wrapper {
-        background-color: #f0f0f0;
-    }
-    .row {
-        margin-top:20px;
-    }
-</style>
+
 @{
     UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
 
-   
-    <div class="pageTitle">
-        <div class="container">
+    <div id="titlebar" class="banner-bg row" style="background-image: url(/Assets/images/all-categories-photo.jpg)">
+        <div class="container titlebar-inner">
             <div class="row">
-                <div class="col-md-6 col-sm-6">
-                    <h1 class="page-heading">Feedback</h1>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="breadCrumb"><a href="/Home/Index/">Home</a> / <span>Feedback</span></div>
+                <div class="col-sm-12">
+                    <h2 class="whitetitle">Feedback</h2>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Page Title End -->
-    <div class="container">
-                <!--Start comment Section-->
-                    <div class="row">
-                        <div class="col-md-12 message-des">
-                            <div class="col-md-12">
-                                <h3 class="widgettitles gp-standard-titles" style="margin-top:20px;">
-                                    <span class="heading-color">Feedback</span>
-                                </h3>
-                            </div>
-                            @if (@user == null)
-                            {
-                                <label style="margin-bottom:5px;">You must be logged in to post a review.</label>
-                            }
-                            else
-                            {
-                                <form asp-action="PostSucessStoryReview" method="post" enctype="multipart/form-data">
-                                    <div class="col-sm-12 col-md-12">
-                                        @if (TempData["Feedback"] != null)
-                                        {
-                                        <p class="success-message"> @Html.Raw(@TempData["Feedback"].ToString())</p>
-                                        }
-                                        
-                                        <label>
-                                            <textarea class="text-area-editor form-control col-md-12" asp-for="Message" id="areaCommet" name="Message" cols="52" rows="7" placeholder="MESSAGE" minlength=10 required></textarea>
-                                        </label><br />
-                                        <font class="reviewfontwaring heading-color">* Should be maximum 100 words</font>
+    <div class="container home-screen-section">
+        <!--Start comment Section-->
+        <h2 class="text-center blacktitle">Feedback</h2>
+        @if (@user == null)
+        {
+            <div class="spacer-top-20 col-xs-12">
+                <p class="home-screen-section text-center">You must be logged in to post a review.</p>
+            </div>
+        }
+        else
+        {
+            <form asp-action="PostSucessStoryReview" method="post" enctype="multipart/form-data" class="col-md-6 col-md-offset-3 col-xs-offset-0 home-screen-section">
 
-                                    </div>
-                                    <div class="col-sm-12 col-md-12" style="margin-bottom:10px;">
-                                        <button type="submit" id="submitReview" class="button centered" style="width:40%">Post  </button>
-                                    </div>
-                                    <br />
-                                </form>
-
-                            }
-                        </div>
+                @if (TempData["Feedback"] != null)
+                {
+                    <div class="alert alert-success text-center">
+                        <p>@Html.Raw(@TempData["Feedback"].ToString())</p>
                     </div>
-                    <!--End comment Section-->
-                
-           
-        </div>
-    
+                }
+                <div class="form-group">
+                    <label class="input-label">
+                        Message
+                    </label>
+                    <textarea class="form-control input-elements" asp-for="Message" id="areaCommet" name="Message" cols="52" rows="7" placeholder="MESSAGE" minlength=10 required></textarea>
+                    <p>* <small>Should be maximum 100 words</small></p>
+                </div>
+                <div class="form-group spacer-top-20 text-center">
+                    <button type="submit" id="submitReview" class="btn btn-success">Post</button>
+                </div>
+            </form>
+        }
+    </div>
 }
 @section Scripts
     {
