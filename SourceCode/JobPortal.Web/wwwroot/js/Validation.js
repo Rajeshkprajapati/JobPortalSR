@@ -134,3 +134,11 @@ function validatePassword($password) {
     var passwordReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
     return passwordReg.test($password);
 }
+
+function PhoneLengthValidation(txtBox) {
+    let phone = $(txtBox).val();
+    if (phone.length < 10 || phone.length > 10) {
+        ErrorDialog('Error', 'Mobile Number should be 10 digit long');
+        $(txtBox).val('');
+    }
+}
