@@ -4,8 +4,8 @@
 }
 @model UserViewModel
 
-<link href="~/Assets/css/AdminLoginmain.css" rel="stylesheet" />
-<link href="~/Assets/css/AdminLoginutil.css" rel="stylesheet" />
+@*<link href="~/Assets/css/AdminLoginmain.css" rel="stylesheet" />
+<link href="~/Assets/css/AdminLoginutil.css" rel="stylesheet" />*@
 
 <!--<link href="~/css/Auth/auth.css" rel="stylesheet" />
 
@@ -24,7 +24,7 @@
     </div>
 </div> -->
 
-<div class="limiter">
+@*<div class="limiter">
     <div class="container-login100" style="background-image: url('/Assets/images/bg-02.jpg');">
         <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
             <div asp-validation-summary="All" asp- class="text-danger-custom">
@@ -33,16 +33,7 @@
                 <span class="login100-form-title">
                     Admin Login
                 </span>
-                <!--
-                <a href="#" class="btn-face m-b-20">
-                    <i class="fa fa-facebook-official"></i>
-                    Facebook
-                </a>
-
-                <a href="#" class="btn-google m-b-20">
-                    <img src="~/Assets/images/icon-google.png" alt="GOOGLE">
-                    Google
-                </a> -->
+               
                 <div class="p-t-31 p-b-9">
                     <span class="txt1">
                         Username
@@ -58,10 +49,7 @@
                     <span class="txt1">
                         Password
                     </span>
-                    <!--
-                    <a href="#" class="txt2 bo1 m-l-5">
-                        Forgot?
-                    </a>-->
+                   
                 </div>
                 <div class="wrap-input100 validate-input" data-validate="Password is required">
                     <input class="input100" asp-for="Password" type="password" name="Password" required>
@@ -76,6 +64,32 @@
                 </div>
             </form>
         </div>
+    </div>
+</div>*@
+
+<div class="container screen-height home-screen-section">
+    <div class="login-form">
+        <h2 class="blacktitle">Admin Login</h2>
+        <div asp-validation-summary="All" class="text-danger-custom"></div>
+        <form method="post" class="login spacer-top-20" asp-action="AdminLogin">
+            <div class="form-group">
+                <label for="username" class="input-label">
+                    User name
+                </label>
+                <input type="text" class="form-control input-elements" required asp-for="Email" id="Email" value="" placeholder="Enter Email" />
+            </div>
+            <div class="form-group">
+                <label for="password" class="input-label">
+                    Password
+                </label>
+                <input class="form-control input-elements" type="password" required asp-for="Password" id="password" placeholder="Enter Password" />
+            </div>
+            <div class="form-group spacer-top-20">
+                <p>
+                    <input type="submit" class="btn btn-primary btn-block" name="login" value="Login" />
+                </p>
+            </div>
+        </form>
     </div>
 </div>
 
