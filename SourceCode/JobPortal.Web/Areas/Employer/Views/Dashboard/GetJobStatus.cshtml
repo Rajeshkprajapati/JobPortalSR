@@ -1,77 +1,82 @@
 ﻿@using JobPortal.Model.DataViewModel.Employer.JobPost
 @model IEnumerable<JobPostViewModel>
 
-<div class="dashboard-list-box-content">
+<div class="col-sm-12 home-screen-section">
     <!-- Table -->
-    <table class="manage-table responsive-table" id="dataTable" >
-        <tr>
-        <tr>
-            <th>
-                Job Title
-            </th>
-            <th>Required Skill</th>
-            <th>
-                CTC
-            </th>
-            <th>
-                Posted On
-            </th>
-            <th>
-                Close Date
-                </th>
-            <th></th>
-        </tr>
-        <!-- Item #1 -->
-        @if (Model.Count() > 0)
-        {
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable">
 
-            @foreach (var job in Model)
-            {
-        <tr>
-            <td>
-                <a href="/Job/JobDetails/?jobid=@job.JobPostId" target="_blank">
-                    @job.JobTitleByEmployer
-                </a>
-            </td>
-            <td>@job.HiringCriteria</td>
-            <td>
-                @job.CTC
-            </td>
-            <td>
-                @job.PostedOn
-            </td>
-            <td>
-                @job.PositionEndDate
-            </td>
-            @if (ViewBag.JobStatus != null)
-            {
-                @if (ViewBag.JobStatus == 1)
+                <tr class="active">
+                    <th>
+                        Job Title
+                    </th>
+                    <th>Required Skill</th>
+                    <th>
+                        CTC
+                    </th>
+                    <th>
+                        Posted On
+                    </th>
+                    <th>
+                        Close Date
+                    </th>
+                    <th></th>
+                </tr>
+                <!-- Item #1 -->
+                @if (Model.Count() > 0)
                 {
-                    <td onclick="DeactiveActiveJob(@job.JobPostId)">
-                        <a href="javascript:void(0)">
-                            <i class="fa fa-times" aria-hidden="true">&nbsp; Close</i>
-                        </a>
-                    </td>
-                }
-                else {
-                    <td>Closed</td>
-                }
-            }
-        </tr>
-            }
 
-        }
-        else
-        {
-            <tr>
-                <td colspan="8">
-                    <label>
-                        Data not found to display
-                    </label>
-                </td>
-            </tr>
-        }
+                    @foreach (var job in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href="/Job/JobDetails/?jobid=@job.JobPostId" target="_blank">
+                                    @job.JobTitleByEmployer
+                                </a>
+                            </td>
+                            <td>@job.HiringCriteria</td>
+                            <td>
+                                @job.CTC
+                            </td>
+                            <td>
+                                @job.PostedOn
+                            </td>
+                            <td>
+                                @job.PositionEndDate
+                            </td>
+                            @if (ViewBag.JobStatus != null)
+                            {
+                                @if (ViewBag.JobStatus == 1)
+                                {
+                                    <td onclick="DeactiveActiveJob(@job.JobPostId)">
+                                        <a href="javascript:void(0)" class="quick-links text-uppercase">
+                                            Close
+                                        </a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>Closed</td>
+                                }
+                            }
+                        </tr>
+                    }
 
-    </table>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">
+                            <label>
+                                Data not found to display
+                            </label>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
 </div>
 <script src="~/js/Employer/ActiveCloseJobs/ActiveCloseJobs.js"></script>

@@ -1,198 +1,166 @@
 ﻿
 @using JobPortal.Model.DataViewModel.Employer.JobPost
 @model JobPostViewModel
-@*<link href="~/lib/Calendar/css/tail.datetime-default-red.css" rel="stylesheet" />*@
-@*<link href="~/lib/bootstrap-multiselect//css/bootstrap-multiselect.css" rel="stylesheet" />*@
-@*<link href="~/css/Employer/JobPost.css" rel="stylesheet" />*@
 
-
-<div class="dashboard-content">
-
-    <!-- Titlebar -->
-    <div id="titlebar">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Add Job</h2>
-                <!-- Breadcrumbs -->
-                <nav id="breadcrumbs">
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Dashboard</a></li>
-                        <li>Add Job</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-
-        <!-- Table-->
-        <div class="col-lg-12 col-md-12">
-            <form onsubmit="return AddJobPost(this)" id="JobPostForm">
-                <div class="dashboard-list-box margin-top-0">
-                    <h4>Job Details</h4>
-                    <div class="dashboard-list-box-content">
-                        <div class="submit-page">
-
-                            <div class="form">
-                                <h5>Job Industry</h5>
-                                <select asp-for="JobIndustryAreaId" data-placeholder="Industry Type" id="JobIndustryAreaId" name="JobIndustryAreaId" class="chosen-select-no-single" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
-                                    <option value="0">Select Industry</option>
-                                </select>
-                            </div>
-
-                            <!--<div class="form">
-                                <h5>Other Industry</h5>
-                                <input type="text" id="txtOtherJobIndustry" asp-for="OtherJobIndustryArea" name="OtherJobIndustryArea" class="search-field" placeholder="Industry Name">
-                            </div> -->
-
-                            <div class="form">
-                                <h5>Job Title By Employer</h5>
-                                <input type="text" id="txtJobTitleByEmployer" required asp-for="JobTitleByEmployer" name="JobTitleByEmployer" class="search-field" placeholder="Job Title">
-                            </div>
-
-                            <div class="form">
-                                <div class="select">
-                                    <h5>Job Title</h5>
-                                    <!-- <input type="hidden" id="hdnJobTitleId" asp-for="JobTitleId" /> -->
-                                    <select id="ddlJobRoles" asp-for="JobTitleId" data-placeholder="Choose Job Title" name="JobTitleId" class="chosen-select" multiple></select>
-                                </div>
-                            </div>
-
-                            <div class="form">
-                                <h5>Employment Status</h5>
-                                <select asp-for="EmploymentStatusId" data-placeholder="Choose Employment Status" class="chosen-select-no-single" asp-items="@(new SelectList(@ViewBag.EmploymentStatus,"EmploymentStatusId", "EmploymentStatusName"))"></select>
-                            </div>
-
-
-                            <div class="form">
-                                <h5>Job Type</h5>
-                                @foreach (var jobType in ViewBag.JobTypes)
-                                {
-                                    <label class="radio-inline">
-                                        <input type="radio" asp-for="JobType" id="radioJobType" value="@jobType.Id">
-                                        @jobType.Type
-                                    </label>
-                                }
-                            </div>
-
-                            <div class="form">
-                                <h5>Skill</h5>
-                                <input type="text" id="Skills" required asp-for="Skills" name="Skills" class="search-field" placeholder="Required Skills">
-                            </div>
-
-
-                            <div class="form">
-                                <h5>Hiring Criteria</h5>
-                                <input type="text" required asp-for="HiringCriteria" name="HiringCriteria" class="search-field" placeholder="Minimum Education">
-                            </div>
-
-
-                            <div class="form">
-                                <h5>CTC</h5>
-                                <input type="number" id="annumSalary" required asp-for="CTC" min="0" maxlength="7" name="CTC" class="search-field" placeholder="CTC">
-                            </div>
-
-
-                            <div class="form">
-                                <h5>Job Start Date:</h5>
-                                <div class="input-group">
-                                    <input type="date" required asp-for="PositionStartDate" id="startDate" name="PositionStartDate" class="form-control unstyled">
-                                    <div class="input-group-addon">
-                                        <a href="javascript:void(0)" onclick="toggleCalendar(this)">
-                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                @*<input type="date" required asp-for="PositionStartDate" id="startDate" name="PositionStartDate" class="form-control" placeholder="Job Start Date">*@
-                            </div>
-
-
-                            <div class="form">
-                                <h5>Job Expiration Date:</h5>
-                                <div class="input-group">
-                                    <input type="date" required asp-for="PositionEndDate" id="endDate" name="PositionEndDate" class="form-control unstyled">
-                                    <div class="input-group-addon">
-                                        <a href="javascript:void(0)" onclick="toggleCalendar(this)">
-                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                @*<input type="date" asp-for="PositionEndDate" required id="endDate" name="PositionEndDate" class="form-control" placeholder="Job Expiration Date" onblur="compare();">*@
-                            </div>
-
-                            <div class="form">
-                                <h5>Country</h5>
-                                <select asp-for="CountryCode" id="ddlCountry" class="chosen-select-no-single" asp-items="@(new SelectList(@ViewBag.Country,"CountryCode", "Country"))">
-                                    @*<option value="">Country</option>*@
-                                </select>
-                            </div>
-
-
-                            <div class="form">
-                                <h5>State</h5>
-                                <select asp-for="StateCode" required data-placeholder="Choose State" class="chosen-select-no-single" id="ddlState"></select>
-                            </div>
-
-
-                            <div class="form">
-                                <h5>City</h5>
-                                <select asp-for="CityCode" required data-placeholder="Choose City" class="chosen-select-no-single" id="ddlCity"></select>
-                            </div>
-
-                            <div class="form">
-                                <h5>Contact Person Name</h5>
-                                <input type="text" id="spoc" required asp-for="ContactPerson" name="ContactPerson" class="search-field" placeholder="SPOC Name">
-                            </div>
-
-
-                            <div class="form">
-                                <h5>Mobile</h5>
-                                <input type="text" id="spocContact" required asp-for="Mobile" maxlength="10" name="Mobile" class="search-field" placeholder="SPOC Phone">
-                            </div>
-
-
-                            <div class="form">
-                                <h5>Contact Person Email</h5>
-                                <input type="email" id="spocEmail" required asp-for="SPOCEmail" name="SPOCEmail" class="search-field" placeholder="SPOC Email">
-                            </div>
-
-                            <div class="form">
-                                <h5>Number of Position</h5>
-                                <input type="number" name="NoPosition" min="1" required asp-for="NoPosition" class="search-field" placeholder="Number of Position">
-                            </div>
-
-                            <div class="form">
-                                <h5>Is Walkin Job</h5>
-                                <select asp-for="IsWalkIn" name="IsWalkin" data-placeholder="Is Walkin Job" class="chosen-select-no-single">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
-
-                            <div class="form" id="textarea" style="width:100%">
-                                <h5>Description</h5>
-                                <textarea class="WYSIWYG text-area-editor" cols="10" asp-for="JobDetails" id="JobDetails" name="JobDetails" placeholder="Job Detail"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="font:12px;color:red;">
-                    <span>* Post job will be visible to the jobseekers</span><br />
-                    <span>* Draft job will be saved for post in near future</span>
-                </div>
-                <div>
-                    <input type="submit" class="button margin-top-30" value="Post Job">
-                    <input type="button" class="button margin-top-30" onclick="return SaveJob(this)" value="Draft Job">
-                </div>
-            </form>
-
-            @*<a href="#" class="button margin-top-30">Post <i class="fa fa-arrow-circle-right"></i></a>*@
-        </div>
-    </div>
+<div id="titlebar" class="col-sm-12 banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    <h2 class="whitetitle">Add Job</h2>
 </div>
 
+<nav id="breadcrumbs" class="col-sm-12">
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Dashboard</a></li>
+        <li>Add Job</li>
+    </ol>
+</nav>
+
+<div class="col-xs-12 spacer-top-20">
+    <h2 class="blacktitle">Job Details</h2>
+    <form onsubmit="return AddJobPost(this)" id="JobPostForm" class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="input-label">Job Industry</label>
+                <select asp-for="JobIndustryAreaId" data-placeholder="Industry Type" id="JobIndustryAreaId" name="JobIndustryAreaId" class="chosen-select-no-single" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
+                    <option value="0">Select Industry</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="input-label">Job Title By Employer</label>
+                <input type="text" id="txtJobTitleByEmployer" required asp-for="JobTitleByEmployer" name="JobTitleByEmployer" class="form-control input-elements" placeholder="Job Title">
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="input-label">Job Title</label>
+                <select id="ddlJobRoles" asp-for="JobTitleId" data-placeholder="Choose Job Title" name="JobTitleId" class="chosen-select" multiple></select>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="input-label">Employment Status</label>
+                <select asp-for="EmploymentStatusId" data-placeholder="Choose Employment Status" class="chosen-select-no-single" asp-items="@(new SelectList(@ViewBag.EmploymentStatus,"EmploymentStatusId", "EmploymentStatusName"))"></select>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="input-label min-width-100"><strong>Job Type</strong></label>
+                @foreach (var jobType in ViewBag.JobTypes)
+                {
+                    <label class="radio-inline input-label">
+                        <input type="radio" asp-for="JobType" id="radioJobType" value="@jobType.Id">
+                        @jobType.Type
+                    </label>
+                }
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">Skill</label>
+                <input type="text" id="Skills" required asp-for="Skills" name="Skills" class="form-control input-elements" placeholder="Required Skills">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">Hiring Criteria</label>
+                <input type="text" required asp-for="HiringCriteria" name="HiringCriteria" class="form-control input-elements" placeholder="Minimum Education">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">CTC</label>
+                <input type="number" id="annumSalary" required asp-for="CTC" min="0" maxlength="7" name="CTC" class="form-control input-elements" placeholder="CTC">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">Job Start Date:</label>
+                <div class="input-group min-width-100 datepicker-wrapper">
+                    <input type="date" required asp-for="PositionStartDate" id="startDate" name="PositionStartDate" class="form-control input-elements">
+                    <a href="javascript:void(0)" onclick="toggleCalendar(this)" class="datepicker-btn">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">Job Expiration Date:</label>
+                <div class="input-group min-width-100 datepicker-wrapper">
+                    <input type="date" required asp-for="PositionEndDate" id="endDate" name="PositionEndDate" class="form-control input-elements">
+                    <a href="javascript:void(0)" onclick="toggleCalendar(this)" class="datepicker-btn">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">Country</label>
+                <select asp-for="CountryCode" id="ddlCountry" class="chosen-select-no-single" asp-items="@(new SelectList(@ViewBag.Country,"CountryCode", "Country"))"></select>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">State</label>
+                <select asp-for="StateCode" required data-placeholder="Choose State" class="chosen-select-no-single" id="ddlState"></select>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">City</label>
+                <select asp-for="CityCode" required data-placeholder="Choose City" class="chosen-select-no-single" id="ddlCity"></select>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">Contact Person Name</label>
+                <input type="text" id="spoc" required asp-for="ContactPerson" name="ContactPerson" class="form-control input-elements" placeholder="SPOC Name">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+
+                <label class="input-label">Mobile</label>
+                <input type="text" id="spocContact" required asp-for="Mobile" maxlength="10" name="Mobile" class="form-control input-elements" placeholder="SPOC Phone">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">Contact Person Email</label>
+                <input type="email" id="spocEmail" required asp-for="SPOCEmail" name="SPOCEmail" class="form-control input-elements" placeholder="SPOC Email">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">Number of Position</label>
+                <input type="number" name="NoPosition" min="1" required asp-for="NoPosition" class="form-control input-elements" placeholder="Number of Position">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">Is Walkin Job</label>
+                <select asp-for="IsWalkIn" name="IsWalkin" data-placeholder="Is Walkin Job" class="chosen-select-no-single">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group" id="textarea">
+                <label class="input-label">Description</label>
+                <textarea class="WYSIWYG text-area-editor" cols="10" asp-for="JobDetails" id="JobDetails" name="JobDetails" placeholder="Job Detail"></textarea>
+            </div>
+            <small class="col-xs-12">* Post job will be visible to the jobseekers</small>
+            <small class="col-xs-12">* Draft job will be saved for post in near future</small>
+        </div>
+        <div class="col-xs-12 home-screen-section text-center">
+            <input type="submit" class="btn btn-primary" value="Post Job">
+            <input type="button" class="btn btn-success" onclick="return SaveJob(this)" value="Draft Job">
+        </div>
+    </form>
+</div>
 
 <script src="~/js/Employer/JobPost/JobPost.js"></script>
 <script type="text/javascript">
@@ -207,10 +175,10 @@
         });
         let JobTitleByEmployer = $('input[name=JobTitleByEmployer]').val();
         if (JobTitleByEmployer.length < 5) {
-            ErrorDialog('Error','JobTitleByEmployer must be atleast 5 character long');
+            ErrorDialog('Error', 'JobTitleByEmployer must be atleast 5 character long');
             return false;
         }
-        let State =  $('select[name=StateCode]').val();
+        let State = $('select[name=StateCode]').val();
         let City = $('select[name=CityCode]').val();
         if (State.length <= 0) {
             ErrorDialog('Error', 'Please select state!');
@@ -240,7 +208,7 @@
             }
         });
         //resetForm($('#JobPostForm'));
-        
+
         $('#JobPostForm').trigger("reset");;
         $(".chosen-select").trigger("chosen:updated");
         $(".chosen-select-no-single").trigger("chosen:updated");

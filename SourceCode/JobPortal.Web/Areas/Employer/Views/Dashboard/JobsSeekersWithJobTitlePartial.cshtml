@@ -15,8 +15,8 @@
 <div class="col-xs-12 home-screen-section dashboard-list-box">
     <div class="dashboard-list-box-content table-responsive">
         <!-- Table -->
-        <table class="manage-table resumes responsive-table table table-bordered">
-            <tr>
+        <table class="manage-table resumes table table-bordered">
+            <tr class="active">
                 <th>Name</th>
                 <th>Contact</th>
                 <th>Email</th>
@@ -29,10 +29,10 @@
             {
                 @foreach (var jobseeker in Model)
                 {
-                    <tr>
+                    <tr class="success">
                         <td colspan="7">
                             <strong class="text-uppercase">@jobseeker.JobTitleByEmployer</strong>
-                            <span class="pull-right">Job Roles:</span><span>@jobseeker.JobRoles</span>
+                            <span class="job-type">Job Roles: @jobseeker.JobRoles</span>
                         </td>
                     </tr>
                     @foreach (var employee in jobseeker.jobSeekers)

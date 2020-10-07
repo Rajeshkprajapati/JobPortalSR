@@ -39,13 +39,15 @@
 <div class="col-xs-12">
     <div class="row">
         <div class="col-xs-8">
-            <h4 class="subheader">Inbox</h4>
+            <h2 class="blacktitle">Inbox</h2>
         </div>
         <div class="col-xs-4 d-flex align-center justify-content-end">
-            <input type="text" required id="dateToFilterMessages" readonly class="message-action form-control input-elements">
-            <a href="javascript:void(0)" onclick="toggleCalendar()" class="btn btn-default btn-lg">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-            </a>
+            <div class="datepicker-wrapper">
+                <input type="text" required id="dateToFilterMessages" readonly class="message-action form-control input-elements">
+                <a href="javascript:void(0)" onclick="toggleCalendar()" class="datepicker-btn">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                </a>
+            </div>
         </div>
     </div>
 </div>
