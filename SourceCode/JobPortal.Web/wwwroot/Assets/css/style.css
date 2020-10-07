@@ -401,7 +401,7 @@ body {
 }
 
 .search-field {
-    margin: 5px 2px;
+    margin: 0px 2px;
 }
 
 .search-field .default {
@@ -1720,6 +1720,9 @@ label.input-label {
     color: #313131;
     text-decoration: underline;
 }
+.activity-list-item .msg-content a strong {
+    color: #2b9057;
+}
 
 .activity-list-item .msg-content a:hover {
     text-decoration: none;
@@ -1833,6 +1836,7 @@ a.employer-website:hover {
     border: 1px solid #e2e2e2;
     padding-top: 15px;
     padding-bottom: 15px;
+    min-height: 250px;
 }
 
 
@@ -2143,7 +2147,6 @@ a.employer-website:hover {
     z-index: 3;
     box-shadow: 0px 5px 3px 0px rgba(0,0,0,0.09);
     display: none;
-    border: 5px solid red;
 }
 
 .chosen-container-active .chosen-drop {
