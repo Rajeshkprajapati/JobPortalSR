@@ -22,7 +22,7 @@ namespace JobPortal.Business.Handlers.Auth
     public class AuthHandler : IAuthHandler
     {
         private readonly IAuthRepository _authProcessor;
-        private IHostingEnvironment hostingEnviroment;
+        private readonly IHostingEnvironment hostingEnviroment;
         private readonly IEMailHandler emailHandler;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _configuration;

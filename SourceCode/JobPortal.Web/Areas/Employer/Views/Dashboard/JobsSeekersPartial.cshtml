@@ -8,7 +8,7 @@
 <nav id="breadcrumbs" class="col-sm-12">
     <ol class="breadcrumb">
         <li><a href="#">Home</a></li>
-        <li><a href=#">Dashboard</a></li>
+        <li><a href="#">Dashboard</a></li>
         <li class="active">JobSeekers</li>
     </ol>
 </nav>
@@ -17,7 +17,8 @@
     <input type="button" onclick="DownloadResume()" class="btn btn-primary pull-right" value="Download Resume" />
 
     @if (Convert.ToString(ViewData["isViewdProfile"]) == "1")
-        <a href="" id="ziplink" hidden>Data</a>
+    { 
+       <a href="" id="ziplink" hidden>Data</a>
     }
     else
     {

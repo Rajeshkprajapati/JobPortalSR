@@ -308,7 +308,7 @@ body {
 .banner h1 {
     font-size: 55px;
     font-weight: 800;
-    text-transform: lowercase;
+    /*text-transform: lowercase;*/
     color: #fff;
     letter-spacing: -3px;
 }

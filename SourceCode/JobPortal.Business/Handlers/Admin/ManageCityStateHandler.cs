@@ -142,7 +142,7 @@ namespace JobPortal.Business.Handlers.Admin
             return lstState;
             //throw new Exception("State not found");
         }
-        private bool usp_CheckIfStateAlreadyExist(string stateCode)
+        private bool CheckIfStateAlreadyExist(string stateCode)
         {
             return _manageCityStateRepository.CheckIfStateCodeExist(stateCode);
         }
