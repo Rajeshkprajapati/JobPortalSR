@@ -1032,10 +1032,15 @@ $("#btnJobAlert").change(function () {
     let isAlert;
     if (this.checked) {
         isAlert = 1;
+        JobAlertUncheckConfirmation(isAlert);
     }
     else {
         isAlert = 0;
+        ConfirmationDialog('Confirmation', 'Are you sure?', JobAlertUncheckConfirmation, isAlert);
     }
+ });
+
+function JobAlertUncheckConfirmation(isAlert) {
     data = "";
     SendAJAXRequest("/JobSeekerManagement/JobsAlert/?isAlert=" + isAlert + "", 'POST', data, 'JSON', function (result) {
         if (result) {
@@ -1050,4 +1055,4 @@ $("#btnJobAlert").change(function () {
             ErrorDialog('Error', 'Failed,Please try again!');
         }
     });
-});
+}

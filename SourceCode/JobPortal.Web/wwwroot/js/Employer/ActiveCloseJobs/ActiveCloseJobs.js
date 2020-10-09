@@ -52,3 +52,7 @@ $("#closedJobs").click(function () {
     $(this).addClass('active');
     $("#activeJobs").removeClass('active');
 });
+
+function CloseJobConfirmation(data) {
+    ConfirmationDialog('Confirmation', 'Are you sure to close this job?', DeactiveActiveJob, data);
+}
