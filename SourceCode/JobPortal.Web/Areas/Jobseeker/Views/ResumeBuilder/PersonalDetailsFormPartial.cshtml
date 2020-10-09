@@ -1,76 +1,113 @@
-﻿<form method="post" id="personalDetails" onsubmit="savePersonalDetails(this,event)">
-    <div class="formrow">
-        <label for="FirstName">First Name:</label>
-        <input type="text" name="FirstName" class="form-control" placeholder="First Name">
-    </div>
-    <div class="formrow">
-        <label for="LastName">Last Name:</label>
-        <input type="text" name="LastName" class="form-control" placeholder="Last Name">
-    </div>
-    <div class="formrow">
-        <label for="Email">Email:</label>
-        <input type="email" name="Email" class="form-control" placeholder="Email">
-    </div>
-    <div class="formrow">
-        <label for="MobileNo">Contact Number:</label>
-        <input type="text" name="MobileNo" class="form-control" placeholder="Contact No." maxlength="10">
-    </div>
-    <div class="formrow">
-        <label for="Address1">Address 1:</label>
-        <input type="text" name="Address1" class="form-control" placeholder="Address Line 1" required>
-    </div>
-    <div class="formrow">
-        <label for="Address2">Address 2:</label>
-        <input type="text" name="Address2" class="form-control" placeholder="Address Line 2">
-    </div>
-    <div class="formrow">
-        <label for="Address3">Address 3:</label>
-        <input type="text" name="Address3" class="form-control" placeholder="Address Line 3">
-    </div>
-    <div class="formrow">
-        <label for="Country">Country:</label>
-        <select name="Country" onchange="getStates(this)" class="form-control">
-        </select>
-    </div>
-    <div class="formrow">
-        <label for="State">State:</label>
-        <select name="State" onchange="getCities(this)" class="form-control">
-        </select>
-    </div>
-    <div class="formrow">
-        <label for="City">City:</label>
-        <select name="City" class="form-control">
-        </select>
-    </div>
-    <div class="formrow">
-        <label for="MaritalStatus">Marital Status:</label>
-        <div class="form-group">
-            <label class="radio-inline">
-                <input type="radio" name="MaritalStatus" value="">
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="MaritalStatus" value="">
-            </label>
-        </div>
-    </div>
-    <div class="formrow">
-        <label for="Gender">Gender:</label>
-        <div class="form-group">
-            <label class="radio-inline">
-                <input type="radio" name="Gender"  value="">
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="Gender" value="">
-            </label>
-        </div>
-    </div>
-    <div class="formrow">
-        <label for="DOB">Date of Birth:</label>
+﻿<form method="post" id="personalDetails" onsubmit="savePersonalDetails(this,event)" class="home-screen-section">
+    <div class="col-sm-12">
         <div class="row">
-            <div class="col-md-12">
-                <input type="date" name="DOB" id="DOB" class="demo form-control unstyled dobCalander" placeholder="Please enter date of birth">
-             </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="FirstName" class="input-label">First Name:</label>
+                    <input type="text" name="FirstName" class="form-control input-elements" placeholder="First Name">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="LastName" class="input-label">Last Name:</label>
+                    <input type="text" name="LastName" class="form-control input-elements" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="Email" class="input-label">Email:</label>
+                    <input type="email" name="Email" class="form-control input-elements" placeholder="Email">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="DOB" class="input-label">Date of Birth:</label>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="date" name="DOB" id="DOB" class="demo form-control input-elements unstyled dobCalander" placeholder="Please enter date of birth">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="MobileNo" class="input-label">Contact Number:</label>
+                    <input type="text" name="MobileNo" class="form-control input-elements" placeholder="Contact No." maxlength="10">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="Gender" class="input-label">Gender:</label>
+                    <div class="min-width-100">
+                        <label class="radio-inline">
+                            <input type="radio" name="Gender" value="">
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Gender" value="">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="MaritalStatus" class="input-label">Marital Status:</label>
+                    <div class="min-width-100">
+                        <label class="radio-inline">
+                            <input type="radio" name="MaritalStatus" value="">
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="MaritalStatus" value="">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </div>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="Address1" class="input-label">Address 1:</label>
+                    <input type="text" name="Address1" class="form-control input-elements" placeholder="Address Line 1" required>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="Address2" class="input-label">Address 2:</label>
+                    <input type="text" name="Address2" class="form-control input-elements" placeholder="Address Line 2">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="Address3" class="input-label">Address 3:</label>
+                    <input type="text" name="Address3" class="form-control input-elements" placeholder="Address Line 3">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="Country" class="input-label">Country:</label>
+                    <select name="Country" onchange="getStates(this)" class="form-control input-elements">
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="State" class="input-label">State:</label>
+                    <select name="State" onchange="getCities(this)" class="form-control input-elements">
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="City" class="input-label">City:</label>
+                    <select name="City" class="form-control input-elements">
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
-    <input type="submit" class="btn" value="Save and Continue">
+    <div class="form-group spacer-bottom-20 spacer-top-20 text-center col-xs-12">
+        <input type="submit" class="btn btn-success" value="Save and Continue">
+    </div>
 </form>

@@ -1,51 +1,46 @@
-﻿<form id="frmExperienceDetails_0">
+﻿<form id="frmExperienceDetails_0" class="home-screen-section">
     <input type="hidden" name="Id" value="0" />
-    <div class="formrow">
-        <label for="Designation">Designation*:</label>
-        <input type="text" name="Designation" class="form-control" placeholder="Current Designation">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="Designation" class="input-label">Designation*:</label>
+            <input type="text" name="Designation" class="form-control input-elements" placeholder="Current Designation">
+        </div>
     </div>
-    <div class="formrow">
-        <label for="Organization">Company*:</label>
-        <input type="text" name="Organization" class="form-control" placeholder="Current Company">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="Organization" class="input-label">Company*:</label>
+            <input type="text" name="Organization" class="form-control input-elements" placeholder="Current Company">
+        </div>
     </div>
-    <div class="formrow">
-        <label>Annual Salary:</label>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="row col-md-8">
-                    <select name="AnnualSalaryInLakhs" class="form-control">
-                        <option value="">Select</option>
-                        @for (int i = 0; i < 100; i++)
-                        {
-                            <option value="@i">@i</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <span>Lakh(s)</span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="row col-md-8">
-                    <select name="AnnualSalaryInThousands" class="form-control">
-                        <option value="">Select</option>
-                        @for (int i = 0; i < 100; i += 5)
-                        {
-                            <option value="@i">@i</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <span>Thousand(s)</span>
-                </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="input-label">Annual Salary:</label>
+            <div class="d-flex align-center">
+                <select name="AnnualSalaryInLakhs" class="form-control input-elements">
+                    <option value="">Select</option>
+                    @for (int i = 0; i < 100; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+
+                <span class="margin-lft-right-5">Lakh(s)</span>
+                <select name="AnnualSalaryInThousands" class="form-control input-elements">
+                    <option value="">Select</option>
+                    @for (int i = 0; i < 100; i += 5)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+                <span class="margin-lft-right-5">Thousand(s)</span>
             </div>
         </div>
     </div>
-    <div class="formrow">
-        <label>Working since:</label>
-        <div class="row">
-            <div class="col-md-4">
-                <select name="WorkingFromYear" class="form-control">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label class="input-label">Working since:</label>
+            <div class="d-flex align-center">
+                <select name="WorkingFromYear" class="form-control input-elements">
                     <option value="">Year</option>
                     @{
                         int currYear = DateTime.Now.Year;
@@ -54,23 +49,18 @@
                             <option value="@i">@i</option>
                         }
                     }
-
                 </select>
-            </div>
-            <div class="col-md-3">
-                <select name="WorkingFromMonth" class="form-control">
-                    <option value="">Month</option>
-                    @for (int i = 0; i < 12; i++)
-                    {
-                        <option value="@i">@(i + 1)</option>
-                    }
-                </select>
-            </div>
-            <div class="col-md-1">
-                <span>To</span>
-            </div>
-            <div class="col-md-4">
-                <select name="WorkingTill" class="form-control">
+                <div class="margin-lft-right-5">
+                    <select name="WorkingFromMonth" class="form-control input-elements width-70">
+                        <option value="">Month</option>
+                        @for (int i = 0; i < 12; i++)
+                        {
+                            <option value="@i">@(i + 1)</option>
+                        }
+                    </select>
+                </div>
+                <span class="margin-lft-right-5">To</span>
+                <select name="WorkingTill" class="form-control input-elements">
                     <option value="">Year</option>
                     int currYear = DateTime.Now.Year;
                     @for (int i = (currYear - 50); i <= (currYear + 50); i++)
@@ -81,35 +71,49 @@
             </div>
         </div>
     </div>
-    <div class="formrow">
-        <label for="WorkLocation">Current location:</label>
-        <select name="WorkLocation" class="form-control"></select>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="WorkLocation" class="input-label">Current location:</label>
+            <select name="WorkLocation" class="form-control input-elements"></select>
+        </div>
     </div>
-    <div class="formrow">
-        <label for="NoticePeriod">Duration of Notice Period:</label>
-        <select name="NoticePeriod" class="form-control">
-            <option value="">Select</option>
-            <option value="15">15 Days</option>
-            <option value="30">30 Days</option>
-            <option value="45">45 Days</option>
-            <option value="60">60 Days</option>
-            <option value="90+">90 Days or more</option>
-        </select>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="NoticePeriod" class="input-label">Duration of Notice Period:</label>
+            <select name="NoticePeriod" class="form-control input-elements">
+                <option value="">Select</option>
+                <option value="15">15 Days</option>
+                <option value="30">30 Days</option>
+                <option value="45">45 Days</option>
+                <option value="60">60 Days</option>
+                <option value="90+">90 Days or more</option>
+            </select>
+        </div>
     </div>
-    <div class="formrow checkbox">
-        <label><input type="checkbox" name="ServingNoticePeriod">Serving notice period ?</label>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="Skills" class="input-label">Skills:</label>
+            <input type="text" name="Skills" class="form-control input-elements" placeholder="Skills" required>
+        </div>
     </div>
-    <div class="formrow">
-        <label for="Skills">Skills:</label>
-        <input type="text" name="Skills" class="form-control" placeholder="Skills" required>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="Industry" class="input-label">Industry:</label>
+            <select name="Industry" class="form-control input-elements"></select>
+        </div>
     </div>
-    <div class="formrow">
-        <label for="Industry">Industry:</label>
-        <select name="Industry" class="form-control"></select>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label for="JobProfile" class="input-label">Describe Job Profile</label>
+            <textarea name="JobProfile" class="form-control input-elements text-area-editor" placeholder="Describe your experience here" required></textarea>
+        </div>
     </div>
-    <div class="formrow">
-        <label for="JobProfile">Describe Job Profile</label>
-        <textarea name="JobProfile" class="form-control text-area-editor" placeholder="Describe your experience here" required></textarea>
+    <div class="col-sm-12">
+        <div class="form-group d-flex align-center">
+            <label><input type="checkbox" name="ServingNoticePeriod"><space class="margin-lft-right-5"></space>Serving notice period ?</label>
+        </div>
     </div>
-    <a id="btnAddAnOtherExperience" onclick="createExperiencDetailsForm(this)">+add another employment</a>
+    <div class="col-sm-12">
+        <a id="btnAddAnOtherExperience" class="btn btn-primary" onclick="createExperiencDetailsForm(this)">+add another employment</a>
+    </div>
 </form>

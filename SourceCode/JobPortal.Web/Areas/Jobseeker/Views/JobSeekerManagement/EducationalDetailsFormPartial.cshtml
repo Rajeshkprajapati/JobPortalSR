@@ -1,52 +1,68 @@
-﻿<form id="frmEducationalDetails_0">
-    <input type="hidden" name="Id" value="0"/>
-    <div class="formrow">
-        <label for="Qualification">Qualification*:</label>
-        <select class="form-control" name="Qualification" onchange="changeCourseCategory(this)">      
-        </select>
-    </div>
-    <div class="formrow">
-        <label for="Course">Course*:</label>
-        <select class="form-control" name="Course">
-        </select>
-    </div>
-    <div class="formrow">
-        <label for="Specialization">Specialization*:</label>
-        <input type="text" name="Specialization" class="form-control" placeholder="Specialization">
-    </div>
-    <div class="formrow">
-        <label for="University">University/College*:</label>
-        <input type="text" name="University" required class="form-control" placeholder="Institute Name">
-    </div>
-    <div class="formrow">
-        <label for="CourseType">Course Type*:</label>
+﻿<form id="frmEducationalDetails_0" class="home-screen-section">
+    <input type="hidden" name="Id" value="0" />
+    <div class="col-sm-6">
         <div class="form-group">
-            <label class="radio-inline">
-                <input type="radio" name="CourseType" value="">
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="CourseType" value="">
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="CourseType" value="">
-            </label>
+            <label for="Qualification" class="input-label">Qualification*:</label>
+            <select class="form-control input-elements" name="Qualification" onchange="changeCourseCategory(this)">
+            </select>
         </div>
     </div>
-    <div class="formrow">
-        <label for="Percentage">Percentage*:</label>
-        <input type="number" name="Percentage" class="form-control" placeholder="Percentage (%)" >
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="Course" class="input-label">Course*:</label>
+            <select class="form-control input-elements" name="Course">
+            </select>
+        </div>
     </div>
-    <div class="formrow">
-        <label for="PassingYear">Passing Year*:</label>
-        <select class="form-control" name="PassingYear">
-            @{
-                int currYear = DateTime.Now.Year;
-                @for (int i = (currYear - 50); i <= (currYear + 1); i++)
-                {
-                    <option value="@i">@i</option>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="Specialization" class="input-label">Specialization*:</label>
+            <input type="text" name="Specialization" class="form-control input-elements" placeholder="Specialization">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="University" class="input-label">University/College*:</label>
+            <input type="text" name="University" required class="form-control input-elements" placeholder="Institute Name">
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label for="CourseType" class="input-label">Course Type*:</label>
+            <div class="min-width-100">
+                <label class="radio-inline">
+                    <input type="radio" name="CourseType" value="">
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="CourseType" value="">
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="CourseType" value="">
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="Percentage" class="input-label">Percentage*:</label>
+            <input type="number" name="Percentage" class="form-control input-elements" placeholder="Percentage (%)">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="PassingYear" class="input-label">Passing Year*:</label>
+            <select class="form-control input-elements" name="PassingYear">
+                @{
+                    int currYear = DateTime.Now.Year;
+                    @for (int i = (currYear - 50); i <= (currYear + 1); i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
                 }
-            }
-        </select>
+            </select>
+        </div>
     </div>
-    <a id="btnAddAnOtherAcademic" onclick="createEducationalDetailsForm(this)">+add another academic</a>
+    <div class="col-sm-12">
+        <a id="btnAddAnOtherAcademic" class="btn btn-primary" onclick="createEducationalDetailsForm(this)">+add another academic</a>
+    </div>
 </form>

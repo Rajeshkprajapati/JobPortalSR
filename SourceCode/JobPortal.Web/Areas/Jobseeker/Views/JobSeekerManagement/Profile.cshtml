@@ -28,7 +28,7 @@
     <!-- Navigation / End -->
     <!-- Content
     ================================================== -->
-    <div class="flex-1 mobile-full-screen">
+    <div class="flex-1 mobile-full-screen spacer-bottom-20">
         <div class="usrProfile col-sm-12 home-screen-section">
             @{
                 UserViewModel usrProfile = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
@@ -62,17 +62,17 @@
                 </div>
             }
         </div>
-        <div class="jobseeker-doc col-sm-12 home-screen-section">
+        <div class="jobseeker-doc col-sm-12 spacer-top-10">
+            <div class="form-group text-right row">
+                <a href="javascript:void(0)" target="_blank" id="Resumefile" class="btn btn-primary"><i class="fa fa-file-text"></i> Download CV</a>
+                <a asp-area="Jobseeker" asp-controller="ResumeBuilder" asp-action="Index" class="btn btn-success"><i class="fa fa-envelope"></i> Build Resume</a>
+            </div>
             <div class="row d-flex align-center">
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <img src="~/Assets/images/Resume.png" alt="" class="img-responsive">
                     <span id="Resumename"></span>
                 </div>
-                <div class="col-sm-9">
-                    <div class="form-group text-center">
-                        <a href="javascript:void(0)" target="_blank" id="Resumefile" class="btn btn-primary"><i class="fa fa-file-text"></i> Download CV</a>
-                        <a asp-area="Jobseeker" asp-controller="ResumeBuilder" asp-action="Index" class="btn btn-success"><i class="fa fa-envelope"></i> Build Resume</a>
-                    </div>
+                <div class="col-sm-6 col-xs-12">
                     <div class="form-group">
                         <label class="input-label">
                             Upload Resume
@@ -82,194 +82,199 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="dashboard-list-box margin-top-3">
+        <div class="col-sm-12">
+            <hr />
+            <div class="row">
+                <div class="col-xs-6">
                     <h4>Add Key Skill</h4>
                 </div>
-                <div class="application">
-                    <div class="app-content">
-                        <p class="subHeadinfo">
-                            Helps recruiter in finding you for relevant jobs.
-                        </p>
-                        <div class="info uploadCont">
-                            <label id="txtSkillsValues" class="profileSummary"></label>
-                        </div>
-                        <!-- Buttons -->
-                        <div class="buttons" style="margin-top:10px">
-                            <label class="upload-btn">
-                                <span onclick="EditProfileSkills()"> <i class="fa fa-plus-circle"></i> Add More</span>
-                            </label>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
+                <div class="col-xs-6 text-right "><a href="javascript:void(0)" onclick="EditProfileSkills()" class="quick-links text-uppercase"> Add More</a></div>
+            </div>
+            <p class="subHeadinfo">
+                Helps recruiter in finding you for relevant jobs.
+            </p>
+            <p id="txtSkillsValues" class="profileSummary"></p>
+        </div>
+
+        <div class="col-sm-12">
+            <hr />
+            <div class="row">
+                <div class="col-xs-6">
+                    <h4>IT Skills</h4>
                 </div>
-
-                <div class="dashboard-list-box margin-top-3">
-                    <h4>IT Skills<a data-toggle="modal" onclick="AddITSkills()" class="addMorebtn pull-right">+Add More</a></h4>
+                <div class="col-xs-6 text-right ">
+                    <a data-toggle="modal" onclick="AddITSkills()" class="quick-links text-uppercase">+Add More</a>
                 </div>
-                <div class="application">
-                    <div class="app-content">
-                        <div class="col-lg-12 col-md-12">
-
-                            <div class="dashboard-list-box margin-top-0">
-                                <div class="dashboard-list-box-content">
-                                    <!-- Table -->
-                                    <table class="manage-table responsive-table">
-                                        <tr>
-                                            <th hidden><i class="fa fa-file-text"></i> id</th>
-                                            <th><i class="fa fa-file-text"></i> Skill</th>
-                                            <th><i class="fa fa-check-square-o"></i> Version</th>
-                                            <th><i class="fa fa-calendar"></i> Last Used</th>
-                                            <th><i class="fa fa-user"></i> Experience(y)</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        <tbody id="ITSkills"></tbody>
-
-
-                                    </table>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
+            </div>
+            <div class="table-responsive spacer-top-20">
+                <!-- Table -->
+                <table class="table table-bordered">
+                    <tr class="active">
+                        <th hidden>id</th>
+                        <th>Skill</th>
+                        <th>Version</th>
+                        <th>Last Used</th>
+                        <th>Experience(y)</th>
+                        <th>Action</th>
+                    </tr>
+                    <tbody id="ITSkills"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <hr />
+            <div class="row">
+                <div class="col-xs-6">
+                    <h4>Employment Details</h4>
                 </div>
-
-                <div class="dashboard-list-box margin-top-3">
-
-                    <h4>Employment Details  <a data-toggle="modal" onclick="ShowModal('employementModalCenter')" class="addMorebtn pull-right">+Add More</a></h4>
-
+                <div class="col-xs-6 text-right">
+                    <a data-toggle="modal" onclick="ShowModal('employementModalCenter')" class="quick-links text-uppercase"> Add More</a>
                 </div>
-                <div class="application">
-
-                    <div class="app-content">
-                        <div id="addEmployment">
-
-                        </div>
-
-
-                        <div class="clearfix"></div>
-                    </div>
+            </div>
+            <div class="table-responsive spacer-top-20">
+                <table class="table table-bordered">
+                    <tr class="active">
+                        <th hidden>id</th>
+                        <th>Designation</th>
+                        <th>Organization</th>
+                        <th>Work Duration</th>
+                        <th>Notice Period</th>
+                        <th>JobProfile</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    <tbody id="addEmployment"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <hr />
+            <div class="row">
+                <div class="col-xs-6">
+                    <h4>Education Details </h4>
                 </div>
-
-                <div class="dashboard-list-box margin-top-3">
-                    <h4>Education Details <a data-toggle="modal" onclick="ShowModal('educationModalCenter')" class="addMorebtn pull-right">+Add More</a></h4>
+                <div class="col-xs-6 text-right">
+                    <a data-toggle="modal" onclick="ShowModal('educationModalCenter')" class="quick-links text-uppercase"> Add More</a>
                 </div>
-                <div class="application">
-                    <div class="app-content">
-                        <div id="addEducation">
-
-                        </div>
-
-
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-
-                <div class="dashboard-list-box margin-top-3">
+            </div>
+            <div class="table-responsive spacer-top-20">
+                <table class="table table-bordered">
+                    <tr class="active">
+                        <th hidden>id</th>
+                        <th>CourseName</th>
+                        <th>University</th>
+                        <th>Specialization</th>
+                        <th>PassingYear</th>
+                        <th>Percentage</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    <tbody id="addEducation"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <hr />
+            <div class="row">
+                <div class="col-xs-6">
                     <h4>Profile Summary</h4>
                 </div>
-                <div class="application">
-                    <div class="app-content">
-
-                        <div class="info uploadCont">
-                            <label id="txtProfileSummary" class="profileSummary"></label>
-                        </div>
-                        <!-- Buttons -->
-                        <div class="buttons">
-                            <label class="upload-btn">
-                                <span onclick="EditProfileSummary()"> <i class="fa fa-plus-circle"></i> Add More</span>
+                <div class="col-xs-6 text-right">
+                    <a onclick="EditProfileSummary()" class="quick-links text-uppercase"> Add More</a>
+                </div>
+            </div>
+            <div id="txtProfileSummary"></div>
+        </div>
+        <div class="col-sm-12">
+            <hr />
+            <div class="row">
+                <div class="col-xs-6">
+                    <h4>Preferred Location</h4>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <a data-toggle="modal" onclick="ShowModal('locationModalCenter')" class="quick-links text-uppercase"> Add More</a>
+                </div>
+            </div>
+            <div id="preferredlocationdata"></div>
+        </div>
+        <div class="col-sm-12">
+            <hr />
+            <div class="row">
+                <div class="col-xs-6">
+                    <h4>  Personal Details</h4>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <a data-toggle="modal" onclick="EditProfileData()" class="quick-links text-uppercase"> Add More</a>
+                </div>
+            </div>
+            <div class="row" id="divpersonalDetails">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm-6 summary-data">
+                            <label class="data-label">
+                                Date of Birth:
                             </label>
+                            <label class="data-value" id="personaldob"></label>
                         </div>
-                        <div class="clearfix"></div>
+                        <div class="col-sm-6 summary-data">
+                            <label class="data-label">
+                                Email Id:
+                            </label>
+                            <label class="data-value" id="personalemail"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 data-panel-wrapper">
+                            <label class="data-label">
+                                Mobile Number:
+                            </label>
+                            <label class="data-value" id="personalphone"></label>
+                        </div>
+                        <div class="col-sm-6 summary-data">
+                            <label class="data-label">
+                                Gender:
+                            </label>
+                            <label class="data-value" id="personalgender"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 summary-data">
+                            <label class="data-label">
+                                Linkedin Profile:
+                            </label>
+                            <label class="data-value" id="personalLinkedinProfile"></label>
+                        </div>
+                        <div class="col-sm-6 summary-data">
+                            <label class="data-label">
+                                Marital Status:
+                            </label>
+                            <label class="data-value" id="personalMaritalSatatusName"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 summary-data">
+                            <label class="data-label">
+                                Address:
+                            </label>
+                            <label class="data-value" id="personaladdress"></label>
+                        </div>
                     </div>
                 </div>
-
-                <div class="dashboard-list-box margin-top-3">
-                    <h4>Preferred Location <a data-toggle="modal" onclick="ShowModal('locationModalCenter')" class="addMorebtn pull-right">+Add More</a></h4>
-                </div>
-                <div class="application">
-                    <div class="app-content">
-                        <div id="preferredlocationdata">
-
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-
-                <div class="dashboard-list-box margin-top-3">
-                    <h4>Personal Details<a data-toggle="modal" onclick="EditProfileData()" class="addMorebtn pull-right">+Add More/Edit</a></h4>
-                </div>
-                <div class="application">
-                    <div class="app-content">
-                        <div class="row" id="divpersonalDetails">
-                            <div class="col-md-12 col-sm-12">
-                                <br />
-                                <div class="col-md-6">
-                                    <h6>
-                                        Date of Birth
-                                    </h6>
-                                    <div class="emp" id="personaldob"></div>
-                                    <br />
-                                    <h6>
-                                        Gender
-                                    </h6>
-                                    <div class="emp" id="personalgender"></div><br />
-                                    <h6>
-                                        Email Id
-                                    </h6>
-                                    <div class="emp" id="personalemail"></div><br />
-                                </div>
-                                <div class="col-md-4">
-                                    <h6>
-                                        Address
-                                    </h6>
-                                    <div class="emp" id="personaladdress"></div><br />
-                                    <h6>
-                                        Mobile Number
-                                    </h6>
-                                    <div class="emp" id="personalphone"></div><br />
-                                    <h6>
-                                        Marital Status
-                                    </h6>
-                                    <div class="emp" id="personalMaritalSatatusName"></div><br />
-
-                                    <div>
-                                        <input type="hidden" id="hdnCurrentSalary" value="" />
-                                        <input type="hidden" id="hdnMaritalStatus" value="" />
-                                        <input type="hidden" id="hdnExpectedSalary" value="" />
-                                        <input type="hidden" id="hdnAboutMe" value="" />
-                                        <input type="hidden" id="hdnJobCategory" value="" />
-                                        <input type="hidden" id="hdnEmploymentStatus" value="" />
-                                        <input type="hidden" id="hdnCountry" value="" />
-                                        <input type="hidden" id="hdnState" value="" />
-                                        <input type="hidden" id="hdnCity" value="" />
-                                        <input type="hidden" id="hdnTotalExperience" value="" />
-                                        <input type="hidden" id="hdnJobTitleId" value="" />
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <h6>
-                                        Linkedin Profile
-                                    </h6>
-                                    <div class="emp" id="personalLinkedinProfile"></div><br />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
+                <input type="hidden" id="hdnCurrentSalary" value="" />
+                <input type="hidden" id="hdnMaritalStatus" value="" />
+                <input type="hidden" id="hdnExpectedSalary" value="" />
+                <input type="hidden" id="hdnAboutMe" value="" />
+                <input type="hidden" id="hdnJobCategory" value="" />
+                <input type="hidden" id="hdnEmploymentStatus" value="" />
+                <input type="hidden" id="hdnCountry" value="" />
+                <input type="hidden" id="hdnState" value="" />
+                <input type="hidden" id="hdnCity" value="" />
+                <input type="hidden" id="hdnTotalExperience" value="" />
+                <input type="hidden" id="hdnJobTitleId" value="" />
 
             </div>
         </div>
+        <!-- Content / End -->
     </div>
-    <!-- Content / End -->
 </div>
-<!-- Dashboard / End -->
-@*<! End html tag of new tempate>*@
-
-
 <!-- Modal -->
 <div class="modal fade" id="employementModalCenter" tabindex="-1" role="dialog" aria-labelledby="employementModalCenter" aria-hidden="true" style="background-color: rgb(128 128 128 / 88%);">
     <div class="dashboard-content">

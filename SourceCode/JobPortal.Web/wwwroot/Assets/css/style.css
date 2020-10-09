@@ -1205,6 +1205,9 @@ body[data-menu-position="closed"] .jPanelMenu-panel:after {
 .spacer-top-20 {
     padding-top: 20px !important;
 }
+.spacer-bottom-20 {
+    padding-bottom: 20px !important;
+}
 
 .spacer-top-10 {
     padding-top: 10px !important;
@@ -1253,6 +1256,7 @@ label.input-label {
     color: #26ae61;
     font-size: 13px;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .quick-links:hover {
@@ -1332,7 +1336,7 @@ label.input-label {
 
 @media screen and (max-width: 1024px) {
     .banner-bg h2.whitetitle {
-        font-size: 38px;
+        font-size: 30px;
         letter-spacing: -1px;
     }
 
@@ -1343,7 +1347,7 @@ label.input-label {
 
 @media screen and (max-width: 767px) {
     .banner-bg h2.whitetitle {
-        font-size: 30px;
+        font-size: 28px;
     }
 
     .banner-bg {
@@ -2239,4 +2243,36 @@ a.employer-website:hover {
 
 .table td a{
     cursor: pointer;
+}
+
+.summary-data{
+    display: flex;
+}
+
+.data-label,
+.data-value {
+   
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: normal
+}
+
+.data-label {
+    color: #5d5d5d;
+}
+
+.data-value {
+    color: #000;
+    word-break: break-word;
+}
+.nav-tabs > li{
+    margin-bottom: -2px;
+}
+.margin-lft-right-5{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.width-70{
+    width: 70px;
 }
