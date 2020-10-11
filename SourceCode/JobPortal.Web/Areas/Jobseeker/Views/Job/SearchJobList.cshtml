@@ -9,18 +9,165 @@
 <link href="~/css/JobSeeker/search-jobs.css" rel="stylesheet" />
 
 <!-- Page Title start -->
-<div class="pageTitle">
-    <div class="container">
+<div id="titlebar" class="banner-bg row" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    <div class="container titlebar-inner">
         <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <h1 class="page-heading">Job Listing</h1>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="breadCrumb"><a href="/Home/Index/">Home</a> / <span>Job List</span></div>
+            <div class="col-sm-8">
+                <h2 class="whitetitle">Job Listing</h2>
             </div>
         </div>
     </div>
 </div>
+
+
+@{
+    UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+    var filters = ViewBag.Searches as SearchJobViewModel;
+    var SearchesInJson = JsonConvert.SerializeObject(filters);
+    <input type="hidden" id="hdnFilters" value="@SearchesInJson">
+    <div class="home-screen-section row">
+        <div class="container">
+
+            <!-- Recent Jobs -->
+            <div class="col-sm-12">
+                <div class="row d-flex">
+                    <div class="sidebar-search">
+                        <h4 class="col-xs-12">Search Filter</h4>
+                        <div class="sidebar-widget col-xs-12">
+
+                            <label class="input-label"><strong>Jobs By City</strong></label>
+                            <input type="text" class="filter-search-box form-control input-elements" placeholder="Search" />
+
+                            <ul class="checkboxes expandible filter-option-item">
+                                @{
+                                    if (ViewBag.City != null && ViewBag.City.Count > 0)
+                                    {
+                                        int j = 0;
+                                        foreach (var item in ViewBag.City)
+                                        {
+                                            if (item.CountValue > 0)
+                                            {
+                                                <li>
+                                                    <input type="checkbox" @if (filters.City.Any(c => c == item.CityCode)) { <text> checked</text> } name="checkname" id="Name_@j" value="@item.CityCode" onchange="SearchCity(this)" />
+                                                    <label for="Name_@j" class="input-label">
+                                                        @item.City (<span>@item.CountValue</span>)
+                                                    </label>
+                                                </li>
+                                                j = j + 1;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li class="alert alert-danger">
+                                            Cities not available
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <hr />
+                        <div class="sidebar-widget col-xs-12">
+                            <label class="input-label"><strong>Jobs By Company</strong></label>
+                            <input type="text" class="filter-search-box form-control input-elements" placeholder="Search" />
+                            <ul class="checkboxes expandible expanded filter-option-item">
+                                @{
+                                    if (ViewBag.Company != null && ViewBag.Company.Count > 0)
+                                    {
+                                        int k = 0;
+                                        foreach (var item in ViewBag.Company)
+                                        {
+                                            if (item.CountValue > 0)
+                                            {
+                                                <li>
+                                                    <input type="checkbox" @if (filters.CompanyUserId.Any(c => c == Convert.ToString(item.UserId))) { <text> checked</text> } name="CompanyName" id="CompanyName_@k" value="@item.UserId" onchange="SearchCompany(this)" />
+                                                    <label for="CompanyName_@k" class="input-label">
+                                                        @item.CompanyName (<span>@item.CountValue</span>)
+                                                    </label>
+                                                </li>
+                                                k = k + 1;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li class="alert alert-danger">
+                                            Company not available
+                                        </li>
+                                    }
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flex-1 mobile-full-screen overflow-hidden">
+                        @if (Model.Count() < 1)
+                        {
+                            <div class="alert alert-danger" role="alert"><strong>Oh snap!</strong> Jobs not found</div>
+                        }
+                        else
+                        {
+                            <div class="col-xs-12">
+                                <h2 class="blacktitle">We found best matching:</h2>
+                            </div>
+                            <div class="row">
+
+                                <div class="job-lists col-sm-12 two-column">
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <div class="job-lists-item col-md-6 col-xs-12">
+                                            <div class="job-list-content col-xs-12">
+                                                <div class="col-xs-3 company">
+                                                    <a href="/Job/JobDetails/?jobid=@item.JobPostId" class="company-logo">
+                                                        <img src="@item.CompanyLogo" alt="Logo" class="responsive-img">
+                                                    </a>
+                                                </div>
+                                                <div class="job-list-details col-xs-9">
+                                                    <h4><a href="/Job/JobDetails/?jobid=@item.JobPostId" class="company-logo">@item.JobTitleByEmployer</a> <span class="listing-type">@item.EmploymentStatus</span></h4>
+                                                    <ul class="job-discription">
+                                                        <li>@item.CompanyName</li>
+                                                        <li>@item.City</li>
+                                                        <li>@item.CTC</li>
+                                                        <li><span>@item.NumberOfDays</span><span> days ago</span></li>
+                                                    </ul>
+                                                    <ul class="job-skills">
+                                                        <!--<span style="background-color:white;color:#808080 !important;font-weight:300 !important">Skills: </span>-->
+                                                        @{
+                                                            if (!string.IsNullOrEmpty(item.Skills) && item.Skills.Length > 0)
+                                                            {
+                                                                string[] skills = item.Skills.Split(',');
+                                                                foreach (var skill in skills)
+                                                                {
+                                                                    if (skill.Length > 1)
+                                                                    {
+                                                                        <li class="job-skill">@skill</li>
+                                                                    }
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>N/A</li>
+                                                            }
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        <nav class="pagination">
+                            <ul id="pagin"></ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 
 <!-- Confirmation Modal Begin -->
 <div id="confimationModel" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
@@ -38,144 +185,6 @@
         </div>
     </div>
 </div>
-@{
-    UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-    var filters = ViewBag.Searches as SearchJobViewModel;
-    var SearchesInJson = JsonConvert.SerializeObject(filters);
-    <input type="hidden" id="hdnFilters" value="@SearchesInJson">
-    <div class="container">
-        <!-- Recent Jobs -->
-        <div class="eleven columns">
-            <div class="padding-right">
-                @if (Model.Count() < 1)
-                {
-                    <br />
-                    <div class="alert alert-danger" role="alert"><strong>Oh snap!</strong>&nbsp; Jobs not found</div>
-
-                }
-                else
-                {
-                    <div class="listings-container">
-                        @foreach (var item in Model)
-                        {
-                            <!-- Listing -->
-                            <a href="/Job/JobDetails/?jobid=@item.JobPostId" class="listing full-time">
-                                <div class="listing-logo">
-                                    <img src="@item.CompanyLogo" alt="Logo">
-                                </div>
-                                <div class="listing-title">
-                                    <h4>@item.JobTitleByEmployer <span class="listing-type">@item.EmploymentStatus</span></h4>
-                                    <ul class="listing-icons">
-                                        <li><i class="ln ln-icon-Management"></i> @item.CompanyName</li>
-                                        <li><i class="ln ln-icon-Map2"></i> @item.City</li>
-                                        <li><i class="ln ln-icon-Money-2"></i>@item.CTC</li>
-                                        <li><div class="listing-date new">@item.NumberOfDays&#8203; days ago</div></li>
-                                    </ul>
-                                    <div class="skills">
-                                        <!--<span style="background-color:white;color:#808080 !important;font-weight:300 !important">Skills: </span>-->
-                                        @{
-                                            if (!string.IsNullOrEmpty(item.Skills) && item.Skills.Length > 0)
-                                            {
-                                                string[] skills = item.Skills.Split(',');
-                                                foreach (var skill in skills)
-                                                {
-                                                    if (skill.Length > 1)
-                                                    {
-                                                        <span>@skill</span>
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                <span>N/A</span>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                            </a>
-                        }
-                    </div>
-                }
-                <div class="clearfix"></div>
-                <div class="pagination-container">
-                    <nav class="pagination">
-                        <ul id="pagin"></ul>
-                    </nav>
-                    <nav class="pagination-next-prev">
-                        <ul>
-                            <!-- <li><a class="prev">Previous</a></li> -->
-                            <li><a class="next">Next</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <div class="five columns">
-
-            <div class="widget">
-                <h4>Jobs By City</h4>
-                <input type="text" class="filter-search-box" placeholder="Search" />
-                <ul class="checkboxes">
-                    @{
-                        if (ViewBag.City != null && ViewBag.City.Count > 0)
-                        {
-                            int j = 0;
-                            foreach (var item in ViewBag.City)
-                            {
-                                if (item.CountValue > 0)
-                                {
-                                    <li>
-                                        <input type="checkbox" @if (filters.City.Any(c => c == item.CityCode)) { <text> checked</text> } name="checkname" id="Name_@j" value="@item.CityCode" onchange="SearchCity(this)" />
-                                        <label for="Name_@j"></label>
-                                        @item.City (<span>@item.CountValue</span>)
-                                    </li>
-                                    j = j + 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            <li>
-                                <label style="color:red;"> Cities not available</label>
-                            </li>
-                        }
-                    }
-                </ul>
-            </div>
-            <div class="widget">
-                <h4>Jobs By Company</h4>
-                <input type="text" class="filter-search-box" placeholder="Search" />
-                <ul class="checkboxes expandible expanded">
-                    @{
-                        if (ViewBag.Company != null && ViewBag.Company.Count > 0)
-                        {
-                            int k = 0;
-                            foreach (var item in ViewBag.Company)
-                            {
-                                if (item.CountValue > 0)
-                                {
-                                    <li>
-                                        <input type="checkbox" @if (filters.CompanyUserId.Any(c => c == Convert.ToString(item.UserId))) { <text> checked</text> } name="CompanyName" id="CompanyName_@k" value="@item.UserId" onchange="SearchCompany(this)" />
-                                        <label for="CompanyName_@k"></label>
-                                        @item.CompanyName (<span>@item.CountValue</span>)
-                                    </li>
-                                    k = k + 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            <li>
-                                <label style="color:red;"> Company not available</label>
-                            </li>
-                        }
-                    }
-
-                </ul>
-            </div>
-        </div>
-    </div>
-}
 
 <!-- Confirmation Model End -->
 @section Scripts

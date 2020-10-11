@@ -1,122 +1,102 @@
 ﻿@using JobPortal.Model.DataViewModel.Employer.JobPost;
 @model IEnumerable<JobPostViewModel>
 
-<style>
-    table th{
-        white-space:nowrap;
-    }
-    .customenowrap{
-        white-space:nowrap;
-    }
-</style>
-<div class="dashboard-content">
-    <!-- Titlebar -->
-    <div id="titlebar">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Manage Jobs</h2>
-                <!-- Breadcrumbs -->
-                <nav id="breadcrumbs">
-                    <ul>
-                        <li>Home</li>
-                        <li>Dashboard</li>
-                        <li>Manage Jobs</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+
+<div id="titlebar" class="col-sm-12 banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    <h2 class="whitetitle">Manage Jobs</h2>
+</div>
+
+<nav id="breadcrumbs" class="col-sm-12">
+    <ol class="breadcrumb">
+        <li><a href="/Home/Index">Home</a></li>
+        <li><a href="/Dashboard/EmpDashboard">Dashboard</a></li>
+        <li>Manage Jobs</li>
+    </ol>
+</nav>
+
+<div class="col-sm-12">
+    <div class="alert alert-info">
+        Your listings are shown in the table below. Expired listings will be automatically removed after 30 days.
     </div>
-
     <div class="row">
-
-        <!-- Table-->
-        <div class="col-lg-12 col-md-12">
-            <div class="notification notice">
-                Your listings are shown in the table below. Expired listings will be automatically removed after 30 days.
-            </div>
-
-            <div class="row margin-bottom-10">
-                <div class="form col-sm-12 col-md-12 col-lg-12">
-                    <h5>Current Job Details</h5>
-                </div>
-                <div class="form col-sm-6 col-md-6 col-lg-6">
-                    <select name="jobListYearFilter" id="jobListYearFilter" onchange="getMyJobs()" data-placeholder="Select Year" class="chosen-select-no-single">
-                        @{
-                            int currYear = DateTime.Now.Year;
-                            @for (int i = (currYear - 2); i <= currYear; i++)
-                            {
-                                <option value="@i">@i</option>
-                            }
-                        }
-                    </select>
-                </div>
-                @if (null != ViewBag.Employers)
-                {
-                    <div class="form col-sm-6 col-md-6 col-lg-6">
-                        <select class="chosen-select-no-single" name="employerFilter" id="employerFilter" asp-items="@(new SelectList(ViewBag.Employers, "UserId", "CompanyName", ViewBag.SelectedEmployer))" onchange="employerChanged()">
-                            <option value="">All</option>
-                        </select>
-                    </div>
+        <div class="col-sm-6">
+            <select name="jobListYearFilter" id="jobListYearFilter" onchange="getMyJobs()" data-placeholder="Select Year" class="chosen-select-no-single">
+                @{
+                    int currYear = DateTime.Now.Year;
+                    @for (int i = (currYear - 2); i <= currYear; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
                 }
-                </div>
-               
-            <div class="dashboard-list-box margin-top-30" style="overflow-y:scroll;max-height:1000px;height:100%">
-                <div class="dashboard-list-box-content">
-                    <!-- Table -->
-                    <table class="manage-table responsive-table">
-                        <tr>
-                            <th>Title</th>
-                            <th>Date Posted</th>
-                            <th>HiringCriteria</th>
-                            <th>JobTypeSummary</th>
-                            <th>Total Applications</th>
-                            <th>Action</th>
-                        </tr>
-
-                        <!-- Item #1 -->
-                        @if (Model.Count() > 0)
-                        {
-
-                            @foreach (var job in Model)
-                            {
-                                <tr>
-                                    <td class="title">
-                                        @job.JobTitleByEmployer
-                                        @if (job.Featured == "True")
-                                        {
-                                            <i class="fa fa-check"></i>
-                                        }
-                                    </td>                                    
-                                    <td class="companyName">@job.PostedOn.ToString("MM/dd/yyyy")</td>
-                                    <td class="companyName">@job.HiringCriteria</td>
-                                    <td class="location">@job.JobTypeSummary </td>
-                                    <td class="centered">
-                                        @job.TotalApplications
-                                    </td>
-                                    <td class="customenowrap">
-                                        <label onclick="populateJobOnForm(@job.JobPostId)" style="cursor:pointer"><i class="fa fa-pencil"></i> Edit</label>                                        
-                                    </td>
-                                </tr>
-                            }
-
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="5">
-                                    <label>
-                                        Data not found to display
-                                    </label>
-                                </td>
-                            </tr>
-                        }
-
-                    </table>
-                </div>
-            </div>
+            </select>
         </div>
+        @if (null != ViewBag.Employers)
+        {
+            <div class="col-sm-6">
+                <select class="chosen-select-no-single" name="employerFilter" id="employerFilter" asp-items="@(new SelectList(ViewBag.Employers, "UserId", "CompanyName", ViewBag.SelectedEmployer))" onchange="employerChanged()">
+                    <option value="">All</option>
+                </select>
+            </div>
+        }
     </div>
 </div>
+<div class="col-sm-12 home-screen-section">
+    <h2 class="blacktitle">Current Job Details</h2>
+
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr class="active">
+                <th>Title</th>
+                <th>Date Posted</th>
+                <th>HiringCriteria</th>
+                <th>JobTypeSummary</th>
+                <th>Total Applications</th>
+                <th>Action</th>
+            </tr>
+
+            <!-- Item #1 -->
+            @if (Model.Count() > 0)
+            {
+
+                @foreach (var job in Model)
+                {
+                    <tr>
+                        <td class="title">
+                            @job.JobTitleByEmployer
+                            @if (job.Featured == "True")
+                            {
+                                <i class="fa fa-check"></i>
+                            }
+                        </td>
+                        <td class="companyName">@job.PostedOn.ToString("MM/dd/yyyy")</td>
+                        <td class="companyName">@job.HiringCriteria</td>
+                        <td class="location">@job.JobTypeSummary </td>
+                        <td class="centered">
+                            @job.TotalApplications
+                        </td>
+                        <td class="customenowrap">
+                            <label onclick="populateJobOnForm(@job.JobPostId)" style="cursor:pointer"><i class="fa fa-pencil"></i> Edit</label>
+                        </td>
+                    </tr>
+                }
+
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">
+                        <label>
+                            Data not found to display
+                        </label>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
 <!-- Edit Job Popup Container -->
 
 <div class="modal fade" id="editJob" tabindex="-1" role="dialog">

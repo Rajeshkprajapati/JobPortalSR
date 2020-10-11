@@ -44,60 +44,57 @@
     </div>
 </div>
 
-
-
 <!-- Content
 ================================================== -->
 <div class="home-screen-section container">
     <h2 class="blacktitle">We found best matching:</h2>
     <!-- Recent Jobs -->
-    <div class="eleven columns">
-        <div class="padding-right">
-            <div class="listings-container">
-                @if (ViewBag.AllJobsCompany != null)
-                {
-                    @foreach (var jobs in ViewBag.AllJobsCompany)
-                    {
-                        <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing full-time">
-                            <div class="listing-logo">
-                                <img src="@jobs.CompanyLogo" alt="">
-                            </div>
-                            <div class="listing-title">
-                                <h4> @jobs.JobTitle <span class="listing-type">@jobs.EmploymentStatus</span></h4>
-                                <ul class="listing-icons">
-                                    <li><i class="ln ln-icon-Management"></i> @jobs.CompanyName</li>
-                                    <li><i class="ln ln-icon-Map2"></i> @jobs.City</li>
-                                    <li><i class="ln ln-icon-Money-2"></i>@jobs.CTC</li>
-                                    <li><div class="listing-date new">@jobs.NumberOfDays&#8203;d ago</div></li>
-                                </ul>
-                            </div>
-                        </a>
-                    }
+    <div class="job-lists row two-column">
+        @if (ViewBag.AllJobsCompany != null)
+        {
+            @foreach (var jobs in ViewBag.AllJobsCompany)
+            {
 
-                }
-                else
-                {
-                    <p> No data found</p>
-                }
+                <div class="job-lists-item col-md-6 col-xs-12">
+                    <div class="job-list-content col-xs-12">
 
-            </div>
-            <div class="pagination-container">
-                <nav class="pagination">
-                    <ul id="pagin">
-                    </ul>
-                </nav>
-                <nav class="pagination-next-prev">
-                    <ul>
-                        <li><a href="#" class="prev">Previous</a></li>
-                        <li><a href="#" class="next">Next</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+                        <div class="col-xs-3 company">
+                            <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo">
+
+                                <img src="@jobs.CompanyLogo" alt="" class="responsive-img">
+                            </a>
+                        </div>
+                        <div class="job-list-details col-xs-9">
+                            <h4>
+                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId">
+                                    @jobs.JobTitle
+                                </a>
+                                <span class="listing-type">@jobs.EmploymentStatus</span>
+                            </h4>
+                            <ul class="job-discription">
+                                <li>@jobs.CompanyName</li>
+                                <li>@jobs.City</li>
+                                <li>@jobs.CTC</li>
+                                <li><span>@jobs.NumberOfDays</span><span>d ago</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        }
+        else
+        {
+            <p> No data found</p>
+        }
+
     </div>
-
+    <nav class="pagination-next-prev graypanel">
+        <ul id="pagin">
+        </ul>
+    </nav>
 </div>
-
 
 <div class="home-screen-section row panelbg-green">
     <div class="container">

@@ -13,7 +13,7 @@
     <!--home page Banner-->
     <div class="container text-center banner">
         <h1>Digital India Power To Empower</h1>
-        <p class="col-sm-8 col-sm-offset-2">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        @*<p class="col-sm-8 col-sm-offset-2">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>*@
         <!-- button start -->
     </div>
     <!-- button end -->
@@ -211,7 +211,7 @@
                                                 <li><i class="fa fa-money"></i><span>@jobs.CTC INR</span></li>
                                             }
                                         </ul>
-                                        @Html.Raw(@jobs.JobDetails)
+                                        @*Html.Raw(@jobs.JobDetails)*@
                                         <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="btn btn-link">Apply For This Job</a>
                                     </li>
                                 }
@@ -295,7 +295,7 @@
 
                                         <span class="name"> @row.CompanyName</span>
                                         <span class="count">@row.Count</span>
-                                        <span class="btn btn-default btn-sm follow-btn">Follow</span>
+                                        <span class="btn btn-default btn-sm follow-btn">Followed</span>
                                     </a>
                                 </div>
                             }

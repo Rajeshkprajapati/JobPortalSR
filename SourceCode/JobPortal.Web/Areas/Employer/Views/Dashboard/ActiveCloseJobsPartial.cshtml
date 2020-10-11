@@ -1,54 +1,37 @@
 ﻿
-<style>
-    table th {
-        white-space: nowrap;
-    }
 
-    table td {
-        white-space: nowrap;
-    }
-</style>
+<div id="titlebar" class="col-sm-12 banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    <h2 class="whitetitle">Job Info</h2>
+</div>
 
-<div class="dashboard-content">
-    <!-- Titlebar -->
-    <div id="titlebar">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Job Info</h2>
-                <!-- Breadcrumbs -->
-                <nav id="breadcrumbs">
-                    <ul>
-                        <li>Home</li>
-                        <li>Dashboard</li>
-                        <li>Job Info</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-   
-    <div class="row">
-        <ul class="tabs-nav blog">
+<nav id="breadcrumbs" class="col-sm-12">
+    <ol class="breadcrumb">
+        <li><a href="/Home/Index">Home</a></li>
+        <li><a href="/Dashboard/EmpDashboard">Dashboard</a></li>
+        <li>Job Info</li>
+    </ol>
+</nav>
+
+<div class="col-sm-12">
+    <div class="userbtns">
+        <ul class="nav nav-tabs text-uppercase">
             <li onclick="jobStatusDetails(1)" class="active" id="activeJobs"><a href="javascript:void(0)">Active Jobs</a></li>
             <li onclick="jobStatusDetails(0)" class="" id="closedJobs"><a href="javascript:void(0)">Closed Jobs</a></li>
         </ul>
-        <br/>
-        <div class="dashboard-list-box margin-top-0" id="contentTableHolder" style="overflow-y:scroll;max-height:1000px;height:100%">
-           
-        </div>
     </div>
+    <div class="dashboard-list-box tab-content" id="contentTableHolder"> </div>
 </div>
-<script>
-    $(document).ready(function () {
-        let year = new Date().getFullYear();
-        let jobStatus = 1;
-        SendAJAXRequest(`/Dashboard/GetJobStatus?year=${year}&JobStatus=${jobStatus}`, "GET", {}, "html", function (resp) {
-            if (resp && resp !== "") {
-                $("div#contentTableHolder").html(resp);
-            }
-            else {
-                return false;
-            }
+    <script>
+        $(document).ready(function () {
+            let year = new Date().getFullYear();
+            let jobStatus = 1;
+            SendAJAXRequest(`/Dashboard/GetJobStatus?year=${year}&JobStatus=${jobStatus}`, "GET", {}, "html", function (resp) {
+                if (resp && resp !== "") {
+                    $("div#contentTableHolder").html(resp);
+                }
+                else {
+                    return false;
+                }
+            });
         });
-    });
-</script>
+    </script>

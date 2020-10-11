@@ -138,9 +138,11 @@ $(document).ready(function () {
             let l1 = result.PersonalDetails.PreferredLocation1 === null ? '' : result.PersonalDetails.PreferredLocation1;
             let l2 = result.PersonalDetails.PreferredLocation2 === null ? '' : result.PersonalDetails.PreferredLocation2;
             let l3 = result.PersonalDetails.PreferredLocation3 === null ? '' : result.PersonalDetails.PreferredLocation3;
-            let preferredlocation = `<p>Location 1 : ${cityname1.length > 0 ? cityname1[0].City : l1} <br /> 
-                                        Location 2 : ${cityname2.length > 0 ? cityname2[0].City : l2} <br /> 
-                                        Location 3 : ${cityname3.length > 0 ? cityname3[0].City : l3}</p >`;
+            let preferredlocation = `<div class="row">
+                                        <div class="col-sm-6 summary-data"><label class="data-label">Location 1: </label><label class="data-value">${cityname1.length > 0 ? cityname1[0].City : l1} </label></div> 
+                                        <div class="col-sm-6 summary-data"><label class="data-label">Location 2: </label><label class="data-value">${cityname2.length > 0 ? cityname2[0].City : l2} </label></div> 
+                                        <div class="col-sm-6 summary-data"><label class="data-label">Location 3: </label><label class="data-value">${cityname3.length > 0 ? cityname3[0].City : l3} </label></div>
+                                    </div>`;
 
             $('#preferredlocationdata').append(preferredlocation);
 
@@ -165,13 +167,14 @@ $(document).ready(function () {
                 if (result.ExperienceDetails.length > 0) {
                     for (var i = 0; i < result.ExperienceDetails.length; i++) {
                         let o = replaceNullOrUndefinedToEmpty(result.ExperienceDetails[i]);
-                        let item = $(`<p class="profile-detail-box">
-                            <strong>${o.Designation}</strong>&nbsp;&nbsp;<i class="material-icons customehover" onclick="EditExperience()" style="font-size:15px;">create</i><br />
-                            ${o.Organization}<br />
-                            ${o.WorkingFrom} to ${o.WorkingTill}<br />
-                            Available to join in ${o.NoticePeriod} days<br />
-                            ${o.JobProfile}
-                            </p>`);
+                        let item = $(`<tr>
+                            <td>${o.Designation}</td>
+                            <td>${o.Organization}</td>
+                            <td>${o.WorkingFrom} to ${o.WorkingTill}</td>
+                            <td>${o.NoticePeriod} days</td>
+                            <td>${o.JobProfile}</td>
+                            <td><a href="javascript:void(0)" class="quick-links" onclick="EditExperience()">Edit</td>
+                        </tr>`);
                         item.data('rowData', o);
                         $("#addEmployment").append(item);
                     }
@@ -182,13 +185,14 @@ $(document).ready(function () {
                 if (result.EducationalDetails.length > 0) {
                     for (var j = 0; j < result.EducationalDetails.length; j++) {
                         let o = replaceNullOrUndefinedToEmpty(result.EducationalDetails[j]);
-                        let item = $(`<p class="profile-detail-box">
-                            <strong>${o.CourseName == 'Other' ? o.OtherCourseName : o.CourseName}</strong>&nbsp;&nbsp;<i class="material-icons customehover" onclick="EditEducation()" style="font-size:15px">create</i><br />
-                            ${o.University}<br />
-                            ${o.Specialization} <br />
-                            Graduated in ${o.PassingYear} <br />
-                            with ${o.Percentage} %
-                            </p>`);
+                        let item = $(`<tr>
+                            <td>${o.CourseName == 'Other' ? o.OtherCourseName : o.CourseName}</td>
+                            <td>${o.University}</td>
+                            <td>${o.Specialization}</td>
+                            <td>Graduated in ${o.PassingYear}</td>
+                            <td>${o.Percentage}%</td>
+                            <td><a href="javascript:void(0)" class="quick-links">Edit</a></td>
+                            </tr>`);
                         item.data('rowData', o);
                         $("#addEducation").append(item);
                     }
@@ -201,13 +205,12 @@ $(document).ready(function () {
                         let skills = result.ITSkills[k];
                         let item = $(`<tr>
                             <td hidden>${skills.Id}</td>
-                            <td>${skills.Skill}</td>
-                            <td>${skills.SkillVersion}</td>
-                            <td>${skills.LastUsed}</td>
-                            <td>${skills.ExperienceYear}</td>
-                            <td class="action">
-                            <a onclick="EditITSkills(this)"><i class="fa fa-pencil"></i> Edit</a>
-                             <a class="delete" onclick="DeleteITSkill(${skills.Id})"><i class="fa fa-remove"></i> Delete</a>
+                            <td width="20%">${skills.Skill}</td>
+                            <td width="10%">${skills.SkillVersion}</td>
+                            <td width="25%">${skills.LastUsed}</td>
+                            <td width="25%">${skills.ExperienceYear}</td>
+                            <td width="20%">
+                                <a onclick="EditITSkills(this)" class="quick-links">Edit</a> <a class="delete" class="quick-links" onclick="DeleteITSkill(${skills.Id})">Delete</a>
                            </td>
                             </tr>`);
                         item.data('rowData', skills);
@@ -1029,10 +1032,15 @@ $("#btnJobAlert").change(function () {
     let isAlert;
     if (this.checked) {
         isAlert = 1;
+        JobAlertUncheckConfirmation(isAlert);
     }
     else {
         isAlert = 0;
+        ConfirmationDialog('Confirmation', 'Are you sure?', JobAlertUncheckConfirmation, isAlert);
     }
+ });
+
+function JobAlertUncheckConfirmation(isAlert) {
     data = "";
     SendAJAXRequest("/JobSeekerManagement/JobsAlert/?isAlert=" + isAlert + "", 'POST', data, 'JSON', function (result) {
         if (result) {
@@ -1047,4 +1055,4 @@ $("#btnJobAlert").change(function () {
             ErrorDialog('Error', 'Failed,Please try again!');
         }
     });
-});
+}

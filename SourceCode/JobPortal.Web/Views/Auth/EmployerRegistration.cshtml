@@ -39,7 +39,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="CompanyName" class="input-label"> Company Name:</label>
-                        <input type="text" class="form-control input-elements" asp-for="CompanyName" id="companyname" placeholder="CompanyName" />
+                        <input type="text" class="form-control input-elements" asp-for="CompanyName" id="companyname" placeholder="Company Name" required />
                         <span asp-validation-for="CompanyName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -81,7 +81,7 @@
                         <label asp-for="CompanyName" class="input-label">
                             Consultancy Name:
                         </label>
-                        <input type="text" class="form-control input-elements" asp-for="CompanyName" placeholder="Consultancy Name" />
+                        <input type="text" class="form-control input-elements" asp-for="CompanyName" placeholder="Consultancy Name" required />
                         <span asp-validation-for="CompanyName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -102,7 +102,7 @@
                         <label asp-for="Mobile" class="input-label">
                             Mobile:
                         </label>
-                        <input type="number" maxlength="10" class="form-control input-elements" asp-for="Mobile" placeholder="Mobile" />
+                        <input type="number" maxlength="10" class="form-control input-elements" asp-for="Mobile" placeholder="Mobile" onblur="PhoneLengthValidation(this)" />
                         <span asp-validation-for="Mobile" class="text-danger"></span>
                     </div>
                     <div class="form-group spacer-top-20">

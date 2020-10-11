@@ -6,7 +6,7 @@
 <div id="titlebar" class="col-sm-12 banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
     @{
         UserViewModel user = Context.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
-        <h2 class="whitetitle"><span class="title-bdr-black-4">Welcome, @user.FirstName</span></h2>
+        <h2 class="whitetitle">Welcome, @user.FirstName</h2>
     }
 </div>
 <nav id="breadcrumbs" class="col-sm-12">
@@ -58,7 +58,7 @@
 <div class="col-sm-12">
     <div class="row">
         <div class="col-lg-6 col-md-12 spacer-top-20">
-            <h2 class="blacktitle">Recent Activities</h2>
+            <h2 class="blacktitle">Recent Job Post</h2>
             @if (ViewBag.RecentJobs != null)
             {
                 <ul class="activity-lists">

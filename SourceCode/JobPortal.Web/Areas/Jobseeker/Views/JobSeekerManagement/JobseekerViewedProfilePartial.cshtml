@@ -1,58 +1,44 @@
 ﻿@using JobPortal.Model.DataViewModel.JobSeeker
 @model JobSeekerViewedProfile
-<div id="titlebar">
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Viewed Profile</h2>
-            <!-- Breadcrumbs -->
-            <nav id="breadcrumbs">
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="/JobSeekerManagement/Dashboard">Dashboard</a></li>
-                    <li>Viewed Profile</li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</div>
-<div class="row">
 
-    <!-- Table-->
-    <div class="col-lg-12 col-md-12">
-        <div class="dashboard-list-box margin-top-0">
-            <div class="dashboard-list-box-content">
-                <!-- Table -->
-                <table class="manage-table resumes responsive-table">
-                    <tr>
-                        <th><i class="fa fa-tags"></i> Company</th>
-                        <th><i class="fa fa-file-text"></i> Viewed on</th>
+
+<div id="titlebar" class="col-sm-12 banner-bg" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    <h2 class="whitetitle">Viewed Profile</h2>
+</div>
+<nav id="breadcrumbs" class="col-sm-12">
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a href="/JobSeekerManagement/Dashboard">Dashboard</a></li>
+        <li>Viewed Profile</li>
+    </ol>
+</nav>
+
+<div class="col-xs-12 home-screen-section">
+    <div class="table-responsive">
+        <!-- Table -->
+        <table class="manage-table responsive-table table table-bordered">
+            <tr>
+                <th width="80%">Company</th>
+                <th> Viewed on</th>
+            </tr>
+            <!-- Item #1 -->
+            @if (ViewBag.ViewedProfile != null && Enumerable.Count(ViewBag.ViewedProfile) > 0)
+            {
+                foreach (var item in ViewBag.ViewedProfile)
+                {
+                    <tr class="active">
+                        <td>@item.CompanyName</td>
+                        <td>@item.ModifiedViewedOn</td>
                     </tr>
-                    <!-- Item #1 -->
-                    @if (ViewBag.ViewedProfile != null && Enumerable.Count(ViewBag.ViewedProfile) > 0)
-                    {
-                        foreach (var item in ViewBag.ViewedProfile)
-                        {
-                            <tr>
-                                <td>@item.CompanyName</td>
-                                <td>@item.ModifiedViewedOn</td>
-                            </tr>
 
-                        }
-
-                    }
-                    else
-                    {
-                        <tr><td>No data available!</td></tr>
-                    }
-
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Copyrights -->
-    <div class="col-md-12">
-        <div class="copyrights">© 2020 CareerIndeed. All Rights Reserved.</div>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2">No data available!</td>
+                </tr>
+            }
+        </table>
     </div>
 </div>
-

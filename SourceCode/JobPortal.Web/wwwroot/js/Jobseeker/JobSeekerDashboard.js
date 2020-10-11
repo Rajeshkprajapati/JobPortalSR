@@ -53,15 +53,15 @@ function EmployerFollowers() {
     });
 }
 
+function UnfollowComapnyConfirmation(data) {
+    ConfirmationDialog('Confirmation', 'Are you sure?', UnfollowComapny, data);
+}
+
 function UnfollowComapny(EmployerId) {
     var data = "";
     SendAJAXRequest("/JobSeekerManagement/UnfollowCompany/?EmployerId=" + EmployerId + "", 'POST', data, 'JSON', function (result) {
         if (result) {
-            //let icon = 'fa fa-thumbs-up';
-            //updatedsucessfully(result, icon);
-            //alert("Done");
-            InformationDialog('Unfollowed', 'You are no longer follower of the company');
-            //location.reload();
+            InformationDialogWithPartialReload('Unfollowed', 'You are no longer follower of the company', EmployerFollowers);
         } else {
             warnignPopup('Error');
         }

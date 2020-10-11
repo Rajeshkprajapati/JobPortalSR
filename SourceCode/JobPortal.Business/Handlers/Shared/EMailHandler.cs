@@ -24,7 +24,7 @@ namespace JobPortal.Business.Handlers.Shared
 
         public void SendMail(EmailViewModel email, int userId, bool isInsertInDB)
         {
-
+            string adminmail = configuration["AdminMail:Email"];
             foreach (string to in email.To)
             {
                 if (!string.IsNullOrWhiteSpace(to))
@@ -35,6 +35,7 @@ namespace JobPortal.Business.Handlers.Shared
                         Body = email.Body,
                         IsBodyHtml = email.IsHtml
                     };
+                    message.CC.Add(adminmail);
 
                     var smtp = new SmtpClient
                     {
