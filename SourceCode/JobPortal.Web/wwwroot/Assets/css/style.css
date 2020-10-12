@@ -339,6 +339,9 @@ body {
     padding-left: 0;
     padding-right: 0;
 }
+.searchwrap .search-form-element .chosen-container-multi{
+    border-radius: 3px 3px 0 0;
+}
 
 .searchwrap .form-control {
     min-height: 38px;
@@ -359,11 +362,11 @@ body {
 }
 
 .searchwrap .form-control.first-column {
-    border-radius: 0 0 0 5px;
+    border-radius: 0 0 0 3px;
 }
 
 .searchwrap .form-control.last-column {
-    border-radius: 0 0 5px 0;
+    border-radius: 0 0 3px 0;
     border-right: 0;
 }
 
@@ -2275,4 +2278,17 @@ a.employer-website:hover {
 
 .width-70{
     width: 70px;
+}
+
+.small-bootstrapmodal-topmargin{
+    margin-top: 150px;
+}
+
+.modal-content{
+    border-radius: 3px;
+    margin-top: 100px;
+}
+
+.modal-body{
+    padding: 50px;
 }

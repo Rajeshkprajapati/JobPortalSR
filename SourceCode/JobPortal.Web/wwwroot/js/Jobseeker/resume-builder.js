@@ -86,7 +86,7 @@ function createExperiencDetailsForm(_this) {
     if (finalSaveButton) {
         finalSaveButton.remove();
     }
-    $(_this).parent().parent().append($(`<div class="formrow other-employment-title"><h6>Another Employment</h6></div>`));
+    $(_this).parent().parent().append($(`<div class="col-sm-12 other-employment-title spacer-top-20"><h4>Another Employment</h4></div>`));
     let forms = $(_this).parent().parent().find('form');
     forms.each(function (i, f) {
         $(f).find("a#btnAddAnOtherExperience").hide();
