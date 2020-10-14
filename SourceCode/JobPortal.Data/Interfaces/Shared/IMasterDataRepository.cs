@@ -24,5 +24,6 @@ namespace JobPortal.Data.Interfaces.Shared
         DataTable GetMaritalStatusMaster();
         DataTable JobIndustryArea();
         DataTable GetJobTitlesById(int JobIndustryAreaId);
+        DataTable GetJobSeekers();
     }
 }

@@ -315,5 +315,23 @@ namespace JobPortal.Business.Handlers.Admin
             }
             throw new DataNotFound("Cities not found, please contact your tech deck.");
         }
+        public IList<UserViewModel> GetJobSeekers()
+        {
+            DataTable dt = masterRepository.GetJobSeekers();
+            var jobseekersList = new List<UserViewModel>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var jobseeker = new UserViewModel()
+                {
+                    UserId = Convert.ToInt32(dt.Rows[i]["Userid"]),
+                    FirstName = Convert.ToString(dt.Rows[i]["FirstName"]),
+                    LastName = Convert.ToString(dt.Rows[i]["LastName"]),
+                    Email = Convert.ToString(dt.Rows[i]["Email"])
+
+                };
+                jobseekersList.Add(jobseeker);
+             }
+            return jobseekersList;
+        }
     }
 }

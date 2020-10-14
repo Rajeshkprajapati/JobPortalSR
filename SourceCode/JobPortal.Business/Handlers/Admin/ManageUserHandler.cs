@@ -367,5 +367,38 @@ namespace JobPortal.Business.Handlers.Admin
         {
             return _userProcessor.DeleteBulkJobPost(JobPostId);
         }
+
+        public IEnumerable<JobPostViewModel> GetJobs(int empId, int year)
+        {
+            int jobid = 0;
+            bool isDraftJob = false;
+            var jobs = _userProcessor.GetJobs(empId, year, jobid, isDraftJob);
+            if (null != jobs && jobs.Rows.Count > 0)
+            {
+                IList<JobPostViewModel> jModel = new List<JobPostViewModel>();
+                foreach (DataRow row in jobs.Rows)
+                {
+                    jModel.Add(new JobPostViewModel
+                    {
+                        JobPostId = Convert.ToInt32(row["JobPostId"]),
+                        Country = Convert.ToString(row["Country"]),
+                        State = Convert.ToString(row["State"]),
+                        City = Convert.ToString(row["City"]),
+                        JobTitleByEmployer = Convert.ToString(row["JobTitleByEmployer"]),
+                        HiringCriteria = Convert.ToString(row["HiringCriteria"]),
+                        JobType = Convert.ToInt32(row["JobType"]),
+                        JobTypeSummary = Convert.ToString(row["JobTypeSummary"]),
+                        JobDetails = Convert.ToString(row["JobDetails"]),
+                        CTC = Convert.ToString(row["CTC"]),
+                        TotalApplications = Convert.ToInt32(row["TotalApplications"]),
+                        PostedOn = Convert.ToDateTime(row["PostedOn"]),
+                        Featured = Convert.ToString(row["Featured"]),
+                        DisplayOrder = row["FeaturedJobDisplayOrder"] as int? ?? 0
+                    });
+                }
+                return jModel;
+            }
+            throw new DataNotFound("Jobs not found");
+        }
     }
 }

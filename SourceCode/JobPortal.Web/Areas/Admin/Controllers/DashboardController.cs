@@ -585,6 +585,42 @@ namespace JobPortal.Web.Areas.Admin.Controllers
            return PartialView("SummaryDashboardPartial");
         }
 
-     
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult SendNotification()
+        {
+            ViewBag.EmployersData = dashboardHandler.GetEmployers(true);
+            ViewBag.JobSeekerData = dashboardHandler.GetJobSeekers();
+            //List<UsersReviewsViewModel> list = new List<UsersReviewsViewModel>();
+            //try
+            //{
+            //    list = _usersReviewsHandler.GetUsersReviews();
+            //}
+            //catch (DataNotFound ex)
+            //{
+            //    ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            //}
+            return PartialView("SendNotificationPartial");
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult CompanyJobs(int year, int EmpId=0)
+        {
+            IEnumerable<JobPostViewModel> jobs = null;
+            try
+            {
+                //jobTitle = _homeHandler.GetJobTitleById(JobIndustryAreaId);
+                jobs = manageuserHandler.GetJobs(EmpId, year);
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DashboardController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return Json(jobs);
+        }
+
+
     }
 }

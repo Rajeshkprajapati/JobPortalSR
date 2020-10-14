@@ -30,5 +30,6 @@ namespace JobPortal.Business.Interfaces.Admin
         List<GenderViewModel> GetGenders();
         List<JobPostViewModel> GetBulkJobSearchList(int CompanyId, string FY, string statecode, string citycode);
         bool DeleteBulkJobs(string JobPostId);
+        IEnumerable<JobPostViewModel> GetJobs(int empId, int year);
     }
 }
