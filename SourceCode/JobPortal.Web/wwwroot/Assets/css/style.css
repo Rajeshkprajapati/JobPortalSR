@@ -2289,6 +2289,22 @@ a.employer-website:hover {
     margin-top: 100px;
 }
 
-.modal-body{
+.modal-content-body,
+.modal-body {
     padding: 50px;
+}
+
+.modal-content-body{
+    background-color: #fff;
+}
+.modal-content-body .modal-body {
+    padding: 0;
+}
+
+.flex-direction-column{
+    flex-direction: column
+}
+
+.justify-content-center{
+    justify-content: center;
 }

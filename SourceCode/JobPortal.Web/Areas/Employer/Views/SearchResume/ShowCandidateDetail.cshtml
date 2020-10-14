@@ -5,156 +5,156 @@
 }
 <link href="~/css/CommanPopup.css" rel="stylesheet" />
 
-<div id="titlebar" class="resume">
-    <div class="container">
-        <div class="ten columns">
-            <div class="resume-titlebar">
-                @if (Model.ProfilePic == "")
-                {
-                    <img src="~/ProfilePic/Avatar.jpg" alt="">
-                }
-                else
-                {
-                    <img src="@Model.ProfilePic" alt="">
-                }
-                <div class="resumes-list-content">
-                    <h4>@Model.FirstName @Model.LastName<span>@Model.JobTitle</span></h4>
-                    <span class="icons"><i class="fa fa-map-marker"></i>@Model.CityName, @Model.StateName</span>
-                    <!--<span class="icons"><i class="fa fa-money"></i> $100 / hour</span> -->
-                    <span class="icons"><a href="#"><i class="fa fa-link"></i> Website</a></span>
-                    <span class="icons"><i class="fa fa-envelope"></i> @Model.Email</span>
-                    <div class="skills">
-                        @{
-                            if (Model.Skills != null && Model.Skills.SkillSets != null && Model.Skills.SkillSets.Length > 0)
-                            {
-                                string[] skills = Model.Skills.SkillSets.Split(',');
-                                foreach (var skill in skills)
-                                {
-                                    if (skill.Length > 1)
-                                    {
-                                        <span>@skill</span>
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                <span>N/A</span>
-                            }
-                        }
-                        @*<span>@Model.Skills.SkillSets</span>*@
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
+<div class="container spacer-top-20">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-2">
+            @if (Model.ProfilePic == "")
+            {
+                <img src="~/ProfilePic/Avatar.jpg" alt="" class="img-responsive img-thumbnail">
+            }
+            else
+            {
+                <img src="@Model.ProfilePic" alt="" class="img-responsive img-thumbnail">
+            }
         </div>
-        <div class="six columns">
-            <div class="two-buttons">
-                @if (!string.IsNullOrWhiteSpace(Model.Resume))
+    </div>
+    <div class="d-flex flex-direction-column text-center">
+        <h4 class="text-center">
+            <strong>@Model.FirstName @Model.LastName</strong>
+            <br />
+            <small>@Model.JobTitle</small>
+        </h4>
+        <p>
+            <span>@Model.CityName, @Model.StateName</span>
+        </p>
+        <p>
+            <span>@Model.Email</span>
+        </p>
+
+        <div class="job-skills justify-content-center">
+            @{
+                if (Model.Skills != null && Model.Skills.SkillSets != null && Model.Skills.SkillSets.Length > 0)
                 {
-                    <a href="@Model.Resume" target="_blank" class="btn"><i class="fa fa-download" aria-hidden="true"></i> Download CV</a>
+                    string[] skills = Model.Skills.SkillSets.Split(',');
+                    foreach (var skill in skills)
+                    {
+                        if (skill.Length > 1)
+                        {
+                            <li class="job-skill">@skill</li>
+                        }
+                    }
                 }
                 else
                 {
-                    <a href="javascript:void(0);" style="pointer-events:none;" class="btn"><i class="fa fa-download" aria-hidden="true"></i> Download CV</a>
+                    <span>N/A</span>
                 }
-                <a onclick="SendMail('@Model.Email','@Model.FirstName')" class="button"><i class="fa fa-envelope" aria-hidden="true"></i> Send Message</a>
-                <!-- <a href="#small-dialog" class="popup-with-zoom-anim button"><i class="fa fa-envelope"></i> Send Message</a> -->
+            }
+        </div>
+    </div>
 
-                <div id="small-dialog" class="zoom-anim-dialog mfp-hide apply-popup">
-                    <div class="small-dialog-headline">
-                        <h2>Send Message to @Model.FirstName @Model.LastName</h2>
-                    </div>
-                    <div class="small-dialog-content">
-                        <form action="#" method="get">
-                            <input type="text" placeholder="Full Name" value="@Model.FirstName @Model.LastName" readonly />
-                            <input type="text" placeholder="Email Address" value="@Model.Email" readonly />
-                            <textarea placeholder="Message"></textarea>
-                            <button class="send">Send Application</button>
-                        </form>
-                    </div>
+    <div class="btn-row spacer-top-20 spacer-bottom-20 text-center">
+        @if (!string.IsNullOrWhiteSpace(Model.Resume))
+        {
+            <a href="@Model.Resume" target="_blank" class="btn btn-primary">Download CV</a>
+        }
+        else
+        {
+            <a href="javascript:void(0);" class="btn btn-primary">Download CV</a>
+        }
+        <a onclick="SendMail('@Model.Email','@Model.FirstName')" class="btn btn-link quick-links">Send Message</a>
+    </div>
+</div>
 
+<div class="row panelbg-lghtgrey home-screen-section">
+    <div class="container">
+        <div id="small-dialog" class="col-sm-8 col-sm-offset-2">
+            <h2 class="blacktitle text-center">Send Message to <strong>@Model.FirstName @Model.LastName</strong></h2>
+            <form action="#" method="get" class="row">
+                <div class="form-group">
+                    <label class="input-label">First Name</label>
+                    <input type="text" class="form-control input-elements" placeholder="Full Name" value="@Model.FirstName @Model.LastName" readonly />
                 </div>
-                <!-- <a href="#" class="button dark"><i class="fa fa-star"></i> Bookmark This Resume</a> -->
-
-            </div>
+                <div class="form-group">
+                    <label class="input-label">Email</label>
+                    <input type="text" class="form-control input-elements" placeholder="Email Address" value="@Model.Email" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="input-label">Message</label>
+                    <textarea class="form-control input-elements" placeholder="Message"></textarea>
+                </div>
+                <div class="form-group text-center">
+                    <button class="btn btn-success">Send Application</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <!-- Content
 ================================================== -->
-<div class="container">
+<div class="container home-screen-section">
     <!-- Recent Jobs -->
-    <div class="eight columns">
-        <div class="padding-right">
-            <h3 class="margin-bottom-15">About Me</h3>
-            <p class="margin-reset">
-                @Model.AboutMe
-            </p>
-
-        </div>
-    </div>
-
-    <!-- Widgets -->
-    <div class="eight columns">
-        <h3 class="margin-bottom-20">Education</h3>
-        <!-- Resume Table -->
-        <dl class="resume-table">
-            @if (Model.EducationalDetails == null)
-            {
-                <dd>
-                    <strong>No Data Found</strong>
-                </dd>
-            }
-            else
-            {
-                @foreach (var item in Model.EducationalDetails)
-                {
-                    <dt>
-                        @if (item.CourseName != null && item.CourseName != "")
-                        {
-                            <small class="date">@item.PassingYear</small>
-                            <strong>@item.CourseName</strong>
-                            <strong>@item.University</strong>
-                            <strong>Score @item.Percentage %</strong>
-                        }
-                        else
-                        {
-                            <strong>N/A</strong>
-                        }
-                    </dt>
-                }
-            }
-
-        </dl>
-        <h3 class="margin-bottom-20">Experience</h3>
-        <dl class="resume-table">
-            @if (Model.ExperienceDetails == null)
-            {
-                <dd>
-                    <strong>No Data Found</strong>
-                </dd>
-            }
-            else
-            {
-                @foreach (var item in Model.ExperienceDetails)
-                {
-                    <dt>
-                        <small class="date">@item.WorkingFrom - @item.WorkingTill</small>
-                        <strong>@item.Organization</strong>
-                        <strong>@item.Designation</strong>
-                    </dt>
-                }
-            }
-
-        </dl>
-    </div>
+    <h2 class="blacktitle">About Me</h2>
+    <p>
+        @Model.AboutMe
+    </p>
 </div>
+<div class="container home-screen-section">
+    <h2 class="blacktitle">Education</h2>
+    <!-- Widgets -->
+    @if (Model.EducationalDetails == null)
+    {
+        <p>
+            <strong>No Data Found</strong>
+        </p>
+    }
+    else
+    {
+        @foreach (var item in Model.EducationalDetails)
+        {
 
+            @if (item.CourseName != null && item.CourseName != "")
+            {
+                <h4 class="spacer-top-10">@item.CourseName</h4>
+                <div class="row spacer-bottom-10">
+                    <div class="col-sm-4"><span class="data-label">PassingYear:</span> @item.PassingYear</div>
+                    <div class="col-sm-4"><span class="data-label">University:</span> @item.University</div>
+                    <div class="col-sm-4"><span class="data-label">Score:</span> @item.Percentage %</div>
+                </div>
+            }
+            else
+            {
+                <div class="col-sm-12">
+                    <p>N/A</p>
+                </div>
+            }
+
+        }
+    }
+</div>
+<div class="container home-screen-section">
+    <h2 class="blacktitle">Experience</h2>
+    @if (Model.ExperienceDetails == null)
+    {
+        <p>
+            <strong>No Data Found</strong>
+        </p>
+    }
+    else
+    {
+        @foreach (var item in Model.ExperienceDetails)
+        {
+            <h4 class="spacer-top-10">@item.Organization</h4>
+            <div class="row spacer-bottom-10">
+                <div class="col-sm-6"><span class="data-label">Duration:</span> @item.WorkingFrom - @item.WorkingTill</div>
+                <div class="col-sm-6"><span class="data-label">Designation:</span> @item.Designation</div>
+            </div>
+        }
+    }
+</div>
 
 @section Scripts
     {
-
     <script src="~/js/Employer/SearchResume/SearchResume.js"></script>
 }
 
