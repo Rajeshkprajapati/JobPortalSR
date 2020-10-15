@@ -530,5 +530,36 @@ namespace JobPortal.Data.Repositories.Admin
             throw new DataNotFound("Jobs not found, please contact your tech deck.");
         }
 
+        public DataTable EmailTemplates(int userRole,int Id)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@UserRole",userRole),
+                        new SqlParameter("@Id",Id),
+                    };
+                    var result =
+                        SqlHelper.ExecuteDataset
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetEmailTemplate",
+                            parameters
+                            );
+                    if (null != result && result.Tables.Count > 0)
+                    {
+                        return result.Tables[0];
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Job seeker not found, please contact your tech deck.");
+        }
+
     }
 }

@@ -18,15 +18,21 @@
     <div class="userbtns">
         <ul class="nav nav-tabs">
 
-            <li class="active"><a data-toggle="tab" href="#jobseeker" aria-expanded="true">Job Seeker</a></li>
-            <li class=""><a data-toggle="tab" href="#employer" aria-expanded="false">Employer</a></li>
+            <li class="active"><a data-toggle="tab" href="#jobseeker" aria-expanded="true" onclick="EmailTemplates(2)">Job Seeker</a></li>
+            <li class=""><a data-toggle="tab" href="#employer" aria-expanded="false" onclick="EmailTemplates(1)">Employer</a></li>
         </ul>
     </div>
     <div class="tab-content">
 
         <div id="jobseeker" class="formpanel tab-pane fade active in">
 
-            <form autocomplete="off" method="post" asp-action="">
+            <form autocomplete="off" method="post" id="JobSeekerNotification" asp-action="">
+                <div class="form">
+                    <h5>Email Template</h5>
+                    <select class="form-control" required id="ddlEmailTemplate" onchange="getTemplate(this)">
+                        <option value="">Select Template</option>
+                    </select>
+                </div>
                 <div class="form">
                     <h5>Company</h5>
                     <select class="form-control" required id="CompanyId" asp-items="@(new SelectList(@ViewBag.EmployersData,"UserId", "CompanyName"))">
@@ -45,6 +51,8 @@
                         <option value="">Select Job Seekers</option>
                     </select>
                 </div>
+
+
                 <div class="form-row">
                     <input type="submit" class="button border fw margin-top-10" value="Send Jobseekers" />
                 </div>
@@ -61,5 +69,10 @@
             </form>
         </div>
     </div>
+    <div id="contentHolder">
+
+    </div>
 </div>
+
+
 <script src="~/js/Admin/SendNotification/SendNotification.js"></script>

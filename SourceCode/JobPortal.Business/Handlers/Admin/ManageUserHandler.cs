@@ -18,6 +18,7 @@ using JobPortal.Utility.Helpers;
 using JobPortal.Utility.Exceptions;
 using Microsoft.AspNetCore.Http;
 using JobPortal.Data.Interfaces.Shared;
+using JobPortal.Model.DataViewModel.Admin.Notifications;
 
 namespace JobPortal.Business.Handlers.Admin
 {
@@ -368,11 +369,10 @@ namespace JobPortal.Business.Handlers.Admin
             return _userProcessor.DeleteBulkJobPost(JobPostId);
         }
 
-        public IEnumerable<JobPostViewModel> GetJobs(int empId, int year)
+        public IEnumerable<JobPostViewModel> GetJobs(int empId, int year,int JobId)
         {
-            int jobid = 0;
             bool isDraftJob = false;
-            var jobs = _userProcessor.GetJobs(empId, year, jobid, isDraftJob);
+            var jobs = _userProcessor.GetJobs(empId, year, JobId, isDraftJob);
             if (null != jobs && jobs.Rows.Count > 0)
             {
                 IList<JobPostViewModel> jModel = new List<JobPostViewModel>();
@@ -399,6 +399,29 @@ namespace JobPortal.Business.Handlers.Admin
                 return jModel;
             }
             throw new DataNotFound("Jobs not found");
+        }
+
+        public IEnumerable<EmailTemplateViewModel> GetEmailTemplate(int UserRole,int Id)
+        {
+            
+            var templates = _userProcessor.EmailTemplates(UserRole,Id);
+            if (null != templates && templates.Rows.Count > 0)
+            {
+                IList<EmailTemplateViewModel> templModel = new List<EmailTemplateViewModel>();
+                foreach (DataRow row in templates.Rows)
+                {
+                    templModel.Add(new EmailTemplateViewModel
+                    {
+                        Id = Convert.ToInt32(row["Id"]),
+                        Name = Convert.ToString(row["Name"]),
+                        Subject = Convert.ToString(row["Subject"]),
+                        EmailBody = Convert.ToString(row["EmailBody"]),
+                        UserRole = Convert.ToInt32(row["UserRole"])
+                    });
+                }
+                return templModel;
+            }
+            throw new DataNotFound("Email template not found");
         }
     }
 }

@@ -24,5 +24,6 @@ namespace JobPortal.Data.Interfaces.Admin
         DataTable GetBulkJobSearchList(int CompanyId, string FY, string statecode, string citycode);
         bool DeleteBulkJobPost(string JobPostId);
         DataTable GetJobs(int empId, int year, int jobId, bool isDraftJob);
+        DataTable EmailTemplates(int userRole,int Id);
     }
 }
