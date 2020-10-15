@@ -656,6 +656,9 @@ h2.blacktitle.text-center:after {
 .panelbg-green {
     background-color: #2b9057;
 }
+.pangel-softgreen {
+    background-color: #8daf91;
+}
 
 .home-screen-section {
     padding-top: 30px;
@@ -2308,3 +2311,37 @@ a.employer-website:hover {
 .justify-content-center{
     justify-content: center;
 }
+
+.jobpostSummary tbody tr:first-child{
+    font-weight: bold;
+    background-color: #eee;
+}
+.jobpostSummary td{
+    font-size: 12px;
+    white-space: nowrap;
+   
+}
+.jobpostSummary tbody tr td:first-child {
+    max-width: 60px;
+    min-width: 60px;
+
+}
+.error-class,
+.error-text {
+    color: red;
+}
+
+.error-class ol{
+    padding-left: 15px;
+}
+    .error-class ol li {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .note-text {
+        color: #9e9d9d;
+        font-size: 12px;
+    }

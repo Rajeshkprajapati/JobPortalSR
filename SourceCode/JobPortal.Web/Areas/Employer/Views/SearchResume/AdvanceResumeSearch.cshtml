@@ -6,36 +6,20 @@
 }
 @{
     int currYear = DateTime.Now.Year;
-    <style>
-        .experiance-field {
-            width: 44% !important;
-            display: inline-block !important;
-        }
 
-        .remove-hide {
-            display: block !important;
-        }
-
-        .skills span {
-            margin: 2px 3px 0 0 !important;
-        }
-    </style>
-    <!-- Titlebar
-    ================================================== -->
-    <div id="titlebar" class="single">
-        <div class="container">
-            <div class="sixteen columns">
-                <h2>Advance Searches</h2>
-                <nav id="breadcrumbs">
-                    <ul>
-                        <li>You are here:</li>
-                        <li><a href="#">Home</a></li>
-                        <li>Advance Searches</li>
-                    </ul>
-                </nav>
-            </div>
+    <div id="titlebar" class="banner-bg row" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+        <div class="container titlebar-inner">
+            <h2 class="whitetitle"><span class="title-bdr-black-4">Advance Searches</span></h2>
         </div>
     </div>
+    <nav id="breadcrumbs" class="container">
+        <ol class="breadcrumb">
+            <li>You are here:</li>
+            <li><a href="#">Home</a></li>
+            <li>Advance Searches</li>
+        </ol>
+    </nav>
+
 
     <div class="container">
         <!-- Accordion
@@ -49,7 +33,7 @@
                     <h3><span class="ui-accordion-header-icon ui-icon ui-accordion-icon"></span>Advance Search <i class="fa fa-cog pull-right" aria-hidden="true"></i></h3>
                     <div>
                         <div class="form remove-hide">
-                            <input class="search-field" asp-for="HiringRequirement" id="HiringRequirement"  type="text" placeholder="Requiremet, You hiring for" value="" required />
+                            <input class="search-field" asp-for="HiringRequirement" id="HiringRequirement" type="text" placeholder="Requiremet, You hiring for" value="" required />
                         </div>
                         <div class="form remove-hide">
                             <h5>Any Keyword</h5>
@@ -66,12 +50,12 @@
                         <div class="form remove-hide">
                             <h5 class="margin-top-5">Total Experiance <span> &nbsp;In Years</span></h5>
                             <input class="search-field experiance-field" asp-for="MinExperiance" id="MinExperiance" type="Number" min="0" onmouseout="CompareNumberType(MinExperiance,MaxExperiance)" value="" placeholder="min" />
-                            <input class="search-field experiance-field" asp-for="MaxExperiance" id="MaxExperiance" type="Number"  min="0" onmouseout="CompareNumberType(MinExperiance,MaxExperiance)" value="" placeholder="max" />
+                            <input class="search-field experiance-field" asp-for="MaxExperiance" id="MaxExperiance" type="Number" min="0" onmouseout="CompareNumberType(MinExperiance,MaxExperiance)" value="" placeholder="max" />
                         </div>
                         <div class="form remove-hide">
                             <h5 class="margin-top-5">Total Salary <span> &nbsp;In Rs</span></h5>
-                            <input class="search-field experiance-field" asp-for="MinSalary" id="MinSalary" type="Number" onmouseout="CompareNumberType(MinSalary,MaxSalary)"  min="0" value="" placeholder="min" />
-                            <input class="search-field experiance-field" asp-for="MaxSalary" id="MaxSalary" type="Number" onmouseout="CompareNumberType(MinSalary,MaxSalary)"  min="0" value="" placeholder="max" />
+                            <input class="search-field experiance-field" asp-for="MinSalary" id="MinSalary" type="Number" onmouseout="CompareNumberType(MinSalary,MaxSalary)" min="0" value="" placeholder="min" />
+                            <input class="search-field experiance-field" asp-for="MaxSalary" id="MaxSalary" type="Number" onmouseout="CompareNumberType(MinSalary,MaxSalary)" min="0" value="" placeholder="max" />
                         </div>
                         <div class="form remove-hide">
                             <h5>Current Location</h5>
@@ -125,7 +109,7 @@
 
                         <div class="form remove-hide">
                             <h5>Current Designation</h5>
-                            <input class="search-field" type="text" asp-for="CurrentDesignation" id="CurrentDesignation"  placeholder="Current Designation" value="" />
+                            <input class="search-field" type="text" asp-for="CurrentDesignation" id="CurrentDesignation" placeholder="Current Designation" value="" />
                         </div>
                         <div class="form remove-hide">
                             <h5>Notice Period</h5>
@@ -242,7 +226,8 @@
                                     {
                                         <option value=@i selected>@(i)</option>
                                     }
-                                    else {
+                                    else
+                                    {
                                         <option value=@i>@(i)</option>
                                     }
 
@@ -253,7 +238,6 @@
                         <div class="form remove-hide">
                             <h5>Genders</h5>
                             <select data-placeholder="Full-Time" asp-for="Gender" id="Gender" class="chosen-select-no-single experiance-field" asp-items="@(new SelectList(@ViewBag.GenderData,"GenderCode", "Gender"))">
-                             
                             </select>
                             @*<h5>Category Wise</h5>
                                 <select data-placeholder="Full-Time" class="chosen-select-no-single experiance-field">
@@ -322,16 +306,16 @@
 
         <!-- Tabs
         ================================================= -->
-        <div class="seven columns">
-            <div class="margin-bottom-20"></div>
+        <div class="container tab">
+            
             <!-- Tabs Navigation -->
-            <ul class="tabs-nav">
+            <ul class="nav nav-tabs text-uppercase">
                 <li class="active"><a href="#tab1">Recent Searches</a></li>
                 <li><a href="#tab2">Saved Searches</a></li>
                 <li><a href="#tab3">Last Keyword</a></li>
             </ul>
             <!-- Tabs Content -->
-            <div class="tabs-container">
+            <div class="row tab-content tabs">
                 <div class="tab-content" id="tab1">
                     <div class="skills">
                         @if (ViewBag.AdvanceSearchStats != null)
@@ -391,28 +375,45 @@
             <br>
         </div>
         <!-- Widgets -->
-        <div class="five columns">
-            <!-- Sort by -->
-            <div class="widget">
-                <img src="~/Assets/images/app-images-v3.png" width="100%">
-                <div class="clearfix"></div>
-            </div>
-        </div>
         <!-- Widgets / End -->
+    </div>
+    <div class="home-screen-section row pangel-softgreen">
+        <div class="container">
+            <!-- Widgets -->
+            <!-- Sort by -->
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="widget text-center">
+                        <img src="/Assets/images/app-images-v3.png" class="responsive-img">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="widget text-center">
+                        <img src="/Assets/images/app-images-v3.png" class="responsive-img">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="widget text-center">
+                        <img src="/Assets/images/app-images-v3.png" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+            <!-- Widgets / End -->
+        </div>
     </div>
 }
 
 @section Scripts
     {
-        <script>
-            $(document).ready(function () {
-                SpecialChar('#HiringRequirement');
-                SpecialChar('#AnyKeyword');
-                SpecialChar('#AllKeyword');
-                SpecialChar('#ExculudeKeyword');
-                SpecialChar('#CurrentDesignation');
-            });
-        </script>
+    <script>
+        $(document).ready(function () {
+            SpecialChar('#HiringRequirement');
+            SpecialChar('#AnyKeyword');
+            SpecialChar('#AllKeyword');
+            SpecialChar('#ExculudeKeyword');
+            SpecialChar('#CurrentDesignation');
+        });
+    </script>
 
     <script src="~/js/Employer/SearchResume/AdvanceSearchResume.js"></script>
     <script src="~/js/Validation.js"></script>
