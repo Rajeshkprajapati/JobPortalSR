@@ -421,8 +421,12 @@
                         <label class="input-label">
                             Education
                         </label>
-                        <select class="selectDropdown form-control input-elements" id="CourseCategory" name="Qualification" asp-items="@(new SelectList(@ViewBag.Coursecategory, "Id", "Name"))" required>
+                        <select class="selectDropdown form-control input-elements" id="CourseCategory" name="Qualification"  required>
                             <option value="">--Select Course Category--</option>
+                            @foreach (var course in @ViewBag.Coursecategory)
+                            {
+                            <option value="@course.Id">@course.Name</option>
+                            }
                         </select>
                     </div>
                     <div class="form-group">
