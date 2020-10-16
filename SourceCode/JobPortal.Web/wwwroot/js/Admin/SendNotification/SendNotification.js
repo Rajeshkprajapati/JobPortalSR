@@ -98,12 +98,26 @@ $("#JobSeekerNotification").submit(function (e) {
     var emailId = form.find('#JobSeekerId option:selected').attr('value');
     var subject = form.find('#JobId option:selected').text();
     var TempHtml = $("#ContentDiv").html();
-    SendAJAXRequest(`/Dashboard/SendNotificationMail/?Email=${emailId}&htmlBody=${TempHtml}&Subject=${subject}`, 'GET', {}, 'JSON', (d) => {
-        debugger;
-        if (d) {
-            alert("done");
-        } else {
-            warnignPopup('Error!');
+    console.log(TempHtml);
+    let data = {Email:emailId,htmlBody:TempHtml,Subject:subject};
+    let url = `/Dashboard/SendNotificationMail/?Email=${emailId}&Subject=${subject}&htmlBody=${TempHtml}`;
+    //SendAJAXRequest(`/Dashboard/SendNotificationMail/?Email=${emailId}&Subject=${subject}&htmlBody=${TempHtml}`, 'GET', {}, 'JSON', (d) => {
+    //    debugger;
+    //    if (d) {
+    //        alert("done");
+    //    } else {
+    //        warnignPopup('Error!');
+    //    }
+    //});
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'content-type': 'text/html; charset=utf-8'
         }
-    });
+    }).then(resp => resp.json()).then(d => {
+        if (d) {
+            alert('done');
+        }
+    }).catch(err => console.log(err));
   });

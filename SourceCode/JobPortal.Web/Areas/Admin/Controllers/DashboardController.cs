@@ -645,7 +645,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             return Json(emailTemplate);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("[action]")]
         public IActionResult SendNotificationMail(string Email, string htmlBody,string Subject)
         {
