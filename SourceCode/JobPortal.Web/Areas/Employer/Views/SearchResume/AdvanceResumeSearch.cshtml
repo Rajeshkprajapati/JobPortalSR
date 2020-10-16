@@ -303,12 +303,12 @@
         <!-- Tabs Content -->
         <div class="col-sm-12 tab-content tabs tabs-container home-screen-section">
             <div class="tab-content" id="tab1">
-                <div class="skills">
+                <ul class="job-skills">
                     @if (ViewBag.AdvanceSearchStats != null)
                     {
                         foreach (var row in ViewBag.AdvanceSearchStats)
                         {
-                            <span onclick="GetAdvanceSearchById(@row.id)" title="click">@row.HiringRequirement</span>
+                            <li onclick="GetAdvanceSearchById(@row.id)" title="click" class="job-skill click-pointer link-hover">@row.HiringRequirement</li>
                         }
                     }
                     else
@@ -318,17 +318,17 @@
                     @*<span>Asp.net core software developer</span>
                         <span>Business/Project manager</span>
                         <span>Customer support and sales executive</span>*@
-                </div>
+                </ul>
             </div>
             <div class="tab-content" id="tab2">
-                <div class="skills">
+                <ul class="job-skills">
                     @if (ViewBag.AdvanceSearchStats != null)
                     {
                         foreach (var row in ViewBag.AdvanceSearchStats)
                         {
                             if (@row.isSavedSearch == true)
                             {
-                                <span onclick="GetAdvanceSearchById(@row.id)" style="cursor:pointer">@row.HiringRequirement</span>
+                                <li onclick="GetAdvanceSearchById(@row.id)" class="job-skill click-pointer link-hover">@row.HiringRequirement</li>
                             }
                         }
                     }
@@ -336,17 +336,17 @@
                     {
                         <p>No data</p>
                     }
-                </div>
+                </ul>
             </div>
             <div class="tab-content" id="tab3">
-                <div class="skills">
+                <ul class="job-skills">
                     @if (ViewBag.AdvanceSearchStats != null)
                     {
                         foreach (var row in ViewBag.AdvanceSearchStats)
                         {
                             if (!string.IsNullOrWhiteSpace(row.AllKeyword))
                             {
-                                <span>@row.AllKeyword</span>
+                                <li class="job-skill">@row.AllKeyword</li>
                             }
 
                         }
@@ -355,7 +355,7 @@
                     {
                         <p>No data</p>
                     }
-                </div>
+                </ul>
             </div>
         </div>
     </div>

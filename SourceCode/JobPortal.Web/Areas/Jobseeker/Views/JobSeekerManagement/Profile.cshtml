@@ -131,20 +131,7 @@
                     <a data-toggle="modal" onclick="ShowModal('employementModalCenter')" class="quick-links text-uppercase"> Add More</a>
                 </div>
             </div>
-            <div class="table-responsive spacer-top-20">
-                <table class="table table-bordered">
-                    <tr class="active">
-                        <th hidden>id</th>
-                        <th>Designation</th>
-                        <th>Organization</th>
-                        <th>Work Duration</th>
-                        <th>Notice Period</th>
-                        <th>JobProfile</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                    <tbody id="addEmployment"></tbody>
-                </table>
-            </div>
+            <div id="addEmployment" class="d-flex flex-wrap"></div>
         </div>
         <div class="col-sm-12">
             <hr />
@@ -156,20 +143,7 @@
                     <a data-toggle="modal" onclick="ShowModal('educationModalCenter')" class="quick-links text-uppercase"> Add More</a>
                 </div>
             </div>
-            <div class="table-responsive spacer-top-20">
-                <table class="table table-bordered">
-                    <tr class="active">
-                        <th hidden>id</th>
-                        <th>CourseName</th>
-                        <th>University</th>
-                        <th>Specialization</th>
-                        <th>PassingYear</th>
-                        <th>Percentage</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                    <tbody id="addEducation"></tbody>
-                </table>
-            </div>
+            <div id="addEducation" class="d-flex flex-wrap"></div>
         </div>
         <div class="col-sm-12">
             <hr />
@@ -421,11 +395,11 @@
                         <label class="input-label">
                             Education
                         </label>
-                        <select class="selectDropdown form-control input-elements" id="CourseCategory" name="Qualification"  required>
+                        <select class="selectDropdown form-control input-elements" id="CourseCategory" name="Qualification" required>
                             <option value="">--Select Course Category--</option>
                             @foreach (var course in @ViewBag.Coursecategory)
                             {
-                            <option value="@course.Id">@course.Name</option>
+                                <option value="@course.Id">@course.Name</option>
                             }
                         </select>
                     </div>

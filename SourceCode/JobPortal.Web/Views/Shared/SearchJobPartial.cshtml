@@ -15,18 +15,8 @@
 
     <form asp-area="Jobseeker" id="formJobPartial" asp-controller="Job" asp-action="SearchJobList" method="post" class="col-xs-10 col-xs-offset-1 searchbar">
         <div class="col-xs-12">
-            <div class="row">
-                <div class="col-sm-12 search-form-element">
-                    @*<input type="hidden" asp-for="JobRole" value="@jRoleId" id="hiddenjobtitle" />*@
-                    @*<select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select> <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select> <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>*@
-                    <select type="text" asp-for="JobTitle" id="JobTitle" name="JobTitle" multiple autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3 search-form-element">
-                    <input type="text" asp-for="Skills" class="form-control first-column" placeholder="Skill" />
-                </div>
-                <div class="col-sm-4 search-form-element">
+            <div class="row top-row">
+                <div class="col-sm-6 search-form-element">
                     @if (ViewBag.JobIndustryArea != null)
                     {
                         <select asp-for="JobCategory[0]" class="form-control" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
@@ -40,7 +30,18 @@
                         </select>
                     }
                 </div>
-                <div class="col-sm-2 search-form-element">
+                <div class="col-sm-6 search-form-element">
+                    @*<input type="hidden" asp-for="JobRole" value="@jRoleId" id="hiddenjobtitle" />*@
+                    @*<select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select> <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select> <select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>*@
+                    <select type="text" asp-for="JobTitle" id="JobTitle" name="JobTitle" multiple autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>
+                </div>
+            </div>
+            <div class="row bottom-row">
+                <div class="col-sm-4 search-form-element">
+                    <input type="text" asp-for="Skills" class="form-control first-column" placeholder="Skill" />
+                </div>
+               
+                <div class="col-sm-4 search-form-element">
                     <select class="form-control" asp-for="Experiance">
                         <option value="-1">Year</option>
                         <option value="0">Fresher</option>
@@ -50,7 +51,7 @@
                         }
                     </select>
                 </div>
-                <div class="col-sm-3 search-form-element">
+                <div class="col-sm-4 search-form-element">
                     <input asp-for="City" type="hidden" id="hdnCity" />
                     <input type="text" id="City" class="form-control last-column" placeholder="Enter city" />
                 </div>
