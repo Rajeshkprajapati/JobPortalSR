@@ -484,5 +484,31 @@ namespace JobPortal.Data.Repositories.Shared
             }
             throw new DataNotFound("Job roles not found, please contact your tech deck.");
         }
+
+        public DataTable GetJobSeekers()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    var result =
+                        SqlHelper.ExecuteDataset
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetJobSeekers"
+                            );
+                    if (null != result && result.Tables.Count > 0)
+                    {
+                        return result.Tables[0];
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Job seeker not found, please contact your tech deck.");
+        }
     }
 }

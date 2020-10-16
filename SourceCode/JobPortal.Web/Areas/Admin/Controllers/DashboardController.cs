@@ -1,6 +1,8 @@
 ﻿using JobPortal.Business.Interfaces.Admin;
+using JobPortal.Business.Interfaces.Shared;
 using JobPortal.Model.DataViewModel.Admin.Dashboard;
 using JobPortal.Model.DataViewModel.Admin.ManageUsers;
+using JobPortal.Model.DataViewModel.Admin.Notifications;
 using JobPortal.Model.DataViewModel.Employer.JobPost;
 using JobPortal.Model.DataViewModel.JobSeeker;
 using JobPortal.Model.DataViewModel.Shared;
@@ -28,11 +30,15 @@ namespace JobPortal.Web.Areas.Admin.Controllers
     {
         private readonly IManageUsersHandler manageuserHandler;
         private readonly IDashboardHandler dashboardHandler;
+        private readonly IConfiguration config;
+        private readonly IEMailHandler emailHandler;
 
-        public DashboardController(IManageUsersHandler _manageuserHandler, IDashboardHandler _dashboardHandler)
+        public DashboardController(IManageUsersHandler _manageuserHandler, IDashboardHandler _dashboardHandler, IConfiguration _config, IEMailHandler _emailHandler)
         {
             manageuserHandler = _manageuserHandler;
             dashboardHandler = _dashboardHandler;
+            emailHandler = _emailHandler;
+            config = _config;
         }
 
         public ActionResult Index(string country = "IN")
@@ -585,6 +591,87 @@ namespace JobPortal.Web.Areas.Admin.Controllers
            return PartialView("SummaryDashboardPartial");
         }
 
-     
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult SendNotification()
+        {
+            ViewBag.EmployersData = dashboardHandler.GetEmployers(true);
+            ViewBag.JobSeekerData = dashboardHandler.GetJobSeekers();
+            //List<UsersReviewsViewModel> list = new List<UsersReviewsViewModel>();
+            //try
+            //{
+            //    list = _usersReviewsHandler.GetUsersReviews();
+            //}
+            //catch (DataNotFound ex)
+            //{
+            //    ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            //}
+            return PartialView("SendNotificationPartial");
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult CompanyJobs(int year, int JobId, int EmpId=0 )
+        {
+            IEnumerable<JobPostViewModel> jobs = null;
+            try
+            {
+                //jobTitle = _homeHandler.GetJobTitleById(JobIndustryAreaId);
+                jobs = manageuserHandler.GetJobs(EmpId, year, JobId);
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DashboardController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return Json(jobs);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult EmailTemplate(int UserRole,int Id)
+        {
+            IEnumerable<EmailTemplateViewModel> emailTemplate = null;
+            try
+            {
+                //jobTitle = _homeHandler.GetJobTitleById(JobIndustryAreaId);
+                emailTemplate = manageuserHandler.GetEmailTemplate(UserRole,Id);
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DashboardController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return Json(emailTemplate);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult SendNotificationMail(string Email, string htmlBody,string Subject)
+        {
+            //IEnumerable<EmailTemplateViewModel> emailTemplate = null;
+            string message = "fail";
+            try
+            {
+                var eModel = new EmailViewModel
+                {
+                    Subject = Subject,
+                    Body = htmlBody,
+                    To = new string[] { Email },
+                    From = config["EmailCredential:Fromemail"],
+                    IsHtml = true,
+                    MailType = (int)MailType.OTP
+                };
+                emailHandler.SendMail(eModel, -1);
+                message = "Pass";
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DashboardController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return Json(message);
+        }
+
     }
 }

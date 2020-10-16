@@ -642,7 +642,6 @@ h2.blacktitle.text-center:after {
 
 .panelbg-black {
     background-color: #000;
-    whitetitle
 }
 
 .panelbg-gray10 {
@@ -2334,14 +2333,52 @@ a.employer-website:hover {
 .error-class ol{
     padding-left: 15px;
 }
-    .error-class ol li {
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.error-class ol li {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-    .note-text {
-        color: #9e9d9d;
-        font-size: 12px;
-    }
+.note-text {
+    color: #9e9d9d;
+    font-size: 12px;
+}
+
+.panel-default > .panel-heading{
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+}
+.panel-group .panel{
+    border-radius: 1px;
+}
+
+.panel-title a{
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    color: inherit;
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    padding: 12px 10px;
+    width: 100%;
+    display: inline-block;
+}
+.panel-title a:hover{
+    text-decoration: none;
+}
+
+.panel-group .panel + .panel {
+    margin: -1px 0 0;
+}
+
+.panel-title a[aria-expanded="true"] {
+    background-color: #2b9057;
+    color: #fff;
+}
+
+.width-120{
+    width: 120px;
+}

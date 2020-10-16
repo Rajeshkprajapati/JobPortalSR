@@ -110,5 +110,16 @@ function manageadveritsement() {
 
 }
 
+function SendNotification() {
+    SendAJAXRequest(`/Dashboard/SendNotification`, "GET", {}, "html", function (resp) {
+        if (resp && resp !== "") {
+            $("div#contentHolder").html(resp);
+        }
+        else {
+            return false;
+        }
+    });
+}
+
 
 

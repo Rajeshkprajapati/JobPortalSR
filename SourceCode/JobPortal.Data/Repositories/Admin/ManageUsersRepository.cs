@@ -497,5 +497,69 @@ namespace JobPortal.Data.Repositories.Admin
             }
             throw new DataNotUpdatedException("Unable to delete data");
         }
+        public DataTable GetJobs(int empId, int year, int jobId, bool isDraftJob)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@EmpId",empId),
+                        new SqlParameter("@JobId",jobId),
+                        new SqlParameter("@year",year),
+                        new SqlParameter("@isDraftJob",isDraftJob)
+                    };
+                    var result =
+                        SqlHelper.ExecuteDataset
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetEmployerJobDetails",
+                            parameters
+                            );
+                    if (null != result && result.Tables.Count > 0)
+                    {
+                        return result.Tables[0];
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Jobs not found, please contact your tech deck.");
+        }
+
+        public DataTable EmailTemplates(int userRole,int Id)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@UserRole",userRole),
+                        new SqlParameter("@Id",Id),
+                    };
+                    var result =
+                        SqlHelper.ExecuteDataset
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetEmailTemplate",
+                            parameters
+                            );
+                    if (null != result && result.Tables.Count > 0)
+                    {
+                        return result.Tables[0];
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new DataNotFound("Job seeker not found, please contact your tech deck.");
+        }
+
     }
 }

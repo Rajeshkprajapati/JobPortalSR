@@ -1,4 +1,5 @@
 ﻿using JobPortal.Model.DataViewModel.Admin.ManageUsers;
+using JobPortal.Model.DataViewModel.Admin.Notifications;
 using JobPortal.Model.DataViewModel.Employer.JobPost;
 using JobPortal.Model.DataViewModel.JobSeeker;
 using JobPortal.Model.DataViewModel.Shared;
@@ -30,5 +31,7 @@ namespace JobPortal.Business.Interfaces.Admin
         List<GenderViewModel> GetGenders();
         List<JobPostViewModel> GetBulkJobSearchList(int CompanyId, string FY, string statecode, string citycode);
         bool DeleteBulkJobs(string JobPostId);
+        IEnumerable<JobPostViewModel> GetJobs(int empId, int year,int JobId);
+        IEnumerable<EmailTemplateViewModel> GetEmailTemplate(int UserRole,int Id);
     }
 }
