@@ -393,7 +393,8 @@ namespace JobPortal.Business.Handlers.Admin
                         TotalApplications = Convert.ToInt32(row["TotalApplications"]),
                         PostedOn = Convert.ToDateTime(row["PostedOn"]),
                         Featured = Convert.ToString(row["Featured"]),
-                        DisplayOrder = row["FeaturedJobDisplayOrder"] as int? ?? 0
+                        DisplayOrder = row["FeaturedJobDisplayOrder"] as int? ?? 0,
+                        CompanyName = Convert.ToString(row["CompanyName"]),
                     });
                 }
                 return jModel;

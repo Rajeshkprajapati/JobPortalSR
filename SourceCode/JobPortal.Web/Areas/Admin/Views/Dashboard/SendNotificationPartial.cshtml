@@ -1,4 +1,7 @@
-﻿<div class="dashboard-content">
+﻿<style>
+    .chosen-container-active {width:100%!important;}
+    </style>
+<div class="dashboard-content">
     <!-- Titlebar -->
     <div id="titlebar">
         <div class="row">
@@ -19,7 +22,7 @@
         <ul class="nav nav-tabs">
 
             <li class="active"><a data-toggle="tab" href="#jobseeker" aria-expanded="true" onclick="EmailTemplates(2)">Job Seeker</a></li>
-            <li class=""><a data-toggle="tab" href="#employer" aria-expanded="false" onclick="EmailTemplates(1)">Employer</a></li>
+            <li class=""><a data-toggle="tab" href="#employer" aria-expanded="false" onclick="EmailTemplates(3)">Employer</a></li>
         </ul>
     </div>
     <div class="tab-content">
@@ -47,7 +50,7 @@
                 </div>
                 <div class="form">
                     <h5>Job Seekers</h5>
-                    <select class="form-control" required id="JobSeekerId" asp-items="@(new SelectList(@ViewBag.JobSeekerData,"Email", "Email"))">
+                    <select class="chosen-select" required id="JobSeekerId" multiple asp-items="@(new SelectList(@ViewBag.JobSeekerData,"Email", "Email"))">
                         <option value="">Select Job Seekers</option>
                     </select>
                 </div>
@@ -60,9 +63,32 @@
 
         </div>
 
-        <div id="employer" class="formpanel tab-pane fade">
+        <div id="employer" class="formpanel tab-pane fade in">
 
-            <form autocomplete="off" method="post" asp-action="">
+            <form autocomplete="off" method="post" id="EmployerNotification" asp-action="">
+                @*<div class="form">
+            <h5>Company</h5>
+            <select class="chosen-select" id="CompanyEmail" multiple asp-items="@(new SelectList(@ViewBag.EmployersData,"Email", "Email"))" required>
+                <option value="">Select Company</option>
+            </select>
+        </div>*@
+
+                <div class="form">
+                    <h5>Email Template</h5>
+                    <select class="form-control" required id="ddlEmpEmailTemplate" onchange="getTemplate(this)">
+                        <option value="">Select Template</option>
+                    </select>
+                </div>
+                <div class="form">
+                    <h5>Subject</h5>
+                    <input type="text" class="form-control" required id="EmpSubject" />
+                </div>
+                <div class="form" style="width:100%">
+                    <h5>Job Seekers</h5>
+                    <select class="chosen-select" required id="CompanyEmail" multiple asp-items="@(new SelectList(@ViewBag.EmployersData,"Email", "Email"))" style="width:100%">
+                        <option value="">Select Job Seekers</option>
+                    </select>
+                </div>
                 <div class="form-row">
                     <input type="submit" class="button border fw margin-top-10" value="Send Employer" />
                 </div>
@@ -76,3 +102,8 @@
 
 
 <script src="~/js/Admin/SendNotification/SendNotification.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".chosen-select").chosen({});
+    });
+</script>

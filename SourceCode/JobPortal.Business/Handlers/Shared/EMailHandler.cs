@@ -24,44 +24,51 @@ namespace JobPortal.Business.Handlers.Shared
 
         public void SendMail(EmailViewModel email, int userId, bool isInsertInDB)
         {
-            string adminmail = configuration["AdminMail:Email"];
-            foreach (string to in email.To)
+            try
             {
-                if (!string.IsNullOrWhiteSpace(to))
+
+
+                foreach (string to in email.To)
                 {
-                    var message = new MailMessage(email.From, to)
+                    if (!string.IsNullOrWhiteSpace(to))
                     {
-                        Subject = email.Subject,
-                        Body = email.Body,
-                        IsBodyHtml = email.IsHtml
-                    };
-                    message.CC.Add(adminmail);
-
-                    var smtp = new SmtpClient
-                    {
-                        Host = configuration["SMTPClient:Host"].Trim(),
-                        Port = Convert.ToInt32(configuration["SMTPClient:Port"]),
-                        EnableSsl = Convert.ToBoolean(configuration["SMTPClient:EnableSsl"]),
-                        Credentials =
-                        new NetworkCredential(configuration["EmailCredential:Fromemail"].Trim(),
-                        configuration["EmailCredential:FromPassword"].Trim())
-                    };
-                    smtp.Send(message);
-
-                    if (isInsertInDB)
-                    {
-                        var mailInfo = new EmailModel
+                        var message = new MailMessage(email.From, to)
                         {
-                            To = to,
-                            From = email.From,
-                            Body = email.Body,
                             Subject = email.Subject,
-                            InsertedBy = userId,
-                            MailType = email.MailType
+                            Body = email.Body,
+                            IsBodyHtml = email.IsHtml
                         };
-                        emailRepository.SaveMailInformation(mailInfo);
+
+                        var smtp = new SmtpClient
+                        {
+                            Host = configuration["SMTPClient:Host"].Trim(),
+                            Port = Convert.ToInt32(configuration["SMTPClient:Port"]),
+                            EnableSsl = Convert.ToBoolean(configuration["SMTPClient:EnableSsl"]),
+                            Credentials =
+                            new NetworkCredential(configuration["EmailCredential:Fromemail"].Trim(),
+                            configuration["EmailCredential:FromPassword"].Trim())
+                        };
+                        smtp.Send(message);
+
+                        if (isInsertInDB)
+                        {
+                            var mailInfo = new EmailModel
+                            {
+                                To = to,
+                                From = email.From,
+                                Body = email.Body,
+                                Subject = email.Subject,
+                                InsertedBy = userId,
+                                MailType = email.MailType
+                            };
+                            emailRepository.SaveMailInformation(mailInfo);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+
             }
 
         }
