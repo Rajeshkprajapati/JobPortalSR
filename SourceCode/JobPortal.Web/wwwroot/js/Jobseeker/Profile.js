@@ -69,9 +69,9 @@ $(document).ready(function () {
     SendAJAXRequest("/JobSeekerManagement/ProfileData/", "GET", {}, "JSON", function (result) {
         if (result !== null) {
             if (result.Skills !== null && result.Skills.SkillSets !== null) {
-                $('label#txtSkillsValues').text(result.Skills.SkillSets);
+                $('p#txtSkillsValues').text(result.Skills.SkillSets);
             }
-            $('label#txtProfileSummary').text(result.PersonalDetails.ProfileSummary);
+            $('div#txtProfileSummary').text(result.PersonalDetails.ProfileSummary);
             $('label#usrDataProfileSummary').text(result.PersonalDetails.AboutMe);
             $('#personaldob').text(result.PersonalDetails.DOB);
             $('#personalLinkedinProfile').text(result.PersonalDetails.LinkedinProfile);
@@ -191,7 +191,7 @@ $(document).ready(function () {
                             <td>${o.Specialization}</td>
                             <td>Graduated in ${o.PassingYear}</td>
                             <td>${o.Percentage}%</td>
-                            <td><a href="javascript:void(0)" class="quick-links">Edit</a></td>
+                            <td><a href="javascript:void(0)" class="quick-links" onclick="EditEducation()">Edit</a></td>
                             </tr>`);
                         item.data('rowData', o);
                         $("#addEducation").append(item);
@@ -652,6 +652,7 @@ function UploadProfilePicture(_this) {
 
 function EditExperience() {
     let rowData = $(event.target).parent().data('rowData');
+   
     for (let key in rowData) {
         let e = $("#employementModalCenter.modal").find(`[name=${key}]`);
         if (e && e.is('input[type=radio]')) {
