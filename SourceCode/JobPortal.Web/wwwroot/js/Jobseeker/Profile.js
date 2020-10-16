@@ -167,14 +167,13 @@ $(document).ready(function () {
                 if (result.ExperienceDetails.length > 0) {
                     for (var i = 0; i < result.ExperienceDetails.length; i++) {
                         let o = replaceNullOrUndefinedToEmpty(result.ExperienceDetails[i]);
-                        let item = $(`<tr>
-                            <td>${o.Designation}</td>
-                            <td>${o.Organization}</td>
-                            <td>${o.WorkingFrom} to ${o.WorkingTill}</td>
-                            <td>${o.NoticePeriod} days</td>
-                            <td>${o.JobProfile}</td>
-                            <td><a href="javascript:void(0)" class="quick-links" onclick="EditExperience()">Edit</td>
-                        </tr>`);
+                        let item = $(`<div class="profile-detail-box">
+                            <strong>${o.Designation}</strong>&nbsp;&nbsp;<i class="material-icons customehover" onclick="EditExperience()" style="font-size:15px;">create</i><br />
+                            ${o.Organization}<br />
+                            ${o.WorkingFrom} to ${o.WorkingTill}<br />
+                            Available to join in ${o.NoticePeriod} days<br />
+                            ${o.JobProfile}
+                            </div>`);
                         item.data('rowData', o);
                         $("#addEmployment").append(item);
                     }
@@ -185,14 +184,13 @@ $(document).ready(function () {
                 if (result.EducationalDetails.length > 0) {
                     for (var j = 0; j < result.EducationalDetails.length; j++) {
                         let o = replaceNullOrUndefinedToEmpty(result.EducationalDetails[j]);
-                        let item = $(`<tr>
-                            <td>${o.CourseName == 'Other' ? o.OtherCourseName : o.CourseName}</td>
-                            <td>${o.University}</td>
-                            <td>${o.Specialization}</td>
-                            <td>Graduated in ${o.PassingYear}</td>
-                            <td>${o.Percentage}%</td>
-                            <td><a href="javascript:void(0)" class="quick-links" onclick="EditEducation()">Edit</a></td>
-                            </tr>`);
+                        let item = $(`<div class="profile-detail-box">
+                            <strong>${o.CourseName == 'Other' ? o.OtherCourseName : o.CourseName}</strong>&nbsp;&nbsp;<i class="material-icons customehover" onclick="EditEducation()" style="font-size:15px">create</i><br />
+                            ${o.University}<br />
+                            ${o.Specialization} <br />
+                            Graduated in ${o.PassingYear} <br />
+                            with ${o.Percentage} %
+                            </div>`);
                         item.data('rowData', o);
                         $("#addEducation").append(item);
                     }
