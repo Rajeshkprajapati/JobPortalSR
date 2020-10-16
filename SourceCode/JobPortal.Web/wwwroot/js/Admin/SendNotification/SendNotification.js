@@ -2,7 +2,6 @@
     EmailTemplates(2);
 });
 $("#CompanyId").change(function () {
-    debugger;
     var CompanyId = $(this).val();
     var dt = new Date();
     var Year = dt.getFullYear();
@@ -29,7 +28,14 @@ $("#CompanyId").change(function () {
 
 function EmailTemplates(usrRole) {
     debugger;
-    var ddlEmailTemplate = $("#ddlEmailTemplate");
+    var ddlEmailTemplate;
+    if (usrRole == 3) {
+        ddlEmailTemplate = $("#ddlEmpEmailTemplate");
+    }
+    else {
+       ddlEmailTemplate = $("#ddlEmailTemplate");
+    }
+    
     var TemplateId = 0;
     SendAJAXRequest(`/Dashboard/EmailTemplate/?UserRole=${usrRole}&Id=${TemplateId}`, 'GET', {}, 'JSON', (d) => {
         if (d) {
@@ -38,7 +44,12 @@ function EmailTemplates(usrRole) {
             $.each(d, function (i, v1) {
                 v += "<option value=" + v1.id + ">" + v1.name + "</option>";
             });
-            $("#ddlEmailTemplate").html(v);
+            if (usrRole == 3) {
+                $("#ddlEmpEmailTemplate").html(v);
+            }
+            else {
+                $("#ddlEmailTemplate").html(v);
+            }
             $(".chosen-select").trigger("chosen:updated");
         } else {
             warnignPopup('Error!');
@@ -65,15 +76,15 @@ function getTemplate(_this) {
     });
 }
 $("#JobId").change(function () {
-    debugger;
     var JobId = $('option:selected', this).attr('value');
     var dt = new Date();
     var Year = dt.getFullYear();
     var CompanyId = $('#CompanyId option:selected').attr('value');
     SendAJAXRequest(`/Dashboard/CompanyJobs/?EmpId=${CompanyId}&year=${Year}&JobId=${JobId}`, 'GET', {}, 'JSON', (d) => {
-        debugger;
         if (d) {
             $("#JobTitle").text("" + d[0].jobTitleByEmployer + "");
+           $("#JobTitleByEmployer").text("" + d[0].jobTitleByEmployer + "");
+            $("#CompanyName").text("" + d[0].companyName + "");
             $("#JobTitleIntable").text("" + d[0].jobTitleByEmployer + "");
             $("#skills").text("" + d[0].hiringCriteria + "");
             $("#LocationInTable").text("" + d[0].city + "," + d[0].state + "," + d[0].country+ "");
@@ -91,33 +102,35 @@ $("#JobId").change(function () {
 });
 
 $("#JobSeekerNotification").submit(function (e) {
-    debugger;
-    e.preventDefault(); // avoid to execute the actual submit of the form.
-
+    e.preventDefault(); 
     var form = $(this);
-    var emailId = form.find('#JobSeekerId option:selected').attr('value');
+    var emailId = form.find('#JobSeekerId').val().toString();
     var subject = form.find('#JobId option:selected').text();
     var TempHtml = $("#ContentDiv").html();
-    console.log(TempHtml);
-    let data = {Email:emailId,htmlBody:TempHtml,Subject:subject};
-    let url = `/Dashboard/SendNotificationMail/?Email=${emailId}&Subject=${subject}&htmlBody=${TempHtml}`;
-    //SendAJAXRequest(`/Dashboard/SendNotificationMail/?Email=${emailId}&Subject=${subject}&htmlBody=${TempHtml}`, 'GET', {}, 'JSON', (d) => {
-    //    debugger;
-    //    if (d) {
-    //        alert("done");
-    //    } else {
-    //        warnignPopup('Error!');
-    //    }
-    //});
-    fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'content-type': 'text/html; charset=utf-8'
+    let data = { EmailId: emailId, EmailBody: TempHtml, Subject:subject};
+    SendAJAXRequest(`/Dashboard/SendNotificationMail`, "POST", data, "JSON", function (resp) {
+        if (resp) {
+            InformationDialog('Done', 'Your email has been send!');
         }
-    }).then(resp => resp.json()).then(d => {
-        if (d) {
-            alert('done');
+        else {
+            ErrorDialog('Fail', 'Your email has not been send!');
         }
-    }).catch(err => console.log(err));
-  });
+    });
+});
+
+$("#EmployerNotification").submit(function (e) {
+    e.preventDefault();
+    var form = $(this);
+    var emailId = form.find('#CompanyEmail').val().toString();
+    var subject = form.find('#EmpSubject').val();
+    var TempHtml = $("#ContentDiv").html();
+    let data = { EmailId: emailId, EmailBody: TempHtml, Subject: subject };
+    SendAJAXRequest(`/Dashboard/SendNotificationMail`, "POST", data, "JSON", function (resp) {
+        if (resp) {
+            InformationDialog('Done','Your email has been send!'); 
+        }
+        else {
+            ErrorDialog('Fail','Your email has not been send!');
+        }
+    });
+});

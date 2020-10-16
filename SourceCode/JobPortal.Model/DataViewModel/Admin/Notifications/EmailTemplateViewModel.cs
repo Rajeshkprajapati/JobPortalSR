@@ -11,5 +11,6 @@ namespace JobPortal.Model.DataViewModel.Admin.Notifications
         public string Subject { get; set; }
         public string EmailBody { get; set; }
         public int UserRole { get; set; }
+        public string EmailId { get; set; }
     }
 }

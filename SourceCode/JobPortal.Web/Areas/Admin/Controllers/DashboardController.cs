@@ -19,6 +19,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace JobPortal.Web.Areas.Admin.Controllers
 {
@@ -647,29 +648,36 @@ namespace JobPortal.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult SendNotificationMail(string Email, string htmlBody,string Subject)
+        public IActionResult SendNotificationMail([FromBody]EmailTemplateViewModel model)
         {
             //IEnumerable<EmailTemplateViewModel> emailTemplate = null;
+           
+            string[] Emails = model.EmailId.Split(',').Select(sValue => sValue.Trim()).ToArray();
+
             string message = "fail";
-            try
+            for (int i = 0; i < Emails.Length; i++)
             {
-                var eModel = new EmailViewModel
+                try
                 {
-                    Subject = Subject,
-                    Body = htmlBody,
-                    To = new string[] { Email },
-                    From = config["EmailCredential:Fromemail"],
-                    IsHtml = true,
-                    MailType = (int)MailType.OTP
-                };
-                emailHandler.SendMail(eModel, -1);
-                message = "Pass";
+                    var eModel = new EmailViewModel
+                    {
+                        Subject = model.Subject,
+                        Body = model.EmailBody,
+                        To = new string[] { Emails[i] },
+                        From = config["EmailCredential:Fromemail"],
+                        IsHtml = true,
+                        MailType = (int)MailType.OTP
+                    };
+                    emailHandler.SendMail(eModel, -1);
+                    message = "Pass";
+                }
+                catch (DataNotFound ex)
+                {
+                    Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DashboardController), ex);
+                    ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+                }
             }
-            catch (DataNotFound ex)
-            {
-                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DashboardController), ex);
-                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
-            }
+           
             return Json(message);
         }
 

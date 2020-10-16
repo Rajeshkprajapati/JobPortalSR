@@ -243,7 +243,8 @@ namespace JobPortal.Business.Handlers.Admin
                     FirstName = Convert.ToString(dt.Rows[i]["FirstName"]),
                     LastName = Convert.ToString(dt.Rows[i]["LastName"]),
                     CompanyName = Convert.ToString(dt.Rows[i]["CompanyName"]),
-                    CityName = Convert.ToString(dt.Rows[i]["City"])
+                    CityName = Convert.ToString(dt.Rows[i]["City"]),
+                    Email = Convert.ToString(dt.Rows[i]["Email"])
 
                 };
                 if (!employers.Any(e => e.CompanyName == emp.CompanyName))
