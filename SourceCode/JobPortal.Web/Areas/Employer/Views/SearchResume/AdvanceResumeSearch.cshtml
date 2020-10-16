@@ -226,8 +226,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="input-label">Genders</label>
-                                    <select data-placeholder="Full-Time" asp-for="Gender" id="Gender" class="chosen-select-no-single experiance-field" asp-items="@(new SelectList(@ViewBag.GenderData,"GenderCode", "Gender"))">
-                                    </select>
+                                    <select data-placeholder="Full-Time" asp-for="Gender" id="Gender" class="chosen-select-no-single experiance-field" asp-items="@(new SelectList(@ViewBag.GenderData,"GenderCode", "Gender"))"></select>
                                 </div>
                             </div>
                         </div>
