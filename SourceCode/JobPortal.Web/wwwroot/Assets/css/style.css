@@ -346,12 +346,15 @@ body {
 .searchwrap .search-form-element .chosen-container-multi{
     border-radius: 3px 3px 0 0;
 }
-.bottom-row .search-form-element,
+.bottom-row .search-form-element {
+    border-left: 1px solid #ccc;
+}
 .top-row .search-form-element {
     border-bottom: 1px solid #ccc;
     border-left: 1px solid #ccc;
 }
-.searchwrap .chosen-container{
+
+.searchwrap .chosen-container {
     border-width: 0;
     border-radius: 0;
 }
@@ -2418,3 +2421,60 @@ a.employer-website:hover {
 .link-hover:hover{
     text-decoration: underline;
 }
+
+.profile-detail-box {
+    padding: 20px 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.1);
+    width: 31.03%;
+    position: relative;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+.profile-detail-box i.material-icons {
+    position: absolute;
+    right: 20px;
+    top: 22px;
+    cursor: pointer;
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
+}
+#pagin {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: auto;
+    display: flex;
+}
+#pagin li {
+    display: inline-block;
+    padding: 1px;
+    text-align: center;
+}
+#pagin li a {
+    padding: 5px 12px;
+    background: #f1f1f1;
+    cursor: pointer;
+}
+#pagin li a.current-page {
+    background: #000;
+    color: #fff;
+}
+
+.resume-lists .resume-lists-item{
+    border-top: 1px solid #f1f1f1;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+    .resume-lists .resume-lists-item:first-child{
+        padding-top: 0;
+        border-top: 0px;
+    }
+    .resumes-list-content p{
+        margin-bottom: 3px;
+    }
+

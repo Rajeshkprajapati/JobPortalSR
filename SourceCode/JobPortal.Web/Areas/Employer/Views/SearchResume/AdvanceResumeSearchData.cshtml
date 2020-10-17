@@ -3,144 +3,101 @@
 @{
     ViewData["Title"] = "Advance Search Resume";
 }
-@*<link href="~/lib/jquery/jquery-ui.min.css" rel="stylesheet" />*@
-@*<link href="~/css/Employer/search-resume.css" rel="stylesheet" />*@
-<!-- Page Title start -->
-<style>
-    .pagination {
-        display: contents !important;
-    }
 
-    .listing {
-        padding: 0px !important;
-    }
-</style>
-<div class="pageTitle">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <h1 class="page-heading">Resume Listing</h1>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="breadCrumb">
-                    <a href="/Home/Index/">Home</a> /
-                    <a asp-controller="EmployerManagement" asp-action="SearchResume">Resume Search</a> /
-                    <span>Resume List</span>
-                </div>
-            </div>
-        </div>
+<div id="titlebar" class="banner-bg row" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    <div class="container titlebar-inner">
+        <h2 class="whitetitle">Resume Listing</h2>
     </div>
 </div>
-
+<nav id="breadcrumbs" class="container">
+    <ol class="breadcrumb">
+        <li><a href="/Home/Index">Home</a></li>
+        <li> <a asp-controller="EmployerManagement" asp-action="SearchResume">Resume Search</a></li>
+        <li>Resume List</li>
+    </ol>
+</nav>
 
 @{
-<div class="container">
-    <!-- Recent Jobs -->
-    <div class="eleven columns">
-        <div class="padding-right">
-            @if (Model.Count() < 1)
-            {
-                <br />
-                <div class="alert alert-danger" role="alert"><strong>Oh snap!</strong>&nbsp; Candidates not found</div>
+    <div class="container">
+        @if (Model.Count() < 1)
+        {
+            <div class="alert alert-danger spacer-bottom-20" role="alert"><strong>Oh snap!</strong> Candidates not found</div>
+        }
+        else
+        {
+            <div class="col-xs-12 resume-lists">
+                @foreach (var item in Model)
+                {
+                    <div class="resume-lists-item col-xs-12">
+                        <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId" class="col-sm-3">
+                            @if (item.ProfilePic == "")
+                            {
+                                <img src="~/images/jobs/jobimg.jpg" alt="Jobseeker photo" class="img-responsive" />
+                            }
+                            else
+                            {
+                                <img src="@item.ProfilePic" alt="Jobseeker" class="img-responsive" />
+                            }
+                        </a>
+                        <div class="resumes-list-content col-sm-9">
+                            <h4>
+                                <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId">
+                                    @item.FirstName @item.LastName
+                                </a>
+                            </h4>
+                            <p>@item.Email</p>
+                            <p>@item.JobTitle</p>
+                            @if (item.ExperienceDetails != null && item.ExperienceDetails[0].AnnualSalary != null)
+                            {
+                                <p>@item.ExperienceDetails[0].AnnualSalary</p>
+                            }
+                            else
+                            {
+                                <p>N/A</p>
+                            }
+                            <p>@item.Email</p>
+                            <p>
 
-            }
-            else
-            {
-
-                <ul class="resumes-list alternative">
-                    @foreach (var item in Model)
-                    {
-
-                        <li class="listing">
-                            <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId">
-                                @if (item.ProfilePic == "")
+                                @if (string.IsNullOrWhiteSpace(item.CityName))
                                 {
-                                    <img src="~/images/jobs/jobimg.jpg" alt="Jobseeker photo" />
+                                    <span>N/A</span>
                                 }
                                 else
                                 {
-                                    <img src="@item.ProfilePic" alt="Jobseeker">
+                                    @item.CityName
                                 }
-                                <div class="resumes-list-content">
-                                    <h4>
-                                        @item.FirstName @item.LastName <span>@item.Email</span>
-                                        <span>@item.JobTitle</span>
-                                    </h4>
-                                    @if (item.ExperienceDetails != null && item.ExperienceDetails[0].AnnualSalary != null)
+                            </p>
+                            <p>@item.AboutMe</p>
+                            <div class="skills">
+                                @{
+                                    if (item.Skills != null && item.Skills.SkillSets != null && item.Skills.SkillSets.Length > 0)
                                     {
-                                        <span><i class="fa fa-money"></i> @item.ExperienceDetails[0].AnnualSalary</span>
+                                        string[] skills = item.Skills.SkillSets.Split(',');
+                                        foreach (var skill in skills)
+                                        {
+                                            if (skill.Length > 1)
+                                            {
+                                                <span>@skill</span>
+                                            }
+                                        }
                                     }
                                     else
                                     {
-                                        <span><i class="fa fa-money"></i> N/A</span>
+                                        <span>N/A</span>
                                     }
-                                    <span><i class="fa fa-envelope" aria-hidden="true"></i>@item.Email</span>
-                                    <span>
-                                        <i class="fa fa-map-marker"></i>
-                                        @if (string.IsNullOrWhiteSpace(item.CityName))
-                                        {
-                                            <span>N/A</span>
-                                        }
-                                        else
-                                        {
-                                            @item.CityName
-                                        }
-                                    </span>
-                                    <span>@item.AboutMe</span>
-                                    <div class="skills">
-                                        @{
-                                            if (item.Skills != null && item.Skills.SkillSets != null && item.Skills.SkillSets.Length > 0)
-                                            {
-                                                string[] skills = item.Skills.SkillSets.Split(',');
-                                                foreach (var skill in skills)
-                                                {
-                                                    if (skill.Length > 1)
-                                                    {
-                                                        <span>@skill</span>
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                <span>N/A</span>
-                                            }
-                                        }
-                                    </div>
-
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                            <div class="clearfix"></div>
-                        </li>
-
-
-                    }
-                </ul>
-            }
-            <div class="clearfix"></div>
-            <div class="pagination-container">
-                <nav class="pagination">
-                    <ul id="pagin"></ul>
-                </nav>
-                <nav class="pagination-next-prev">
-                    <ul>
-                        <li><a class="prev">Previous</a></li>
-                        <li><a class="next">Next</a></li>
-                    </ul>
-                </nav>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
-        </div>
+        }
+        <nav class="pagination">
+            <a class="prev">Previous</a>
+            <ul id="pagin"></ul>
+            <a class="next">Next</a>
+        </nav>
     </div>
-    <!-- Widgets -->
-    <div class="five columns">
-        <!-- Sort by -->
-        <div class="widget">
-            <img src="~/Assets/images/app-images-v3.png" width="100%">
-            <div class="clearfix"></div>
-        </div>
-    </div>
-    <!-- Widgets / End -->
-</div>
 }
 
 @section Scripts

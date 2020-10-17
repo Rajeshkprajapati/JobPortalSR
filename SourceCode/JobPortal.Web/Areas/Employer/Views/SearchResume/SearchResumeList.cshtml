@@ -3,83 +3,105 @@
 @{
     ViewData["Title"] = "SearchResume";
 }
-@*<link href="~/lib/jquery/jquery-ui.min.css" rel="stylesheet" />*@
-@*<link href="~/css/Employer/search-resume.css" rel="stylesheet" />*@
 <!-- Page Title start -->
-<style>
-    .pagination {
-        display: contents !important;
-    }
-
-    .listing {
-        padding: 0px !important;
-    }
-</style>
-<div class="pageTitle">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <h1 class="page-heading">Resume Listing</h1>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="breadCrumb">
-                    <a href="/Home/Index/">Home</a> /
-                    <a asp-controller="EmployerManagement" asp-action="SearchResume">Resume Search</a> /
-                    <span>Resume List</span>
-                </div>
-            </div>
+<div id="titlebar" class="banner-bg row" style="background-image: url(/Assets/images/all-categories-photo.jpg);">
+    <div class="container titlebar-inner">
+        <div class="container titlebar-inner">
+            <h2 class="whitetitle">Resume Listing</h2>
         </div>
     </div>
 </div>
-
-
+<nav id="breadcrumbs" class="container">
+    <ol class="breadcrumb">
+        <li><a href="/Home/Index">Home</a></li>
+        <li> <a asp-controller="EmployerManagement" asp-action="SearchResume">Resume Search</a></li>
+        <li>Resume List</li>
+    </ol>
+</nav>
 @{
     var filters = ViewBag.Searches as SearchResumeViewModel;
     var SearchesInJson = JsonConvert.SerializeObject(filters);
     <input type="hidden" id="hdnFilters" value="@SearchesInJson">
     <div class="container">
-        <!-- Recent Jobs -->
-        <div class="eleven columns">
-            <div class="padding-right">
-                @if (Model.Count() < 1)
-                {
-                    <br/>
-                    <div class="alert alert-danger" role="alert"><strong>Oh snap!</strong>&nbsp; Candidates not found</div>
-
-                }
-                else
-                {
-
-                    <ul class="resumes-list alternative">
-                        @foreach (var item in Model)
-                        {
-
-                            <li class="listing">
-                                <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId">
-                                    @if (item.ProfilePic == "")
+        <div class="col-sm-12">
+            <div class="row d-flex">
+                <!-- Widgets -->
+                <div class="sidebar-search">
+                    <!-- Rate/Hr -->
+                    <h4 class="col-xs-12">Filter</h4>
+                    <div class="sidebar-widget col-xs-12">
+                        <label class="input-label"><strong>Resume By City</strong></label>
+                        <input type="text" class="filter-search-box form-control input-elements" placeholder="Search" />
+                        <ul class="checkboxes expandible expanded filter-option-item">
+                            @{
+                                if (ViewBag.City != null && ViewBag.City.Count > 0)
+                                {
+                                    int j = 0;
+                                    foreach (var item in ViewBag.City)
                                     {
-                                        <img src="~/images/jobs/jobimg.jpg" alt="Jobseeker photo" />
-                                    }
-                                    else
-                                    {
-                                        <img src="@item.ProfilePic" alt="Jobseeker">
-                                    }
-                                    <div class="resumes-list-content">
-                                        <h4>
-                                            @item.FirstName @item.LastName <span>@item.Email</span>
-                                            <span>@item.JobTitle</span>
-                                        </h4>
-                                        @if (item.ExperienceDetails != null && item.ExperienceDetails[0].AnnualSalary != null)
+                                        if (item.CountValue > 0)
                                         {
-                                            <span><i class="fa fa-money"></i> @item.ExperienceDetails[0].AnnualSalary</span>
+                                            <li>
+                                                <input type="checkbox" @if (filters.City.Any(c => c == item.CityCode)) { <text> checked</text> } name="checkname" id="Name_@j" value="@item.CityCode" onchange="SearchCity(this)" />
+                                                <label for="Name_@j" class="input-label">@item.City (<span>@item.CountValue</span>)</label>
+                                            </li>
+                                            j = j + 1;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <li>
+                                        <label style="color:red;"> Cities not found</label>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <!-- Widgets / End -->
+                <div class="flex-1 mobile-full-screen overflow-hidden">
+                    @if (Model.Count() < 1)
+                    {
+                        <div class="alert alert-danger spacer-top-20" role="alert"><strong>Oh snap!</strong> Candidates not found</div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-12 resume-lists">
+                            @foreach (var item in Model)
+                            {
+                                <div class="resume-lists-item col-xs-12">
+
+                                    <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId" class="col-sm-3">
+                                        @if (item.ProfilePic == "")
+                                        {
+                                            <img src="~/images/jobs/jobimg.jpg" alt="Jobseeker photo" class="img-responsive" />
                                         }
                                         else
                                         {
-                                            <span><i class="fa fa-money"></i> N/A</span>
+                                            <img src="@item.ProfilePic" alt="Jobseeker" class="img-responsive" />
                                         }
-                                        <span><i class="fa fa-envelope" aria-hidden="true"></i>@item.Email</span>
-                                        <span>
-                                            <i class="fa fa-map-marker"></i>
+                                    </a>
+                                    <div class="resumes-list-content col-sm-9">
+                                        <h4>
+                                            <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId">
+                                                @item.FirstName @item.LastName
+                                            </a>
+
+
+                                        </h4>
+                                        <p>@item.Email</p>
+                                        <p>@item.JobTitle</p>
+                                        @if (item.ExperienceDetails != null && item.ExperienceDetails[0].AnnualSalary != null)
+                                        {
+                                            <p> @item.ExperienceDetails[0].AnnualSalary</p>
+                                        }
+                                        else
+                                        {
+                                            <p> N/A</p>
+                                        }
+                                        <p>@item.Email</p>
+                                        <p>
                                             @if (string.IsNullOrWhiteSpace(item.CityName))
                                             {
                                                 <span>N/A</span>
@@ -88,8 +110,8 @@
                                             {
                                                 @item.CityName
                                             }
-                                        </span>
-                                        <span>@item.AboutMe</span>
+                                        </p>
+                                        <p>@item.AboutMe</p>
                                         <div class="skills">
                                             @{
                                                 if (item.Skills != null && item.Skills.SkillSets != null && item.Skills.SkillSets.Length > 0)
@@ -109,69 +131,19 @@
                                                 }
                                             }
                                         </div>
-
-                                        <div class="clearfix"></div>
                                     </div>
-                                </a>
-                                <div class="clearfix"></div>
-                            </li>
-
-
-                        }
-                    </ul>
-                }
-                <div class="clearfix"></div>
-                <div class="pagination-container">
+                                </div>
+                            }
+                        </div>
+                    }
                     <nav class="pagination">
+                        <a class="prev">Previous</a>
                         <ul id="pagin"></ul>
-                    </nav>
-                    <nav class="pagination-next-prev">
-                        <ul>
-                            <li><a class="prev">Previous</a></li>
-                            <li><a class="next">Next</a></li>
-                        </ul>
+                        <a class="next">Next</a>
                     </nav>
                 </div>
             </div>
         </div>
-
-        <!-- Widgets -->
-        <div class="five columns">
-
-            <!-- Rate/Hr -->
-            <div class="widget">
-                <h4>Resume By City</h4>
-                <input type="text" class="filter-search-box" placeholder="Search" />
-                <ul class="checkboxes expandible expanded">
-                    @{
-                        if (ViewBag.City != null && ViewBag.City.Count > 0)
-                        {
-                            int j = 0;
-                            foreach (var item in ViewBag.City)
-                            {
-                                if (item.CountValue > 0)
-                                {
-                                    <li>
-                                        <input type="checkbox" @if (filters.City.Any(c => c == item.CityCode)) { <text> checked</text> } name="checkname" id="Name_@j" value="@item.CityCode" onchange="SearchCity(this)" />
-                                        <label for="Name_@j"></label>
-                                        @item.City (<span>@item.CountValue</span>)
-                                    </li>
-                                    j = j + 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            <li>
-                                <label style="color:red;"> Cities not found</label>
-                            </li>
-                        }
-                    }
-                </ul>
-            </div>
-
-        </div>
-        <!-- Widgets / End -->
     </div>
 }
 
