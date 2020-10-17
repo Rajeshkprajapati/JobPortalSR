@@ -4,7 +4,7 @@
     //startPage = 0;
     //numberPage = 0;
 
-    var pageCount = $(".listing").length / pageSize;
+    var pageCount = $(".job-lists-item").length / pageSize;
     var totalSlidepPage = Math.floor(pageCount / incremSlide);
 
     for (var i = 0; i < pageCount; i++) {
@@ -29,7 +29,7 @@
         numberPage++;
         slide();
     });
-    if ($(".listing").length == 0) {
+    if ($(".job-lists-item").length == 0) {
         next.hide();
     };
     $("#pagin li").first().find("a").addClass("current-page");
@@ -55,8 +55,8 @@
     }
 
     showPage = function (page) {
-        $(".listing").hide();
-        $(".listing").each(function (n) {
+        $(".job-lists-item").hide();
+        $(".job-lists-item").each(function (n) {
             if (n >= pageSize * (page - 1) && n < pageSize * page)
                 $(this).show();
         });
