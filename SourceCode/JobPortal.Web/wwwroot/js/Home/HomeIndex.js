@@ -19,8 +19,7 @@
             var ddlJobRoles = $('#JobTitle');
             SendAJAXRequest(`/Home/JobTitlesById/?JobIndustryAreaId=${JobIndustryAreaId}`, 'GET', {}, 'JSON', (d) => {
                 if (d) {
-                    ddlJobRoles.empty(); // Clear the plese wait  
-                    var valueofJobRoles = "";
+                    ddlJobRoles.empty(); 
                     var v = "";
                     $.each(d, function (i, v1) {
                         v += "<option value=" + v1.jobTitleId + ">" + v1.jobTitleName + "</option>";

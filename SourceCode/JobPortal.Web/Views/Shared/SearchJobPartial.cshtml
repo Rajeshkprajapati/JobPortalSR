@@ -19,13 +19,13 @@
                 <div class="col-sm-6 search-form-element">
                     @if (ViewBag.JobIndustryArea != null)
                     {
-                        <select asp-for="JobCategory[0]" class="form-control" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
+                        <select asp-for="JobCategory[0]" class="form-control" id="JobIndustryAreaId" asp-items="@(new SelectList(@ViewBag.JobIndustryArea,"JobIndustryAreaId", "JobIndustryAreaName"))">
                             <option value="">Job Industry</option>
                         </select>
                     }
                     else
                     {
-                        <select asp-for="JobCategory" class="form-control">
+                        <select asp-for="JobCategory" id="JobIndustryAreaId" class="form-control">
                             <option value="">Job Industry</option>
                         </select>
                     }
