@@ -25,67 +25,75 @@
         }
         else
         {
-            <div class="col-xs-12 resume-lists">
+            <div class="resume-lists row">
                 @foreach (var item in Model)
                 {
-                    <div class="resume-lists-item col-xs-12">
-                        <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId" class="col-sm-3">
-                            @if (item.ProfilePic == "")
-                            {
-                                <img src="~/images/jobs/jobimg.jpg" alt="Jobseeker photo" class="img-responsive" />
-                            }
-                            else
-                            {
-                                <img src="@item.ProfilePic" alt="Jobseeker" class="img-responsive" />
-                            }
-                        </a>
-                        <div class="resumes-list-content col-sm-9">
-                            <h4>
-                                <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId">
-                                    @item.FirstName @item.LastName
-                                </a>
-                            </h4>
-                            <p>@item.Email</p>
-                            <p>@item.JobTitle</p>
-                            @if (item.ExperienceDetails != null && item.ExperienceDetails[0].AnnualSalary != null)
-                            {
-                                <p>@item.ExperienceDetails[0].AnnualSalary</p>
-                            }
-                            else
-                            {
-                                <p>N/A</p>
-                            }
-                            <p>@item.Email</p>
-                            <p>
 
-                                @if (string.IsNullOrWhiteSpace(item.CityName))
+                    <div class="resume-lists-item col-sm-6 d-flex">
+                        <div class="job-seeker-detail">
+                            <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId" class="profile-pic">
+                                @if (item.ProfilePic == "")
                                 {
-                                    <span>N/A</span>
+                                    <img src="~/images/jobs/jobimg.jpg" alt="Jobseeker photo" class="img-responsive thumbnail" />
                                 }
                                 else
                                 {
-                                    @item.CityName
+                                    <img src="@item.ProfilePic" alt="Jobseeker" class="img-responsive thumbnail " />
                                 }
-                            </p>
-                            <p>@item.AboutMe</p>
-                            <div class="skills">
-                                @{
-                                    if (item.Skills != null && item.Skills.SkillSets != null && item.Skills.SkillSets.Length > 0)
+                            </a>
+                            <div class="resumes-list-content flex-1">
+                                <h4>
+                                    <a href="/SearchResume/ShowCandidateDetail/?userId=@item.UserId">
+                                        @item.FirstName @item.LastName
+                                    </a>
+                                </h4>
+                                <p>@item.JobTitle</p>
+                                <p>
+                                    AnnualSalary:
+                                    @if (item.ExperienceDetails != null && item.ExperienceDetails[0].AnnualSalary != null)
                                     {
-                                        string[] skills = item.Skills.SkillSets.Split(',');
-                                        foreach (var skill in skills)
-                                        {
-                                            if (skill.Length > 1)
-                                            {
-                                                <span>@skill</span>
-                                            }
-                                        }
+                                        <span>@item.ExperienceDetails[0].AnnualSalary</span>
                                     }
                                     else
                                     {
                                         <span>N/A</span>
                                     }
-                                }
+                                </p>
+                                <p>@item.Email</p>
+                                <p>
+                                    Location:
+                                    @if (string.IsNullOrWhiteSpace(item.CityName))
+                                    {
+                                        <span>N/A</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@item.CityName</span>
+                                    }
+                                </p>
+                                <p>
+                                    AboutMe:
+                                    <span>@item.AboutMe</span>
+                                </p>
+                                <ul class="job-skills">
+                                    @{
+                                        if (item.Skills != null && item.Skills.SkillSets != null && item.Skills.SkillSets.Length > 0)
+                                        {
+                                            string[] skills = item.Skills.SkillSets.Split(',');
+                                            foreach (var skill in skills)
+                                            {
+                                                if (skill.Length > 1)
+                                                {
+                                                    <li class="job-skill">@skill</li>
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li>N/A</li>
+                                        }
+                                    }
+                                </ul>
                             </div>
                         </div>
                     </div>
