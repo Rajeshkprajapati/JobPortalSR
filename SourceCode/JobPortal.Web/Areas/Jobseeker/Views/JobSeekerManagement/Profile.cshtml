@@ -6,7 +6,11 @@
 <link href="~/css/CommanPopup.css" rel="stylesheet" />
 <link href="~/lib/Calendar/css/tail.datetime-default-red.css" rel="stylesheet" />
 <link href="~/lib/tag-editor/jquery.tag-editor.css" rel="stylesheet" />
-
+<style>
+    .resizetextarea {
+        resize: vertical !important;
+    }
+</style>
 <!-- Dashboard -->
 <div id="dashboard" class="d-flex container body-container">
     <!-- Navigation
@@ -16,13 +20,13 @@
     <div class="dashboard-nav">
 
         <ul data-submenu-title="">
-            <li><a href="javascript:void(0)" id="ResumeUploadWithLabel">Attach Resume <span class="listing-type">Add</span></a></li>
-            <li><a href="javascript:void(0)" id="ProfileSkillsModalCenterADD" data-toggle="modal" onclick="EditProfileSkills()">Key Skills<span class="listing-type">Add</span></a></li>
-            <li><a href="" id="employementModalCenterADD" data-toggle="modal" onclick="ShowModal('employementModalCenter')">Employment<span class="listing-type">Add</span></a></li>
-            <li><a href="" id="educationModalCenterADD" data-toggle="modal" onclick="ShowModal('educationModalCenter')">Education<span class="listing-type">Add</span></a></li>
-            <li><a href="" id="ProfileSummaryModalCenterADD" onclick="EditProfileSummary()" data-toggle="modal">Profile Summary<span class="listing-type">Add</span></a></li>
-            <li><a href="" id="profileModalCenterADD" data-toggle="modal" onclick="EditProfileData()">Personal Details<span class="listing-type">Add</span></a></li>
-            <li><a href="" id="locationeModalCenterADD" data-toggle="modal" onclick="ShowModal('locationModalCenter')">Pref. Location<span class="listing-type">Add</span></a></li>
+            <li><a href="javascript:void(0)" id="ResumeUploadWithLabel">Attach Resume</a></li>
+            <li><a href="javascript:void(0)" id="ProfileSkillsModalCenterADD" data-toggle="modal" onclick="EditProfileSkills()">Add Key Skills</a></li>
+            <li><a href="" id="employementModalCenterADD" data-toggle="modal" onclick="ShowModal('employementModalCenter')">Add Employment</a></li>
+            <li><a href="" id="educationModalCenterADD" data-toggle="modal" onclick="ShowModal('educationModalCenter')">Add Education</a></li>
+            <li><a href="" id="ProfileSummaryModalCenterADD" onclick="EditProfileSummary()" data-toggle="modal">Add Profile Summary</a></li>
+            <li><a href="" id="profileModalCenterADD" data-toggle="modal" onclick="EditProfileData()">Add Personal Details</a></li>
+            <li><a href="" id="locationeModalCenterADD" data-toggle="modal" onclick="ShowModal('locationModalCenter')">Add Preferred Location</a></li>
         </ul>
     </div>
     <!-- Navigation / End -->
@@ -86,7 +90,7 @@
             <hr />
             <div class="row">
                 <div class="col-xs-6">
-                    <h4>Add Key Skill</h4>
+                    <h4>Key Skills</h4>
                 </div>
                 <div class="col-xs-6 text-right "><a href="javascript:void(0)" onclick="EditProfileSkills()" class="quick-links text-uppercase"> Add More</a></div>
             </div>
@@ -373,7 +377,7 @@
                     <!-- Description -->
                     <div class="form-group">
                         <label class="input-label">Describe your Job Profile</label>
-                        <textarea class="WYSIWYG form-control input-elements" name="JobProfile" placeholder="Type here" id="txtDescribe" cols="15" rows="3" spellcheck="true" required></textarea>
+                        <textarea class="WYSIWYG form-control input-elements resizetextarea" name="JobProfile" placeholder="Type here" id="txtDescribe" cols="15" rows="3" spellcheck="true" required></textarea>
                     </div>
                     <div class="btn-row text-right spacer-top-20">
                         <input type="button" class="btn btn-default" data-dismiss="modal" id="closeModelPupup" value="Close" />
@@ -693,7 +697,7 @@
             <div class="modal-body">
                 <h2 id="ProfileSummaryModalLongTitle" class="blacktitle">Add Profile Summary</h2>
                 <div class="form-group spacer-top-20">
-                    <textarea id="txtareaprofileSummary" class="WYSIWYG form-control input-elements" placeholder="Type here" cols="15" rows="3" spellcheck="true" required></textarea>
+                    <textarea id="txtareaprofileSummary" class="WYSIWYG form-control input-elements resizetextarea" placeholder="Type here" cols="15" rows="3" spellcheck="true" required></textarea>
                 </div>
                 <div class="btn-row text-right spacer-top-20">
                     <input type="button" class="btn btn-default" data-dismiss="modal" id="closeModelPupuppSummary" value="Close" />
@@ -711,7 +715,7 @@
                 <h2 class="blacktitle">Update/Add Skills</h2>
                 <div class="form-group spacer-top-20">
                     <label class="input-label">Add Valid Skills</label>
-                    <textarea id="skillsValue" class="form-control input-elements text-area-editor"></textarea>
+                    <textarea id="skillsValue" class="form-control input-elements text-area-editor resizetextarea"></textarea>
                 </div>
                 <div class="btn-row text-right spacer-top-20">
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModelPupuppSkills">Close</button>

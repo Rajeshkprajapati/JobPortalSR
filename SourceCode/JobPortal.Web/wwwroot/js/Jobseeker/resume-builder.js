@@ -91,7 +91,7 @@ function createExperiencDetailsForm(_this) {
     forms.each(function (i, f) {
         $(f).find("a#btnAddAnOtherExperience").hide();
     });
-    let lForm = forms.eq(forms.length - 1).clone();
+    let lForm = forms.eq(forms.length).clone();
     lForm.attr('id', 'frmExperienceDetails_' + forms.length);
     lForm.find("input[type=hidden][name=Id]").val("0");
     lForm.find("a#btnAddAnOtherExperience").show();
