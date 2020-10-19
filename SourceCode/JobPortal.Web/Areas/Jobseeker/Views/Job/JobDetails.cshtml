@@ -133,7 +133,7 @@
                     }
                     else if (@user.RoleName == "Student")
                     {
-                        <a href="#" id="btnApply" class="btn btn-primary" onclick="ConfrimationFoJobApply(@Model.JobPostId)">Apply For This Job</a>
+                        <a href="#" id="btnApply" class="btn btn-primary" onclick="ConfirmationDialog('Confirmation', 'Are You sure', ApplyJobs, @Model.JobPostId)">Apply For This Job</a>
                     }
 
                     else

@@ -813,7 +813,7 @@ function EditProfileData() {
 }
 
 function EditProfileSkills() {
-    let value = $('label#txtSkillsValues').text();
+    let value = $('p#txtSkillsValues').text();
     if (value !== null && value !== "") {
         $('#skillsValue').tagEditor('destroy');
         //let skillsarray = value.split(',');
