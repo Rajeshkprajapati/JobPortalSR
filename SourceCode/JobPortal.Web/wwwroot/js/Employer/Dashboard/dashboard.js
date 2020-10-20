@@ -430,7 +430,7 @@ function PostDraftJob(_this) {
     }
     let mobile = $('input[name=Mobile]').val();
     if (mobile.length < 10) {
-        ErrorDialog('Error', 'Mobile Number should be 10 digit long');
+        ErrorDialog('Error', 'Mobile Number should be 10 digits long');
         return false;
     }
     //let jobdetail = $('input[name=JobDetails]').val();

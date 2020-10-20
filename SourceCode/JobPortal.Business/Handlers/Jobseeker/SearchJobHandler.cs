@@ -60,7 +60,8 @@ namespace JobPortal.Business.Handlers.Jobseeker
                 Skills = searches.Skills,
                 JobRole = searches.JobTitle,
                 City = string.Join(Constants.CommaSeparator, searches.City),
-                Experiance = searches.Experiance,
+                MinExperiance = searches.MinExperiance,
+                MaxExperiance = searches.MaxExperiance,
                 JobCategory = string.Join(Constants.CommaSeparator, searches.JobCategory),
                 CompanyUserId = string.Join(Constants.CommaSeparator, searches.CompanyUserId)
             };

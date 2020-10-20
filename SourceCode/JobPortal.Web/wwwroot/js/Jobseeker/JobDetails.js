@@ -53,7 +53,7 @@ function ReloadPage() {
     location.reload();
 }
 function WarningPopup() {
-    ErrorDialog("Login Required", "Please login or regiseter to apply job");
+    ErrorDialog("Login Required", "Please login or register to apply job");
     return false;
 }
 $(document).ready(function () {

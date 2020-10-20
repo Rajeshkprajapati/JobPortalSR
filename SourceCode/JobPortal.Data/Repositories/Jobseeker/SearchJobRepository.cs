@@ -27,7 +27,8 @@ namespace JobPortal.Data.Repositories.Jobseeker
                     SqlParameter[] parameters = new SqlParameter[] {
                 new SqlParameter("@jobTitle",searches.JobRole),
                 new SqlParameter("@jobCategory",searches.JobCategory),
-                new SqlParameter("@Experience",searches.Experiance),
+                new SqlParameter("@MinExperience",searches.MinExperiance),
+                new SqlParameter("@MaxExperience",searches.MaxExperiance),
                 new SqlParameter("@city",searches.City),
                 new SqlParameter("@User",UserId),
                 new SqlParameter("@Skills",searches.Skills),                

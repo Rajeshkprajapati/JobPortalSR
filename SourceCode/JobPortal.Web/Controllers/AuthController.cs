@@ -46,8 +46,8 @@ namespace JobPortal.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(UserViewModel user)
-        {
+        public IActionResult Login(UserViewModel user,string FormName)
+        {            
             try
             {
                 if (ModelState.IsValid)
@@ -92,7 +92,7 @@ namespace JobPortal.Web.Controllers
                 //ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", "Entered user credentials are not valid"));
             }
-            return View("JobSeekerLogin");
+            return View(FormName);
         }
 
         [NonAction]

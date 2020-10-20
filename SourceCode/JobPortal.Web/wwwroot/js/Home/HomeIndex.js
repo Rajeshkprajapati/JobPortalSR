@@ -69,7 +69,7 @@
 
 function EmployerFollower(id) {
     if (id === 0) {
-        ErrorDialog("Login Required","Please login or regiseter to follow company");
+        ErrorDialog("Login Required","Please login or register to follow company");
         return false;
     }
     else {

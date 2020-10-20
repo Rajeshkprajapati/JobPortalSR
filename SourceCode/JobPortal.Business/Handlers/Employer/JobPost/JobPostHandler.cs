@@ -255,7 +255,7 @@ namespace JobPortal.Business.Handlers.Employer.JobPost
                 MinExp=(int)jobpostviewmodel.MinExp,
                 MaxExp=(int)jobpostviewmodel.MaxExp,
                 FinancialYear=jobpostviewmodel.FinancialYear,
-                IsDraftJob = isDraftJob
+                IsDraftJob = isDraftJob,
             };
             bool result = _jobPostProcessor.AddJobPostData(model);
             if (result == true)

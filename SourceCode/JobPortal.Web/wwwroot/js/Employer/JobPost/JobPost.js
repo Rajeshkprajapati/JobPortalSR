@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    debugger;
     //country india on load    
     var ddlState = $('#ddlState');
 
@@ -69,8 +69,7 @@
     });
 
     //Job Title Bind By job industry are id  
-    $("#JobIndustryAreaId").change(function () {
-        debugger;
+    $("#JobIndustryAreaId").change(function () {        
         var JobIndustryAreaId = $(this).val();
         if (JobIndustryAreaId !== "") {
             var ddlJobRoles = $('#ddlJobRoles');
@@ -98,31 +97,32 @@
         }
     });
 
-    $("input[type=radio][id=radioJobType]").change(function () {
-        if (this.checked) {
-            switch (this.value) {
-                case "2":
-                    $("select[name=minExp]").parent().css("display", "block");
-                    $("select[name=maxExp]").parent().css("display", "block");
-                    break;
-                case "1":
-                case "3":
-                    if (this.value === "1") {
-                        $("select[name=minExp]").val(0);
-                        $("select[name=maxExp]").val(0);
-                    }
-                    else {
-                        $("select[name=minExp]").val(-1);
-                        $("select[name=maxExp]").val(-1);
-                    }
-                    $("select[name=minExp]").parent().css("display", "none");
-                    $("select[name=maxExp]").parent().css("display", "none");
-                    break;
-                default:
-                    break;
-            }
-        }
-    });
+    //$("input[type=radio][id=radioJobType]").change(function () {
+    //    if (this.checked) {
+    //        switch (this.value) {
+    //            case "2":
+    //                $("select[name=minExp]").parent().css("display", "block");
+    //                $("select[name=maxExp]").parent().css("display", "block");
+    //                break;
+    //            case "1":
+    //            case "3":
+    //                if (this.value === "1") {
+    //                    $("select[name=minExp]").val(0);
+    //                    $("select[name=maxExp]").val(0);
+    //                }
+    //                else {
+    //                    $("select[name=minExp]").val(-1);
+    //                    $("select[name=maxExp]").val(-1);
+    //                }
+    //                $("select[name=minExp]").parent().css("display", "none");
+    //                $("select[name=maxExp]").parent().css("display", "none");
+    //                break;
+    //            default:
+    //                break;
+    //        }
+    //    }
+    //});
+
     $("input[type=radio][id=radioJobType][value=3]").prop("checked", true).change();
 
     $("select[name=minExp]").change(function () {
@@ -243,7 +243,7 @@ function AddJobPost(_this) {
     
     let mobile = $('input[name=Mobile]').val();
     if (mobile.length < 10) {
-        ErrorDialog('Error', 'Mobile Number should be 10 digit long');
+        ErrorDialog('Error', 'Mobile Number should be 10 digits long');
         return false;
     }
     let jdetails = CKEDITOR.instances['JobDetails'].getData();
@@ -270,9 +270,28 @@ function AddJobPost(_this) {
         Mobile: $('input[name=Mobile]').val(),
         SPOCEmail: $('input[name=SPOCEmail]').val(),
         IsWalkin: $('select[name=IsWalkin]').val(),
-        JobDetails: CKEDITOR.instances['JobDetails'].getData()
+        JobDetails: CKEDITOR.instances['JobDetails'].getData(),
+        MinExp: -1,
+        MaxExp: -1
     };
 
+    let jobTypes = $('input[type=radio][name=JobType]').val();
+    if (jobTypes == 1) {
+        let exprange = $('input[type=text][name=Experience]').val();
+        if (!exprange.includes('-')) {
+            ErrorDialog('Error', 'Please Enter valid range of experience!');
+            return false;
+        }
+        let exp = exprange.split('-');       
+        if (exp[0] > 0 && exp[1]<= 10) {
+            formData.MinExp = exp[0];
+            formData.MaxExp = exp[1];
+        }
+        else {
+            ErrorDialog('Error', 'Please Enter valid range of experience!');
+            return false;
+        }
+    }
     SendAJAXRequest('/JobManagement/AddJobPost/', 'POST', formData, 'JSON', (resp) => {
         if (resp) {            
             InformationDialog('Information','Job Post Successful');            
@@ -300,4 +319,4 @@ function toggleCalendar(_this) {
 }
 
 SpecialChar($('#spoc'));
-SpecialCharAndAlphabet($('#spocContact,#nobuerofpostion,#annumSalary,#Experience'));
+SpecialCharAndAlphabet($('#spocContact,#nobuerofpostion,#annumSalary'));

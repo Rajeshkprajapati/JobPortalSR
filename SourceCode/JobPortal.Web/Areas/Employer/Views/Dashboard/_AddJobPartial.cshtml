@@ -43,16 +43,22 @@
                 <select asp-for="EmploymentStatusId" data-placeholder="Choose Employment Status" class="chosen-select-no-single" asp-items="@(new SelectList(@ViewBag.EmploymentStatus,"EmploymentStatusId", "EmploymentStatusName"))"></select>
             </div>
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-6">
             <div class="form-group">
                 <label class="input-label min-width-100"><strong>Job Type</strong></label>
                 @foreach (var jobType in ViewBag.JobTypes)
                 {
                     <label class="radio-inline input-label">
-                        <input type="radio" asp-for="JobType" id="radioJobType" value="@jobType.Id">
+                        <input type="radio" name="JobType" asp-for="JobType" id="radioJobType" value="@jobType.Id">
                         @jobType.Type
                     </label>
                 }
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label class="input-label">Experience Between</label>
+                <input type="text" id="Experience" required asp-for="MaxExp" readonly name="Experience" class="form-control input-elements" placeholder="Ex: 2-8 or 1-5 etc">
             </div>
         </div>
         <div class="col-xs-6">
@@ -168,8 +174,19 @@
         $(".chosen-select").chosen({});
         $(".chosen-select-no-single").chosen({});
     });
-    function SaveJob(_this) {
-        debugger;
+    $("input[type=radio][name=JobType]").change(function () {        
+        if (this.value === "2") {            
+            $("input[name=Experience]").val('');
+            $("input[name=Experience]").prop('readonly', false);
+            $("input[name=Experience]").css('pointerEvents', 'auto');            
+        }
+        else {
+            $("input[name=Experience]").val('');
+            $("input[name=Experience]").prop('readonly', true);            
+            $("input[name=Experience]").css('pointerEvents', 'none');
+        }
+    });
+    function SaveJob(_this) {        
         $('#JobPostForm').submit(function (e) {
             e.preventDefault();
         });
@@ -195,6 +212,29 @@
         if (jobtitleid.length <= 0) {
             ErrorDialog('Error', 'Please select atleast one JobTitle !');
             return false;
+        }
+        let jobTypes = $('input[type=radio][name=JobType]').val();
+        if (jobTypes == 1) {
+            let exprange = $('input[type=text][name=Experience]').val();
+            if (!exprange.includes('-')) {
+                ErrorDialog('Error', 'Please Enter valid range of experience!');
+                return false;
+            }
+            let exp = exprange.split('-');
+
+            //if (!Number.isInteger(exp[0]) && !Number.isInteger(exp[1])) {
+            //    ErrorDialog('Error', 'Please Enter valid range of experience!');
+            //    return false;
+            //}
+
+            if (exp[0] > 0 && exp[1] <= 10) {
+                formsData[0].MinExp = exp[0];
+                formsData[0].MaxExp = exp[1];
+            }
+            else {
+                ErrorDialog('Error', 'Please Enter valid range of experience!');
+                return false;
+            }
         }
         formsData[0].JobTitleId = jobtitleid == "" ? 0 : jobtitleid;
         let openings = $('input[name=NoPosition]').val();

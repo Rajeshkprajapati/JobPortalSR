@@ -24,7 +24,7 @@ namespace JobPortal.Model.DataViewModel.Shared
         public string FullName { get { return $"{FirstName} {LastName}"; } }
 
         [Required(ErrorMessage = "Mobile Number is required.")]
-        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Mobile Number should be 10 digit long.")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Mobile Number should be 10 digits long.")]
         public string MobileNo { get; set; }
 
         public string UserName { get; set; }

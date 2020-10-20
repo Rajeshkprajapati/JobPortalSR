@@ -138,7 +138,7 @@ function validatePassword($password) {
 function PhoneLengthValidation(txtBox) {
     let phone = $(txtBox).val();
     if (phone.length < 10 || phone.length > 10) {
-        ErrorDialog('Error', 'Mobile Number should be 10 digit long');
+        ErrorDialog('Error', 'Mobile Number should be 10 digits long');
         $(txtBox).val('');
     }
 }

@@ -10,6 +10,8 @@ namespace JobPortal.Data.DataModel.Shared
         public int JobRole { get; set; }
         public string JobCategory { get; set; }
         public int Experiance { get; set; }
+        public int MinExperiance { get; set; }
+        public int MaxExperiance { get; set; }
         public string City { get; set; }
         public string CompanyUserId;
     }

@@ -41,9 +41,19 @@
                     <input type="text" asp-for="Skills" class="form-control first-column" placeholder="Skill" />
                 </div>
                
-                <div class="col-sm-4 search-form-element">
-                    <select class="form-control" asp-for="Experiance">
-                        <option value="-1">Year</option>
+                <div class="col-sm-2 search-form-element">
+                    <select class="form-control" asp-for="MinExperiance">
+                        <option value="-1">Min Exp</option>
+                        <option value="0">Fresher</option>
+                        @for (int i = 1; i <= 15; i++)
+                        {
+                            <option value=@i>@(i)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-2 search-form-element">
+                    <select class="form-control" asp-for="MaxExperiance">
+                        <option value="-1">Max Exp</option>
                         <option value="0">Fresher</option>
                         @for (int i = 1; i <= 15; i++)
                         {
