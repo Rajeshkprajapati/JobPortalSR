@@ -216,7 +216,7 @@ $(document).ready(function () {
                     }
                 }
             }
-
+            
             if (result.PersonalDetails.ProfileScore !== 0) {
                 let item = $(`<div class="progress-bar" role="progressbar" style="width: ${result.PersonalDetails.ProfileScore}%;" aria-valuenow="${result.PersonalDetails.ProfileScore}" aria-valuemin="0" aria-valuemax="100">${result.PersonalDetails.ProfileScore}%</div>`);
                 //item.data('rowData', skills);

@@ -2034,7 +2034,7 @@ a.employer-website:hover {
 .profile-score {
     position: absolute;
     bottom: 0;
-    height: 10px;
+    height: 14px;
     left: 0;
     right: 0;
     overflow: hidden;
@@ -2509,3 +2509,6 @@ a.employer-website:hover {
     font-weight: normal;
 }
 
+.resizetextarea {
+    resize: vertical !important;
+}
