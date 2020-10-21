@@ -153,9 +153,8 @@ namespace JobPortal.Business.Handlers.Auth
                 }
             }
             catch (Exception ex)
-            {
-                return false;
-                throw new UserNotCreatedException("Unable to create user, please contact your teck deck.");
+            {                
+                throw new UserNotCreatedException(ex.Message);
             }
             return false;
         }

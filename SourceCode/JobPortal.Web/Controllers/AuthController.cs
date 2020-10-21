@@ -57,11 +57,19 @@ namespace JobPortal.Web.Controllers
                     {
                         if (result.RoleName != "Admin")
                         {
+                            if(FormName == "JobSeekerLogin" && (result.RoleName == "Corporate" || result.RoleName == "Consultant"))
+                            {
+                                throw new InvalidRoleException("You are not allowed to login here!Kindly login from Employer login page");
+                            }
+                            if(FormName == "EmployerLogin" && result.RoleName == "Student")
+                            {
+                                throw new InvalidRoleException("You are not allowed to login here!Kindly login from Jobseeker login page");
+                            }
                             return SetSession(result);
                         }
                         else
                         {
-                            ModelState.AddModelError("ErrorMessage", string.Format("{0}", "You are not allowed to login here!"));
+                            throw new InvalidRoleException("You are not allowed to login here!Kindly login from Admin login page");                           
                         }
 
                     }
@@ -82,6 +90,11 @@ namespace JobPortal.Web.Controllers
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
             catch (NotApprovedByAdminException ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            catch (InvalidRoleException ex)
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
