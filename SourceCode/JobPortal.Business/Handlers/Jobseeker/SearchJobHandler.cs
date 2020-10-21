@@ -54,7 +54,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
 
         public List<SearchJobListViewModel> SearchJobList(SearchJobViewModel searches, int UserId)
         {
-
+            //Microsoft.Extensions.Logging.Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("Before search Info Logged"));
             var sModel = new JobSearchModel
             {
                 Skills = searches.Skills,

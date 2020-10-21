@@ -18,7 +18,7 @@ using JobPortal.Web.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-
+using Newtonsoft.Json;
 
 namespace JobPortal.Web.Areas.Employer.Controllers
 {
@@ -58,6 +58,8 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             try
             {
                 var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+                user = user ?? new UserViewModel();
+                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("Method Reach Info Logged"));
                 var props = searches.GetType().GetProperties();
                 foreach (PropertyInfo prop in props)
                 {
@@ -84,7 +86,9 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 //GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
                 var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
                 searchresumehandler.LogSearchResumeList(searches, userip, user.UserId);
+                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("Before Search Resume Info Logged"));
                 lstResumeList = searchresumehandler.GetSearchResumeList(searches);
+                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("After Resume Search Info Logged"));
             }
 
             catch (DataNotFound ex)

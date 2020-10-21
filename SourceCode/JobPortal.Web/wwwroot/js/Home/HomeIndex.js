@@ -10,7 +10,17 @@
             }
         });
     });
-
+    $("select[name=MinExperiance]").change(function () {
+        let minExp = parseInt(this.value);
+        $("select[name=MaxExperiance] option").each(function (i, o) {
+            if (parseInt(o.value) < minExp) {
+                $(o).prop("disabled", true);
+            }
+            else {
+                $(o).removeAttr("disabled");
+            }
+        });
+    });
     //Job Title Bind By job industry are id  
     $("#JobIndustryAreaId").change(function () {
         debugger;

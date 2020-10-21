@@ -17,6 +17,7 @@ using JobPortal.Web.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace JobPortal.Web.Areas.Jobseeker.Controllers
 {
@@ -66,6 +67,7 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
             List<SearchJobListViewModel> lstjobList = new List<SearchJobListViewModel>();
             var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             user = user ?? new UserViewModel();
+            Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("Info Logged"));
             try
             {
                 if (null == user)
@@ -99,7 +101,9 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
                 ViewBag.Searches = searches;
                 var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();                                
                 searchJobHandler.LogSearchJob(searches,userip, user.UserId);
+                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("Before searchjob Info Logged"));
                 lstjobList = searchJobHandler.SearchJobList(searches ,user.UserId);
+                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("After searchjob Info Logged"));
             }
 
             catch (DataNotFound ex)

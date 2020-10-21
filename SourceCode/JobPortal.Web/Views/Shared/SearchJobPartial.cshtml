@@ -42,7 +42,7 @@
                 </div>
                
                 <div class="col-sm-2 search-form-element">
-                    <select class="form-control" asp-for="MinExperiance">
+                    <select class="form-control" name="MinExperiance" asp-for="MinExperiance">
                         <option value="-1">Min Exp</option>
                         <option value="0">Fresher</option>
                         @for (int i = 1; i <= 15; i++)
@@ -52,7 +52,7 @@
                     </select>
                 </div>
                 <div class="col-sm-2 search-form-element">
-                    <select class="form-control" asp-for="MaxExperiance">
+                    <select class="form-control" name="MaxExperiance" asp-for="MaxExperiance">
                         <option value="-1">Max Exp</option>
                         <option value="0">Fresher</option>
                         @for (int i = 1; i <= 15; i++)
@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-sm-4 search-form-element">
                     <input asp-for="City" type="hidden" id="hdnCity" />
-                    <input type="text" id="City" class="form-control last-column" placeholder="Enter city" />
+                    <input type="text" pattern="[A-Za-z ]{0,}" title="Only alphabets are allowed" id="City" class="form-control last-column" placeholder="Enter city" />
                 </div>
             </div>
             <div class="row btn-row text-center">

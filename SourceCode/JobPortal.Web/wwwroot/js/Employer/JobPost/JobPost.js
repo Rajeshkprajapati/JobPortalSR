@@ -283,7 +283,7 @@ function AddJobPost(_this) {
             return false;
         }
         let exp = exprange.split('-');       
-        if (exp[0] > 0 && exp[1]<= 10) {
+        if (exp[0] > 0 && exp[1]<= 15) {
             formData.MinExp = exp[0];
             formData.MaxExp = exp[1];
         }
