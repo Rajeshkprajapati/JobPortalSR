@@ -94,16 +94,20 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
                         }
                     }
                 }
+                
 
                 ViewBag.JobIndustryArea = jobpastHandler.GetJobIndustryAreaWithJobPost();
+                
                 ViewBag.City = homeHandler.GetCityHasJobPostId();
+
                 ViewBag.Company = homeHandler.GetCompanyHasJobPostId();
+
                 ViewBag.Searches = searches;
-                var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();                                
-                searchJobHandler.LogSearchJob(searches,userip, user.UserId);
-                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("Before searchjob Info Logged"));
+                //var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();                                
+                //searchJobHandler.LogSearchJob(searches,userip, user.UserId);                
+                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("108 Before searchjob Info Logged"));
                 lstjobList = searchJobHandler.SearchJobList(searches ,user.UserId);
-                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("After searchjob Info Logged"));
+                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("110 After searchjob Info Logged"));
             }
 
             catch (DataNotFound ex)

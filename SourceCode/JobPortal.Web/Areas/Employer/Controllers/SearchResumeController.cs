@@ -84,11 +84,11 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 ViewBag.City = homeHandler.GetCitiesWithJobSeekerInfo();
                 ViewBag.Searches = searches;
                 //GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
-                var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
-                searchresumehandler.LogSearchResumeList(searches, userip, user.UserId);
-                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("Before Search Resume Info Logged"));
+                //var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+                //searchresumehandler.LogSearchResumeList(searches, userip, user.UserId);
+                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("89 Before Search Resume Info Logged"));
                 lstResumeList = searchresumehandler.GetSearchResumeList(searches);
-                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("After Resume Search Info Logged"));
+                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("91 After Resume Search Info Logged"));
             }
 
             catch (DataNotFound ex)

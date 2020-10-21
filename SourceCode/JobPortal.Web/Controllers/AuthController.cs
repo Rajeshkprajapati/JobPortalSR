@@ -552,7 +552,7 @@ namespace JobPortal.Web.Controllers
         {
             try
             {
-                var basePath = string.Format("{0}://{1}", URLprotocol, Request.Host);
+                var basePath = string.Format("{0}://{1}", Request.Scheme, Request.Host);
                 var link = basePath + "/Auth/EmployerLogin";
                 var eModel = new EmailViewModel
                 {
@@ -617,7 +617,7 @@ namespace JobPortal.Web.Controllers
         {
             try
             {
-                var basePath = string.Format("{0}://{1}", URLprotocol, Request.Host);
+                var basePath = string.Format("{0}://{1}", Request.Scheme, Request.Host);
                 var link = basePath + "/Auth/JobSeekerLogin";
 
                 var eModel = new EmailViewModel
