@@ -35,7 +35,6 @@ function savePersonalDetails(_this, ev) {
 }
 
 function saveExperienceDetails(_this) {
-    debugger;
     let data = ResolveFormData($(_this.parentNode.parentNode).find('form'));
     if (data && data.length > 0) {
         let dataArr = [];
@@ -244,7 +243,6 @@ function changeCourseCategory(_this) {
                 var btnParent = $("#btnSaveEmploymentInfo").parent();
                 $("#btnSaveEmploymentInfo").parent().remove();
                 resp.data.uDetail.ExperienceDetails.forEach(function (obj, ind) {
-                    debugger;
                     for (let key in obj) {
                         let e = $('form#frmExperienceDetails_' + ind).find('[name=' + key + ']');
                         e.eq(0).val(obj[key]);
