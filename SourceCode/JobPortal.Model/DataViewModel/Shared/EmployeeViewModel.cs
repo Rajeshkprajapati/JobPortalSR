@@ -8,8 +8,8 @@ namespace JobPortal.Model.DataViewModel.Shared
     public class EmployeeViewModel
     {
         [Required(ErrorMessage = "This field is required.")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Invalid value,Please use only alphabet!")]
-        [StringLength(100, ErrorMessage = "Value must be at least {2} characters long.", MinimumLength = 2)]
+        [RegularExpression(@"^[a-zA-Z_ ]+$", ErrorMessage = "Invalid Name,Please use only alphabet!")]
+        [StringLength(100, ErrorMessage = "Name must be at least {2} characters long.", MinimumLength = 2)]
         public string CompanyName { get; set; }
 
         [Required]
