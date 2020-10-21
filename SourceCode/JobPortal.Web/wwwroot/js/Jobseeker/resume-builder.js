@@ -35,10 +35,11 @@ function savePersonalDetails(_this, ev) {
 }
 
 function saveExperienceDetails(_this) {
-    let data = ResolveFormData($(_this.parentNode).find('form'));
+    debugger;
+    let data = ResolveFormData($(_this.parentNode.parentNode).find('form'));
     if (data && data.length > 0) {
         let dataArr = [];
-        let skills = $(_this.parentNode).find('input[type=hidden][name=Skills]').val();
+        let skills = $(_this.parentNode.parentNode).find('input[type=hidden][name=Skills]').val();
         let skillItems = skills.toUpperCase().split(",");
         data.forEach(function (f) {
             f.AnnualSalary = `${f.AnnualSalaryInLakhs} Lakhs ${f.AnnualSalaryInThousands} Thousands`;
@@ -75,7 +76,7 @@ function saveExperienceDetails(_this) {
         });
     }
     else {
-        warnignPopup("Some issues with user's employment details, please contact your admin")
+        ErrorDialog("Some issues with user's employment details, please contact your admin")
         return false;
 
     }
@@ -83,25 +84,28 @@ function saveExperienceDetails(_this) {
 
 function createExperiencDetailsForm(_this) {
     let finalSaveButton = $(_this.parentNode.parentNode).find("#btnSaveEmploymentInfo");
+    var btnParent = $("#btnSaveEmploymentInfo").parent();
+    $("#btnSaveEmploymentInfo").parent().remove();
     if (finalSaveButton) {
         finalSaveButton.remove();
     }
-    $(_this).parent().parent().append($(`<div class="col-sm-12 other-employment-title spacer-top-20"><h4>Another Employment</h4></div>`));
-    let forms = $(_this).parent().parent().find('form');
+    $(_this).parent().parent().parent().append($(`<div class="form-group other-employment-title spacer-top-20"><h4>Another Employment</h4></div>`));
+    let forms = $(_this).parent().parent().parent().find('form');
     forms.each(function (i, f) {
         $(f).find("a#btnAddAnOtherExperience").hide();
     });
-    let lForm = forms.eq(forms.length -1).clone();
+    let lForm = forms.eq(forms.length-1).clone();
     lForm.attr('id', 'frmExperienceDetails_' + forms.length);
     lForm.find("input[type=hidden][name=Id]").val("0");
     lForm.find("a#btnAddAnOtherExperience").show();
     lForm.get(0).reset();
-    $(_this).parent().parent().append(lForm);
-    $(_this).parent().parent().append($(finalSaveButton));
+    $(_this).parent().parent().parent().append(lForm);
+    $(_this).parent().parent().parent().append($(finalSaveButton));
+    $("#Employment").append(btnParent);
 }
 
 function saveEducationDetails(_this) {
-    let data = ResolveFormData($(_this.parentNode).find('form'));
+    let data = ResolveFormData($(_this.parentNode.parentNode).find('form'));
     if (data && data.length > 0) {
         SendAJAXRequest("/ResumeBuilder/SaveEducationDetails", "POST", data, "json", function (resp) {
             if (resp && resp.isSuccess) {
@@ -120,11 +124,13 @@ function saveEducationDetails(_this) {
 
 function createEducationalDetailsForm(_this) {
     let finalSaveButton = $(_this.parentNode.parentNode).find("#btnSaveEducationInfo");
+    var btnParentEdu = $("#btnSaveEducationInfo").parent();
+    $("#btnSaveEducationInfo").parent().remove();
     if (finalSaveButton) {
         finalSaveButton.remove();
     }
-    $(_this).parent().parent().append($(`<div class="formrow other-education-title"><h6>Another Education</h6></div>`));
-    let forms = $(_this).parent().parent().find('form');
+    $(_this).parent().parent().parent().append($(`<div class="form-group other-education-title"><h6>Another Education</h6></div>`));
+    let forms = $(_this).parent().parent().parent().find('form');
     forms.each(function (i, f) {
         $(f).find("a#btnAddAnOtherAcademic").hide();
     });
@@ -133,8 +139,9 @@ function createEducationalDetailsForm(_this) {
     lForm.find("input[type=hidden][name=Id]").val("0");
     lForm.find("a#btnAddAnOtherAcademic").show();
     lForm.get(0).reset();
-    $(_this).parent().parent().append(lForm);
+    $(_this).parent().parent().parent().append(lForm);
     $(_this).parent().parent().append($(finalSaveButton));
+    $("#Education").append(btnParentEdu);
 }
 
 function getStates(_this) {
@@ -164,11 +171,11 @@ function changeCourseCategory(_this) {
     SendAJAXRequest("/ResumeBuilder/GetCourses?cCategory=" + _this.value, "GET", {}, "JSON", function (resp) {
         if (resp && resp.isSuccess) {
             if (resp.Courses && resp.Courses.length > 0) {
-                $(form).find('[name=Course]').closest('.formrow').show();
+                $(form).find('[name=Course]').closest('.form-group').show();
                 bindDropDownOptions($(form).find('[name=Course]'), resp.Courses, 'Id', 'Name');
             }
             else {
-                $(form).find('[name=Course]').closest('.formrow').hide();
+                $(form).find('[name=Course]').closest('.form-group').hide();
             }
         }
         else {
@@ -234,8 +241,10 @@ function changeCourseCategory(_this) {
                 $('div#Employment').find('input[type=hidden][name=Skills]').val(resp.data.uDetail.Skills.SkillSets);
             }
             if (resp.data.uDetail.ExperienceDetails && resp.data.uDetail.ExperienceDetails.length > 0) {
+                var btnParent = $("#btnSaveEmploymentInfo").parent();
+                $("#btnSaveEmploymentInfo").parent().remove();
                 resp.data.uDetail.ExperienceDetails.forEach(function (obj, ind) {
-
+                    debugger;
                     for (let key in obj) {
                         let e = $('form#frmExperienceDetails_' + ind).find('[name=' + key + ']');
                         e.eq(0).val(obj[key]);
@@ -274,6 +283,7 @@ function changeCourseCategory(_this) {
                         $('form#frmExperienceDetails_' + ind).find("a#btnAddAnOtherExperience").click();
                     }
                 });
+                $("#Employment").append(btnParent);
             }
 
             //  Educational Details
@@ -281,6 +291,8 @@ function changeCourseCategory(_this) {
             bindDropDownOptions($('form#frmEducationalDetails_0').find('[name=Qualification]'), resp.data.CourseCategories, 'Id', 'Name');
             bindRadioButtons($('form#frmEducationalDetails_0').find('[name=CourseType]'), resp.data.CourseTypes, 'TypeId', 'Type');
             if (resp.data.uDetail.EducationalDetails && resp.data.uDetail.EducationalDetails.length > 0) {
+                var btnParentEdu = $("#btnSaveEducationInfo").parent();
+                $("#btnSaveEducationInfo").parent().remove();
                 resp.data.uDetail.EducationalDetails.forEach(function (obj, ind) {
                     for (let key in obj) {
                         let e = $('form#frmEducationalDetails_' + ind).find('[name=' + key + ']');
@@ -308,6 +320,7 @@ function changeCourseCategory(_this) {
                         $('form#frmEducationalDetails_' + ind).find("a#btnAddAnOtherAcademic").click();
                     }
                 });
+                $("#Education").append(btnParentEdu);
             }
         }
     }
