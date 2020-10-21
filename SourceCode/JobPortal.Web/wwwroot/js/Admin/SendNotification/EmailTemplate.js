@@ -59,48 +59,26 @@ function Updatedata(_this) {
 
 function AddData(_this) {
     debugger;
-    //alert($('#UserId').val());
-    let CountryCode = $('#Country').val().trim();
-    let StateCode = $('#StateCode').val().trim();
-    let StateName = $('#StateName').val().trim();
-    if (StateCode === "") {
-        ErrorDialog('Required', 'Please fill state code');
-        return false;
-    }
-    if (StateName === "") {
-        ErrorDialog('Required', 'Please fill state name');
-        return false;
-    }
-    if (CountryCode !== "0") {
-        var data = { CountryCode: CountryCode, StateCode: $('#StateCode').val().trim(), State: $('#StateName').val().trim() };
-        //SendAJAXRequest('/ManageCityState/InsertState/', 'POST', data, 'JSON', (result) => {
-        //    if (result) {
-        //        //alert(result);
-        //        //location.reload(true);
-        //        if (result === 'State code already exist') {
-
-        //            ErrorDialog('Error', result);
-        //        }
-        //        else {
-        //            $('#PopUpModal').modal('toggle');
-        //            InformationDialogWithPartialReload('Done', 'You have successfully done this action.', GetStateList);
-        //        }
-
-        //        //location.reload(true);
-        //    } else {
-        //        ErrorDialog('Error', 'Faild to do this action');
-        //    }
-        //});
-    }
-    else {
-        ErrorDialog('Required', 'Please select country');
-    }
-}
+    //let TemplateId = $('#TemplateId').val().trim();
+    let TemplateName = $('#TemplateName').val().trim();
+    let TemplateSubject = $('#TemplateSubject').val().trim();
+    let UserRole = $('#UserRole').val().trim();
+    let TemplateHtml = $('#TemplateHtml').val().trim();
+    let data = {EmailBody: TemplateHtml, Subject: TemplateSubject, UserRole: UserRole, Name: TemplateName };
+    SendAJAXRequest(`/EmailTemplate/InsertEmailTemplate`, "POST", data, "JSON", function (resp) {
+        if (resp) {
+            InformationDialog('Done', 'Successfully Updated');
+        }
+        else {
+            ErrorDialog('Fail', 'could not update');
+        }
+    });
+ }
 
 //function deletedata(CountryCode, stateCode) {
 function deletedata(data) {
-    // var data = { CountryCode: CountryCode, StateCode: stateCode };
-    SendAJAXRequest('/ManageCityState/DeleteState/', 'POST', data, 'JSON', (result) => {
+   
+    SendAJAXRequest('/EmailTemplate/DeleteEmailTemplate/', 'GET', data, 'JSON', (result) => {
         if (result) {
             InformationDialogWithPartialReload('Done', result, GetStateList);
         } else {

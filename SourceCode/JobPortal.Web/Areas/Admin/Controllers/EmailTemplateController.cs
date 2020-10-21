@@ -60,5 +60,39 @@ namespace JobPortal.Web.Areas.Admin.Controllers
                 return Json(ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult InsertEmailTemplate([FromBody]EmailTemplateViewModel model)
+        {
+            try
+            {
+                var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+
+                var data = _emailTemplateHandler.InsertEmailTemplate(model, Convert.ToString(user.UserId));
+
+                return Json(data);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult DeleteEmailTemplate(int Id)
+        {
+            var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
+
+            var result = _emailTemplateHandler.DeleteUsersReviews(Id, user.UserId);
+            if (result)
+            {
+                //return View();
+                return Json("Record Deleted");
+            }
+            return Json("Record Can't be Deleted");
+            //return View();
+        }
     }
 }

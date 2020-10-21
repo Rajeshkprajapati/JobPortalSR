@@ -9,5 +9,7 @@ namespace JobPortal.Data.Interfaces.Admin
     public interface IEmailTemplateRepository
     {
         bool UpdateEmailTemplate(EmailTemplateViewModel model, string userid);
+        bool InsertTemplate(EmailTemplateViewModel model, string userid);
+        bool DeleteEmailTemplate(int id, int deletedBy);
     }
 }

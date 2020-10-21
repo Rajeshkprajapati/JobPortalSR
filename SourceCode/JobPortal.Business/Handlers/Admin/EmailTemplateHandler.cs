@@ -59,5 +59,32 @@ namespace JobPortal.Business.Handlers.Admin
             }
             throw new Exception("Unable to Update data");
         }
+
+        public bool InsertEmailTemplate(EmailTemplateViewModel data, string userid)
+        {
+            var model = new EmailTemplateViewModel()
+            {
+                Name = data.Name,
+                Subject = data.Subject,
+                UserRole = data.UserRole,
+                EmailBody = data.EmailBody
+            };
+            var result = emailTemplateRepository.InsertTemplate(model, userid);
+            if (result)
+            {
+                return true;
+            }
+            throw new Exception("Unable to Update data");
+        }
+
+        public bool DeleteUsersReviews(int id, int deletedBy)
+        {
+            var result = emailTemplateRepository.DeleteEmailTemplate(id, deletedBy);
+            if (result)
+            {
+                return true;
+            }
+            throw new Exception("Unable to delete data");
+        }
     }
 }

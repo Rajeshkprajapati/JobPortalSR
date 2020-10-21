@@ -50,5 +50,71 @@ namespace JobPortal.Data.Repositories.Admin
             }
             throw new Exception("Unable to delete data");
         }
+
+        public bool InsertTemplate(EmailTemplateViewModel model, string userid)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@UserId",userid),
+                        new SqlParameter("@Name",model.Name),
+                        new SqlParameter("@Subject",model.Subject),
+                        new SqlParameter("@UserRole",model.UserRole),
+                        new SqlParameter("@EmailBody",model.EmailBody),
+                    };
+                    var data =
+                       SqlHelper.ExecuteNonQuery
+                       (
+                           connection,
+                           CommandType.StoredProcedure,
+                           "usp_InsertEmailTemplate",
+                           parameters
+                           );
+                    if (data > 0)
+                    {
+                        return true;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new Exception("Unable to delete data");
+        }
+        public bool DeleteEmailTemplate(int id, int deletedBy)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@id",id),
+                        new SqlParameter("@UpdatedBy",deletedBy),
+                    };
+                    var data =
+                       SqlHelper.ExecuteNonQuery
+                       (
+                           connection,
+                           CommandType.StoredProcedure,
+                           "usp_DeleteSEmailTemplate",
+                           parameters
+                           );
+                    if (data > 0)
+                    {
+                        return true;
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new Exception("Unable to delete data");
+        }
+
     }
 }

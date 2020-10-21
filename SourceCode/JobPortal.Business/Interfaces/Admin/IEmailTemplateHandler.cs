@@ -9,5 +9,7 @@ namespace JobPortal.Business.Interfaces.Admin
     {
         List<EmailTemplateViewModel> GetEmailTemplates(int UserRole);
         bool UpdateEmailTemplate(EmailTemplateViewModel data, string userid);
+        bool InsertEmailTemplate(EmailTemplateViewModel data, string userid);
+        bool DeleteUsersReviews(int id, int deletedBy);
     }
 }
