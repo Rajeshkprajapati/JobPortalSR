@@ -77,85 +77,85 @@ namespace JobPortal.Business.Handlers.Auth
 
         public bool RegisterUser(JobSeekerViewModel user)
         {
-            bool status = true;
-            try
+            //bool status = true;
+            //try
+            //{
+
+            if (CheckIfUserExists(user.Email))
             {
-
-                if (CheckIfUserExists(user.Email))
-                {
-                    throw new UserAlreadyExists("Seems this user already exists in our record, please login with previous credentials.");
-                }
-
-                byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
-
-                var u = new UserModel
-                {
-                    Email = user.Email,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    MobileNo = user.MobileNo,
-                    Password = user.Password,
-                    RoleId = user.RoleId,
-                    PasswordSalt = passwordSalt,
-                    PasswordHash = passwordHash,
-                    IsApproved = true,
-                    IsActive = true
-                };
-                int isRegister = _authProcessor.RegisterUser(u);
-                if (isRegister > 0)
-                {
-                    return status;
-                }
+                throw new UserAlreadyExists("Seems this user already exists in our record, please login with previous credentials.");
             }
-            catch (UserNotCreatedException ex)
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
+
+            var u = new UserModel
             {
-                status = false;
-                throw new UserNotCreatedException("Unable to create user, please contact your teck deck.");
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                MobileNo = user.MobileNo,
+                Password = user.Password,
+                RoleId = user.RoleId,
+                PasswordSalt = passwordSalt,
+                PasswordHash = passwordHash,
+                IsApproved = true,
+                IsActive = true
+            };
+            int isRegister = _authProcessor.RegisterUser(u);
+            if (isRegister > 0)
+            {
+                return true;
             }
-            return status;
+            //}
+            //catch (UserNotCreatedException ex)
+            //{
+            //    status = false;
+            //    throw new UserNotCreatedException("Unable to create user, please contact your teck deck.");
+            //}
+            return false;
         }
 
         public bool RegisterEmployer(EmployeeViewModel user)
         {
-            try
+            //try
+            //{
+
+            if (_authProcessor.CheckIfEmployerExists(user.CompanyName))
             {
-
-                if (_authProcessor.CheckIfEmployerExists(user.CompanyName))
-                {
-                    throw new UserAlreadyExists("Seems this company already exists in our record, please login with previous credentials.");
-                }
-
-                if (CheckIfUserExists(user.Email))
-                {
-                    throw new UserAlreadyExists("Seems this user already exists in our record, please login with previous credentials.");
-                }
-
-                byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
-
-                var u = new UserModel
-                {
-                    CompanyName = user.CompanyName,
-                    Email = user.Email,
-                    Password = user.Password,
-                    RoleId = user.RoleId,
-                    PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt,
-                    IsActive = true,
-                    IsApproved = true,
-                    MobileNo = user.Mobile
-                };
-                bool isRegister = _authProcessor.RegisterEmployer(u);
-                if (isRegister)
-                {
-                    return true;
-                }
+                throw new UserAlreadyExists("Seems this company already exists in our record, please login with previous credentials.");
             }
-            catch (Exception ex)
-            {                
-                throw new UserNotCreatedException(ex.Message);
+
+            if (CheckIfUserExists(user.Email))
+            {
+                throw new UserAlreadyExists("Seems this user already exists in our record, please login with previous credentials.");
             }
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
+
+            var u = new UserModel
+            {
+                CompanyName = user.CompanyName,
+                Email = user.Email,
+                Password = user.Password,
+                RoleId = user.RoleId,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                IsActive = true,
+                IsApproved = true,
+                MobileNo = user.Mobile
+            };
+            bool isRegister = _authProcessor.RegisterEmployer(u);
+            if (isRegister)
+            {
+                return true;
+            }
+            //}
+            //catch (Exception ex)
+            //{                
+            //    throw new UserNotCreatedException(ex.Message);
+            //}
             return false;
         }
 
@@ -516,7 +516,7 @@ namespace JobPortal.Business.Handlers.Auth
             if (status)
             {
                 int user = _authProcessor.GetUserRole(emailId);
-                if (user>0)
+                if (user > 0)
                 {
                     return user;
 

@@ -46,8 +46,8 @@ namespace JobPortal.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(UserViewModel user,string FormName)
-        {            
+        public IActionResult Login(UserViewModel user, string FormName)
+        {
             try
             {
                 if (ModelState.IsValid)
@@ -57,11 +57,11 @@ namespace JobPortal.Web.Controllers
                     {
                         if (result.RoleName != "Admin")
                         {
-                            if(FormName == "JobSeekerLogin" && (result.RoleName == "Corporate" || result.RoleName == "Consultant"))
+                            if (FormName == "JobSeekerLogin" && (result.RoleName == "Corporate" || result.RoleName == "Consultant"))
                             {
                                 throw new InvalidRoleException("You are not allowed to login here!Kindly login from Employer login page");
                             }
-                            if(FormName == "EmployerLogin" && result.RoleName == "Student")
+                            if (FormName == "EmployerLogin" && result.RoleName == "Student")
                             {
                                 throw new InvalidRoleException("You are not allowed to login here!Kindly login from Jobseeker login page");
                             }
@@ -69,7 +69,7 @@ namespace JobPortal.Web.Controllers
                         }
                         else
                         {
-                            throw new InvalidRoleException("You are not allowed to login here!Kindly login from Admin login page");                           
+                            throw new InvalidRoleException("You are not allowed to login here!Kindly login from Admin login page");
                         }
 
                     }
@@ -99,7 +99,7 @@ namespace JobPortal.Web.Controllers
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, user.UserId, typeof(AuthController), ex);
                 //ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
@@ -205,7 +205,7 @@ namespace JobPortal.Web.Controllers
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
                 ViewData["SuccessMessage"] = ex.Message;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(AuthController), ex);
                 ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
@@ -255,11 +255,11 @@ namespace JobPortal.Web.Controllers
             {
                 return View("JobSeekerLogin");
             }
-            else 
+            else
             {
                 return View("EmployerLogin");
             }
-            
+
         }
 
         public IActionResult Logout(string returnUrl = "")
@@ -495,9 +495,15 @@ namespace JobPortal.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     user.RoleId = 3;//For Employer
-                    authHandler.RegisterEmployer(user);
-                    SendRegistrationMailToEmployer(user);
-                    TempData["successMsg"] = "Registered Successfully. Please login with registered email!";
+                    if (authHandler.RegisterEmployer(user))
+                    {
+                        SendRegistrationMailToEmployer(user);
+                        TempData["successMsg"] = "Registered Successfully. Please login with registered email!";
+                    }
+                    else
+                    {
+                        TempData["successMsg"] = "Registered Failed. Please try again!";
+                    }
                     ModelState.Clear();
                 }
             }
@@ -532,9 +538,15 @@ namespace JobPortal.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     user.RoleId = 4;//For Consultancy
-                    authHandler.RegisterEmployer(user);
-                    SendRegistrationMailToEmployer(user);
-                    TempData["successMsg"] = "Registered Successfully. Please login with registered mail!";
+                    if (authHandler.RegisterEmployer(user))
+                    {
+                        SendRegistrationMailToEmployer(user);
+                        TempData["successMsg"] = "Registered Successfully. Please login with registered mail!";
+                    }
+                    else
+                    {
+                        TempData["successMsg"] = "Registered Failed. Please try again!";
+                    }
                     ModelState.Clear();
                 }
             }
@@ -599,9 +611,15 @@ namespace JobPortal.Web.Controllers
                 {
 
                     user.RoleId = 2;//For Student
-                    authHandler.RegisterUser(user);
-                    SendRegistrationMailToJobSeeker(user);
-                    TempData["successMsg"] = "User registered successfully, please login to proceed.";
+                    if (authHandler.RegisterUser(user))
+                    {
+                        SendRegistrationMailToJobSeeker(user);
+                        TempData["successMsg"] = "User registered successfully, please login to proceed.";
+                    }
+                    else
+                    {
+                        TempData["successMsg"] = "Registered Failed. Please try again!";
+                    }
                     ModelState.Clear();
                 }
             }
@@ -723,8 +741,14 @@ namespace JobPortal.Web.Controllers
                 };
 
                 user.RoleId = 3;//For Employer
-                authHandler.RegisterEmployer(user);
-                SendRegistrationMailToEmployer(user);
+                if (authHandler.RegisterEmployer(user))
+                {
+                    SendRegistrationMailToEmployer(user);
+                }
+                else
+                {
+                    isSuccess = false;
+                }
             }
             catch (UserNotCreatedException ex)
             {
@@ -767,8 +791,14 @@ namespace JobPortal.Web.Controllers
                 };
 
                 user.RoleId = 4;//For Consultation
-                authHandler.RegisterEmployer(user);
-                SendRegistrationMailToEmployer(user);
+                if (authHandler.RegisterEmployer(user))
+                {
+                    SendRegistrationMailToEmployer(user);
+                }
+                else
+                {
+                    isSuccess = false;
+                }
             }
             catch (UserNotCreatedException ex)
             {
@@ -810,8 +840,14 @@ namespace JobPortal.Web.Controllers
                 };
 
                 user.RoleId = 2;//For Student
-                authHandler.RegisterUser(user);
-                SendRegistrationMailToJobSeeker(user);
+                if (authHandler.RegisterUser(user))
+                {
+                    SendRegistrationMailToJobSeeker(user);
+                }
+                else
+                {
+                    isSuccess = false;
+                }
             }
             catch (UserNotCreatedException ex)
             {
@@ -854,8 +890,16 @@ namespace JobPortal.Web.Controllers
                 };
 
                 user.RoleId = 2;//For Student
-                authHandler.RegisterUser(user);
-                SendRegistrationMailToJobSeeker(user);
+                if (authHandler.RegisterUser(user))
+                {
+                    SendRegistrationMailToJobSeeker(user);
+                }
+                else
+                {
+                    isSuccess = false;
+                    msg = "Registration Failed,Please try again!";
+                }
+
             }
             catch (UserNotCreatedException ex)
             {
@@ -901,8 +945,15 @@ namespace JobPortal.Web.Controllers
                 };
 
                 user.RoleId = 4;//For Consultant
-                authHandler.RegisterEmployer(user);
-                SendRegistrationMailToEmployer(user);
+                if (authHandler.RegisterEmployer(user))
+                {
+                    SendRegistrationMailToEmployer(user);
+                }
+                else
+                {
+                    isSuccess = false;
+                    msg = "Registration Failed,Please try again!";
+                }
             }
             catch (UserNotCreatedException ex)
             {
@@ -948,8 +999,15 @@ namespace JobPortal.Web.Controllers
                 };
 
                 user.RoleId = 3;//For Employer
-                authHandler.RegisterEmployer(user);
-                SendRegistrationMailToEmployer(user);
+                if (authHandler.RegisterEmployer(user))
+                {
+                    SendRegistrationMailToEmployer(user);
+                }
+                else
+                {
+                    isSuccess = false;
+                    msg = "Registration Failed,Please try again!";
+                }
             }
             catch (UserNotCreatedException ex)
             {
@@ -1032,7 +1090,7 @@ namespace JobPortal.Web.Controllers
                     result.ProfilePic = fName;
                 }
                 HttpContext.Session.Set<UserViewModel>(Constants.SessionKeyUserInfo, result);
-                authHandler.LogActiveUsers(HttpContext.Session.Id,result);
+                authHandler.LogActiveUsers(HttpContext.Session.Id, result);
                 authHandler.UserActivity(result.UserId);
                 return GoAhead(result.RoleName, result.UserId);
             }
