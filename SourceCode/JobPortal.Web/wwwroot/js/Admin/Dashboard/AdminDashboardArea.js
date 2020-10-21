@@ -121,5 +121,16 @@ function SendNotification() {
     });
 }
 
+function EmailTemplate() {
+    debugger;
+    SendAJAXRequest(`/EmailTemplate/EmailTemplates`, "GET", {}, "html", function (resp) {
+        if (resp && resp !== "") {
+            $("div#contentHolder").html(resp);
+        }
+        else {
+            return false;
+        }
+    });
+}
 
 

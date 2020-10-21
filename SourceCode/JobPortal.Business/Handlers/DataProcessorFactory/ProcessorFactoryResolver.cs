@@ -118,6 +118,9 @@ namespace JobPortal.Business.Handlers.DataProcessorFactory
                 case "IAdvertisementsRepository":
                     IAdvertisementsRepository advertisementsRepository = new AdvertisementsRepository(config);
                     return (T)advertisementsRepository;
+                case "IEmailTemplateRepository":
+                    IEmailTemplateRepository emailTemplateRepository = new EmailTemplateRepository(config);
+                    return (T)emailTemplateRepository;
                 default:                   
                     throw new Exception("Can not create object");
             }
