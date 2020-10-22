@@ -59,7 +59,7 @@ namespace JobPortal.Web.Areas.Employer.Controllers
             {
                 var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
                 user = user ?? new UserViewModel();
-                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("Method Reach Info Logged"));
+                //Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("Method Reach Info Logged"));
                 var props = searches.GetType().GetProperties();
                 foreach (PropertyInfo prop in props)
                 {
@@ -86,9 +86,9 @@ namespace JobPortal.Web.Areas.Employer.Controllers
                 //GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
                 //var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
                 //searchresumehandler.LogSearchResumeList(searches, userip, user.UserId);
-                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("89 Before Search Resume Info Logged"));
+                //Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("89 Before Search Resume Info Logged"));
                 lstResumeList = searchresumehandler.GetSearchResumeList(searches);
-                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("91 After Resume Search Info Logged"));
+                //Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(SearchResumeController), new Exception("91 After Resume Search Info Logged"));
             }
 
             catch (DataNotFound ex)

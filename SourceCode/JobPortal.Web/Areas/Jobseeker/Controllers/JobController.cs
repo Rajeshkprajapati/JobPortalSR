@@ -67,7 +67,7 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
             List<SearchJobListViewModel> lstjobList = new List<SearchJobListViewModel>();
             var user = HttpContext.Session.Get<UserViewModel>(Constants.SessionKeyUserInfo);
             user = user ?? new UserViewModel();
-            Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("Info Logged"));
+            //Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("Info Logged"));
             try
             {
                 if (null == user)
@@ -105,9 +105,9 @@ namespace JobPortal.Web.Areas.Jobseeker.Controllers
                 ViewBag.Searches = searches;
                 //var userip = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();                                
                 //searchJobHandler.LogSearchJob(searches,userip, user.UserId);                
-                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("108 Before searchjob Info Logged"));
+                //Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("108 Before searchjob Info Logged"));
                 lstjobList = searchJobHandler.SearchJobList(searches ,user.UserId);
-                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("110 After searchjob Info Logged"));
+                //Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(searches), user.UserId, typeof(JobController), new Exception("110 After searchjob Info Logged"));
             }
 
             catch (DataNotFound ex)

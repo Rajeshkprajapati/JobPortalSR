@@ -197,7 +197,7 @@ $(document).ready(function () {
                 }
             }
 
-            if (result.ITSkills !== null) {
+            if (result.ITSkills !== null) {                
                 if (result.ITSkills.length > 0) {
                     for (var k = 0; k < result.ITSkills.length; k++) {
                         let skills = result.ITSkills[k];
@@ -205,10 +205,10 @@ $(document).ready(function () {
                             <td hidden>${skills.Id}</td>
                             <td width="20%">${skills.Skill}</td>
                             <td width="10%">${skills.SkillVersion}</td>
-                            <td width="25%">${skills.LastUsed}</td>
+                            <td width="25%">${skills.LastUsed != null ? skills.LastUsed:''}</td>
                             <td width="25%">${skills.ExperienceYear}</td>
                             <td width="20%">
-                                <a onclick="EditITSkills(this)" class="quick-links">Edit</a> <a class="delete" class="quick-links" onclick="DeleteITSkill(${skills.Id})">Delete</a>
+                                <a onclick="EditITSkills(this)" class="quick-links">Edit</a> <a class="delete" class="quick-links" onclick="DeleteITSkillConfirmation(${skills.Id})">Delete</a>
                            </td>
                             </tr>`);
                         item.data('rowData', skills);
@@ -856,8 +856,12 @@ function AddITSkills(){
     $("#ITSkillsModel").removeClass("open");
     $("#ITSkillsModel").addClass("in");
 }
+
+function DeleteITSkillConfirmation(id) {
+    ConfirmationDialog('Confirmaton','Are you sure ? you want to delete this skill', DeleteITSkill,id);
+}
 function DeleteITSkill(id) {
-    var data = "";
+    var data = "";    
     SendAJAXRequest("/JobSeekerManagement/DeleteITSkill/?ITSkillId=" + id + "", 'POST', data, 'JSON', function (result) {
         if (result) {
             InformationDialogWithPageRelode("Success", 'Succuessfully Done');
