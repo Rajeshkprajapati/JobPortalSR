@@ -29,7 +29,7 @@ function savePersonalDetails(_this, ev) {
         });
     }
     else {
-        warnignPopup("Some issues with user's employment details, please contact your admin")
+        ErrorDialog("Some issues with user's employment details, please contact your admin")
         return false;
     }
 }
@@ -93,9 +93,10 @@ function createExperiencDetailsForm(_this) {
     forms.each(function (i, f) {
         $(f).find("a#btnAddAnOtherExperience").hide();
     });
-    let lForm = forms.eq(forms.length-1).clone();
+    let lForm = forms.eq(forms.length - 1).clone();
     lForm.attr('id', 'frmExperienceDetails_' + forms.length);
     lForm.find("input[type=hidden][name=Id]").val("0");
+    lForm.find("input[type=text][name=Skills]").tagEditor('destroy');
     lForm.find("a#btnAddAnOtherExperience").show();
     lForm.get(0).reset();
     $(_this).parent().parent().parent().append(lForm);
@@ -116,7 +117,7 @@ function saveEducationDetails(_this) {
         });
     }
     else {
-        warnignPopup("Some issues with user's educational details, please contact your admin")
+        Error("Some issues with user's educational details, please contact your admin")
         return false;
     }
 }
@@ -128,14 +129,15 @@ function createEducationalDetailsForm(_this) {
     if (finalSaveButton) {
         finalSaveButton.remove();
     }
-    $(_this).parent().parent().parent().append($(`<div class="form-group other-education-title"><h6>Another Education</h6></div>`));
+    $(_this).parent().parent().parent().append($(`<div class="form-group other-education-title spacer-top-20"><h4>Another Education</h4></div>`));    
     let forms = $(_this).parent().parent().parent().find('form');
     forms.each(function (i, f) {
         $(f).find("a#btnAddAnOtherAcademic").hide();
     });
     let lForm = forms.eq(forms.length - 1).clone();
     lForm.attr('id', 'frmEducationalDetails_' + forms.length);
-    lForm.find("input[type=hidden][name=Id]").val("0");
+    lForm.find("input[type=hidden][name=Id]").val("0");    
+    lForm.find("select[name=Course]").empty();
     lForm.find("a#btnAddAnOtherAcademic").show();
     lForm.get(0).reset();
     $(_this).parent().parent().parent().append(lForm);
@@ -167,20 +169,23 @@ function getCities(_this) {
 
 function changeCourseCategory(_this) {
     let form = $(_this).closest('form');
-    SendAJAXRequest("/ResumeBuilder/GetCourses?cCategory=" + _this.value, "GET", {}, "JSON", function (resp) {
-        if (resp && resp.isSuccess) {
-            if (resp.Courses && resp.Courses.length > 0) {
-                $(form).find('[name=Course]').closest('.form-group').show();
-                bindDropDownOptions($(form).find('[name=Course]'), resp.Courses, 'Id', 'Name');
+    debugger;
+    if (_this.value != null && _this.value != "") {
+        SendAJAXRequest("/ResumeBuilder/GetCourses?cCategory=" + _this.value, "GET", {}, "JSON", function (resp) {
+            if (resp && resp.isSuccess) {
+                if (resp.Courses && resp.Courses.length > 0) {
+                    $(form).find('[name=Course]').closest('.form-group').show();
+                    bindDropDownOptions($(form).find('[name=Course]'), resp.Courses, 'Id', 'Name');
+                }
+                else {
+                    $(form).find('[name=Course]').closest('.form-group').hide();
+                }
             }
             else {
-                $(form).find('[name=Course]').closest('.form-group').hide();
+                return false;
             }
-        }
-        else {
-            return false;
-        }
-    });
+        });
+    }
 }
 
 (function () {
@@ -190,7 +195,7 @@ function changeCourseCategory(_this) {
         position: "top",
         closeButton: false,
         dateEnd: new Date(),
-        dateStart:'01/01/1950'
+        dateStart: '01/01/1950'
     })
         .on("open", () => {
 

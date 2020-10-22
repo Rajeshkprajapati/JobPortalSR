@@ -23,7 +23,7 @@
     });
     //Job Title Bind By job industry are id  
     $("#JobIndustryAreaId").change(function () {
-        debugger;
+        
         var JobIndustryAreaId = $(this).val();
         if (JobIndustryAreaId !== "") {
             var ddlJobRoles = $('#JobTitle');
