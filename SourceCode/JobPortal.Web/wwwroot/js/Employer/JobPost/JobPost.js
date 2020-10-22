@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    debugger;
+    
     //country india on load    
     var ddlState = $('#ddlState');
 
@@ -211,7 +211,7 @@ function initCalendar(selector, date, startDate) {
 }
 
 function AddJobPost(_this) {
-    debugger;
+    
     $('#JobPostForm').submit(function (e) {
         e.preventDefault();
     });    

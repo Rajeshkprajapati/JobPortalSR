@@ -203,7 +203,7 @@
 
                 if ($lis.length > 0) {
                     $ul
-                        .append($('<span class="showmore"><li class="expand">' + (isExpanded ? 'Show Less' : 'Show More') + '</li></span>')
+                        .append($('<span class="showmore" style="cursor: pointer"><li class="expand">' + (isExpanded ? 'Show Less' : 'Show More') + '</li></span>')
                             .click(function (event) {
                                 var isExpanded = $ul.hasClass('expanded');
                                 event.preventDefault();

@@ -381,7 +381,8 @@ function updateJob(_this) {
     let formsData = ResolveFormData(forms);
     dashboard.updateJob(formsData[0]);
 }
-function PostDraftJob(_this) { 
+function PostDraftJob(_this) {
+    debugger;
     let forms = $(_this).parent().parent().find("form");
     let formsData = ResolveFormData(forms);
 
@@ -445,7 +446,7 @@ function PostDraftJob(_this) {
     //    return false;
     //}
     
-    formsData[0].JobTitle = jobrole;
+    formsData[0].JobTitleId = jobrole;
     dashboard.PostDraftJob(formsData[0]);
 }
 
