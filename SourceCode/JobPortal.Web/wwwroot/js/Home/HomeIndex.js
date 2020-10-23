@@ -23,19 +23,26 @@
     });
     //Job Title Bind By job industry are id  
     $("#JobIndustryAreaId").change(function () {
-        
+
         var JobIndustryAreaId = $(this).val();
         if (JobIndustryAreaId !== "") {
             var ddlJobRoles = $('#JobTitle');
             SendAJAXRequest(`/Home/JobTitlesById/?JobIndustryAreaId=${JobIndustryAreaId}`, 'GET', {}, 'JSON', (d) => {
                 if (d) {
-                    ddlJobRoles.empty(); 
+                    ddlJobRoles.empty();
                     var v = "";
                     $.each(d, function (i, v1) {
                         v += "<option value=" + v1.jobTitleId + ">" + v1.jobTitleName + "</option>";
                     });
                     $("#JobTitle").html(v);
                     $(".chosen-select").trigger("chosen:updated");
+                    //multiselector.initSelector(
+                    //    $('select#Jobtitle'),
+                    //    {
+                    //        nonSelectedText: 'Select job role',
+                    //    },
+                    //    $("input[type=hidden]#hiddenjobtitle"),
+                    //    ",");
                 } else {
                     warnignPopup('Error!');
                 }
@@ -43,16 +50,16 @@
 
         }
     });
-    
 
-    //multiselector.initSelector(
-    //    $('select#ddlJobRoles'),
-    //    {
-    //        nonSelectedText: 'Select job role',
-    //    },
-    //    $("input[type=hidden]#hdnJobRoleIds"),
-    //    ","
-    //);
+
+    multiselector.initSelector(
+        $('select#Jobtitle'),
+        {
+            nonSelectedText: 'Select job role',
+        },
+        $("input[type=hidden]#hiddenjobtitle"),
+        ","
+    );
 
     $('.slidepartners').slick({
         slidesToShow: 1,
@@ -79,7 +86,7 @@
 
 function EmployerFollower(id) {
     if (id === 0) {
-        ErrorDialog("Login Required","Please login or register to follow company");
+        ErrorDialog("Login Required", "Please login or register to follow company");
         return false;
     }
     else {
@@ -89,7 +96,7 @@ function EmployerFollower(id) {
                 InformationDialog('Information', 'Successfully done');
                 location.reload(true);
             } else {
-                ErrorDialog('Error','Please try again');
+                ErrorDialog('Error', 'Please try again');
             }
         });
     }
@@ -99,26 +106,26 @@ var slideIndex = 0;
 var intraval = 2000;
 showSlides();
 function showSlides() {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("mySlides");
-        for(i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-         }
-        slideIndex++;
-        if (slideIndex > slides.length) { slideIndex = 1 }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex - 1].style.display = "";
-        dots[slideIndex - 1].className += " active";
-       
-        setTimeout(showSlides, intraval);
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("mySlides");
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) { slideIndex = 1 }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex - 1].style.display = "";
+    dots[slideIndex - 1].className += " active";
+
+    setTimeout(showSlides, intraval);
 }
 $('#myslideUl').hover(function () {
     intraval = 10000;
 });
 
 $('#myslideUl').mouseout(function () {
-   intraval = 2000;
+    intraval = 2000;
 });

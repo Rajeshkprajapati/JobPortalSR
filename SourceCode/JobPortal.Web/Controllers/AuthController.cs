@@ -721,7 +721,7 @@ namespace JobPortal.Web.Controllers
         [HttpPost]
         public JsonResult FBEmpRegistration([FromBody]string accesstoken)
         {
-            Logger.Logger.WriteLog(Logger.Logtype.Information,"Access Token: "+ accesstoken, 0, typeof(AuthController), "724 Method FBEmpReg Reach Test");
+            //Logger.Logger.WriteLog(Logger.Logtype.Information,"Access Token: "+ accesstoken, 0, typeof(AuthController), "724 Method FBEmpReg Reach Test");
             var isSuccess = true;
             try
             {
@@ -731,7 +731,7 @@ namespace JobPortal.Web.Controllers
                 {
                     throw new UserNotCreatedException("Invalid access token");
                 }
-                Logger.Logger.WriteLog(Logger.Logtype.Information,JsonConvert.SerializeObject(resp), 0, typeof(AuthController), "734 Method FBEmpReg See the response from fb");
+                //Logger.Logger.WriteLog(Logger.Logtype.Information,JsonConvert.SerializeObject(resp), 0, typeof(AuthController), "734 Method FBEmpReg See the response from fb");
                 var randomPassword = RandomGenerator.GetRandom(5);
                 var user = new EmployeeViewModel
                 {
@@ -826,7 +826,7 @@ namespace JobPortal.Web.Controllers
             var isSuccess = true;
             try
             {
-                Logger.Logger.WriteLog(Logger.Logtype.Information, "Access Token: " + accesstoken, 0, typeof(AuthController), "829 Method FBJobseekerReg Reach Test");
+                //Logger.Logger.WriteLog(Logger.Logtype.Information, "Access Token: " + accesstoken, 0, typeof(AuthController), "829 Method FBJobseekerReg Reach Test");
                 var resp = authHandler.GetFBUserInfo(accesstoken);
 
                 if (resp == null)
@@ -841,7 +841,7 @@ namespace JobPortal.Web.Controllers
                     Email = resp.Email,
                     Password = randomPassword,
                 };
-                Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(resp), 0, typeof(AuthController), "844 Method FBJobSeekerReg See the response from fb");
+                //Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(resp), 0, typeof(AuthController), "844 Method FBJobSeekerReg See the response from fb");
                 user.RoleId = 2;//For Student
                 if (authHandler.RegisterUser(user))
                 {
@@ -873,6 +873,7 @@ namespace JobPortal.Web.Controllers
         [HttpPost]
         public JsonResult JobseekerGoogleRegistration([FromBody]string accesstoken)
         {
+            //Logger.Logger.WriteLog(Logger.Logtype.Information, "Access Token: " + accesstoken, 0, typeof(AuthController), "876 Method JobseekerGoogleReg Reach Test");
             var isSuccess = true;
             var msg = string.Empty;
             try
@@ -883,6 +884,7 @@ namespace JobPortal.Web.Controllers
                 {
                     throw new UserNotCreatedException("Invalid access token");
                 }
+                //Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(resp), 0, typeof(AuthController), "887 Method JobseekerGoogleReg Response");
                 var randomPassword = RandomGenerator.GetRandom(5);
                 var user = new JobSeekerViewModel
                 {
@@ -928,6 +930,7 @@ namespace JobPortal.Web.Controllers
         [HttpPost]
         public JsonResult ConsultantGoogleRegistration([FromBody]string accesstoken)
         {
+            //Logger.Logger.WriteLog(Logger.Logtype.Information, "Access Token: " + accesstoken, 0, typeof(AuthController), "933 Method ConsultantGoogleReg Reach Test");
             var isSuccess = true;
             var msg = string.Empty;
             try
@@ -938,6 +941,7 @@ namespace JobPortal.Web.Controllers
                 {
                     throw new UserNotCreatedException("Invalid access token");
                 }
+                //Logger.Logger.WriteLog(Logger.Logtype.Information, JsonConvert.SerializeObject(resp), 0, typeof(AuthController), "944 Method ConsultantGoogleReg Response");
                 var randomPassword = RandomGenerator.GetRandom(5);
                 var user = new EmployeeViewModel
                 {
