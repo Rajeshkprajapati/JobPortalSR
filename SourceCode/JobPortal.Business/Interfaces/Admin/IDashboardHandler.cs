@@ -18,6 +18,6 @@ namespace JobPortal.Business.Interfaces.Admin
         IList<DemandAggregationOnEmployersViewModel> GetDemandAggregationDataOnEmployer(int userId, DemandAggregationSearchItems search);
         IWorkbook GetDemandAggregationReportData(DemandAggregationSearchItems search, FileExtensions fileExtension);
         List<CityViewModel> GetCityList(string StateCode);
-        IList<UserViewModel> GetJobSeekers();
+        IList<UserViewModel> GetJobSeekers(int MaxExp);
     }
 }

@@ -16,13 +16,9 @@
 
     $('#dataTable_length').addClass('data-table-lenthFilter');
     $('#dataTable_filter').addClass('data-table-SearchFilter');
-
-    //SpecialChar('#StateCode');
-    //SpecialChar('#StateName');
+    
 });
 function edit(_this) {
-    debugger;
-    //console.log(userid)
     $('#PopUpModal').on('show.bs.modal', function (event) {
         var row = $(_this).closest('tr').find('td');
         $('#error_sp_msg').hide();
@@ -39,7 +35,6 @@ function edit(_this) {
 
 }
 function Updatedata(_this) {
-    debugger;
     let TemplateId = $('#TemplateId').val().trim();
     let TemplateName = $('#TemplateName').val().trim();
     let TemplateSubject = $('#TemplateSubject').val().trim();
@@ -48,7 +43,7 @@ function Updatedata(_this) {
     let data = { Id: TemplateId, EmailBody: TemplateHtml, Subject: TemplateSubject, UserRole: UserRole, Name: TemplateName  };
     SendAJAXRequest(`/EmailTemplate/UpdateEmailTemplate`, "POST", data, "JSON", function (resp) {
         if (resp) {
-            InformationDialog('Done', 'Successfully Updated');
+            InformationDialogWithPartialReload('Done', 'Successfully Updated', EmailTemplate);
         }
         else {
             ErrorDialog('Fail', 'could not update');
@@ -58,8 +53,6 @@ function Updatedata(_this) {
 
 
 function AddData(_this) {
-    debugger;
-    //let TemplateId = $('#TemplateId').val().trim();
     let TemplateName = $('#TemplateName').val().trim();
     let TemplateSubject = $('#TemplateSubject').val().trim();
     let UserRole = $('#UserRole').val().trim();
@@ -67,7 +60,7 @@ function AddData(_this) {
     let data = {EmailBody: TemplateHtml, Subject: TemplateSubject, UserRole: UserRole, Name: TemplateName };
     SendAJAXRequest(`/EmailTemplate/InsertEmailTemplate`, "POST", data, "JSON", function (resp) {
         if (resp) {
-            InformationDialog('Done', 'Successfully Updated');
+            InformationDialogWithPartialReload('Done', 'Successfully Added', EmailTemplate);
         }
         else {
             ErrorDialog('Fail', 'could not update');
@@ -75,14 +68,12 @@ function AddData(_this) {
     });
  }
 
-//function deletedata(CountryCode, stateCode) {
-function deletedata(data) {
-   
-    SendAJAXRequest('/EmailTemplate/DeleteEmailTemplate/', 'GET', data, 'JSON', (result) => {
+function deletedata(id) {
+    SendAJAXRequest(`/EmailTemplate/DeleteEmailTemplate/?Id=${id}`, 'GET', {}, 'JSON', (result) => {
         if (result) {
-            InformationDialogWithPartialReload('Done', result, GetStateList);
+            InformationDialogWithPartialReload('Done', 'You have successfully deleted.', EmailTemplate);
         } else {
-            ErrorDialog('Error', 'Unable to do this action');
+            ErrorDialog('Error', 'Action faild with error');
         }
     });
 }
@@ -126,14 +117,7 @@ $('#PopUpModal').on('hidden.bs.modal', function () {
 
 });
 
-function ConfrimationDeleteState(countryId, stateId) {
-    //$('#confimationDeleteModel').modal({
-    //    dismissible: true
-    //});
-    //$('#btndelete').attr('onclick', 'deletedata("' + countryId + '","' + stateId + '")');
-    //$('#confimationDeleteModel').modal('show');
-    //$("#confimationDeleteModel").addClass("open");
-    //$("#confimationDeleteModel").addClass("in");
-    var data = { CountryCode: countryId, StateCode: stateId };
-    ConfirmationDialog('Confirmation', 'Are you sure', deletedata, data);
-}
+//function ConfrimationDeleteState(countryId, stateId) {
+//   var data = { CountryCode: countryId, StateCode: stateId };
+//    ConfirmationDialog('Confirmation', 'Are you sure', deletedata, data);
+//}

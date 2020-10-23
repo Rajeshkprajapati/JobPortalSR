@@ -485,18 +485,22 @@ namespace JobPortal.Data.Repositories.Shared
             throw new DataNotFound("Job roles not found, please contact your tech deck.");
         }
 
-        public DataTable GetJobSeekers()
+        public DataTable GetJobSeekers(int MaxExp)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 try
                 {
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@MaxExp",MaxExp)
+                    };
                     var result =
                         SqlHelper.ExecuteDataset
                         (
                             connection,
                             CommandType.StoredProcedure,
-                            "usp_GetJobSeekers"
+                            "usp_GetJobSeekers",
+                            parameters
                             );
                     if (null != result && result.Tables.Count > 0)
                     {

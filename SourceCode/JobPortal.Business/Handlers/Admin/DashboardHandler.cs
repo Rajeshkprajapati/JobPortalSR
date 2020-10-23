@@ -316,9 +316,9 @@ namespace JobPortal.Business.Handlers.Admin
             }
             throw new DataNotFound("Cities not found, please contact your tech deck.");
         }
-        public IList<UserViewModel> GetJobSeekers()
+        public IList<UserViewModel> GetJobSeekers(int MaxExp)
         {
-            DataTable dt = masterRepository.GetJobSeekers();
+            DataTable dt = masterRepository.GetJobSeekers(MaxExp);
             var jobseekersList = new List<UserViewModel>();
             for (int i = 0; i < dt.Rows.Count; i++)
             {

@@ -1,4 +1,15 @@
 ﻿$(document).ready(function () {
+    $('#dataTable').dataTable({
+        order: [],
+        dom: 'Bfrtip',
+        buttons: [
+            'excel'
+        ],
+        //searching: false
+    });
+    $('#dataTable_length').addClass('data-table-lenthFilter');
+    $('#dataTable_filter').addClass('data-table-SearchFilter');
+
     EmailTemplates(2);
 });
 $("#CompanyId").change(function () {
@@ -27,7 +38,6 @@ $("#CompanyId").change(function () {
 });
 
 function EmailTemplates(usrRole) {
-    debugger;
     var ddlEmailTemplate;
     if (usrRole == 3) {
         ddlEmailTemplate = $("#ddlEmpEmailTemplate");
@@ -107,10 +117,14 @@ $("#JobSeekerNotification").submit(function (e) {
     var emailId = form.find('#JobSeekerId').val().toString();
     var subject = form.find('#JobId option:selected').text();
     var TempHtml = $("#ContentDiv").html();
+    if (emailId == "") {
+        ErrorDialog('Required', 'Please select an email id');
+        return false;
+    }
     let data = { EmailId: emailId, EmailBody: TempHtml, Subject:subject};
     SendAJAXRequest(`/Dashboard/SendNotificationMail`, "POST", data, "JSON", function (resp) {
-        if (resp) {
-            InformationDialog('Done', 'Your email has been send!');
+        if (resp =="Pass") {
+            InformationDialog('Done', 'Your email has been send!'); 
         }
         else {
             ErrorDialog('Fail', 'Your email has not been send!');
@@ -124,13 +138,97 @@ $("#EmployerNotification").submit(function (e) {
     var emailId = form.find('#CompanyEmail').val().toString();
     var subject = form.find('#EmpSubject').val();
     var TempHtml = $("#ContentDiv").html();
+    if (emailId == "") {
+        ErrorDialog('Required', 'Please select an email id');
+        return false;
+    }
     let data = { EmailId: emailId, EmailBody: TempHtml, Subject: subject };
     SendAJAXRequest(`/Dashboard/SendNotificationMail`, "POST", data, "JSON", function (resp) {
-        if (resp) {
+        if (resp == "Pass") {
             InformationDialog('Done','Your email has been send!'); 
+            
         }
         else {
             ErrorDialog('Fail','Your email has not been send!');
         }
     });
 });
+
+$("#MaxExp").change(function () {
+    var MaxExp = $('option:selected', this).attr('value');
+    SendAJAXRequest(`/Dashboard/JobSeekersData?MaxExp=${MaxExp}`, "GET", {}, "html", function (resp) {
+        if (resp && resp !== "") {
+            $("div#contentHolderData").html(resp);
+        }
+        else {
+            return false;
+        }
+    });
+});
+
+function SelectAll() {
+    var allSelectedValues = "";
+    var isFirst = true;
+
+    $(".checkBoxClass").each(function () {
+
+        if (isFirst === true) {
+            isFirst = false;
+
+            allSelectedValues = $(this).val();
+            $(".checkBoxClass").prop('checked', false);
+        } else {
+            allSelectedValues = allSelectedValues + "," + $(this).val();
+
+            $(".checkBoxClass").prop('checked', true);
+        }
+
+    });
+    $('#allselectcheckbox').removeAttr('onchange');
+    $('#allselectcheckbox').attr('onchange', 'DSelectAll()');
+    $('#JobSeekerId').val(allSelectedValues);
+}
+
+function DSelectAll() {
+    var allSelectedValues = "";
+    var isFirst = true;
+
+    $(".checkBoxClass").each(function () {
+
+        if (isFirst === true) {
+            isFirst = false;
+
+            allSelectedValues = $(this).val();
+            $(".checkBoxClass").prop('checked', false);
+        } else {
+            allSelectedValues = allSelectedValues + "," + $(this).val();
+
+            $(".checkBoxClass").prop('checked', false);
+        }
+
+    });
+
+    $('#allselectcheckbox').removeAttr('onchange');
+    $('#allselectcheckbox').attr('onchange', 'SelectAll()');
+    $('#JobSeekerId').val('');
+}
+
+function SelectJob(_this, e) {
+
+    var allSelectedValues = "";
+    var isFirst = true;
+
+    $(".checkBoxClass:checked").each(function () {
+
+        if (isFirst === true) {
+            isFirst = false;
+
+            allSelectedValues = $(this).val();
+        } else {
+            allSelectedValues = allSelectedValues + "," + $(this).val();
+        }
+
+    });
+
+    $('#JobSeekerId').val(allSelectedValues);
+}

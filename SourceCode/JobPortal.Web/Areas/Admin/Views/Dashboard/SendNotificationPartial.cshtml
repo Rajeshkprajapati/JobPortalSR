@@ -1,6 +1,8 @@
 ﻿<style>
-    .chosen-container-active {width:100%!important;}
-    </style>
+    .chosen-container-active {
+        width: 100% !important;
+    }
+</style>
 <div class="dashboard-content">
     <!-- Titlebar -->
     <div id="titlebar">
@@ -30,36 +32,55 @@
         <div id="jobseeker" class="formpanel tab-pane fade active in">
 
             <form autocomplete="off" method="post" id="JobSeekerNotification" asp-action="">
-                <div class="form">
+                <div class="col-md-4">
                     <h5>Email Template</h5>
                     <select class="form-control" required id="ddlEmailTemplate" onchange="getTemplate(this)">
                         <option value="">Select Template</option>
                     </select>
                 </div>
-                <div class="form">
+                <div class="col-md-4">
                     <h5>Company</h5>
                     <select class="form-control" required id="CompanyId" asp-items="@(new SelectList(@ViewBag.EmployersData,"UserId", "CompanyName"))">
                         <option value="">Select Company</option>
                     </select>
                 </div>
-                <div class="form">
-                    <h5>Jobs</h5>
+                <div class="col-md-4">
+                    <h5>Jobs Titles</h5>
                     <select class="form-control" required id="JobId">
                         <option value="">Select Jobs</option>
                     </select>
                 </div>
-                <div class="form">
-                    <h5>Job Seekers</h5>
-                    <select class="chosen-select" required id="JobSeekerId" multiple asp-items="@(new SelectList(@ViewBag.JobSeekerData,"Email", "Email"))">
-                        <option value="">Select Job Seekers</option>
+                @*<div class="col-md-2" style="width:50%">
+                        <h5>Min Experiance </h5>
+                        <input type="number"  class="form-control" id="MinExp">
+                    </div>*@
+                <div class="col-md-2" style="width:50%">
+                    <h5>Max Experiance</h5>
+                    <select class="form-control" required id="MaxExp">
+                        <option value="0">Year</option>
+                        <option value="0">Fresher</option>
+                        @for (int i = 1; i <= 15; i++)
+                        {
+                            <option value=@i>@(i)</option>
+
+                        }
                     </select>
                 </div>
-
+                @*<div class="col-md-4">
+                        <h5>Job Seekers</h5>
+                        <select class="chosen-select" required id="JobSeekerId" multiple asp-items="@(new SelectList(@ViewBag.JobSeekerData,"Email", "Email"))">
+                            <option value="">Select Job Seekers</option>
+                        </select>
+                    </div>*@
+                <input type="hidden" value="" id="JobSeekerId">
 
                 <div class="form-row">
                     <input type="submit" class="button border fw margin-top-10" value="Send Jobseekers" />
                 </div>
             </form>
+
+            <div id="contentHolderData">
+            </div>
 
         </div>
 
@@ -67,11 +88,11 @@
 
             <form autocomplete="off" method="post" id="EmployerNotification" asp-action="">
                 @*<div class="form">
-            <h5>Company</h5>
-            <select class="chosen-select" id="CompanyEmail" multiple asp-items="@(new SelectList(@ViewBag.EmployersData,"Email", "Email"))" required>
-                <option value="">Select Company</option>
-            </select>
-        </div>*@
+                        <h5>Company</h5>
+                        <select class="chosen-select" id="CompanyEmail" multiple asp-items="@(new SelectList(@ViewBag.EmployersData,"Email", "Email"))" required>
+                            <option value="">Select Company</option>
+                        </select>
+                    </div>*@
 
                 <div class="form">
                     <h5>Email Template</h5>
@@ -100,7 +121,9 @@
     </div>
 </div>
 
-
+<script src="~/lib/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/lib/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/jquery/jquery-ui.min.js"></script>
 <script src="~/js/Admin/SendNotification/SendNotification.js"></script>
 <script>
     $(document).ready(function () {

@@ -89,9 +89,9 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             if (result)
             {
                 //return View();
-                return Json("Record Deleted");
+                return Json(result);
             }
-            return Json("Record Can't be Deleted");
+            return Json(result);
             //return View();
         }
     }

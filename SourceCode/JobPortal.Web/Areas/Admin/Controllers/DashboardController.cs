@@ -597,7 +597,7 @@ namespace JobPortal.Web.Areas.Admin.Controllers
         public PartialViewResult SendNotification()
         {
             ViewBag.EmployersData = dashboardHandler.GetEmployers(true);
-            ViewBag.JobSeekerData = dashboardHandler.GetJobSeekers();
+            //ViewBag.JobSeekerData = dashboardHandler.GetJobSeekers();
             //List<UsersReviewsViewModel> list = new List<UsersReviewsViewModel>();
             //try
             //{
@@ -679,6 +679,24 @@ namespace JobPortal.Web.Areas.Admin.Controllers
             }
            
             return Json(message);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public PartialViewResult JobSeekersData(int MaxExp)
+        {
+            IEnumerable<UserViewModel> list = null;
+            try
+            {
+                //jobTitle = _homeHandler.GetJobTitleById(JobIndustryAreaId);
+                list = dashboardHandler.GetJobSeekers(MaxExp);
+            }
+            catch (DataNotFound ex)
+            {
+                Logger.Logger.WriteLog(Logger.Logtype.Error, ex.Message, 0, typeof(DashboardController), ex);
+                ModelState.AddModelError("ErrorMessage", string.Format("{0}", ex.Message));
+            }
+            return PartialView("NotificationJobSeekersPartial", list);
         }
 
     }
