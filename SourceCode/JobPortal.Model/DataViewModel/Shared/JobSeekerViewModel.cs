@@ -62,7 +62,8 @@ namespace JobPortal.Model.DataViewModel.Shared
         public string Skills { get; set; }
 
         
-        public double TotalExperience { get; set; }        
+        public double TotalExperience { get; set; }      
+        public string ActivationKey { get; set; }
 
     }
 }

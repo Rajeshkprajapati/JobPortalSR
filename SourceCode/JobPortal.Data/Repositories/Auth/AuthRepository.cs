@@ -117,7 +117,8 @@ namespace JobPortal.Data.Repositories.Auth
                         new SqlParameter("@passwordSalt",user.PasswordSalt),
                         new SqlParameter("@passwordHash",user.PasswordHash),
                         new SqlParameter("@IsActive",user.IsActive),
-                        new SqlParameter("@Mobile",user.MobileNo)
+                        new SqlParameter("@Mobile",user.MobileNo),
+                        new SqlParameter("@ActivationKey",user.ActivationKey)
                     };
                     var result =
                         SqlHelper.ExecuteNonQuery
@@ -673,6 +674,41 @@ namespace JobPortal.Data.Repositories.Auth
                         var dt = new DataTable();
                         dt.Load(user);
                         return Convert.ToInt32(dt.Rows[0]["RoleId"]);
+
+                    }
+                }
+                finally
+                {
+                    SqlHelper.CloseConnection(connection);
+                }
+            }
+            throw new InvalidUserCredentialsException("Email Id is not valid");
+
+
+        }
+
+        public int GetUserId(string emailId)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@Email",emailId)
+                    };
+                    var user =
+                        SqlHelper.ExecuteReader
+                        (
+                            connection,
+                            CommandType.StoredProcedure,
+                            "usp_GetUserId",
+                            parameters
+                            );
+                    if (null != user && user.HasRows)
+                    {
+                        var dt = new DataTable();
+                        dt.Load(user);
+                        return Convert.ToInt32(dt.Rows[0]["UserId"]);
 
                     }
                 }

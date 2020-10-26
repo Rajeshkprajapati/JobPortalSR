@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using JobPortal.Business.Interfaces.Auth;
 using JobPortal.Business.Interfaces.Jobseeker;
@@ -462,7 +463,7 @@ namespace JobPortal.Web.Controllers
                 ViewBag.EmailVerificationFailed = "Oops! Unable to verify your email, Please contact your teck deck.";
                 return View("EmailVerification");
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -495,6 +496,8 @@ namespace JobPortal.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     user.RoleId = 3;//For Employer
+                    user.ActivationKey = RandomStrings();
+
                     if (authHandler.RegisterEmployer(user))
                     {
                         SendRegistrationMailToEmployer(user);
@@ -537,7 +540,8 @@ namespace JobPortal.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    user.RoleId = 4;//For Consultancy
+                    user.RoleId = 4;
+                    user.ActivationKey = RandomStrings();
                     if (authHandler.RegisterEmployer(user))
                     {
                         SendRegistrationMailToEmployer(user);
@@ -579,12 +583,15 @@ namespace JobPortal.Web.Controllers
             {
                 var basePath = string.Format("{0}://{1}", Request.Scheme, Request.Host);
                 var link = basePath + "/Auth/EmployerLogin";
+                int UserId = authHandler.GetUserId(user.Email);
+                string loginUrl = basePath + $"/Auth/EmailVerification?uId={UserId}&akey={user.ActivationKey}";
                 var eModel = new EmailViewModel
                 {
                     Subject = "Welcome in careerindeed.in!",
                     Body = "<b>Hi " + user.CompanyName + "</b>," + "<br/><br/>Thank You for signing up with careerindeed.in. " +
                     "We are delighted to have you on board." +
                     "<br/><br/>Your login details are below:<br/><br/>" + "User Name: " + user.Email + "<br>Password: " + user.Password +
+                     "<br/><br/>You are one step away to explore our application please <a href=" + loginUrl + ">click here</a> to activate account." +
                     "<br/><br/>You can update your contact and registration details at any time by logging on to https://careerindeed.in/" +
                     "<br/><br/>See you on board!<br/><a href=" + link + "> CareerIndeed</a> Team",
                     To = new string[] { user.Email },
@@ -611,8 +618,10 @@ namespace JobPortal.Web.Controllers
                 {
 
                     user.RoleId = 2;//For Student
+                    user.ActivationKey = RandomStrings();
                     if (authHandler.RegisterUser(user))
                     {
+
                         SendRegistrationMailToJobSeeker(user);
                         TempData["successMsg"] = "User registered successfully, please login to proceed.";
                     }
@@ -650,6 +659,8 @@ namespace JobPortal.Web.Controllers
             {
                 var basePath = string.Format("{0}://{1}", Request.Scheme, Request.Host);
                 var link = basePath + "/Auth/JobSeekerLogin";
+                int UserId = authHandler.GetUserId(user.Email);
+                string loginUrl = basePath + $"/Auth/EmailVerification?uId={UserId}&akey={user.ActivationKey}";
 
                 var eModel = new EmailViewModel
                 {
@@ -659,6 +670,7 @@ namespace JobPortal.Web.Controllers
                             "<br/>Please note that your username and password are both case sensitive.<br/><br/>Your login details are below:<br/><br/>" +
                             "User Name: " + user.Email +
                             "<br>Password: " + user.Password +
+                             "<br/><br/>You are one step away to explore our application please <a href=" + loginUrl + ">click here</a> to activate account." +
                             "<br/><br/>You can update your contact and registration details at any time by logging on to careerindeed.in" +
                             "<br/><br/>Wish you all the best!<br/><a href=" + link + "> CareerIndeed</a> Team",
                     To = new string[] { user.Email },
@@ -1105,6 +1117,15 @@ namespace JobPortal.Web.Controllers
             {
                 return View("CreateNewPassword");
             }
+        }
+
+        public string RandomStrings()
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string key = new string(Enumerable.Repeat(chars, 10)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+            return key;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace JobPortal.Model.DataViewModel.Shared
     public class SearchJobViewModel
     {
         public string Skills { get; set; } = string.Empty;
-        public int JobTitle { get; set; } = 0;
+        public string[] JobTitle { get; set; } = new string[0];
         public string[] JobCategory { get; set; } = new string[0];
         public int Experiance { get; set; } = -1;
         public int MinExperiance { get; set; } = -1;

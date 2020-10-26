@@ -58,7 +58,7 @@ namespace JobPortal.Business.Handlers.Jobseeker
             var sModel = new JobSearchModel
             {
                 Skills = searches.Skills,
-                JobRole = searches.JobTitle,
+                JobRole = string.Join(Constants.CommaSeparator, searches.JobTitle),
                 City = string.Join(Constants.CommaSeparator, searches.City),
                 MinExperiance = searches.MinExperiance,
                 MaxExperiance = searches.MaxExperiance,

@@ -7,7 +7,7 @@ namespace JobPortal.Data.DataModel.Shared
     public class JobSearchModel
     {
         public string Skills { get; set; }
-        public int JobRole { get; set; }
+        public string JobRole { get; set; }
         public string JobCategory { get; set; }
         public int Experiance { get; set; }
         public int MinExperiance { get; set; }

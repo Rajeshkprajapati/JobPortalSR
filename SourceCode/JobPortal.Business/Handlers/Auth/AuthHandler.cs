@@ -100,7 +100,8 @@ namespace JobPortal.Business.Handlers.Auth
                 PasswordSalt = passwordSalt,
                 PasswordHash = passwordHash,
                 IsApproved = true,
-                IsActive = true
+                IsActive = false,
+                ActivationKey = user.ActivationKey
             };
             int isRegister = _authProcessor.RegisterUser(u);
             if (isRegister > 0)
@@ -142,9 +143,10 @@ namespace JobPortal.Business.Handlers.Auth
                 RoleId = user.RoleId,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                IsActive = true,
+                IsActive = false,
                 IsApproved = true,
-                MobileNo = user.Mobile
+                MobileNo = user.Mobile,
+                ActivationKey = user.ActivationKey
             };
             bool isRegister = _authProcessor.RegisterEmployer(u);
             if (isRegister)
@@ -516,6 +518,25 @@ namespace JobPortal.Business.Handlers.Auth
             if (status)
             {
                 int user = _authProcessor.GetUserRole(emailId);
+                if (user > 0)
+                {
+                    return user;
+
+                }
+                throw new UserNotFoundException("User not found");
+            }
+            else
+            {
+                throw new DataNotFound("data not found");
+            }
+        }
+
+        public int GetUserId(string emailId)
+        {
+            var status = _authProcessor.CheckIfUserExists(emailId);
+            if (status)
+            {
+                int user = _authProcessor.GetUserId(emailId);
                 if (user > 0)
                 {
                     return user;

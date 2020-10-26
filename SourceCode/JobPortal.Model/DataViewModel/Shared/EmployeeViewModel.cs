@@ -38,6 +38,6 @@ namespace JobPortal.Model.DataViewModel.Shared
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
+        public string ActivationKey { get; set; }
     }
 }

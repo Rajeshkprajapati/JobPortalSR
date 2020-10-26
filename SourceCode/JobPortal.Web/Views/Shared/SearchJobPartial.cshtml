@@ -3,15 +3,25 @@
 
 
 @{
-    //    UserViewModel user = Context.Session.Get<UserViewModel>
-    //(Constants.SessionKeyUserInfo);
-    //    int jRoleId = 0;
-    //    string jRole = string.Empty;
-    //    if (null != user)
-    //    {
-    //        jRole = user.JobTitleName;
-    //    }
-
+    UserViewModel user = Context.Session.Get<UserViewModel>
+(Constants.SessionKeyUserInfo);
+    int jRoleId = 0;
+    string jRole = string.Empty;
+    if (null != user)
+    {
+        jRole = user.JobTitleName;
+    }
+<style>
+    .multiselect{
+    height:40px;
+    }
+    .multiselect-container {
+        width: 100% !important
+    }
+    .input-group-addon {
+        padding: 9px 7% !important;
+    }
+</style>
 
     <form asp-area="Jobseeker" id="formJobPartial" asp-controller="Job" asp-action="SearchJobList" method="post" class="col-xs-10 col-xs-offset-1 searchbar">
         <div class="col-xs-12">
@@ -30,19 +40,19 @@
                         </select>
                     }
                 </div>
-                <div class="col-sm-6 search-form-element">                 
-
-                    @*<input type="hidden" asp-for="JobTitle" id="hiddenjobtitle" />
-                    <select type="text" asp-for="JobTitle" id="Jobtitle" multiple autocomplete="off" class="form-control" data-placeholder="Choose Job Title"></select>*@
-
-                    <select type="text" asp-for="JobTitle" id="JobTitle" name="JobTitle" multiple autocomplete="off" class="form-control chosen-select" data-placeholder="Choose Job Title"></select>
+                <div class="col-sm-6 search-form-element formultipleclassentry">
+                    <input type="hidden" id="hdnJobTitleId" name="JobTitleId" for="JobTitleId" />
+                    @*<select type="text" asp-for="JobTitle" id="jobtitle" multiple asp-items="@(new SelectList(ViewBag.AllJobRoles,"JobTitleId","JobTitleName"))" autocomplete="off" class="form-control" data-placeholder="Choose Job Title"></select>*@
+                   <select type="text" asp-for="JobTitle[0]" id="JobTitle" name="JobTitle" multiple autocomplete="off" class="form-control" data-placeholder="Choose Job Title ">
+                    <option value="-1" hidden>Please choose</option>
+                    </select>
                 </div>
             </div>
             <div class="row bottom-row">
                 <div class="col-sm-4 search-form-element">
                     <input type="text" asp-for="Skills" class="form-control first-column" placeholder="Skill" />
                 </div>
-
+               
                 <div class="col-sm-2 search-form-element">
                     <select class="form-control" name="MinExperiance" asp-for="MinExperiance">
                         <option value="-1">Min Exp</option>
