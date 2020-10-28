@@ -977,6 +977,8 @@ span.part-time {
     max-width: 100%;
 }
 
+
+
 .listings-container .listing-item {
     display: inline-block;
 }
@@ -2511,4 +2513,19 @@ a.employer-website:hover {
 
 .resizetextarea {
     resize: vertical !important;
+}
+.text-content-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+
+    
+@media only screen and (min-width: 600px) {
+    .job-lists-item .default-img {
+       height:119px;
+    }
 }

@@ -97,13 +97,13 @@
                                 <div class="job-lists-item">
                                     <div class="job-list-content col-xs-12">
                                         <div class="col-xs-3 company">
-                                            <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo"><img src="@jobs.CompanyLogo" alt="" class="responsive-img"></a>
+                                            <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo"><img src="@jobs.CompanyLogo" alt="" class="responsive-img default-img"></a>
                                         </div>
                                         <div class="job-list-details col-xs-9">
                                             <span class="listing-type">@jobs.EmploymentStatus</span>
                                             <h4>
-                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
-                                                    @jobs.JobTitleByEmployer / @jobs.JobTitle
+                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item text-content-wrap">
+                                                    @jobs.JobTitleByEmployer 
                                                 </a>
 
                                             </h4>
@@ -142,13 +142,13 @@
                                     <div class="job-list-content col-xs-12">
                                         <div class="col-xs-3 company">
                                             <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="company-logo">
-                                                <img src="@jobs.CompanyLogo" alt="" class="responsive-img">
+                                                <img src="@jobs.CompanyLogo" alt="" class="responsive-img default-img">
                                             </a>
                                         </div>
                                         <div class="job-list-details col-xs-9">
                                             <span class="listing-type">@jobs.EmploymentStatus</span>
                                             <h4>
-                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item">
+                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item text-content-wrap">
                                                     @jobs.JobTitleByEmployer
                                                 </a>
 
