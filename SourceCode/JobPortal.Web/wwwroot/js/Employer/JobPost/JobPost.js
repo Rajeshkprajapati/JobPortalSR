@@ -277,8 +277,8 @@ function AddJobPost(_this) {
         MaxExp: -1
     };
 
-    let jobTypes = $('input[type=radio][name=JobType]').val();
-    if (jobTypes == 1) {
+    let jobTypes = $('input[type=radio][name=JobType]:checked').val();
+    if (jobTypes == 2) {
         let exprange = $('input[type=text][name=Experience]').val();
         if (!exprange.includes('-')) {
             ErrorDialog('Error', 'Please Enter valid range of experience!');

@@ -226,8 +226,8 @@
             ErrorDialog('Error', 'Please select atleast one JobTitle !');
             return false;
         }
-        let jobTypes = $('input[type=radio][name=JobType]').val();
-        if (jobTypes == 1) {
+        let jobTypes = $('input[type=radio][name=JobType]:checked').val();
+        if (jobTypes == 2) {
             let exprange = $('input[type=text][name=Experience]').val();
             if (!exprange.includes('-')) {
                 ErrorDialog('Error', 'Please Enter valid range of experience!');
@@ -239,7 +239,7 @@
             //    ErrorDialog('Error', 'Please Enter valid range of experience!');
             //    return false;
             //}
-
+            debugger;
             if (exp[0] > 0 && exp[1] <= 15) {
                 formsData[0].MinExp = exp[0];
                 formsData[0].MaxExp = exp[1];
