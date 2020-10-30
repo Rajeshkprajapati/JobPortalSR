@@ -102,16 +102,16 @@
                                         <div class="job-list-details col-xs-9">
                                             <span class="listing-type">@jobs.EmploymentStatus</span>
                                             <h4>
-                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item text-content-wrap">
+                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item text-content-wrap"  data-toggle="tooltip" data-placement="bottom" title="@jobs.JobTitleByEmployer ">
                                                     @jobs.JobTitleByEmployer 
                                                 </a>
 
                                             </h4>
                                             <ul class="job-discription">
-                                                <li>@jobs.CompanyName</li>
-                                                <li>  @jobs.City</li>
+                                                <li> @jobs.CompanyName</li>
+                                                <li> @jobs.City</li>
                                                 <li> @jobs.CTC</li>
-                                                <li><span>@jobs.NumberOfDays</span><span>d ago</span></li>
+                                                <li><span> @jobs.NumberOfDays</span><span>d ago</span></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -148,16 +148,16 @@
                                         <div class="job-list-details col-xs-9">
                                             <span class="listing-type">@jobs.EmploymentStatus</span>
                                             <h4>
-                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item text-content-wrap">
+                                                <a href="/Job/JobDetails/?jobid=@jobs.JobPostId" class="listing-item text-content-wrap" data-toggle="tooltip" data-placement="bottom" title="@jobs.JobTitleByEmployer">
                                                     @jobs.JobTitleByEmployer
                                                 </a>
 
                                             </h4>
                                             <ul class="job-discription">
                                                 <li><i class="ln ln-icon-Management"></i> @jobs.CompanyName</li>
-                                                <li><i class="ln ln-icon-Map2"></i>  @jobs.City</li>
+                                                <li><i class="ln ln-icon-Map2"></i> @jobs.City</li>
                                                 <li><i class="ln ln-icon-Money-2"></i> @jobs.CTC</li>
-                                                <li><span class="listing-date new">@jobs.NumberOfDays</span><span>d ago</span></li>
+                                                <li><span class="listing-date new"> @jobs.NumberOfDays</span><span>d ago</span></li>
                                             </ul>
 
                                         </div>

@@ -12,8 +12,9 @@
         <input type="text" class="form-control input-elements" required name="JobTitleByEmployer" value="@Model.JobTitleByEmployer" id="jobTitle" />
     </div>
     <div class="form-group">
-        <label class="input-label" for="jobRole">Job Role</label>
-        <select class="chosen-select jobRoles" id="jobRole" required multiple="multiple" asp-items="@(new SelectList(ViewBag.JobRoles, "JobTitleId", "JobTitleName"))"></select>
+        <input type="hidden" id="hdnJobTitleId" name="JobTitleId" for="JobTitleId" />
+        @*<label class="input-label" for="jobRole">Job Role</label>*@
+        <select class="form-control jobRoles" id="jobRole" required multiple="multiple" asp-items="@(new SelectList(ViewBag.JobRoles, "JobTitleId", "JobTitleName"))" data-placeholder="Choose Job Title"></select>
     </div>
     <div class="row">
         <div class="col-sm-6">
@@ -107,13 +108,21 @@
 <script>
     CKEDITOR.replace('jobDetails');
     $(document).ready(function () {
-        $("#jobRole").chosen({width:"100%"});
+        //$("#jobRole").chosen({width:"100%"});
         $(".chosen-select-no-single").chosen({});
         var str_array = '@Model.JobTitleId.Replace(" ", "")';
         var arr = str_array.split(',');
         $("#jobRole").val(arr).trigger("chosen:updated");
 
-        initializeCalendars(true,true);
+        initializeCalendars(true, true);
+        multiselector.initSelector(
+            $('select#jobRole'),
+            {
+                nonSelectedText: 'Select job role'
+            },
+            $("input[type=hidden]#hdnJobTitleId"),
+            ","
+        );
     });
 
     function initCalendar(selector, date, startDate) {

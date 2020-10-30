@@ -28,7 +28,8 @@
         if (JobIndustryAreaId !== "") {
             SendAJAXRequest(`/Home/JobTitlesById/?JobIndustryAreaId=${JobIndustryAreaId}`, 'GET', {}, 'JSON', (d) => {
                 if (d) {
-                    
+                        $('#hdnJobTitleId').val('');
+                        $('.multiselect-selected-text').text('Choose Job Title');
                         $("ul.multiselect-container li").not('li:first').remove();
                         var JobTitleli = "";
                         var optionsdBind = "";

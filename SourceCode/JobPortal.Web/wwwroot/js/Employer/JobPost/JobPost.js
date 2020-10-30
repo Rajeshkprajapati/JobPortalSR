@@ -72,19 +72,21 @@
     $("#JobIndustryAreaId").change(function () {        
         var JobIndustryAreaId = $(this).val();
         if (JobIndustryAreaId !== "") {
-            var ddlJobRoles = $('#ddlJobRoles');
             SendAJAXRequest(`/JobManagement/JobTitles/?JobIndustryAreaId=${JobIndustryAreaId}`, 'GET', {}, 'JSON', (d) => {
                 if (d) {
-                    ddlJobRoles.empty(); // Clear the plese wait  
-                    var valueofJobRoles = "";
-                    var v = "<option value=" + valueofJobRoles + ">Select Job Role</option>";
+                    $('#hdnJobTitleId').val('');
+                    $('.multiselect-selected-text').text('Choose Job Title');
+                    $("ul.multiselect-container li").not('li:first').remove();
+                    var JobTitleli = "";
+                    var optionsdBind = "";
                     $.each(d, function (i, v1) {
-                        v += "<option value=" + v1.jobTitleId + ">" + v1.jobTitleName + "</option>";
+                        JobTitleli += "<li> <a tabindex=" + '0' + "><label class=" + 'checkbox' + " title='" + v1.jobTitleName + "'><input type=" + 'checkbox' + " value=" + v1.jobTitleId + "> " + v1.jobTitleName + "</label></a></li>";
+                        optionsdBind += "<option value=" + v1.jobTitleId + ">" + v1.jobTitleName + "</option>";
                     });
-                    $("#ddlJobRoles").html(v);
-                    $(".chosen-select").trigger("chosen:updated");
+                    $("ul.multiselect-container").append(JobTitleli);
+                    $("#ddlJobRoles").html(optionsdBind);
                 } else {
-                    warnignPopup('Error!');
+                    ErrorDialog('Error','Error');
                 }
             });
 
@@ -211,7 +213,7 @@ function initCalendar(selector, date, startDate) {
 }
 
 function AddJobPost(_this) {
-    
+    debugger;
     $('#JobPostForm').submit(function (e) {
         e.preventDefault();
     });    
