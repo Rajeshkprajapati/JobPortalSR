@@ -261,9 +261,14 @@
                         <div data-u="slides" class="showbiz-slider">
                             @foreach (var item in ViewBag.Section2)
                             {
-                                <div class="showbiz-slider-inner">
-                                    <img data-u="image" src="@item.ImagePath" />
-                                </div>
+                            <div class="showbiz-slider-inner">
+                                <a href="@item.JobPage" target="_blank">
+                                    <img data-u="image" class="custom-img1" src="@item.ImagePath" />
+                                </a>
+                                <a href="@item.JobPage" target="_blank" class="btn btn-link apply-button">
+                                    <span class="btn-text">Apply</span>
+                                </a>
+                            </div>
                             }
                         </div>
                     </div>
