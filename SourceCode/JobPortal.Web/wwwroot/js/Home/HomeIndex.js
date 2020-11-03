@@ -59,6 +59,27 @@
     );
     $("ul.multiselect-container li").not('li:first').remove();
 
+    //jQuery.fn.multiselect = function () {
+    //    $(this).each(function () {
+    //        var checkboxes = $(this).find("input:checkbox");
+    //        //checkboxes.each(function () {
+    //        //    var checkbox = $(this);
+    //        //    // Highlight pre-selected checkboxes
+    //        //    if (checkbox.prop("checked"))
+    //        //        checkbox.parent().addClass("multiselect-on");
+
+    //        //    // Highlight checkboxes that the user selects
+    //        //    checkbox.click(function () {
+    //        //        if (checkbox.prop("checked"))
+    //        //            checkbox.parent().addClass("multiselect-on");
+    //        //        else
+    //        //            checkbox.parent().removeClass("multiselect-on");
+    //        //    });
+    //        //});
+    //        var data = $('.multiselect-container li.active').length();
+    //    });
+    //};
+
     $('.slidepartners').slick({
         slidesToShow: 1,
         slidesToScroll: 6,
@@ -126,4 +147,29 @@ $('#myslideUl').hover(function () {
 
 $('#myslideUl').mouseout(function () {
    intraval = 2000;
+});
+$(document).on('change', "ul.multiselect-container li input[type=checkbox]", function () {
+    if ($('.multiselect-container li.active').length > 2) {
+
+        var nonSelectedOptions = $('ul.multiselect-container li').filter(function () {
+            return !$(this).is('.active');
+        });
+        nonSelectedOptions.each(function () {
+            let jTitlevalue = $(this).find('a').find('label').find('input[type=checkbox]').val();
+            console.log(jTitlevalue);
+            let input = $(' input[type = checkbox][value="' + jTitlevalue + '"]');
+            input.prop('disabled', true);
+            input.parent('li').addClass('disabled');
+        });
+     }
+    else {
+        var allOptions = $('ul.multiselect-container li');
+        allOptions.each(function () {
+            let jTitlevalue = $(this).find('a').find('label').find('input[type=checkbox]').val();
+            console.log(jTitlevalue);
+            let input = $(' input[type = checkbox][value="' + jTitlevalue + '"]');
+            input.prop('disabled', false);
+            input.parent('li').removeClass('disabled');
+        });
+    }
 });

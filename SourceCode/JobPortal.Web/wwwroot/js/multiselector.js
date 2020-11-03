@@ -5,7 +5,7 @@ multiselector = (function () {
         includeSelectAllOption: false,
         includeSelectAllIfMoreThan: 0,
         selectAllText: ' Select all',
-        allSelectedText: 'All selected',
+        allSelectedText: false,
         maxSelection: -1,
         buttonWidth: "100%",
         maxHeight: "250",
