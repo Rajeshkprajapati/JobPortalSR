@@ -63,6 +63,7 @@ namespace JobPortal.Business.Handlers.Auth
                 u.Address1 = Convert.ToString(user["Address1"]);
                 u.Address2 = Convert.ToString(user["Address2"]);
                 u.Address3 = Convert.ToString(user["Address3"]);
+                u.IsEmailVerified = Convert.ToBoolean(user["IsActive"]);
             }
             if (u != null)
             {

@@ -58,6 +58,10 @@ namespace JobPortal.Web.Controllers
                     {
                         if (result.RoleName != "Admin")
                         {
+                            if (!result.IsEmailVerified)
+                            {
+                                throw new InvalidRoleException("Your Email is not verified! Kindly verify your email");
+                            }
                             if (FormName == "JobSeekerLogin" && (result.RoleName == "Corporate" || result.RoleName == "Consultant"))
                             {
                                 throw new InvalidRoleException("You are not allowed to login here!Kindly login from Employer login page");
